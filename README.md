@@ -57,6 +57,6 @@ address_confidence, address_source, source, google_maps_url, instagram_search_ur
 
 ## Map
 - Marker colour = store type, radius = tier score; canvas renderer keeps 300+ markers smooth.
-- Filters: country toggles, type, min tier, min alignment, single-SKU openness, debounced
+- Filters: country toggles, type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).
 - Click a column header to sort (tier, fit, CX…). Click a row → map flies to store.

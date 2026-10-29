@@ -95,6 +95,12 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       <label class="chip"><input type="checkbox" name="open" value="Low" checked>Low</label>
     </div>
   </div>
+  <div class="f">Source
+    <div class="chips">
+      <label class="chip"><input type="checkbox" name="src" value="curated" checked>Curated</label>
+      <label class="chip"><input type="checkbox" name="src" value="osm" checked>OSM</label>
+    </div>
+  </div>
   <label class="f">Map sync<span class="chips"><label class="chip"><input id="inview" type="checkbox">Only in view</label></span></label>
   <button class="reset" id="reset">Reset</button>
 </section>
@@ -223,6 +229,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value;
     const minT = +$("tier").value, minA = +$("align").value;
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
+    const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
     $("tier-v").textContent = minT; $("align-v").textContent = minA;
 
@@ -230,6 +237,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const base = data.filter(r =>
       ccs.has(r.country) && (!ty || r.type === ty) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
+      srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
       (!q || r._q.includes(q)));
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
@@ -259,13 +267,14 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
   ["tier", "align"].forEach(id => $(id).addEventListener("input", apply));
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
+  document.querySelectorAll("input[name=src]").forEach(i => i.addEventListener("change", applyAndFit));
   $("inview").addEventListener("change", apply);
   map.on("moveend", () => $("inview").checked && apply());
   $("reset").addEventListener("click", () => {
     $("q").value = ""; $("type").value = "";
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
     $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
-    document.querySelectorAll("input[name=open]").forEach(i => (i.checked = true));
+    document.querySelectorAll("input[name=open], input[name=src]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);
     map.closePopup();
     applyAndFit();

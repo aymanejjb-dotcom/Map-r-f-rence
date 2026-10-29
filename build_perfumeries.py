@@ -55,7 +55,7 @@ RAW = [
      "Intimate Marais boutique praised for owners who champion small artisan houses and take time with every customer."),
     ("Marie Antoinette", NB, "FR", "Paris", "5 Rue d'Ormesson, 75004 Paris, France", 48.85517, 2.36283, 80, 84, "High", 4.7, "ES FS IB GS",
      "Tiny jewel-box shop on a Marais square; reviewers love the founder's personal storytelling and rare discoveries."),
-    ("Dover Street Parfums Market", CS, "FR", "Paris", "11 bis Rue d'Alger, 75001 Paris, France", 48.86557, 2.32990, 89, 62, "Med", 4.5, "ES FS DB IB LX",
+    ("Dover Street Parfums Market", CS, "FR", "Paris", "11 bis Rue Elzévir, 75003 Paris, France", 48.85873, 2.36188, 89, 62, "Med", 4.5, "ES FS DB IB LX",
      "Gallery-like space by the Comme des Garçons/DSM team with a sharp, experimental edit; staff are knowledgeable but selective."),
     ("Liquides Bar à Parfums", CS, "FR", "Paris", "9 Rue de Normandie, 75003 Paris, France", 48.86342, 2.36407, 85, 88, "High", 4.7, "ES FS DB IB GS",
      "Bar-style tasting counter where fragrances are served like spirits; beloved for its relaxed, geeky expertise."),
@@ -290,12 +290,18 @@ MASS = re.compile(
     r"primark|monoprix|galeria|karstadt|kaufhof|woolworth|peek ?& ?cloppenburg|c ?& ?a\b|coop|migros|"
     r"jelmoli|outlet|gourmet|maison et|lafayette maison|du go[uû]t|grande [ée]picerie|\bdi\b|"
     r"parfumerie\.nl|perfume ?shop|parfum ?discount|nuance|beauty ?boutique|thalia|action|normal|"
-    r"origines|l'occitane|nuxe|caudalie|clarins|lanc[ôo]me|sisley|kiehl|aesop|lancaster",
+    r"origines|l'occitane|nuxe|caudalie|clarins|lanc[ôo]me|sisley|kiehl|aesop|lancaster|"
+    # discount, dupe-scent and import networks
+    r"import parfumerie|\bapril\b|parf[üu]merie becker|\bhc parf|city parf|parf[üu]merie platen|loris|"
+    r"duftzwilling|oil de parfum|perfumum|i-n-l-e-t|bargello|pardole|kingdom of perfumes|dubai|"
+    r"discount|promo|dhl|paketshop|otto.?s|marjo|omnia|afamya|kelany|bilqis|alkhaled|dimaschki|"
+    r"al-jazeera|d.orient|ilire|baridi|parfum\.de|perfect look|dessous|w[äa]sche|lingerie|"
+    r"parfum member|braiding|a&m parfums|amica|parfuma\b|beauty parfumerie|sam parf",
     re.I)
 # Monobrand houses (brand fit = 0): own catalogue only.
 MONO = re.compile(
     r"guerlain|diptyque|chanel|dior|herm[eè]s|le labo|byredo|fragonard|molinard|galimard|kurkdjian|"
-    r"artisan parfumeur|goutal|penhaligon|jo malone|creed|acqua di parma|serge lutens|fr[ée]d[ée]ric malle|"
+    r"artisan parfumeur|mad parfumeur|goutal|penhaligon|jo malone|creed|acqua di parma|serge lutens|fr[ée]d[ée]ric malle|"
     r"\bm[ée]mo\b|atelier cologne|margiela|ex nihilo|parfums de marly|floris|santa maria novella|buly|"
     r"trudon|caron|lubin|nicolai|histoires de parfums|initio|amouage|xerjoff|roja|kilian|tom ford|crivelli|"
     r"esteban|durance|kenzo|saint laurent|armani|bvlgari|bulgari|cartier|louis vuitton|gucci|prada|montale|"

@@ -197,26 +197,79 @@ def harvest_cities(bboxes, rows):
         print(f"  ! {len(failed)} tiles failed, rerun to retry: {failed}", file=sys.stderr)
 
 
+PHOTON_WORDS = {
+    "FR": ["parfumerie", "parfums", "parfum", "perfume"],
+    "BE": ["parfumerie", "parfums", "parfum", "perfume"],
+    "LU": ["parfumerie", "parfums", "parfum"],
+    "CH": ["parfumerie", "parfümerie", "parfum", "profumeria"],
+    "NL": ["parfumerie", "parfum", "perfume", "parfums"],
+    "DE": ["parfümerie", "parfumerie", "parfum", "duft", "perfume"],
+}
+PHOTON_SHOPS = ["shop:perfumery", "shop:cosmetics", "shop:beauty"]
+
+
+def photon_row(f, origin):
+    p = f["properties"]
+    lng, lat = f["geometry"]["coordinates"]
+    return {
+        "osm": f"{dict(N='node', W='way', R='relation')[p['osm_type']]}/{p['osm_id']}",
+        "cc": (p.get("countrycode") or "").upper(), "origin": origin, "lat": lat, "lng": lng,
+        "name": p.get("name"), "brand": None, "shop": p.get("osm_value"),
+        "housenumber": p.get("housenumber"), "street": p.get("street"), "postcode": p.get("postcode"),
+        "city": p.get("city"), "mall": None, "website": None, "check_date": None, "opening_hours": None,
+    }
+
+
+def harvest_photon_cities(bboxes, rows):
+    """Overpass fallback: Photon text search per city bbox, restricted to beauty shop tags."""
+    for key, (s, w, n, e) in bboxes.items():
+        cc, city = key.split(":", 1)
+        new = 0
+        for word in PHOTON_WORDS[cc]:
+            params = [("q", word), ("limit", 50), ("bbox", f"{w},{s},{e},{n}")] + [("osm_tag", t) for t in PHOTON_SHOPS]
+            try:
+                feats = get("https://photon.komoot.io/api/?" + urllib.parse.urlencode(params), timeout=60)["features"]
+            except Exception as ex:
+                print(f"    photon {key}/{word}: {ex}", file=sys.stderr)
+                continue
+            for f in feats:
+                if not f["properties"].get("name"):
+                    continue
+                r = photon_row(f, f"photon-city:{city}")
+                if r["cc"] == cc and r["osm"] not in rows:
+                    rows[r["osm"]] = r
+                    new += 1
+            time.sleep(0.5)
+        print(f"  {key}: {new} new")
+    save(rows)
+
+
+# Photon caps a query at 50 hits: big networks are searched per region (lon/lat boxes)
+REGIONS = {
+    "FR": ["-5.2,41.3,2.4,46.5", "2.4,41.3,9.6,46.5", "-5.2,46.5,2.4,51.2", "2.4,46.5,9.6,51.2"],
+    "CH": ["5.9,45.8,7.6,47.9", "7.6,45.8,10.5,47.9"],
+    "DE": ["5.8,47.2,10.5,51.2", "10.5,47.2,15.1,51.2", "5.8,51.2,10.5,55.1", "10.5,51.2,15.1,55.1"],
+}
+
+
 def harvest_chains(rows):
     for q, tags, ccs in CHAINS:
-        params = [("q", q), ("limit", 200)] + [("osm_tag", t) for t in tags]
-        feats = get("https://photon.komoot.io/api/?" + urllib.parse.urlencode(params), timeout=60)["features"]
+        feats = []
+        boxes = [b for cc in sorted(ccs) for b in REGIONS.get(cc, [None])]
+        for box in boxes:
+            params = [("q", q), ("limit", 50)] + [("osm_tag", t) for t in tags] + ([("bbox", box)] if box else [])
+            feats += get("https://photon.komoot.io/api/?" + urllib.parse.urlencode(params), timeout=60)["features"]
+            time.sleep(0.5)
         new = 0
         for f in feats:
             p = f["properties"]
             cc = (p.get("countrycode") or "").upper()
             if cc not in ccs or not p.get("name"):
                 continue
-            osm = f"{dict(N='node', W='way', R='relation')[p['osm_type']]}/{p['osm_id']}"
-            lng, lat = f["geometry"]["coordinates"]
-            if osm in rows:
+            r = photon_row(f, f"photon:{q}")
+            if r["osm"] in rows:
                 continue
-            rows[osm] = {
-                "osm": osm, "cc": cc, "origin": f"photon:{q}", "lat": lat, "lng": lng,
-                "name": p.get("name"), "brand": None, "shop": p.get("osm_value"),
-                "housenumber": p.get("housenumber"), "street": p.get("street"), "postcode": p.get("postcode"),
-                "city": p.get("city"), "mall": None, "website": None, "check_date": None, "opening_hours": None,
-            }
+            rows[r["osm"]] = r
             new += 1
         print(f"  chain {q!r}: {len(feats)} hits, {new} new")
         time.sleep(1)
@@ -257,10 +310,15 @@ def main():
     SRC.mkdir(exist_ok=True)
     path = SRC / "osm_raw.json"
     rows = {r["osm"]: r for r in json.loads(path.read_text())} if path.exists() else {}
-    steps = sys.argv[1:] or ["cities", "chains", "reverse"]
+    steps = sys.argv[1:] or ["cities", "photon-cities", "chains", "reverse"]
     if "cities" in steps:
         harvest_cities(city_bboxes(), rows)
         save(rows)
+    if "cities-ch" in steps:  # Swiss Overpass mirror only (when the global ones are down)
+        harvest_cities({k: v for k, v in city_bboxes().items() if k.startswith("CH:")}, rows)
+        save(rows)
+    if "photon-cities" in steps:
+        harvest_photon_cities(city_bboxes(), rows)
     if "chains" in steps:
         harvest_chains(rows)
         save(rows)

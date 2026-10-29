@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Niche Perfumery Atlas</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap">
@@ -75,6 +76,19 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 .pop .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
 .pop .tag { background: #f1ebe1; border-radius: 4px; padding: 1px 6px; font-size: 11px; }
 .pop a { color: #8a6a3b; font-weight: 600; margin-right: 10px; }
+.pop .seg { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.pop .badge { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid currentColor; }
+.pop .cx { margin: 8px 0; border-top: 1px solid #e4ddd2; padding-top: 6px; }
+.pop .cx h4 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #6f665b; }
+.pop .cx dl { display: grid; grid-template-columns: 74px 1fr; gap: 3px 8px; margin: 0; font-size: 12px; }
+.pop .cx dt { color: #6f665b; }
+.pop .cx dd { margin: 0; }
+.pop .cx .warn { color: #a3402a; }
+.pop .pitch { background: #f6efe3; border-left: 3px solid #8a6a3b; padding: 5px 8px; font-size: 12px; margin: 6px 0; }
+.pop .basis { color: #8d8478; font-size: 11px; font-style: italic; }
+.seg-1 { color: #2e7d4f; } .seg-2 { color: #5e8a2e; } .seg-3 { color: #2f6f6a; } .seg-4 { color: #8a6a3b; } .seg-5 { color: #7b5c99; } .seg-6 { color: #8d8478; }
+.leaflet-control-layers { font-size: 12px; }
+@media (max-width: 700px) { .leaflet-popup-content { max-width: 78vw; } .pop .cx dl { grid-template-columns: 64px 1fr; } }
 /* Tabulator theme */
 .tabulator { background: var(--panel); border: 0; font-size: 13px; color: var(--ink); }
 .tabulator .tabulator-header { background: var(--panel); color: var(--muted); border-bottom: 1px solid var(--line); }
@@ -114,6 +128,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   <div class="f">Country<div class="chips" id="countries"></div></div>
   <label class="f">City<select id="city"><option value="">All</option></select></label>
   <label class="f">Type<select id="type"><option value="">All</option></select></label>
+  <div class="f" title="Market segment for a single-SKU indie launch">Market segment<div class="chips" id="segments"></div></div>
   <label class="f">Min tier <span id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
   <label class="f">Min alignment <span id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
   <div class="f">Single-SKU openness
@@ -131,7 +146,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   </div>
   <label class="f">Pipeline status<select id="status"><option value="">All</option></select></label>
   <label class="f">Launch priority<select id="priority"><option value="">All</option></select></label>
-  <div class="f">Focus<span class="chips"><label class="chip" title="Tier 1 indie niche, High single-SKU openness, fit ≥ 70, not yet won or declined"><input id="quick" type="checkbox">High-Priority Quick Wins</label></span></div>
+  <div class="f">Focus<span class="chips"><label class="chip" title="Verified true indie niche (High single-SKU openness), fit ≥ 70, not yet won or declined"><input id="quick" type="checkbox">High-Priority Quick Wins</label></span></div>
   <label class="f">Map sync<span class="chips"><label class="chip"><input id="inview" type="checkbox">Only in view</label></span></label>
   <div class="actions">
     <button class="primary" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
@@ -146,6 +161,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 </main>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 <script src="perfumeries.js"></script>
 <script>
@@ -161,14 +178,18 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
   const stars = v => v == null ? "–" : v.toFixed(1) + "★";
   // Lower-cased search haystack built once, so typing never re-joins 300+ records
-  data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase(); });
+  data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, r.segment, ...Object.values(r.cx_insights), ...r.cx_traits].join(" ").toLowerCase(); });
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // ---- CRM: pipeline edits live in this browser until exported to sources/crm.json
   const STATUSES = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"];
   const ACTIVE = new Set(["Sample Sent", "Meeting Booked", "Partner Active"]);
   const ROLES = ["Founder", "Store Manager", "Head Buyer"];
+  const BARRIERS = ["Low", "Med", "High", "Very High"];
   const CRM_FIELDS = ["pipeline_status", "decision_maker_role", "notes_prospections"];
+  const SEGMENTS = ["True Indie Niche Boutique", "Indie Niche (to verify)", "Specialist Niche House",
+    "Traditional Prestige Perfumery", "Selective Concept Store", "Department Store"];
+  const SEG_SHORT = ["True indie", "Indie (verify)", "Specialist", "Traditional", "Selective concept", "Department"];
   const STORE_KEY = "perfumery-crm-v1";
   const statusVar = { "Not Contacted": "--s-nc", "Sample Sent": "--s-sample", "Meeting Booked": "--s-meet", "Partner Active": "--s-partner", "Declined": "--s-declined" };
   const statusColor = s => css.getPropertyValue(statusVar[s] || "--s-nc").trim();
@@ -182,10 +203,26 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const byId = new Map(data.map(r => [r.id, r]));
 
   // ---- Map
-  const map = L.map("map", { zoomControl: true, preferCanvas: true }).setView([49.5, 5.5], 5);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+  const map = L.map("map", { zoomControl: true, preferCanvas: true, maxZoom: 20, zoomSnap: .5 }).setView([49.5, 5.5], 5);
+  // OpenFreeMap vector basemaps (no API key, no quota) drawn by MapLibre GL inside Leaflet:
+  // city, district and street labels are rendered as vector text, so they stay crisp and
+  // re-layout at every zoom on desktop and retina phones. Raster fallback without WebGL.
+  const ATTR = '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  const webgl = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch (e) { return false; } })();
+  const vector = style => L.maplibreGL({ style: `https://tiles.openfreemap.org/styles/${style}`, attribution: ATTR });
+  const BASEMAPS = webgl && L.maplibreGL ? {
+    "Streets": vector("liberty"),
+    "Positron": vector("positron"),
+    "Dark": vector("dark"),
+  } : {
+    "Streets": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+      maxZoom: 19, attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors" }),
+  };
+  const theme = document.documentElement.dataset.theme;
+  const dark = theme ? theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  (BASEMAPS[dark ? "Dark" : "Streets"] || BASEMAPS.Streets).addTo(map);
+  L.control.layers(BASEMAPS, null, { position: "topright" }).addTo(map);
+  L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
 
   const legend = L.control({ position: "bottomright" });
   legend.onAdd = () => {
@@ -197,6 +234,10 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   };
   legend.addTo(map);
 
+  const INSIGHT_ROWS = [["staff", "Staff"], ["footfall", "Footfall"], ["sampling", "Sampling"], ["atmosphere", "Atmosphere"], ["watch_out", "Watch out"]];
+  const insights = cx => `<div class="cx"><h4>Consumer insights</h4><dl>${INSIGHT_ROWS.map(([k, l]) =>
+      `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
+    <div class="pitch"><b>Pitch prep:</b> ${esc(cx.pitch)}</div><div class="basis">${esc(cx.basis)}</div></div>`;
   const popup = r => `<div class="pop">
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.type)} · ${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
@@ -205,8 +246,10 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     ${r.notes_prospections ? `<div class="meta">“${esc(r.notes_prospections)}”</div>` : ""}
     <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${stars(r.customer_experience_rating)}</b></span></div>
     ${r.network ? `<div class="meta">Network: ${esc(r.network)}</div>` : ""}
+    <div class="seg"><span class="badge seg-${SEGMENTS.indexOf(r.segment) + 1}">${esc(r.segment)}</span><span class="badge" title="Entry barrier for a single-SKU indie brand">Barrier ${esc(r.entry_barrier)}</span>${r.openness_verified ? `<span class="badge seg-1" title="Editorially verified as micro-brand friendly">✓ micro-brand friendly</span>` : ""}</div>
     <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
     <div style="margin:4px 0 8px">${esc(r.sentiment_summary)}</div>
+    ${insights(r.cx_insights)}
     <a href="${r.google_maps_url}" target="_blank" rel="noopener">Google Maps</a><a href="${r.instagram_search_url}" target="_blank" rel="noopener">Instagram</a>${
       r.source.startsWith("osm:") ? `<a href="https://www.openstreetmap.org/${r.source.slice(4)}" target="_blank" rel="noopener">OSM</a>` : ""}
   </div>`;
@@ -219,7 +262,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   [...data].sort((a, b) => b.tier_score - a.tier_score).forEach(r => {
     const m = L.circleMarker([r.lat, r.lng], {
       radius: radius(r.tier_score), ...ring(r), fillColor: color(r.type), fillOpacity: .85
-    }).bindPopup(() => popup(r), { maxWidth: 320 }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
+    }).bindPopup(() => popup(r), { maxWidth: 340, autoPanPadding: [20, 20] }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
     m.on("click", () => focusRow(r.id));
     markers.set(r.id, m);
   });
@@ -240,6 +283,9 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
       { title: "Prospection notes", field: "notes_prospections", minWidth: 200, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
         formatter: c => c.getValue() ? `<span title="${esc(c.getValue())}">${esc(c.getValue())}</span>` : `<span class="note">Add note…</span>` },
+      { title: "Segment", field: "segment", minWidth: 130, sorter: (a, b) => SEGMENTS.indexOf(a) - SEGMENTS.indexOf(b), formatter: c =>
+          `<span class="typ seg-${SEGMENTS.indexOf(c.getValue()) + 1}" title="${esc(c.getValue())}">${c.getRow().getData().openness_verified ? "✓ " : ""}${SEG_SHORT[SEGMENTS.indexOf(c.getValue())]}</span>` },
+      { title: "Barrier", field: "entry_barrier", width: 85, sorter: (a, b) => BARRIERS.indexOf(a) - BARRIERS.indexOf(b) },
       { title: "Type", field: "type", minWidth: 120, formatter: c =>
           `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
       { title: "City", field: "city", minWidth: 100, formatter: c => esc(c.getRow().getData().district || c.getValue()) },
@@ -299,6 +345,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span style="color:var(--muted)">${n}</span></label>`);
   });
   uniq("type").forEach(t => $("type").add(new Option(t, t)));
+  SEGMENTS.forEach((s, i) => $("segments").insertAdjacentHTML("beforeend",
+    `<label class="chip" title="${esc(s)}"><input type="checkbox" name="seg" value="${esc(s)}" checked><span class="seg-${i + 1}">●</span> ${SEG_SHORT[i]} <span style="color:var(--muted)">${data.filter(r => r.segment === s).length}</span></label>`));
   STATUSES.forEach(t => $("status").add(new Option(t, t)));
   uniq("launch_priority").forEach(t => $("priority").add(new Option(t, t)));
   // City list follows the selected countries; keeps the current pick when still available
@@ -319,13 +367,14 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const minT = +$("tier").value, minA = +$("align").value;
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
     const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
+    const segs = new Set([...document.querySelectorAll("input[name=seg]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
     const st = $("status").value, pri = $("priority").value, quick = $("quick").checked;
     $("tier-v").textContent = minT; $("align-v").textContent = minA;
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
     const base = data.filter(r =>
-      ccs.has(r.country) && (!ty || r.type === ty) && (!city || r.city === city) &&
+      ccs.has(r.country) && (!ty || r.type === ty) && segs.has(r.segment) && (!city || r.city === city) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
       srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
       (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
@@ -371,6 +420,10 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     ["Decision maker", "decision_maker_role"], ["Prospection notes", "notes_prospections"], ["Type", "type"],
     ["Network", "network"], ["City", "city"], ["District", "district"], ["Country", "country_name"], ["Address", "full_address"],
     ["Tier score", "tier_score"], ["Brand fit", "brand_alignment_score"], ["Single-SKU openness", "single_sku_openness"],
+    ["Segment", "segment"], ["Entry barrier", "entry_barrier"], ["Openness verified", "openness_verified"],
+    ["Staff", r => r.cx_insights.staff], ["Footfall", r => r.cx_insights.footfall], ["Sampling", r => r.cx_insights.sampling],
+    ["Atmosphere", r => r.cx_insights.atmosphere], ["Watch out", r => r.cx_insights.watch_out], ["Pitch prep", r => r.cx_insights.pitch],
+    ["Insight basis", r => r.cx_insights.basis],
     ["Address confidence %", "address_confidence_score"], ["Google Maps", "google_maps_url"], ["Instagram", "instagram_search_url"],
     ["CRM key", "crm_key"],
   ];
@@ -380,7 +433,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   };
   $("csv").addEventListener("click", () => {
     const rows = table.getData("active").map(r => byId.get(r.id));
-    const lines = [CSV_COLS.map(c => c[0]), ...rows.map(r => CSV_COLS.map(c => r[c[1]]))].map(l => l.map(csvCell).join(","));
+    const lines = [CSV_COLS.map(c => c[0]), ...rows.map(r => CSV_COLS.map(c => typeof c[1] === "function" ? c[1](r) : r[c[1]]))].map(l => l.map(csvCell).join(","));
     // BOM so Excel reads accents (Bongénie, Düsseldorf…) correctly
     download(`outreach-${new Date().toISOString().slice(0, 10)}.csv`, "\ufeff" + lines.join("\r\n"), "text/csv;charset=utf-8");
   });
@@ -412,7 +465,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
   ["tier", "align"].forEach(id => $(id).addEventListener("input", apply));
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
-  document.querySelectorAll("input[name=src]").forEach(i => i.addEventListener("change", applyAndFit));
+  document.querySelectorAll("input[name=src], input[name=seg]").forEach(i => i.addEventListener("change", applyAndFit));
   $("inview").addEventListener("change", apply);
   map.on("moveend", () => $("inview").checked && apply());
   $("reset").addEventListener("click", () => {
@@ -421,7 +474,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     fillCities(); $("city").value = "";
     $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
     $("status").value = ""; $("priority").value = ""; $("quick").checked = false;
-    document.querySelectorAll("input[name=open], input[name=src]").forEach(i => (i.checked = true));
+    document.querySelectorAll("input[name=open], input[name=src], input[name=seg]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);
     map.closePopup();
     applyAndFit();

@@ -13,7 +13,7 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 | `build_perfumeries.py` | Offline: curated rows + filtered OSM rows → validation → `perfumeries.json` / `.js` |
 | `perfumeries.json` | Canonical dataset |
 | `perfumeries.js` | Same data as `window.PERFUMERIES` (lets `index.html` open from `file://`) |
-| `index.html` | Leaflet (canvas renderer, OSM tiles) + Tabulator app |
+| `index.html` | Leaflet (canvas renderer) on OpenFreeMap vector basemaps (MapLibre GL) + Tabulator app |
 
 ## Usage
 ```bash
@@ -50,14 +50,15 @@ open index.html                # or: python3 -m http.server
 `id, name, type, country, country_name, city, district (Paris/Lyon/Marseille arrondissement or
 Brussels commune, else null), full_address, lat, lng, tier_score (1-100),
 brand_alignment_score (0-100), single_sku_openness (High/Med/Low),
-customer_experience_rating (1-5 or null), cx_traits[], sentiment_summary, network,
+openness_verified, segment, entry_barrier, customer_experience_rating (1-5 or null), cx_traits[],
+sentiment_summary, cx_insights{staff, footfall, sampling, atmosphere, watch_out, pitch, basis}, network,
 address_confidence, address_confidence_score, address_source, source, google_maps_url, instagram_search_url,
 crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospections`
 
 ### B2B sales fields (single-SKU launch)
 | Field | Values |
 |---|---|
-| `launch_priority` | `Tier 1 - Quick Win (Indie Niche)` (niche boutiques), `Tier 2 - Selective Concept Store`, `Tier 3 - Long-term Dept Store` |
+| `launch_priority` | `Tier 1 - Quick Win (Indie Niche)` (true indie + indie to verify), `Tier 2 - Selective (Specialist / Concept)`, `Tier 3 - Long-term Dept Store` |
 | `decision_maker_role` | `Founder` (independents), `Store Manager` (concept-store chains), `Head Buyer` (niche chains, department stores) |
 | `pipeline_status` | `Not Contacted`, `Sample Sent`, `Meeting Booked`, `Partner Active`, `Declined` |
 | `notes_prospections` | free text logged after each contact |
@@ -67,6 +68,30 @@ crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospectio
 Defaults are derived in `build_perfumeries.py`; `sources/crm.json` overrides them. The build
 fails on an unknown status or role and warns about entries that no longer match a store.
 
+### Single-SKU market fit (`calibrate`)
+Editorial openness says how niche-minded a store is, not how easily a one-reference indie
+brand gets listed. Every row is re-derived from a market segment:
+
+| Segment | Openness | Entry barrier | Fit cap | Rule |
+|---|---|---|---|---|
+| True Indie Niche Boutique | High | Low | – | owner-run, editorially verified as micro-brand friendly (`VERIFIED_MICRO`) |
+| Indie Niche (to verify) | Med | Med | 68 | independent with a niche identity, not yet checked |
+| Specialist Niche House | Med | High | 72 | large niche catalogue with a buyer (Jovoy, Senteurs d'Ailleurs, Paris 8…) |
+| Traditional Prestige Perfumery | Low | High | 45 | family perfumery / beauty institute, prestige brands first; default for unassessed OSM independents |
+| Selective Concept Store | Low (Med if `CONCEPT_OPEN`) | High | 55 (65) | central buying, exclusivity and breadth requirements |
+| Department Store | Low | Very High | 35 | corner fees, launch budgets, distribution minimums |
+
+Only *True Indie* rows are High openness, so the **High-Priority Quick Wins** filter only
+surfaces verified micro-brand-friendly shops. The map has a *Market segment* filter.
+
+### Consumer insights (`cx_insights`)
+Popups, search and the CSV carry staff, footfall, sampling policy, atmosphere, a
+**watch out** (expected friction) and a segment-specific **pitch prep**. `basis` says where
+they come from: *store-level synthesis of public reviews* (all 74 curated flagships,
+paraphrased recurring themes, no quotes), *network pattern* (harvested branches of known
+networks) or *derived from store profile & location — verify on visit* (OSM independents).
+The build fails if a curated store has no insight entry.
+
 ## Data caveats
 - `address_confidence` is always `confirmed`: every row has street, house number and
   postcode, and coordinates on the building. `address_source` says where it came from:
@@ -74,12 +99,15 @@ fails on an unknown status or role and warns about entries that no longer match 
   `osm_reverse` (shop had no address tags; number taken from the building it sits in).
 - `source` is `curated` or `osm:<type>/<id>`; the popup links to the OSM object.
 - Scores are **editorial estimates**. OSM rows inherit their network's profile;
-  independent perfumeries get a neutral default (tier 62, fit 72, High) and no CX rating
-  until reviewed. Their niche depth is not assessed — check before outreach.
+  independent perfumeries get a neutral default (tier 62) and no CX rating until reviewed;
+  `calibrate` then caps their fit and openness by segment. Their niche depth is not assessed — check before outreach.
 - OSM can lag behind closures. Known closures excluded: Jelmoli Zürich (2025),
   Galeries Lafayette Berlin (2024).
 
 ## Map
+- Basemap: OpenFreeMap vector tiles (no API key) rendered by MapLibre GL — city, district and
+  street labels are vector text that stays sharp and re-lays out at every zoom (Streets /
+  Positron / Dark switcher, dark by default in dark mode). Raster Esri streets without WebGL.
 - Marker colour = store type, radius = tier score; canvas renderer keeps 300+ markers smooth.
 - Filters: country toggles, city (follows selected countries), type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).

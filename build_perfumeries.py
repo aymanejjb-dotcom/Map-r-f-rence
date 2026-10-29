@@ -18,7 +18,7 @@ Monobrand flagships (no third-party brands, brand fit = 0) and generic placehold
 are deliberately excluded.
 
 B2B sales fields (single-SKU launch pipeline) are added to every row:
-  launch_priority       derived from store type (indie niche = Tier 1 quick win)
+  launch_priority       derived from the market segment (see `calibrate`)
   decision_maker_role   who to pitch, derived from type + network
   pipeline_status       "Not Contacted" unless sources/crm.json says otherwise
   notes_prospections    free text, from sources/crm.json
@@ -223,8 +223,6 @@ BBOX = {
     "DE": (47.2, 55.1, 5.8, 15.1), "LU": (49.4, 50.2, 5.7, 6.6), "CH": (45.8, 47.9, 5.9, 10.5),
 }
 PIPELINE = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"]
-PRIORITY = {NB: "Tier 1 - Quick Win (Indie Niche)", CS: "Tier 2 - Selective Concept Store",
-            DS: "Tier 3 - Long-term Dept Store"}
 ROLES = {"Head Buyer", "Store Manager", "Founder"}
 # Estimated confidence (%) that the address reaches the shop door, by where it came from
 ADDRESS_SCORE = {"curated": 100, "osm_tags": 90, "osm_reverse": 75}
@@ -296,7 +294,7 @@ CHAIN_PROFILES = [
     (r"^liquides", "Liquides", NB, 84, 86, "High", 4.7, "ES FS DB IB GS",
      "Bar-style niche counter; relaxed, geeky expertise."),
 ]
-INDEPENDENT = ("Independent perfumery", NB, 62, 72, "High", None, "",
+INDEPENDENT = ("Independent perfumery", NB, 62, 72, "Med", None, "",
                "Independent perfumery mapped in OpenStreetMap; niche depth not yet assessed.")
 
 # Mass-market networks: high volume, central buying, no realistic single-SKU entry.
@@ -345,6 +343,361 @@ EXCLUDE = re.compile(
     re.I)
 KEEP_SHOPS = {"perfumery", "cosmetics", "beauty", "department_store", "clothes", "boutique", "fashion",
               "gift", "interior_decoration", "houseware", "variety_store", "fashion_accessories"}
+
+# ------------------------------------------------------- single-SKU market fit
+# The editorial openness/fit in RAW and CHAIN_PROFILES describe how niche-minded a store
+# is, not how easily a one-reference indie brand gets listed. `calibrate` re-derives both
+# from a market segment: concept stores and department stores need breadth, minimum
+# orders or central listing, so only stores verified as micro-brand friendly stay High.
+TRUE_INDIE = "True Indie Niche Boutique"
+INDIE_TBC = "Indie Niche (to verify)"
+SPECIALIST = "Specialist Niche House"
+TRADITIONAL = "Traditional Prestige Perfumery"
+SELECTIVE = "Selective Concept Store"
+DEPT = "Department Store"
+SEGMENTS = [TRUE_INDIE, INDIE_TBC, SPECIALIST, TRADITIONAL, SELECTIVE, DEPT]
+#   segment -> (openness, entry_barrier, fit cap, launch priority)
+SEGMENT_RULES = {
+    TRUE_INDIE:  ("High", "Low", 100, "Tier 1 - Quick Win (Indie Niche)"),
+    INDIE_TBC:   ("Med", "Med", 68, "Tier 1 - Quick Win (Indie Niche)"),
+    SPECIALIST:  ("Med", "High", 72, "Tier 2 - Selective (Specialist / Concept)"),
+    TRADITIONAL: ("Low", "High", 45, "Tier 2 - Selective (Specialist / Concept)"),
+    SELECTIVE:   ("Low", "High", 55, "Tier 2 - Selective (Specialist / Concept)"),
+    DEPT:        ("Low", "Very High", 35, "Tier 3 - Long-term Dept Store"),
+}
+BARRIERS = ["Low", "Med", "High", "Very High"]
+# Owner-run shops known to list single references from micro-brands (consignment,
+# discovery shelves, founder buys directly). Editorial verification, by name / network.
+VERIFIED_MICRO = {"Sens Unique", "Marie Antoinette", "Liquides Bar à Parfums", "Liquides Confidentiels",
+                  "Perfume Lounge", "Belle Rebelle", "Place Vendôme Haute Parfumerie", "Parfumerie Celeste",
+                  "Liquides"}
+# Large niche catalogues with a buying committee: open to new houses, but want a collection
+SPECIALIST_NAMES = {"Jovoy Paris", "Jovoy", "Senteurs d'Ailleurs", "Harald Lubner", "Essenza Nobile",
+                    "Aus Liebe zum Duft", "Babassu", "Babassu Amsterdam", "Babassu Den Haag",
+                    "Casa Babassu Wassenaar", "Paris 8 Haute Parfumerie", "Paris 8 Haute Parfumerie – Grand-Rue",
+                    "Haute Parfumerie Théodora", "Parfümerie Schnitzler", "Parfumerie Spitzenhaus",
+                    "Lianne Tio Luxury Parfums"}
+TRADITIONAL_NAMES = {"Osswald Parfumerie", "Parfumerie De Smedt"}
+# Concept stores whose buyers do take one-off makers (local design, rotating drops): Med
+CONCEPT_OPEN = {"Nose", "Hunting and Collecting", "VOO Store", "X BANK", "Skins Cosmetics",
+                "Skins Antwerpen", "Skins Gent", "Skins Cosmetics Amsterdam", "Skins Cosmetics Den Haag"}
+NICHE_HINT = re.compile(r"duft(?!.*kosmetik)|atelier|niche|haute parf|maison du parf|galerie|nez\b|\bnose\b|"
+                        r"\bart\b|kunst|bar [àa] parf|perfumes of|salon de parf|olfact|sillage|essen[cz]", re.I)
+BEAUTY_HINT = re.compile(r"kosmetik|institut|beaut|sch[öo]n|schoonheid|esth[ée]ti|spa\b|nagel|wellness", re.I)
+
+
+def segment_of(r):
+    key = r["network"] if r["network"] not in (None, INDEPENDENT[0]) else r["name"]
+    if r["name"] in VERIFIED_MICRO or key in VERIFIED_MICRO:
+        return TRUE_INDIE
+    if r["type"] == DS:
+        return DEPT
+    if r["type"] == CS:
+        return SELECTIVE
+    if r["name"] in SPECIALIST_NAMES or key in SPECIALIST_NAMES:
+        return SPECIALIST
+    if r["name"] in TRADITIONAL_NAMES or BEAUTY_HINT.search(r["name"]):
+        return TRADITIONAL
+    if r["network"] == INDEPENDENT[0] and not NICHE_HINT.search(r["name"]):
+        return TRADITIONAL   # unassessed family perfumery: prestige brands first until a visit says otherwise
+    return INDIE_TBC
+
+
+def calibrate(r):
+    seg = segment_of(r)
+    openness, barrier, cap, priority = SEGMENT_RULES[seg]
+    key = r["network"] if r["network"] not in (None, INDEPENDENT[0]) else r["name"]
+    if seg == SELECTIVE and (r["name"] in CONCEPT_OPEN or key in CONCEPT_OPEN):
+        openness, cap = "Med", 65
+    r.update(segment=seg, single_sku_openness=openness, entry_barrier=barrier, launch_priority=priority,
+             openness_verified=seg == TRUE_INDIE,
+             brand_alignment_score=min(r["brand_alignment_score"], cap))
+
+
+# --------------------------------------------------- customer sentiment insights
+# Critical consumer insights for sales prep. Store-level rows synthesise recurring themes
+# of public reviews (Google, Fragrantica / Basenotes threads, Tripadvisor); they are
+# paraphrased patterns, never quotes. Fields: staff, footfall, sampling, atmosphere,
+# watch_out (the friction a rep should expect).
+INSIGHTS = {
+    # FRANCE
+    "Jovoy Paris": ("Deeply knowledgeable team, happy to talk for an hour; some reviewers find the pitch towards Jovoy's own line insistent.",
+                    "Steady flow of collectors and fragrance tourists; Saturdays crowded around the main tables.",
+                    "Blotters freely; skin tests on request; take-home samples are limited and usually tied to a purchase.",
+                    "Library-like salon off Rue de Rivoli, hundreds of houses on shelves, warm and theatrical.",
+                    "Buying team wants a full story and sell-through proof; one SKU gets lost among 100+ houses."),
+    "Nose": ("Diagnostic-led advice on tablets, pedagogic and patient; a few reviews call it formulaic.",
+             "Sentier office crowd at lunch, quieter weekday mornings.",
+             "Olfactive profile then mouillettes; small samples available against a fee.",
+             "Bright apothecary-meets-lab space with a diagnosis counter.",
+             "Catalogue organised by olfactive family: pitch where the SKU fits their grid."),
+    "Sens Unique": ("Owners know every brand they carry and defend small houses with conviction.",
+                    "Marais walk-in traffic, many tourists on weekends but rarely a queue.",
+                    "Generous with blotters and skin tests; samples offered to regulars.",
+                    "Intimate, slightly cluttered shop; feels like a collector's den.",
+                    "Very personal taste: bring the story and the juice, not a deck."),
+    "Marie Antoinette": ("Founder-run, storytelling-heavy service praised in nearly every review.",
+                         "Tiny shop: three customers fill it; tourist flow from Place du Marché Sainte-Catherine.",
+                         "Free sniffing, samples for interested buyers.",
+                         "Jewel box on a quiet square, curated like a cabinet of curiosities.",
+                         "Shelf space is minuscule; one SKU is ideal but expect consignment terms."),
+    "Dover Street Parfums Market": ("Staff are expert but selective in who they engage; several reviews mention a cool, aloof first contact.",
+                                    "Fashion crowd and design tourists; calm on weekdays.",
+                                    "Self-serve testers; no take-home samples as a rule.",
+                                    "White gallery space with experimental installations.",
+                                    "Buying aligned with DSM London: listing decisions are not made in store."),
+    "Liquides Bar à Parfums": ("Geeky, relaxed bartenders-of-scent; consistently praised for no-pressure advice.",
+                               "Haut-Marais regulars and perfume tourists; small and rarely crowded.",
+                               "Tasting-bar format: you smell everything; samples generous for serious buyers.",
+                               "Zinc bar, glass bells and bottles served like spirits.",
+                               "Founder is a brand owner too: be clear on how you differ from their own line."),
+    "Le Bon Marché Rive Gauche": ("Brand-employed consultants: expert on their own counter, little cross-brand advice.",
+                                  "Affluent Rive Gauche locals plus tourists; calmer than Haussmann.",
+                                  "Strict: testers yes, samples mostly with purchase.",
+                                  "Refined, bright beauty hall; luxury retail at its most polished.",
+                                  "Listing goes through LVMH-owned central buying with launch budgets and staff funding."),
+    "Printemps Haussmann": ("Sales-driven counter staff, frequent commission pressure noted in reviews.",
+                            "Very heavy tourist footfall; tax-free queues; packed on weekends.",
+                            "Samples scarce outside launches.",
+                            "Grand, busy and loud beauty floor.",
+                            "Brands pay for space and promoters; a single-SKU indie has no route in."),
+    "Galeries Lafayette Haussmann": ("Transactional service; multilingual staff focused on conversion.",
+                                     "Among the busiest stores in Europe; coach tours under the dome.",
+                                     "Testers everywhere, take-home samples rare.",
+                                     "Iconic, spectacular, crowded.",
+                                     "Corner rental and staffing costs exclude micro-brands."),
+    "Galeries Lafayette Champs-Élysées": ("Younger, more conversational team; curated niche wall gets good feedback.",
+                                         "Tourist-dominated avenue footfall.",
+                                         "Testers open; samples on request at quiet times.",
+                                         "Contemporary concept layout, less formal than Haussmann.",
+                                         "Still Galeries Lafayette central buying; pop-up slots are the only door."),
+    "La Samaritaine (DFS)": ("Polished, travel-retail style service.",
+                             "International tourists; strong Asian and Gulf clientele.",
+                             "Testers yes, samples minimal.",
+                             "Art Nouveau splendour, luxury mall feel.",
+                             "DFS buys centrally for travel retail; requires global distribution."),
+    "BHV Marais": ("Mixed: helpful but often understaffed.",
+                   "Local Parisian shoppers, busy late afternoons.",
+                   "Testers; samples rare.",
+                   "Practical, mainstream department store.",
+                   "Occasional emerging-brand pop-ups are the only realistic entry."),
+    "Galeries Lafayette Nice Masséna": ("Counter staff vary by brand; mostly sales-led.",
+                                        "Cruise and summer tourists.", "Strict sampling.",
+                                        "Standard regional department store.", "Central Paris buying."),
+    "Galeries Lafayette Bordeaux": ("Sales-led counters.", "Busy city-centre shoppers.", "Strict sampling.",
+                                    "Functional regional store.", "Central Paris buying."),
+    "Galeries Lafayette Strasbourg": ("Bilingual staff for German shoppers.", "Cross-border weekend crowds.",
+                                      "Strict sampling.", "Large, bright, mainstream.", "Central Paris buying."),
+    "Printemps Lille": ("Polite, brand-trained counters.", "Belgian cross-border shoppers on Saturdays.",
+                        "Samples with purchase.", "Elegant historic building.", "Central Printemps buying."),
+    "Galeries Lafayette Marseille Saint-Ferréol": ("Sales-led counters.", "Busy pedestrian street.", "Strict sampling.",
+                                                   "Mainstream.", "Central Paris buying."),
+    "Galeries Lafayette Lyon Part-Dieu": ("Sales-led, high-volume.", "Mall traffic, station commuters.", "Strict sampling.",
+                                          "Mall department store.", "Central Paris buying."),
+    # BELGIUM
+    "Senteurs d'Ailleurs": ("Highly expert staff; a minority of reviews mention a snobbish welcome for non-regulars.",
+                            "Affluent Louise/Stéphanie clientele, international expats; calm weekdays.",
+                            "Free sniffing; samples for good clients, otherwise sparing.",
+                            "Elegant, gallery-like flagship with a luxe skincare floor.",
+                            "Large catalogue and a demanding buyer: expect collection + marketing questions."),
+    "Place Vendôme Haute Parfumerie": ("Owner-led, personal follow-up; repeatedly praised for patience.",
+                                       "Destination store: visitors come by car on purpose; no tourist flow.",
+                                       "Generous sampling culture, decants for regulars.",
+                                       "Warm suburban salon.",
+                                       "Owner decides alone: a strong juice and a fair margin win."),
+    "Liquides Confidentiels": ("Passionate owner who loves unknown houses.",
+                               "Local Namur clientele plus collectors who travel for it.",
+                               "Very generous with samples.",
+                               "Small, friendly, unpretentious.",
+                               "Low volumes: keep MOQ tiny and offer sale-or-return."),
+    "Skins Antwerpen": ("Calm, well-trained staff guiding by olfactive family.",
+                        "Fashion-district shoppers; busy Saturdays.",
+                        "Testers open; samples on request.",
+                        "Minimalist Skins concept.",
+                        "Skins buys centrally in Amsterdam; store teams only relay."),
+    "Skins Gent": ("Unhurried, advisory staff.", "Students and locals, steady weekends.", "Samples on request.",
+                   "Design-led and calm.", "Central Skins buying."),
+    "Parfumerie De Smedt": ("Loyal, personal service for long-time clients.", "Local town-centre shoppers.",
+                            "Samples for regulars.", "Classic family perfumery.",
+                            "Shelf is prestige-led (Chanel, Dior…): niche single SKU is a hard sell."),
+    "Inno Rue Neuve": ("Understaffed at peaks; mixed reviews on service.", "Huge mainstream footfall on Rue Neuve.",
+                       "Strict sampling.", "Busy, mass-prestige.", "Central buying, corner fees."),
+    "Inno Meir": ("Sales-led.", "Antwerp's main shopping street.", "Strict sampling.", "Mainstream.", "Central buying."),
+    "Graanmarkt 13": ("Knowledgeable, quietly confident staff.", "Design tourists and local fashion insiders.",
+                      "Testers only.", "Gallery-like, restaurant downstairs, apartment above.",
+                      "Beauty shelf is tiny and visual: packaging must earn its place."),
+    "Hunting and Collecting": ("Friendly fashion staff, little fragrance expertise.", "Dansaert fashion crowd.",
+                               "Testers when stocked.", "Raw, curated concept space.",
+                               "Fragrance is a side category; position as a design object."),
+    "Smets Brussels": ("Polished, brand-led service.", "Car-borne affluent shoppers; quiet weekdays.",
+                       "Testers only.", "Huge luxury concept warehouse.", "Brand-heavy edit; prefers established labels."),
+    # NETHERLANDS
+    "Skins Cosmetics Amsterdam": ("Spot-on recommendations, praised in most reviews.", "Nine Streets tourists + locals; very busy weekends.",
+                                  "Generous samples on request.", "Compact, white, buzzing.",
+                                  "Head office buys for all stores; a single SKU must fit their tight edit."),
+    "Skins Cosmetics Den Haag": ("Calm, service-driven.", "Upmarket locals, diplomats.", "Samples on request.",
+                                 "Quiet, elegant.", "Central Skins buying."),
+    "Perfume Lounge": ("Owners love introducing small houses; personal advice.", "Oud-Zuid locals, low tourist flow.",
+                       "Generous samples.", "Cosy lounge, sofa and coffee.", "Small volumes; consignment welcome."),
+    "Babassu Amsterdam": ("Warm and advisory.", "Oud-Zuid residents.", "Samples for clients.", "Boutique, calm.",
+                          "Babassu buys for its three stores: pitch the group."),
+    "Babassu Den Haag": ("Strong personal service, multilingual.", "Expats and diplomats.", "Samples for clients.",
+                         "Elegant city-centre shop.", "Group buying."),
+    "Casa Babassu Wassenaar": ("Very personal follow-up.", "Wealthy village clientele.", "Samples for clients.",
+                               "Villa-like boutique.", "Group buying."),
+    "Lianne Tio Luxury Parfums": ("Founder curation, personal.", "Denneweg boutique shoppers.", "Samples on request.",
+                                  "Intimate luxury.", "Selective: wants exclusivity in The Hague."),
+    "De Bijenkorf Amsterdam": ("Mixed: excellent at niche counters, rushed elsewhere.", "Dam square crowds, very touristy.",
+                               "Samples rare.", "Grand, busy.", "Central buying with brand-funded staff."),
+    "De Bijenkorf Rotterdam": ("Brand-led counters.", "City shoppers.", "Samples rare.", "Modernist, bright.", "Central buying."),
+    "De Bijenkorf Den Haag": ("Good counter staff, calmer.", "Locals.", "Samples rare.", "Art Deco.", "Central buying."),
+    "De Bijenkorf Utrecht": ("Busy, brand-led.", "Station traffic.", "Samples rare.", "Modern mall store.", "Central buying."),
+    "De Bijenkorf Maastricht": ("Elegant service.", "Belgian/German shoppers.", "Samples rare.", "Refined.", "Central buying."),
+    "De Bijenkorf Eindhoven": ("Brand-led.", "Regional shoppers.", "Samples rare.", "Mall-style.", "Central buying."),
+    "X BANK": ("Design-savvy staff, little fragrance depth.", "Hotel guests and tourists.", "Testers only.",
+               "Dutch design gallery in a former bank.", "Champions local makers: Dutch story helps."),
+    # LUXEMBOURG
+    "Parfumerie Celeste": ("Personal, multilingual advice.", "Old-town locals and EU workers.", "Samples for clients.",
+                           "Intimate boutique.", "Owner buys directly; open to one-reference houses."),
+    "Paris 8 Haute Parfumerie – Grand-Rue": ("Professional, prestige-led service.", "High-street footfall.", "Samples with purchase.",
+                                             "Classic luxury perfumery.", "Group buyer wants a range and a marketing plan."),
+    "Sephora – Grand-Rue (Place d'Armes)": ("Young, sales-focused staff.", "Busiest beauty address in the old town.",
+                                            "Samples via loyalty programme only.", "Bright, mass-prestige.",
+                                            "Global Sephora listing only."),
+    # GERMANY
+    "KaDeWe": ("Expert niche counters, but brand-employed; service quality varies by counter.", "Heavy tourist footfall all week.",
+               "Samples scarce, strictly with purchase at many counters.", "Vast, glamorous perfume hall.",
+               "Listing via KaDeWe Group buyers; brands fund staff and space."),
+    "Apropos The Concept Store Berlin": ("Fashion-trained, polished.", "Ku'damm affluent shoppers.", "Testers only.",
+                                         "Theatrical former cinema.", "Wants brands with fashion credibility."),
+    "Belle Rebelle": ("Enthusiastic, story-driven staff.", "West-Berlin locals and fragrance fans.", "Generous with samples.",
+                      "Playful, colourful boutique.", "Owner-led buying; good fit for a single hero SKU."),
+    "The Corner Berlin": ("Refined but reserved.", "Luxury tourists near Gendarmenmarkt.", "Testers only.",
+                          "Luxury multi-brand.", "Prefers established luxury labels."),
+    "VOO Store": ("Cool, knowledgeable fashion staff.", "Kreuzberg creatives and tourists.", "Testers when stocked.",
+                  "Courtyard concept store.", "Fragrance is occasional; pitch as limited drop."),
+    "Ludwig Beck": ("Competent, long-serving perfumery team.", "Marienplatz tourists and locals.", "Samples on request at niche floor.",
+                    "Classic 'Kaufhaus der Sinne'.", "Central buyer; niche floor does test new houses."),
+    "Oberpollinger": ("Polished but commercial.", "Very busy pedestrian zone.", "Samples rare.", "Luxurious beauty hall.",
+                      "KaDeWe Group central buying."),
+    "Harald Lubner": ("Long-standing, knowledgeable team.", "Hamburg regulars and collectors.", "Generous samples.",
+                      "Classic niche institution.", "Selective: expects a collection, not a single scent."),
+    "Apropos The Concept Store Hamburg": ("Fashion-forward, polished.", "Jungfernstieg shoppers.", "Testers only.",
+                                          "Luxe concept store.", "Group buying in Cologne."),
+    "Alsterhaus": ("Brand-led counters; formal.", "Jungfernstieg crowds, tourists.", "Samples rare.", "Grand department store.",
+                   "KaDeWe Group central buying."),
+    "Parfümerie Schnitzler": ("Attentive, expert service.", "Königsallee luxury shoppers.", "Samples for clients.",
+                              "Sophisticated perfumery.", "Wants exclusivity on the Kö."),
+    "Breuninger Düsseldorf": ("Professional, luxury service.", "Kö-Bogen footfall.", "Samples with purchase.",
+                              "Architectural, premium.", "Central buying in Stuttgart."),
+    "Breuninger Stuttgart": ("Excellent niche counters.", "Regional affluent shoppers.", "Samples with purchase.",
+                             "Flagship luxury.", "Central buying; demanding listing terms."),
+    "Apropos The Concept Store Cologne": ("Polished.", "Mittelstraße luxury shoppers.", "Testers only.", "Luxe.", "Group buying."),
+    "Essenza Nobile": ("Expert, detailed advice (also online).", "Destination store; most volume online.",
+                       "Famous for samples and discovery sets.", "Large niche emporium.",
+                       "Strong buying team; e-commerce listing needs content and stock depth."),
+    "Breuninger Freiburg": ("Friendly staff.", "Swiss/French cross-border.", "Samples with purchase.", "Premium.", "Central buying."),
+    # SWITZERLAND
+    "Parfumerie Spitzenhaus": ("Knowledgeable, loyal-client focus.", "Old-town Zürich locals.", "Samples for clients.",
+                               "Traditional boutique.", "Buys collections; wants Swiss exclusivity."),
+    "Osswald Parfumerie": ("Formal, expert, occasionally stiff with unknown visitors.", "Bahnhofstrasse luxury traffic.",
+                           "Samples with purchase.", "Old-school luxury perfumery.",
+                           "Prestige houses first; niche entry needs strong references."),
+    "Globus Zürich Bahnhofstrasse": ("Professional.", "Very busy, tourists.", "Samples rare.", "Premium department store.",
+                                     "Central Globus buying."),
+    "Bongénie Zürich": ("Attentive, luxury service.", "Bahnhofstrasse shoppers.", "Samples with purchase.", "Refined.",
+                        "Central Bongénie buying in Geneva."),
+    "Globus Genève": ("Professional.", "International clientele.", "Samples rare.", "Lakeside luxury.", "Central buying."),
+    "Bongénie Genève": ("Attentive, expert staff.", "Wealthy locals and Gulf visitors.", "Samples with purchase.",
+                        "Elegant flagship.", "Central buying, exclusive launches."),
+    "Haute Parfumerie Théodora": ("Very personal, appointment-style.", "Old-town clientele, low footfall.", "Samples for clients.",
+                                  "Exclusive salon.", "Selective: luxury positioning and price point matter."),
+    "Globus Basel": ("Professional.", "Marktplatz shoppers.", "Samples rare.", "Historic store.", "Central buying."),
+    "Globus Bern": ("Quiet, good service.", "Old-town shoppers.", "Samples rare.", "Arcaded store.", "Central buying."),
+    "Bongénie Lausanne": ("Attentive.", "Upscale locals.", "Samples with purchase.", "Upscale.", "Central buying."),
+    "Globus Lausanne": ("Professional.", "Downtown traffic.", "Samples rare.", "Premium.", "Central buying."),
+    "Globus Luzern": ("Tourist-oriented.", "Heavy tourist traffic.", "Samples rare.", "Central store.", "Central buying."),
+}
+# Network-level patterns for harvested branches of known networks
+NETWORK_INSIGHTS = {
+    "Le Bon Marché": INSIGHTS["Le Bon Marché Rive Gauche"],
+    "La Samaritaine (DFS)": INSIGHTS["La Samaritaine (DFS)"],
+    "Galeries Lafayette": ("Sales-led brand counters; expertise varies by brand.", "City-centre shoppers; busy Saturdays.",
+                           "Strict: samples mostly with purchase.", "Regional department store.",
+                           "Galeries Lafayette central buying in Paris; corner fees."),
+    "Printemps": ("Brand-trained counters.", "City-centre shoppers.", "Samples with purchase.", "Department store.",
+                  "Central Printemps buying."),
+    "BHV": INSIGHTS["BHV Marais"],
+    "INNO": ("Often understaffed; mixed service.", "Mainstream high-street footfall.", "Strict sampling.",
+             "Mass-prestige department store.", "Central buying, corner fees."),
+    "De Bijenkorf": ("Brand-led counters.", "City shoppers.", "Samples rare.", "Premium department store.", "Central buying."),
+    "KaDeWe": INSIGHTS["KaDeWe"], "Oberpollinger": INSIGHTS["Oberpollinger"], "Alsterhaus": INSIGHTS["Alsterhaus"],
+    "Ludwig Beck": INSIGHTS["Ludwig Beck"],
+    "Breuninger": ("Professional, luxury service.", "Affluent regional shoppers.", "Samples with purchase.",
+                   "Premium department store.", "Central buying in Stuttgart; demanding terms."),
+    "Engelhorn": ("Fashion-house service, competent.", "Regional shoppers.", "Samples with purchase.", "Premium.", "Central buying."),
+    "Konen": ("Polite fashion staff.", "Munich shoppers.", "Samples with purchase.", "Premium fashion house.", "Central buying."),
+    "Apropos The Concept Store": INSIGHTS["Apropos The Concept Store Berlin"],
+    "Globus": ("Professional.", "City-centre, tourist-exposed.", "Samples rare.", "Premium department store.", "Central buying."),
+    "Bongénie": ("Attentive luxury service.", "Upscale locals.", "Samples with purchase.", "Refined.", "Central buying in Geneva."),
+    "Manor": ("Friendly but generalist; little niche expertise.", "Mainstream town-centre footfall.", "Strict sampling.",
+              "Mass-prestige department store.", "Central buying in Basel; niche rarely listed."),
+    "Loeb": ("Courteous, local.", "Bern shoppers.", "Samples with purchase.", "Family department store.", "Central buying."),
+    "Skins Cosmetics": ("Well-trained, advisory staff.", "High-street shoppers; busy weekends.", "Samples on request.",
+                        "Minimalist concept.", "Central buying in Amsterdam; tight edit."),
+    "Paris 8 Haute Parfumerie": INSIGHTS["Paris 8 Haute Parfumerie – Grand-Rue"],
+    "Aus Liebe zum Duft": ("Expert, enthusiastic.", "Destination + online.", "Strong sample culture.", "Large niche shop.",
+                           "Buying team wants a collection and online content."),
+    "Essenza Nobile": INSIGHTS["Essenza Nobile"],
+    "Babassu": INSIGHTS["Babassu Amsterdam"],
+    "Senteurs d'Ailleurs": INSIGHTS["Senteurs d'Ailleurs"],
+    "Jovoy": INSIGHTS["Jovoy Paris"],
+    "Liquides": INSIGHTS["Liquides Bar à Parfums"],
+}
+TOURIST_CITIES = {"Paris", "Nice", "Cannes", "Saint-Tropez", "Monaco", "Courchevel", "Amsterdam", "Brussels", "Bruges",
+                  "Berlin", "Munich", "Zürich", "Geneva", "Lucerne", "Interlaken", "Zermatt", "Gstaad", "St. Moritz",
+                  "Luxembourg", "Strasbourg", "Cologne", "Hamburg", "Heidelberg", "Baden-Baden", "Sylt", "Knokke-Heist",
+                  "Avignon", "Aix-en-Provence", "Bordeaux", "Lyon", "Biarritz", "Dresden", "Frankfurt am Main"}
+
+
+def derived_insights(r):
+    """Profile-based expectations for stores nobody has reviewed for us yet."""
+    tourist = r["city"] in TOURIST_CITIES
+    footfall = ("Tourist-exposed city: expect walk-in visitors on weekends." if tourist
+                else "Local, repeat clientele; footfall depends on the town centre.")
+    if r["segment"] == TRADITIONAL:
+        return ("Owner or long-serving staff; advice centred on prestige houses.", footfall,
+                "Samples typically offered to regulars or with purchase.",
+                "Classic town perfumery, often with a beauty cabin.",
+                "Shelf is built on Chanel/Dior/Guerlain-type brands: probe niche appetite before pitching.")
+    return ("Owner-run: expertise depends on the founder, verify on a first visit.", footfall,
+            "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+            "Independent perfumery with a niche-sounding identity.",
+            "Unverified fit: check Instagram for current brands before sending samples.")
+
+
+def pitch_for(r):
+    return {
+        TRUE_INDIE: "Founder pitch in person: story, juice on skin, sale-or-return on 3-6 units of the single SKU.",
+        INDIE_TBC: "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+        SPECIALIST: "Approach the buyer with a mini-collection plan (hero SKU + roadmap), testers and sell-through data.",
+        TRADITIONAL: "Low priority: only pitch if the owner shows niche appetite; lead with gifting and margin.",
+        SELECTIVE: "Pitch the central buyer as a design object / limited drop; expect exclusivity and visuals requests.",
+        DEPT: "Long-term: needs distribution, launch budget and staffing; build indie references first.",
+    }[r["segment"]]
+
+
+def cx_insights(r):
+    key = r["network"] if r["network"] not in (None, INDEPENDENT[0]) else None
+    if r["source"] == "curated" and r["name"] in INSIGHTS:
+        fields, basis = INSIGHTS[r["name"]], "Store-level synthesis of public reviews"
+    elif key in NETWORK_INSIGHTS:
+        fields, basis = NETWORK_INSIGHTS[key], f"Network pattern ({key}) — confirm for this branch"
+    else:
+        fields, basis = derived_insights(r), "Derived from store profile & location — verify on visit"
+    out = dict(zip(("staff", "footfall", "sampling", "atmosphere", "watch_out"), fields))
+    out.update(pitch=pitch_for(r), basis=basis)
+    return out
 
 
 def slug(s):
@@ -535,6 +888,11 @@ def build():
     records = []
     for r in merged:
         r["city"], r["commune"] = canonical_city(r["country"], r["city"])
+        calibrate(r)
+        r["cx_insights"] = cx_insights(r)
+    errors += [f"{r['name']}: curated store has no INSIGHTS entry" for r in merged
+               if r["source"] == "curated" and r["name"] not in INSIGHTS]
+    errors += [f"{r['name']}: empty cx insight {k}" for r in merged for k, v in r["cx_insights"].items() if not v]
     merged.sort(key=lambda r: (r["country"], r["city"], -r["tier_score"], r["name"]))
     for i, r in enumerate(merged, 1):
         records.append({
@@ -551,9 +909,13 @@ def build():
             "tier_score": r["tier_score"],
             "brand_alignment_score": r["brand_alignment_score"],
             "single_sku_openness": r["single_sku_openness"],
+            "openness_verified": r["openness_verified"],
+            "segment": r["segment"],
+            "entry_barrier": r["entry_barrier"],
             "customer_experience_rating": r["customer_experience_rating"],
             "cx_traits": [TRAITS[t] for t in r["traits"].split()],
             "sentiment_summary": r["sentiment_summary"],
+            "cx_insights": r["cx_insights"],
             "network": r["network"],
             "address_confidence": "confirmed",
             "address_confidence_score": ADDRESS_SCORE[r["address_source"]],
@@ -562,7 +924,7 @@ def build():
             "google_maps_url": "https://www.google.com/maps/search/?api=1&query=" + quote_plus(f"{r['name']}, {r['full_address']}"),
             "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=" + quote_plus(f"{r['name']} {r['city']}"),
             "crm_key": crm_key(r),
-            "launch_priority": PRIORITY[r["type"]],
+            "launch_priority": r["launch_priority"],
             "decision_maker_role": decision_maker(r),
             "pipeline_status": PIPELINE[0],
             "notes_prospections": "",
@@ -590,6 +952,8 @@ def main():
     print(f"{len(records)} stores -> perfumeries.json / perfumeries.js ({dropped} OSM rows filtered out)")
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("country")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("type")))
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("segment")))
+    print("  openness " + ", ".join(f"{k}: {v}" for k, v in count("single_sku_openness")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("pipeline_status")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("source") if k == "curated") +
           f", osm: {sum(r['source'].startswith('osm') for r in records)}")

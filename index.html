@@ -83,8 +83,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   <div class="kpis"><span><b id="k-n">0</b> shown</span><span>avg tier <b id="k-t">–</b></span><span>avg fit <b id="k-a">–</b></span><span><b id="k-h">0</b> open to single-SKU</span></div>
 </header>
 <section class="filters">
-  <label class="f search">Search<input id="q" type="search" placeholder="Name, city, trait…"></label>
-  <label class="f">Country<select id="country"><option value="">All</option></select></label>
+  <label class="f search">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
+  <div class="f">Country<div class="chips" id="countries"></div></div>
   <label class="f">Type<select id="type"><option value="">All</option></select></label>
   <label class="f">Min tier <span id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
   <label class="f">Min alignment <span id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
@@ -117,10 +117,13 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const color = t => css.getPropertyValue(
     t === "Niche Boutique" ? "--niche" : t === "Independent Concept Store" ? "--concept" : "--dept").trim();
   const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
+  const stars = v => v == null ? "–" : v.toFixed(1) + "★";
+  // Lower-cased search haystack built once, so typing never re-joins 300+ records
+  data.forEach(r => { r._q = [r.name, r.city, r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase(); });
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // ---- Map
-  const map = L.map("map", { zoomControl: true }).setView([49.5, 5.5], 5);
+  const map = L.map("map", { zoomControl: true, preferCanvas: true }).setView([49.5, 5.5], 5);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
@@ -138,11 +141,13 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const popup = r => `<div class="pop">
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.type)} · ${esc(r.city)}, ${esc(r.country_name)}</div>
-    <div>${esc(r.address)}</div>
-    <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${r.customer_experience_rating.toFixed(1)}★</b></span></div>
+    <div>${esc(r.full_address)}</div>
+    <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${stars(r.customer_experience_rating)}</b></span></div>
+    ${r.network ? `<div class="meta">Network: ${esc(r.network)}</div>` : ""}
     <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
     <div style="margin:4px 0 8px">${esc(r.sentiment_summary)}</div>
-    <a href="${r.google_maps_url}" target="_blank" rel="noopener">Google Maps</a><a href="${r.instagram_search_url}" target="_blank" rel="noopener">Instagram</a>
+    <a href="${r.google_maps_url}" target="_blank" rel="noopener">Google Maps</a><a href="${r.instagram_search_url}" target="_blank" rel="noopener">Instagram</a>${
+      r.source.startsWith("osm:") ? `<a href="https://www.openstreetmap.org/${r.source.slice(4)}" target="_blank" rel="noopener">OSM</a>` : ""}
   </div>`;
 
   const markers = new Map();
@@ -166,12 +171,13 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       { title: "Type", field: "type", minWidth: 120, formatter: c =>
           `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
       { title: "City", field: "city", minWidth: 100 },
+      { title: "Address", field: "full_address", minWidth: 200, widthGrow: 2, formatter: c => esc(c.getValue()) },
       { title: "CC", field: "country", width: 60 },
       { title: "Tier", field: "tier_score", width: 70, hozAlign: "right", sorter: "number" },
       { title: "Fit", field: "brand_alignment_score", width: 110, sorter: "number", formatter: c =>
           `<div style="display:flex;gap:6px;align-items:center"><span style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c)}</div></div>` },
       { title: "SKU", field: "single_sku_openness", width: 70, sorter: (a, b) => ({ High: 3, Med: 2, Low: 1 }[a] - { High: 3, Med: 2, Low: 1 }[b]) },
-      { title: "CX", field: "customer_experience_rating", width: 70, hozAlign: "right", formatter: c => c.getValue().toFixed(1) + "★" },
+      { title: "CX", field: "customer_experience_rating", width: 70, hozAlign: "right", sorter: "number", formatter: c => stars(c.getValue()) },
       { title: "Traits", field: "cx_traits", minWidth: 180, widthGrow: 2, headerSort: false, formatter: c => esc(c.getValue().join(" · ")) },
       { title: "Links", field: "google_maps_url", width: 110, headerSort: false, formatter: c => {
           const r = c.getRow().getData();
@@ -205,12 +211,16 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   // ---- Filters
   const $ = id => document.getElementById(id);
   const uniq = k => [...new Set(data.map(r => r[k]))].sort();
-  uniq("country").forEach(c => $("country").add(new Option(`${data.find(r => r.country === c).country_name} (${c})`, c)));
+  uniq("country").forEach(c => {
+    const n = data.filter(r => r.country === c).length;
+    $("countries").insertAdjacentHTML("beforeend",
+      `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span style="color:var(--muted)">${n}</span></label>`);
+  });
   uniq("type").forEach(t => $("type").add(new Option(t, t)));
 
   function apply() {
     const q = $("q").value.trim().toLowerCase();
-    const cc = $("country").value, ty = $("type").value;
+    const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value;
     const minT = +$("tier").value, minA = +$("align").value;
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
@@ -218,9 +228,9 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
     const base = data.filter(r =>
-      (!cc || r.country === cc) && (!ty || r.type === ty) &&
+      ccs.has(r.country) && (!ty || r.type === ty) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
-      (!q || [r.name, r.city, r.country_name, r.address, r.type, r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase().includes(q)));
+      (!q || r._q.includes(q)));
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
     table.setFilter(r => ids.has(r.id));
@@ -243,13 +253,17 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     firstFit = false;
   }
 
-  ["country", "type"].forEach(id => $(id).addEventListener("change", applyAndFit));
-  ["tier", "align", "q"].forEach(id => $(id).addEventListener("input", apply));
+  $("type").addEventListener("change", applyAndFit);
+  document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", applyAndFit));
+  let qTimer;
+  $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
+  ["tier", "align"].forEach(id => $(id).addEventListener("input", apply));
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
   $("inview").addEventListener("change", apply);
   map.on("moveend", () => $("inview").checked && apply());
   $("reset").addEventListener("click", () => {
-    $("q").value = ""; $("country").value = ""; $("type").value = "";
+    $("q").value = ""; $("type").value = "";
+    document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
     $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
     document.querySelectorAll("input[name=open]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);

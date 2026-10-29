@@ -1,18 +1,28 @@
 #!/usr/bin/env python3
 """Compile the niche perfumery dataset (BE, NL, DE, FR, LU, CH).
 
+Two inputs, merged and validated offline:
+  RAW                    hand-curated flagships (exact addresses checked individually)
+  sources/osm_raw.json   OpenStreetMap harvest (harvest_osm.py), filtered to luxury
+                         networks + independent perfumeries; curated rows win on overlap
+
 Outputs:
   perfumeries.json  canonical dataset
   perfumeries.js    same data as `window.PERFUMERIES` so index.html works from file://
 
 Scores are editorial estimates (curation, prestige, openness to indie brands),
-not measured values. Every row carries an exact street address and building-level
-coordinates (OpenStreetMap/Nominatim), so `address_confidence` is always "confirmed".
+not measured values; OSM rows inherit their network's profile, independents get a
+neutral default and no CX rating. Every row carries street + house number + postcode
+and building-level coordinates, so `address_confidence` is always "confirmed".
 Monobrand flagships (no third-party brands, brand fit = 0) and generic placeholders
 are deliberately excluded.
 """
 import json
+import math
+import re
 import sys
+import unicodedata
+from collections import Counter
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -37,7 +47,7 @@ TRAITS = {
 #  cx_rating, traits, sentiment)
 RAW = [
     # ---------------------------------------------------------------- FRANCE
-    ("Jovoy Paris", NB, "FR", "Paris", "4 Rue de Castiglione, 75001 Paris, France", 48.86560, 2.32775, 96, 72, "High", 4.6, "ES FS GS IB DB",
+    ("Jovoy Paris", NB, "FR", "Paris", "4 Rue de Castiglione, 75001 Paris, France", 48.86560, 2.32775, 95, 72, "High", 4.6, "ES FS GS IB DB",
      "Widely seen as the temple of independent perfumery; staff are passionate and let visitors explore hundreds of houses at leisure."),
     ("Nose", CS, "FR", "Paris", "20 Rue Bachaumont, 75002 Paris, France", 48.86621, 2.34484, 88, 82, "High", 4.5, "ES FS DB IB AP",
      "Known for its olfactory diagnosis that recommends scents by profile; calm, pedagogic atmosphere with strong indie curation."),
@@ -49,7 +59,7 @@ RAW = [
      "Gallery-like space by the Comme des Garçons/DSM team with a sharp, experimental edit; staff are knowledgeable but selective."),
     ("Liquides Bar à Parfums", CS, "FR", "Paris", "9 Rue de Normandie, 75003 Paris, France", 48.86342, 2.36407, 85, 88, "High", 4.7, "ES FS DB IB GS",
      "Bar-style tasting counter where fragrances are served like spirits; beloved for its relaxed, geeky expertise."),
-    ("Le Bon Marché Rive Gauche", DS, "FR", "Paris", "24 Rue de Sèvres, 75007 Paris, France", 48.85104, 2.32413, 93, 34, "Low", 4.2, "LX ES FS PS BW",
+    ("Le Bon Marché Rive Gauche", DS, "FR", "Paris", "24 Rue de Sèvres, 75007 Paris, France", 48.85104, 2.32413, 98, 34, "Low", 4.2, "LX ES FS PS BW",
      "The most refined Paris department store; its beauty hall mixes heritage houses and selected niche, with a calmer crowd than Haussmann."),
     ("Printemps Haussmann", DS, "FR", "Paris", "64 Boulevard Haussmann, 75009 Paris, France", 48.87389, 2.32905, 90, 30, "Low", 3.9, "TC PS LX BW",
      "Huge fragrance floor with exclusive launches; great breadth but very busy and sales-driven at peak times."),
@@ -75,7 +85,7 @@ RAW = [
      "High-traffic mall department store; dependable prestige range."),
 
     # --------------------------------------------------------------- BELGIUM
-    ("Senteurs d'Ailleurs", NB, "BE", "Brussels", "Place Stéphanie 1A, 1050 Ixelles, Belgique", 50.83355, 4.35861, 93, 72, "High", 4.6, "ES FS GS IB LX",
+    ("Senteurs d'Ailleurs", NB, "BE", "Brussels", "Place Stéphanie 1A, 1050 Ixelles, Belgique", 50.83355, 4.35861, 92, 72, "High", 4.6, "ES FS GS IB LX",
      "Belgium's reference for niche perfumery; deep catalogue, elegant setting and staff who know every house."),
     ("Place Vendôme Haute Parfumerie", NB, "BE", "Wezembeek-Oppem", "Leuvensesteenweg 357, 1932 Wezembeek-Oppem, Belgique", 50.86488, 4.43771, 84, 76, "High", 4.6, "ES FS GS IB AP",
      "Out-of-town destination for collectors; reviewers praise generous sampling and personal follow-up."),
@@ -99,7 +109,7 @@ RAW = [
      "Large luxury concept store; polished, gallery-like and brand-heavy."),
 
     # ------------------------------------------------------------ NETHERLANDS
-    ("Skins Cosmetics Amsterdam", CS, "NL", "Amsterdam", "Runstraat 9, 1016 GJ Amsterdam, Pays-Bas", 52.36881, 4.88377, 89, 80, "Med", 4.6, "ES FS IB DB GS",
+    ("Skins Cosmetics Amsterdam", CS, "NL", "Amsterdam", "Runstraat 9, 1016 GJ Amsterdam, Pays-Bas", 52.36881, 4.88377, 92, 80, "Med", 4.6, "ES FS IB DB GS",
      "Pioneer of niche in the Nine Streets; staff are known for spot-on recommendations and generous samples."),
     ("Skins Cosmetics Den Haag", CS, "NL", "The Hague", "Hoogstraat 6, 2513 AR Den Haag, Pays-Bas", 52.07840, 4.30894, 85, 78, "Med", 4.5, "ES FS IB LX",
      "Upmarket clientele near the royal quarter; calm and service-driven."),
@@ -205,67 +215,275 @@ BBOX = {
     "DE": (47.2, 55.1, 5.8, 15.1), "LU": (49.4, 50.2, 5.7, 6.6), "CH": (45.8, 47.9, 5.9, 10.5),
 }
 COUNTRY_NAMES = {"FR": "France", "BE": "Belgium", "NL": "Netherlands", "DE": "Germany", "LU": "Luxembourg", "CH": "Switzerland"}
+COUNTRY_SUFFIX = {"FR": "France", "BE": "Belgique", "NL": "Pays-Bas", "DE": "Allemagne", "LU": "Luxembourg", "CH": "Suisse"}
+
+# ------------------------------------------------------------------ OSM harvest
+# Rows from sources/osm_raw.json (see harvest_osm.py) are kept only when they match
+# a known luxury network (CHAIN_PROFILES) or are independent perfumeries, and never
+# when they belong to a mass-market chain or a monobrand house.
+#   regex on name/brand -> (canonical chain, type, tier, align, openness, cx, traits, blurb)
+CHAIN_PROFILES = [
+    (r"^le bon march", "Le Bon Marché", DS, 98, 36, "Low", 4.3, "LX ES FS PS",
+     "Paris's most refined department store; heritage houses plus a selective niche edit."),
+    (r"samaritaine", "La Samaritaine (DFS)", DS, 90, 25, "Low", 4.1, "LX TC PS",
+     "LVMH/DFS luxury department store; large beauty floor with travel-retail atmosphere."),
+    (r"^galeries lafayette (paris )?haussmann", "Galeries Lafayette", DS, 91, 28, "Low", 3.8, "TC PS BW LX",
+     "Flagship beauty hall; very broad prestige and niche choice, crowded and transactional."),
+    (r"^galeries lafayette", "Galeries Lafayette", DS, 72, 30, "Low", 3.6, "PS BW",
+     "Galeries Lafayette regional store; prestige fragrance counters, niche depth varies by city."),
+    (r"^printemps", "Printemps", DS, 74, 32, "Low", 3.6, "PS BW",
+     "Printemps department store; prestige beauty floor with selected niche corners."),
+    (r"^(le )?bhv", "BHV", DS, 70, 40, "Low", 3.5, "BW PS",
+     "Practical department store; mainstream-leaning beauty with emerging-brand pop-ups."),
+    (r"^inno\b", "INNO", DS, 72, 35, "Low", 3.5, "BW PS",
+     "Belgium's department-store network; broad prestige perfumery with luxury corners."),
+    (r"bijenkorf", "De Bijenkorf", DS, 84, 35, "Low", 3.9, "LX PS",
+     "Dutch premium department store; deep luxury and niche fragrance counters."),
+    (r"^kadewe|kaufhaus des westens", "KaDeWe", DS, 93, 30, "Low", 4.1, "LX TC PS ES",
+     "Continental Europe's most famous department store; huge niche perfume hall."),
+    (r"^oberpollinger", "Oberpollinger", DS, 90, 30, "Low", 4.0, "LX PS TC",
+     "KaDeWe Group's Munich flagship; luxurious beauty hall."),
+    (r"^alsterhaus", "Alsterhaus", DS, 88, 30, "Low", 4.0, "LX PS TC",
+     "Hamburg's grand department store with an elegant beauty floor."),
+    (r"^ludwig beck", "Ludwig Beck", DS, 86, 40, "Low", 4.2, "ES LX IB",
+     "'Kaufhaus der Sinne' with a respected niche perfumery floor."),
+    (r"^(e\. )?breuninger", "Breuninger", DS, 84, 32, "Low", 4.0, "LX PS",
+     "Germany's premium department-store chain; strong luxury fragrance counters."),
+    (r"^engelhorn", "Engelhorn", DS, 78, 34, "Low", 4.0, "LX PS",
+     "Mannheim's premium fashion house with a luxury beauty department."),
+    (r"^konen", "Konen", DS, 76, 34, "Low", 4.0, "LX PS",
+     "Munich premium fashion department store with selective beauty."),
+    (r"^apropos", "Apropos The Concept Store", CS, 84, 58, "Med", 4.3, "LX IB",
+     "Luxury concept store with a selective fragrance edit."),
+    (r"^globus", "Globus", DS, 84, 30, "Low", 4.0, "LX PS",
+     "Switzerland's premium department store; beauty floors carry strong niche brands."),
+    (r"^bong[ée]nie|^bon g[ée]nie", "Bongénie", DS, 86, 34, "Low", 4.1, "LX ES",
+     "Swiss luxury fashion & beauty house; curated perfumery and attentive service."),
+    (r"^manor\b", "Manor", DS, 68, 32, "Low", 3.7, "PS BW",
+     "Swiss department-store network; prestige fragrance corners with selected luxury labels."),
+    (r"^loeb\b", "Loeb", DS, 72, 32, "Low", 3.8, "PS LX",
+     "Bern's family-owned department store; prestige perfumery floor."),
+    (r"^skins", "Skins Cosmetics", CS, 90, 78, "Med", 4.5, "ES FS IB DB",
+     "Benelux niche reference; tight edit of indie houses and staff who guide by olfactive family."),
+    (r"^paris ?8", "Paris 8 Haute Parfumerie", NB, 80, 60, "Med", 4.3, "ES LX FS GW",
+     "Luxembourg's selective multi-brand perfumery chain with a growing niche shelf."),
+    (r"aus liebe zum duft", "Aus Liebe zum Duft", NB, 82, 78, "High", 4.5, "ES FS GS IB",
+     "Large niche specialist with a vast catalogue and strong sample culture."),
+    (r"essenza nobile", "Essenza Nobile", NB, 84, 80, "High", 4.6, "ES FS GS IB",
+     "Major niche specialist; known for samples and discovery sets."),
+    (r"babassu", "Babassu", NB, 80, 80, "High", 4.5, "ES FS IB",
+     "Boutique niche perfumery with a warm, advisory approach."),
+    (r"senteurs d.ailleurs", "Senteurs d'Ailleurs", NB, 92, 72, "High", 4.6, "ES FS GS IB LX",
+     "Belgium's reference for niche perfumery."),
+    (r"^jovoy", "Jovoy", NB, 95, 72, "High", 4.6, "ES FS GS IB DB",
+     "Temple of independent perfumery; hundreds of houses to explore."),
+    (r"^liquides", "Liquides", NB, 84, 86, "High", 4.7, "ES FS DB IB GS",
+     "Bar-style niche counter; relaxed, geeky expertise."),
+]
+INDEPENDENT = ("Independent perfumery", NB, 62, 72, "High", None, "",
+               "Independent perfumery mapped in OpenStreetMap; niche depth not yet assessed.")
+
+# Mass-market networks: high volume, central buying, no realistic single-SKU entry.
+MASS = re.compile(
+    r"douglas|marionnaud|sephora|ici paris|nocib[ée]|yves rocher|body shop|rituals|\blush\b|kiko|kruidvat|"
+    r"\betos\b|rossmann|\bdm\b|m[üu]ller|pieper|flaconi|parfumdreams|\bhema\b|holland ?& ?barrett|nyx|\bmac\b|"
+    r"primark|monoprix|galeria|karstadt|kaufhof|woolworth|peek ?& ?cloppenburg|c ?& ?a\b|coop|migros|"
+    r"jelmoli|outlet|gourmet|maison et|lafayette maison|du go[uû]t|grande [ée]picerie|\bdi\b|"
+    r"parfumerie\.nl|perfume ?shop|parfum ?discount|nuance|beauty ?boutique|thalia|action|normal|"
+    r"origines|l'occitane|nuxe|caudalie|clarins|lanc[ôo]me|sisley|kiehl|aesop|lancaster",
+    re.I)
+# Monobrand houses (brand fit = 0): own catalogue only.
+MONO = re.compile(
+    r"guerlain|diptyque|chanel|dior|herm[eè]s|le labo|byredo|fragonard|molinard|galimard|kurkdjian|"
+    r"artisan parfumeur|goutal|penhaligon|jo malone|creed|acqua di parma|serge lutens|fr[ée]d[ée]ric malle|"
+    r"\bm[ée]mo\b|atelier cologne|margiela|ex nihilo|parfums de marly|floris|santa maria novella|buly|"
+    r"trudon|caron|lubin|nicolai|histoires de parfums|initio|amouage|xerjoff|roja|kilian|tom ford|crivelli|"
+    r"esteban|durance|kenzo|saint laurent|armani|bvlgari|bulgari|cartier|louis vuitton|gucci|prada|montale|"
+    r"mancera|ormonde|couvent|goldfield|juliette has a gun|[ée]tat libre|\bbdk\b|mizensir|different company|"
+    r"heeley|liquides imaginaires|astier de villatte|jardins d.[ée]crivains|oriza|houbigant|parfum d.empire|"
+    r"huiti[eè]me art|pierre guillaume|mad et len|fueguia|frau tonis|harry lehmann|ormaie|21g|jardin retrouv|"
+    r"vilhelm|maison francis|lalique|baccarat|annick|sabon|l'eau de paris|nose shop|ella k|maison matine|"
+    r"perris|nishane|essential parfums|eight ?& ?bob|boadicea|clive christian|bond no|maison lancier|"
+    r"parfumerie generale|parfumerie g[ée]n[ée]rale|lolita lempicka|mugler|givenchy|valentino|celine|"
+    r"loewe|chopard|van cleef|boucheron|rouge bunny|kenzo|zadig|sandro|maje|cire|bastille|dyptique|"
+    r"maison de parfum berry|j\.f\. schwarzlose|schwarzlose|t\. le clerc|officine|hugh parsons|"
+    r"atelier du parfum|studio des parfums|grandiflora",
+    re.I)
+KEEP_SHOPS = {"perfumery", "cosmetics", "beauty", "department_store", "clothes", "boutique", "fashion",
+              "gift", "interior_decoration", "houseware", "variety_store", "fashion_accessories"}
+
+
+def slug(s):
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+
+
+def dist_m(a, b):
+    la1, lo1, la2, lo2 = map(math.radians, (a[0], a[1], b[0], b[1]))
+    h = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
+    return 6371000 * 2 * math.asin(math.sqrt(h))
+
+
+def street_line(cc, street, number):
+    return f"{number} {street}" if cc in ("FR", "LU") and not street.lower().startswith("grand-rue") else f"{street} {number}"
+
+
+def classify(r):
+    """Map a harvested OSM row to a profile tuple, or None when it must be dropped."""
+    name = (r.get("name") or "").strip()
+    label = f"{name} {r.get('brand') or ''}"
+    if not name or r.get("shop") not in KEEP_SHOPS:
+        return None
+    if MONO.search(label):
+        return None
+    for pattern, chain, *profile in CHAIN_PROFILES:
+        if re.search(pattern, name, re.I) or (r.get("brand") and re.search(pattern, r["brand"], re.I)):
+            return (chain, *profile)
+    if MASS.search(label):
+        return None
+    if r["shop"] in ("perfumery",) or (r["shop"] in ("cosmetics", "beauty")
+                                       and re.search(r"parf|perf|duft|profum|fragr", name, re.I)):
+        return INDEPENDENT
+    return None
+
+
+def osm_records():
+    path = Path(__file__).parent / "sources" / "osm_raw.json"
+    if not path.exists():
+        return [], 0
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    out, dropped = [], 0
+    for r in raw:
+        prof = classify(r)
+        if not prof or not all(r.get(k) for k in ("housenumber", "street", "postcode", "city", "lat", "lng")):
+            dropped += 1
+            continue
+        chain, typ, tier, align, openness, cx, traits, blurb = prof
+        cc = r["cc"]
+        line = street_line(cc, r["street"], r["housenumber"])
+        mall = f"{r['mall']}, " if r.get("mall") else ""
+        out.append({
+            "name": r["name"].strip(), "type": typ, "country": cc, "city": r["city"],
+            "full_address": f"{mall}{line}, {r['postcode']} {r['city']}, {COUNTRY_SUFFIX[cc]}",
+            "lat": round(r["lat"], 6), "lng": round(r["lng"], 6),
+            "tier_score": tier, "brand_alignment_score": align, "single_sku_openness": openness,
+            "customer_experience_rating": cx, "traits": traits, "sentiment_summary": blurb,
+            "network": chain, "source": f"osm:{r['osm']}",
+            "address_source": "osm_reverse" if r.get("address_from") == "reverse" else "osm_tags",
+        })
+    return out, dropped
+
+
+def curated_records():
+    out = []
+    for row in RAW:
+        (name, typ, cc, city, addr, lat, lng, tier, align, openness, cx, traits, sentiment) = row
+        out.append({
+            "name": name, "type": typ, "country": cc, "city": city, "full_address": addr,
+            "lat": lat, "lng": lng, "tier_score": tier, "brand_alignment_score": align,
+            "single_sku_openness": openness, "customer_experience_rating": cx, "traits": traits,
+            "sentiment_summary": sentiment, "network": None, "source": "curated", "address_source": "curated",
+        })
+    return out
+
+
+def same_store(a, b):
+    d = dist_m((a["lat"], a["lng"]), (b["lat"], b["lng"]))
+    if d > 150:
+        return False
+    ta, tb = set(slug(a["name"]).split()), set(slug(b["name"]).split())
+    generic = {"parfumerie", "parfumeur", "parfums", "parfum", "perfumery", "the", "de", "la", "le", "store",
+               "concept", "cosmetics", "paris", "haute", "luxury"}
+    shared = (ta & tb) - generic
+    return bool(shared) or (a.get("network") and a.get("network") == b.get("network") and d < 80)
+
+
+def merge():
+    curated = curated_records()
+    harvested, dropped = osm_records()
+    merged = list(curated)
+    for h in harvested:
+        if any(same_store(h, m) for m in merged):
+            continue
+        merged.append(h)
+    return merged, dropped
+
+
+def validate(recs):
+    errors, seen = [], set()
+    for r in recs:
+        n = r["name"]
+        key = (slug(n), round(r["lat"], 3), round(r["lng"], 3))
+        if key in seen:
+            errors.append(f"duplicate: {n}")
+        seen.add(key)
+        if r["type"] not in TYPE_CODES:
+            errors.append(f"{n}: bad type {r['type']}")
+        if r["single_sku_openness"] not in OPENNESS:
+            errors.append(f"{n}: bad openness")
+        if "MB" in r["traits"].split():
+            errors.append(f"{n}: monobrand stores are excluded (brand fit = 0)")
+        cx = r["customer_experience_rating"]
+        if not (1 <= r["tier_score"] <= 100 and 0 <= r["brand_alignment_score"] <= 100 and (cx is None or 1 <= cx <= 5)):
+            errors.append(f"{n}: score out of range")
+        la0, la1, lo0, lo1 = BBOX[r["country"]]
+        if not (la0 <= r["lat"] <= la1 and lo0 <= r["lng"] <= lo1):
+            errors.append(f"{n}: coordinates outside {r['country']}")
+        parts = [x.strip() for x in r["full_address"].split(",")]
+        if not any(re.search(r"\d", x) for x in parts if not re.match(r"\d{4,5}\b|\d{4} ?[A-Z]{2}\b", x)):
+            errors.append(f"{n}: address has no house number: {r['full_address']}")
+        if not re.search(r"\b\d{4}(\s?[A-Z]{2})?\b|\b\d{5}\b", r["full_address"]):
+            errors.append(f"{n}: address has no postcode: {r['full_address']}")
+    return errors
 
 
 def build():
-    records, errors = [], []
-    seen = set()
-    for i, row in enumerate(RAW, 1):
-        (name, typ, cc, city, addr, lat, lng, tier, align, openness, cx, traits, sentiment) = row
-        key = (name, cc)
-        if key in seen:
-            errors.append(f"duplicate: {name}")
-        seen.add(key)
-        if typ not in TYPE_CODES:
-            errors.append(f"{name}: bad type {typ}")
-        if openness not in OPENNESS:
-            errors.append(f"{name}: bad openness {openness}")
-        if "MB" in traits.split():
-            errors.append(f"{name}: monobrand stores are excluded (brand fit = 0)")
-        if not (1 <= tier <= 100 and 0 <= align <= 100 and 1 <= cx <= 5):
-            errors.append(f"{name}: score out of range")
-        la0, la1, lo0, lo1 = BBOX[cc]
-        if not (la0 <= lat <= la1 and lo0 <= lng <= lo1):
-            errors.append(f"{name}: coordinates outside {cc}")
-        tags = [TRAITS[t] for t in traits.split()]
-        query = f"{name}, {addr}"
+    merged, dropped = merge()
+    errors = validate(merged)
+    merged.sort(key=lambda r: (r["country"], r["city"], -r["tier_score"], r["name"]))
+    records = []
+    for i, r in enumerate(merged, 1):
         records.append({
             "id": i,
-            "name": name,
-            "type": typ,
-            "country": cc,
-            "country_name": COUNTRY_NAMES[cc],
-            "city": city,
-            "address": addr,
-            "lat": lat,
-            "lng": lng,
-            "tier_score": tier,
-            "brand_alignment_score": align,
-            "single_sku_openness": openness,
-            "customer_experience_rating": cx,
-            "cx_traits": tags,
-            "sentiment_summary": sentiment,
+            "name": r["name"],
+            "type": r["type"],
+            "country": r["country"],
+            "country_name": COUNTRY_NAMES[r["country"]],
+            "city": r["city"],
+            "full_address": r["full_address"],
+            "lat": r["lat"],
+            "lng": r["lng"],
+            "tier_score": r["tier_score"],
+            "brand_alignment_score": r["brand_alignment_score"],
+            "single_sku_openness": r["single_sku_openness"],
+            "customer_experience_rating": r["customer_experience_rating"],
+            "cx_traits": [TRAITS[t] for t in r["traits"].split()],
+            "sentiment_summary": r["sentiment_summary"],
+            "network": r["network"],
             "address_confidence": "confirmed",
-            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query),
-            "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=" + quote_plus(f"{name} {city}"),
+            "address_source": r["address_source"],
+            "source": r["source"],
+            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=" + quote_plus(f"{r['name']}, {r['full_address']}"),
+            "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=" + quote_plus(f"{r['name']} {r['city']}"),
         })
-    return records, errors
+    return records, errors, dropped
 
 
 def main():
-    records, errors = build()
+    records, errors, dropped = build()
     if errors:
         print("\n".join(errors), file=sys.stderr)
         sys.exit(1)
     out = Path(__file__).parent
-    payload = json.dumps(records, ensure_ascii=False, indent=2)
+    payload = json.dumps(records, ensure_ascii=False, indent=1)
     (out / "perfumeries.json").write_text(payload + "\n", encoding="utf-8")
     (out / "perfumeries.js").write_text("window.PERFUMERIES = " + payload + ";\n", encoding="utf-8")
-    by_country = {}
-    for r in records:
-        by_country[r["country"]] = by_country.get(r["country"], 0) + 1
-    print(f"{len(records)} stores -> perfumeries.json / perfumeries.js")
-    print("  " + ", ".join(f"{k}: {v}" for k, v in sorted(by_country.items())))
+    count = lambda k: sorted(Counter(r[k] for r in records).items())
+    print(f"{len(records)} stores -> perfumeries.json / perfumeries.js ({dropped} OSM rows filtered out)")
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("country")))
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("type")))
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("source") if k == "curated") +
+          f", osm: {sum(r['source'].startswith('osm') for r in records)}")
 
 
 if __name__ == "__main__":

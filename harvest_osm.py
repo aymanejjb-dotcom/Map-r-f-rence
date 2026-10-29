@@ -109,6 +109,9 @@ def nominatim(params, pause=1.1):
             if e.code != 429:
                 raise
             time.sleep(10 * (attempt + 1))
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:  # proxy/TLS drops
+            print(f"    nominatim retry {attempt + 1}: {e}", file=sys.stderr)
+            time.sleep(5 * (attempt + 1))
     return None
 
 

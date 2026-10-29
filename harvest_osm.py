@@ -125,7 +125,7 @@ def city_bboxes():
 
 def overpass(query, cc):
     urls = ([OVERPASS_CH] if cc == "CH" else []) + OVERPASS
-    for attempt in range(6):
+    for attempt in range(4):
         url = urls[attempt % len(urls)]
         try:
             return get(url, urllib.parse.urlencode({"data": query}).encode())["elements"]
@@ -149,28 +149,52 @@ def element(e, cc, origin):
     }
 
 
+def tiles(s, w, n, e, step=0.06):
+    """Split a bbox into ~6 km tiles so dense cities stay under mirror time limits."""
+    ny, nx = max(1, round((n - s) / step)), max(1, round((e - w) / step))
+    dy, dx = (n - s) / ny, (e - w) / nx
+    return [(s + i * dy, w + j * dx, s + (i + 1) * dy, w + (j + 1) * dx) for i in range(ny) for j in range(nx)]
+
+
 def harvest_cities(bboxes, rows):
-    shops = "perfumery|department_store|cosmetics|beauty|chemist"
-    for key, (s, w, n, e) in bboxes.items():
+    shops = "perfumery|department_store|cosmetics|beauty"
+    done_path = SRC / ".tiles_done.json"
+    done = set(json.loads(done_path.read_text())) if done_path.exists() else set()
+    failed = []
+    for key, box in bboxes.items():
         cc, city = key.split(":", 1)
-        bb = f"({s},{w},{n},{e})"
-        q = (f'[out:json][timeout:170];('
-             f'nwr["shop"="perfumery"]{bb};'
-             f'nwr["shop"="department_store"]{bb};'
-             f'nwr["shop"~"^({shops})$"]["name"~"parf|perf|duft|profum|fragr|{NAMED}",i]{bb};'
-             f'nwr["shop"]["name"~"^({NAMED})",i]{bb};'
-             f');out center tags;')
-        els = overpass(q, cc)
-        new = 0
-        for el in els:
-            if "name" not in el.get("tags", {}):
+        found = new = 0
+        for t in tiles(*box):
+            tid = f"{key}:{t[0]:.4f},{t[1]:.4f}"
+            if tid in done:
                 continue
-            r = element(el, cc, f"overpass:{city}")
-            if r["osm"] not in rows:
-                rows[r["osm"]] = r
-                new += 1
-        print(f"  {key}: {len(els)} elements, {new} new")
-        time.sleep(2)
+            bb = "({:.5f},{:.5f},{:.5f},{:.5f})".format(*t)
+            q = (f'[out:json][timeout:90];('
+                 f'nwr["shop"="perfumery"]{bb};'
+                 f'nwr["shop"="department_store"]{bb};'
+                 f'nwr["shop"~"^({shops})$"]["name"~"parf|perf|duft|profum|fragr",i]{bb};'
+                 f'nwr["shop"]["name"~"^({NAMED})",i]{bb};'
+                 f');out center tags;')
+            try:
+                els = overpass(q, cc)
+            except RuntimeError:
+                failed.append(tid)
+                continue
+            found += len(els)
+            for el in els:
+                if "name" not in el.get("tags", {}):
+                    continue
+                r = element(el, cc, f"overpass:{city}")
+                if r["osm"] not in rows:
+                    rows[r["osm"]] = r
+                    new += 1
+            done.add(tid)
+            done_path.write_text(json.dumps(sorted(done)))
+            time.sleep(1)
+        print(f"  {key}: {found} elements, {new} new")
+        save(rows)
+    if failed:
+        print(f"  ! {len(failed)} tiles failed, rerun to retry: {failed}", file=sys.stderr)
 
 
 def harvest_chains(rows):

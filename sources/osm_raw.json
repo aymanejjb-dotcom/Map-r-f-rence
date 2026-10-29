@@ -98,14 +98,17 @@
   "name": "Phoenix Institut de Beauté",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue du Loutrier - Ottervangerstraat",
   "postcode": "1170",
   "city": "Watermael-Boitsfort - Watermaal-Bosvoorde",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11374440354",
@@ -152,7 +155,7 @@
   "name": "INNO Louise",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Avenue Louise - Louizalaan",
   "postcode": "1050",
   "city": "Bruxelles - Brussel",
@@ -160,7 +163,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11613716767",
@@ -319,7 +324,7 @@
   "name": "Apm Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue Coppens - Coppensstraat",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
@@ -327,7 +332,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1279179114",
@@ -412,7 +419,7 @@
   "name": "Parfumerie Simonne",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "372",
   "street": "Kapelsesteenweg",
   "postcode": "2180",
   "city": "Brasschaat",
@@ -420,7 +427,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13514501026",
@@ -431,14 +440,17 @@
   "name": "De Tandenbleker Antwerpen",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "162-164",
   "street": "Turnhoutsebaan",
   "postcode": "2140",
   "city": "Antwerpen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13965581920",
@@ -503,7 +515,7 @@
   "name": "L’écrin à parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "28",
   "street": "Galerie du Roi - Koningsgalerij",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
@@ -511,7 +523,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3150962465",
@@ -540,7 +554,7 @@
   "name": "Parfums Guy Delforge",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "60",
   "street": "Route Merveilleuse",
   "postcode": "5000",
   "city": "Namur",
@@ -548,7 +562,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4087973879",
@@ -559,7 +575,7 @@
   "name": "Inno",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Rue Saint-Gangulphe",
   "postcode": "4000",
   "city": "Liège",
@@ -567,7 +583,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4413385336",
@@ -585,7 +603,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4417740028",
@@ -614,7 +634,7 @@
   "name": "Parfuma",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "31",
   "street": "Eiermarkt",
   "postcode": "2000",
   "city": "Antwerpen",
@@ -622,7 +642,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4461557975",
@@ -633,14 +655,17 @@
   "name": "Institut de coiffure Boué",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Rue du Marché aux Poulets - Kiekenmarkt",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4873676022",
@@ -651,7 +676,7 @@
   "name": "Senteurs d'Ailleurs",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "54",
   "street": "Avenue Louise - Louizalaan",
   "postcode": "1050",
   "city": "Bruxelles - Brussel",
@@ -659,7 +684,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5197615721",
@@ -670,7 +697,7 @@
   "name": "Inno",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Steenstraat",
   "postcode": "8000",
   "city": "Brugge",
@@ -678,7 +705,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5498142477",
@@ -743,7 +772,7 @@
   "name": "Dubai Perfumes",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "27-31",
   "street": "Hoogstraat",
   "postcode": "2000",
   "city": "Antwerpen",
@@ -751,7 +780,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6432752889",
@@ -872,7 +903,7 @@
   "name": "April",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "163",
   "street": "Quai des Usines - Werkhuizenkaai",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
@@ -880,7 +911,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7117473285",
@@ -899,7 +932,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7177359385",
@@ -964,7 +998,7 @@
   "name": "Inno",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "80-82",
   "street": "Meir",
   "postcode": "2000",
   "city": "Antwerpen",
@@ -972,7 +1006,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8228381865",
@@ -983,14 +1019,17 @@
   "name": "Elixir de Beauté",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "7B",
   "street": "Avenue de Busleyden - de Busleydenlaan",
   "postcode": "1020",
   "city": "Bruxelles - Brussel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8500123141",
@@ -1001,7 +1040,7 @@
   "name": "April",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1324",
   "street": "Chaussée de Waterloo - Waterloosesteenweg",
   "postcode": "1180",
   "city": "Uccle - Ukkel",
@@ -1009,7 +1048,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8599613723",
@@ -1028,7 +1069,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/8688267049",
@@ -1075,7 +1117,7 @@
   "name": "INNO Bascule",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "6",
   "street": "Rue de la Bascule - Basculestraat",
   "postcode": "1180",
   "city": "Uccle - Ukkel",
@@ -1083,7 +1125,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/9238672230",
@@ -1137,7 +1181,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9481954223",
@@ -1148,14 +1194,16 @@
   "name": "Exotic Sun Waterloo",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "734",
   "street": "Chaussée de Bruxelles",
   "postcode": "1410",
   "city": "Waterloo",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/9914025170",
@@ -1184,7 +1232,7 @@
   "name": "April",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "806",
   "street": "Route de Lennik - Lennikse Baan",
   "postcode": "1070",
   "city": "Anderlecht",
@@ -1192,7 +1240,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/100071043",
@@ -1229,7 +1279,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/107127090",
@@ -1258,7 +1309,7 @@
   "name": "Inno",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "117",
   "street": "Rue Neuve - Nieuwstraat",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
@@ -1266,7 +1317,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/323043182",
@@ -1313,14 +1366,16 @@
   "name": "Centre Européen de fruits et légumes - Europees Centrum voor fruit en groenten",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "112",
   "street": "Quai des Usines - Werkhuizenkaai",
   "postcode": "1000",
   "city": "Bruxelles - Brussel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10889806815",
@@ -1331,14 +1386,17 @@
   "name": "Zürich Nails by Samantha",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "37",
   "street": "Zwinglistrasse",
   "postcode": "8004",
   "city": "Zürich",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10911607770",
@@ -1349,14 +1407,16 @@
   "name": "Import Parfumerie",
   "brand": "Import Parfumerie",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "34",
+  "street": "Comercialstrasse",
+  "postcode": "7000",
+  "city": "Chur",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1091985152",
@@ -1495,7 +1555,7 @@
   "name": "Otto's",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "30",
   "street": "Löwenstrasse",
   "postcode": "8021",
   "city": "Zürich",
@@ -1503,7 +1563,9 @@
   "website": null,
   "check_date": "2026-03-07",
   "opening_hours": "Mo-Sa 10:00-19:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/119246912",
@@ -1552,7 +1614,7 @@
   "name": "Tocciami",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue Leschot",
   "postcode": "1205",
   "city": "Genève",
@@ -1560,7 +1622,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12058080569",
@@ -1610,7 +1674,7 @@
   "name": "Tensia Perfect Nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Nansenstrasse",
   "postcode": "8050",
   "city": "Zürich",
@@ -1618,7 +1682,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Fr 10:00-19:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12123103404",
@@ -1683,7 +1749,7 @@
   "name": "Douglas",
   "brand": "Douglas",
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Riva Vincenzo Vela",
   "postcode": "6901",
   "city": "Lugano",
@@ -1691,7 +1757,9 @@
   "website": null,
   "check_date": "2024-09-07",
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12204855702",
@@ -1702,14 +1770,16 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "8",
+  "street": "Rue de la Gare / Bahnhofstrasse",
+  "postcode": "2502",
+  "city": "Biel/Bienne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-16:00"
+  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-16:00",
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12252521688",
@@ -1720,7 +1790,7 @@
   "name": "Frank Provost",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "16",
   "street": "Rue de Coutance",
   "postcode": "1201",
   "city": "Genève",
@@ -1728,7 +1798,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12265719492",
@@ -1739,14 +1811,17 @@
   "name": "Marionnaud",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "37",
+  "street": "Grand-Rue",
+  "postcode": "1635",
+  "city": "Bulle",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12278160106",
@@ -1757,7 +1832,7 @@
   "name": "Jolies fragrances",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "16",
   "street": "Rue Jean-Gutenberg",
   "postcode": "1201",
   "city": "Genève",
@@ -1765,7 +1840,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Th 11:30-19:30; Fr 14:30-20:30; Sa 11:30-20:30",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12281750696",
@@ -1776,14 +1853,17 @@
   "name": "Beauty Bern",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "8",
   "street": "Weihergasse",
   "postcode": "3007",
   "city": "Bern",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1228361456",
@@ -1848,7 +1928,7 @@
   "name": "Import Parfumerie",
   "brand": "Import Parfumerie",
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "28",
   "street": "Neuengasse",
   "postcode": "3001",
   "city": "Bern",
@@ -1856,7 +1936,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo 09:00-19:00; Tu,We 08:00-19:00; Th,Fr 08:00-20:00; Sa 08:00-18:00; Su,PH off",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13110679209",
@@ -1921,7 +2003,7 @@
   "name": "Theodora",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "38",
   "street": "Grand-Rue",
   "postcode": "1204",
   "city": "Genève",
@@ -1929,7 +2011,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13481408002",
@@ -1966,7 +2050,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Fr 09:30-18:30; Sa 09:30-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1366648859",
@@ -2049,14 +2134,17 @@
   "name": "Coop City",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "16",
+  "street": "Rue du Marché / Marktgasse",
+  "postcode": "2501",
+  "city": "Biel/Bienne",
   "mall": null,
   "website": null,
   "check_date": "2026-06-19",
-  "opening_hours": "Mo-We,Fr 08:30-18:30; Th 08:30-20:00; Sa 08:30-17:00"
+  "opening_hours": "Mo-We,Fr 08:30-18:30; Th 08:30-20:00; Sa 08:30-17:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13926000564",
@@ -2086,13 +2174,15 @@
   "brand": null,
   "shop": "perfumery",
   "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "street": "Rue de la Gabelle / Salzhausstrasse",
+  "postcode": "2560",
+  "city": "Biel/Bienne",
   "mall": null,
   "website": null,
   "check_date": "2026-06-26",
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/14084862345",
@@ -2139,14 +2229,16 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "3",
+  "street": "Poststrasse",
+  "postcode": "7000",
+  "city": "Chur",
   "mall": null,
   "website": null,
   "check_date": "2026-10-03",
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/14251550356",
@@ -2286,7 +2378,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Merkurstrasse",
   "postcode": "8640",
   "city": "Rapperswil-Jona",
@@ -2294,7 +2386,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1675768355",
@@ -2450,7 +2544,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "26",
   "street": "Rue de Romont / Romontgasse",
   "postcode": "1700",
   "city": "Fribourg",
@@ -2458,7 +2552,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1989668099",
@@ -2469,7 +2565,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Gwattstrasse",
   "postcode": "8808",
   "city": "Pfäffikon SZ",
@@ -2477,7 +2573,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2001262850",
@@ -2506,14 +2604,16 @@
   "name": "Import Parfumerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "35",
+  "street": "Aarmühlestrasse",
+  "postcode": "3800",
+  "city": "Interlaken",
   "mall": null,
   "website": null,
   "check_date": "2024-12-03",
-  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-17:00"
+  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-17:00",
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2089847052",
@@ -2560,14 +2660,17 @@
   "name": "Import Parfumerie",
   "brand": "Import Parfumerie",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "1",
+  "street": "Route de Moncor",
+  "postcode": "1752",
+  "city": "Villars-sur-Glâne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2361401188",
@@ -2578,7 +2681,7 @@
   "name": "Loeb Lebensmittel",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "37",
   "street": "Schauplatzgasse",
   "postcode": "3001",
   "city": "Bern",
@@ -2586,7 +2689,9 @@
   "website": "https://www.loeb.ch/de/loeb/standorte/bern.html",
   "check_date": null,
   "opening_hours": "Mo-Fr 08:00-19:00; Sa 08:00-17:00; Su off",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2552384594",
@@ -2635,7 +2740,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "8",
   "street": "Bahnhofstrasse",
   "postcode": "3601",
   "city": "Thun",
@@ -2643,7 +2748,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/269616496",
@@ -2654,7 +2761,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "36",
   "street": "Grand-Rue",
   "postcode": "1110",
   "city": "Morges",
@@ -2662,7 +2769,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2734556331",
@@ -2691,7 +2800,7 @@
   "name": "RTL",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "16",
   "street": "Corso Elvezia",
   "postcode": "6932",
   "city": "Lugano",
@@ -2699,7 +2808,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "08:00-18:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2820847606",
@@ -2728,7 +2839,7 @@
   "name": "Globus",
   "brand": "Globus",
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Spitalgasse",
   "postcode": "3000",
   "city": "Bern",
@@ -2736,7 +2847,9 @@
   "website": "https://www.globus.ch/filialsuche/store/106",
   "check_date": "2026-10-25",
   "opening_hours": "Mo-We 09:00-19:00; Th 09:00-21:00; Fr 09:00-19:00; Sa 08:00-17:00; Su off",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2917475609",
@@ -2747,7 +2860,7 @@
   "name": "Loeb",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "38",
   "street": "Schauplatzgasse",
   "postcode": "3001",
   "city": "Bern",
@@ -2755,7 +2868,9 @@
   "website": "https://loeb.ch/filialen/loeb-bern",
   "check_date": "2026-10-25",
   "opening_hours": "Mo-We 09:00-19:00; Th 09:00-21:00; Fr 09:00-20:00; Sa 08:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3085757733",
@@ -2802,7 +2917,7 @@
   "name": "Bongénie",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Waisenhausplatz",
   "postcode": "3011",
   "city": "Bern",
@@ -2810,7 +2925,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3166533868",
@@ -2847,7 +2964,8 @@
   "website": "https://www.douglas.ch/",
   "check_date": "2026-10-25",
   "opening_hours": "Mo-We,Fr 09:00-19:00; Th 09:00-20:00; Sa 09:00-18:00; Su,PH closed",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3236033033",
@@ -2988,7 +3106,7 @@
   "name": "Le Labo",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Glockengasse",
   "postcode": "8001",
   "city": "Zürich",
@@ -2996,7 +3114,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Fr 10:00-19:00; Sa 10:00-18:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3646016793",
@@ -3043,14 +3163,17 @@
   "name": "Coop City",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "6",
+  "street": "Rue des Epancheurs",
+  "postcode": "2000",
+  "city": "Neuchâtel",
   "mall": null,
   "website": null,
   "check_date": "2025-04-08",
-  "opening_hours": "Mo-We,Fr 08:00-19:00; Th 08:00-20:00; Sa 08:00-18:00"
+  "opening_hours": "Mo-We,Fr 08:00-19:00; Th 08:00-20:00; Sa 08:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3661128928",
@@ -3061,7 +3184,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Rue de la Gare",
   "postcode": "1260",
   "city": "Nyon",
@@ -3069,7 +3192,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3662931829",
@@ -3080,14 +3205,17 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "34",
+  "street": "Rue de la Gare",
+  "postcode": "1260",
+  "city": "Nyon",
   "mall": null,
   "website": null,
   "check_date": "2026-10-27",
-  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-18:00"
+  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/370383073",
@@ -3098,14 +3226,16 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "28",
+  "street": "Rue de la Madeleine",
+  "postcode": "1800",
+  "city": "Vevey",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Th 09:00-18:30; Fr 09:00-19:00; Sa 08:30-17:00"
+  "opening_hours": "Mo-Th 09:00-18:30; Fr 09:00-19:00; Sa 08:30-17:00",
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/370383112",
@@ -3124,7 +3254,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3716603076",
@@ -3251,7 +3382,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3856675160",
@@ -3269,7 +3401,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3884033857",
@@ -3280,14 +3414,17 @@
   "name": "Beauty Center Winterthur",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Rudolfstrasse",
   "postcode": "8401",
   "city": "Winterthur",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/393982222",
@@ -3388,14 +3525,17 @@
   "name": "Baettig",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "2",
+  "street": "Multergasse",
+  "postcode": "9000",
+  "city": "St. Gallen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-We,Fr 09:00-18:30; Th 09:00-20:00; Sa 08:00-17:00"
+  "opening_hours": "Mo-We,Fr 09:00-18:30; Th 09:00-20:00; Sa 08:00-17:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4092540454",
@@ -3460,7 +3600,7 @@
   "name": "Spitzenhaus",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Börsenstrasse",
   "postcode": "8001",
   "city": "Zürich",
@@ -3468,7 +3608,9 @@
   "website": "https://www.spitzenhaus.com/",
   "check_date": "2025-06-05",
   "opening_hours": "Mo-Fr 09:30-18:30; Sa 09:30-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4281977798",
@@ -3497,7 +3639,7 @@
   "name": "Chanel",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "43",
   "street": "Rue du Rhône",
   "postcode": "1204",
   "city": "Genève",
@@ -3505,7 +3647,9 @@
   "website": null,
   "check_date": "2023-05-19",
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4358577690",
@@ -3516,7 +3660,7 @@
   "name": "Phillipe Marechal",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "18",
   "street": "Rue Boissonnas",
   "postcode": "1227",
   "city": "Genève",
@@ -3524,7 +3668,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4358605590",
@@ -3562,7 +3708,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4358698595",
@@ -3723,7 +3870,7 @@
   "name": "Dépôt MSS",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "21b",
   "street": "Quai Charles-Page",
   "postcode": "1205",
   "city": "Genève",
@@ -3731,7 +3878,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4397575990",
@@ -3769,7 +3918,8 @@
   "website": "https://filialen.migros.ch/de/change-carouge-mparc-la-praille",
   "check_date": null,
   "opening_hours": "Mo-Fr 08:30-18:30; Sa 08:30-17:00; Su off",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4397606094",
@@ -3845,7 +3995,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4397623101",
@@ -3940,7 +4091,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4409403243",
@@ -3976,7 +4128,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4424664340",
@@ -3994,7 +4148,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4443767623",
@@ -4077,7 +4233,7 @@
   "name": "Douglas",
   "brand": "Douglas",
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "29",
   "street": "Freie Strasse",
   "postcode": "4001",
   "city": "Basel",
@@ -4085,7 +4241,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4486137554",
@@ -4150,7 +4308,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "42",
   "street": "Rue Centrale / Zentralstrasse",
   "postcode": "2501",
   "city": "Biel/Bienne",
@@ -4158,7 +4316,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4669885294",
@@ -4169,7 +4329,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "42",
   "street": "Rue Centrale / Zentralstrasse",
   "postcode": "2501",
   "city": "Biel/Bienne",
@@ -4177,7 +4337,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4833061541",
@@ -4196,7 +4358,8 @@
   "website": "https://www.impo.ch/",
   "check_date": null,
   "opening_hours": "Mo-Fr 08:00-21:00; Sa-Su 09:00-20:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4833061643",
@@ -4289,7 +4452,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4841546251",
@@ -4503,13 +4667,15 @@
   "brand": "Import Parfumerie",
   "shop": "perfumery",
   "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "street": "Place du Grand-Mazel",
+  "postcode": "2000",
+  "city": "Neuchâtel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Fr 09:00-18:30,09:00-18:00"
+  "opening_hours": "Mo-Fr 09:00-18:30,09:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4887693999",
@@ -4520,14 +4686,17 @@
   "name": "Maxi bazar",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "2",
+  "street": "Place Coquillon",
+  "postcode": "2000",
+  "city": "Neuchâtel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-18:00"
+  "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5008437608",
@@ -4629,7 +4798,7 @@
   "name": "Parfumerie Plus",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue Igor Stravinski",
   "postcode": "1822",
   "city": "Montreux",
@@ -4637,7 +4806,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5459371874",
@@ -4648,15 +4819,17 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": "Grand-Rue",
+  "housenumber": "2",
+  "street": "Grand'Rue",
   "postcode": "1822",
   "city": "Montreux",
   "mall": null,
   "website": "https://www.marionnaud.ch/",
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5499419505",
@@ -4667,14 +4840,16 @@
   "name": "Import Parfumerie",
   "brand": "Import Parfumerie",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "29",
+  "street": "Bälliz",
+  "postcode": "3600",
+  "city": "Thun",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5540593748",
@@ -4685,7 +4860,7 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "3a",
   "street": "Plazza dal Mulin",
   "postcode": "7500",
   "city": "St. Moritz",
@@ -4693,7 +4868,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/566950902",
@@ -4722,7 +4899,7 @@
   "name": "Schminkbar",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "62",
   "street": "Gerbergasse",
   "postcode": "4001",
   "city": "Basel",
@@ -4730,7 +4907,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo 09:00-18:30; Tu-Fr 09:00-20:00; Sa 10:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5891646554",
@@ -4759,7 +4938,7 @@
   "name": "Süskind",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Scheitergasse",
   "postcode": "8024",
   "city": "Zürich",
@@ -4767,7 +4946,9 @@
   "website": null,
   "check_date": "2025-07-14",
   "opening_hours": "Tu-Fr 12:00-18:30; Sa 12:00-17:00; PH closed",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5894361735",
@@ -4850,14 +5031,17 @@
   "name": "Parfum Christian Dior",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "3",
+  "street": "Bahnhofstrasse",
+  "postcode": "7001",
+  "city": "Chur",
   "mall": null,
   "website": "http://www.dior.ch",
   "check_date": null,
-  "opening_hours": "Mo-Fr 08:30-20:00; Sa 08:00-18:00"
+  "opening_hours": "Mo-Fr 08:30-20:00; Sa 08:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6004841487",
@@ -4889,11 +5073,12 @@
   "housenumber": "11",
   "street": "Gwattstrasse",
   "postcode": "8808",
-  "city": null,
+  "city": "Pfäffikon SZ",
   "mall": null,
   "website": "http://www.dior.ch",
   "check_date": null,
-  "opening_hours": "Mo-Fr 09:00-21:00; Sa 08:00-18:00"
+  "opening_hours": "Mo-Fr 09:00-21:00; Sa 08:00-18:00",
+  "reverse_done": true
  },
  {
   "osm": "node/6004899087",
@@ -4904,7 +5089,7 @@
   "name": "Parfum Christian Dior",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Schauplatzgasse",
   "postcode": "3003",
   "city": "Bern",
@@ -4912,7 +5097,9 @@
   "website": "https://www.dior.com/",
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6004946985",
@@ -4923,14 +5110,17 @@
   "name": "Parfums Christian Dior",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
+  "housenumber": "10",
+  "street": "Bankstrasse",
   "postcode": "8400",
-  "city": null,
+  "city": "Winterthur",
   "mall": null,
   "website": "https://www.dior.com/",
   "check_date": null,
-  "opening_hours": "Mo-Fr 08:30-20:00; Sa 08:00-20:00"
+  "opening_hours": "Mo-Fr 08:30-20:00; Sa 08:00-20:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6004980886",
@@ -4968,7 +5158,8 @@
   "website": "https://www.dior.com/",
   "check_date": null,
   "opening_hours": "Mo-Sa 09:00-20:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6005034998",
@@ -5001,11 +5192,12 @@
   "housenumber": "40",
   "street": "Zentralstrasse",
   "postcode": "2501",
-  "city": null,
+  "city": "Biel/Bienne",
   "mall": null,
   "website": "https://www.dior.com/",
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true
  },
  {
   "osm": "node/6005110786",
@@ -5019,11 +5211,12 @@
   "housenumber": "30",
   "street": "Rue de Romont",
   "postcode": "1700",
-  "city": null,
+  "city": "Fribourg - Freiburg",
   "mall": null,
   "website": "https://www.dior.com/",
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true
  },
  {
   "osm": "node/6005233185",
@@ -5037,11 +5230,12 @@
   "housenumber": "1",
   "street": "Avenue du Général Guisan",
   "postcode": "1800",
-  "city": null,
+  "city": "Vevey",
   "mall": null,
   "website": "https://www.dior.com/",
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true
  },
  {
   "osm": "node/6005233285",
@@ -5108,7 +5302,7 @@
   "name": "Parfums Christian Dior",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "32",
   "street": "Buckhauserstrasse",
   "postcode": "8048",
   "city": "Zürich",
@@ -5116,7 +5310,9 @@
   "website": "https://www.dior.com/",
   "check_date": "2025-02-13",
   "opening_hours": "Mo-Fr 09:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6006734785",
@@ -5259,7 +5455,7 @@
   "name": "YOURS",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Waaghausgasse",
   "postcode": "3000",
   "city": "Bern",
@@ -5267,7 +5463,9 @@
   "website": "https://www.mixyourcandle.ch/partner-parfumerie-yours-bern",
   "check_date": "2026-10-20",
   "opening_hours": "Mo 10:00-18:30; Tu-We,Fr 09:00-18:30; Th 09:00-20:00; Sa 08:00-16:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6239721787",
@@ -5322,7 +5520,8 @@
   "website": "https://www.impo.ch/",
   "check_date": "2025-02-28",
   "opening_hours": "Mo-We 09:00-19:00; Th 09:00-21:00; Fr 09:00-20:00; Sa 09:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6372498642",
@@ -5370,13 +5569,15 @@
   "brand": null,
   "shop": "department_store",
   "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "street": "5",
+  "postcode": "2022",
+  "city": "La Grande-Béroche",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6416054885",
@@ -5387,7 +5588,7 @@
   "name": "The Corner",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Weinmarkt",
   "postcode": "6004",
   "city": "Luzern",
@@ -5395,7 +5596,9 @@
   "website": null,
   "check_date": "2023-07-04",
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6427427198",
@@ -5414,7 +5617,8 @@
   "website": "https://www.manor.ch/de/store-finder/store/BER",
   "check_date": null,
   "opening_hours": "Mo-We 09:00-19:00; Th 09:00-21:00; Fr 09:00-20:00; Sa 08:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6539603328",
@@ -5425,14 +5629,17 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "27",
+  "street": "Rue de Nidau / Nidaugasse",
+  "postcode": "2501",
+  "city": "Biel/Bienne",
   "mall": null,
   "website": "https://www.marionnaud.ch",
   "check_date": "2026-09-02",
-  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-17:00"
+  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-17:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6765651748",
@@ -5487,7 +5694,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6866734773",
@@ -5498,7 +5706,7 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "15",
   "street": "Rue du Mont-Blanc",
   "postcode": "1201",
   "city": "Genève",
@@ -5506,7 +5714,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Fr 10:00-19:00; Sa 10:00-18:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6898626567",
@@ -5518,13 +5728,15 @@
   "brand": null,
   "shop": "department_store",
   "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "street": "Toggenburggässlein",
+  "postcode": "9000",
+  "city": "St. Gallen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-We,Fr 10:00-18:30; Th 10:00-20:00; Sa 10:00-18:00"
+  "opening_hours": "Mo-We,Fr 10:00-18:30; Th 10:00-20:00; Sa 10:00-18:00",
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6990787385",
@@ -5626,13 +5838,15 @@
   "brand": "Import Parfumerie",
   "shop": "perfumery",
   "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "street": "Avenue Gustave Coindet",
+  "postcode": "1800",
+  "city": "Vevey",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7236311883",
@@ -5697,7 +5911,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "16",
   "street": "Mythencenterstrasse",
   "postcode": "6438",
   "city": "Ibach",
@@ -5705,7 +5919,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7395144129",
@@ -5742,7 +5958,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7418113606",
@@ -5779,7 +5996,8 @@
   "website": "https://www.manor.ch/de/store-finder/store/EMM",
   "check_date": null,
   "opening_hours": "Mo-Th 09:00-19:00; Fr 09:00-21:00; Sa 08:00-17:00; PH off",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7450557432",
@@ -5829,11 +6047,12 @@
   "housenumber": "11",
   "street": "Gwattstrasse",
   "postcode": "8808",
-  "city": null,
+  "city": "Pfäffikon SZ",
   "mall": null,
   "website": "https://www.marionnaud.ch/",
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true
  },
  {
   "osm": "node/7475449134",
@@ -6032,7 +6251,8 @@
   "website": "https://www.impo.ch/",
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7479697386",
@@ -6159,7 +6379,8 @@
   "website": "https://www.impo.ch/",
   "check_date": null,
   "opening_hours": "Mo-Sa 09:00-20:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7481154463",
@@ -6314,14 +6535,16 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Zürichstrasse",
+  "housenumber": "36",
+  "street": "Wässeristrasse",
   "postcode": "8349",
   "city": "Hinwil",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8090690978",
@@ -6332,14 +6555,17 @@
   "name": "Perfect Cosmetics",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "18",
+  "street": "Bahnhofplatz",
+  "postcode": "8401",
+  "city": "Winterthur",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Fr 10:00-19:30; Sa 10:00-17:00"
+  "opening_hours": "Mo-Fr 10:00-19:30; Sa 10:00-17:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8204874946",
@@ -6404,14 +6630,17 @@
   "name": "Coop City",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "18",
+  "street": "Marktgasse",
+  "postcode": "3605",
+  "city": "Thun",
   "mall": null,
   "website": "https://www.coop.ch/de/unternehmen/standorte-und-oeffnungszeiten/detail.html/2193/coop-city-city-kyburg.html",
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8486771213",
@@ -6422,14 +6651,17 @@
   "name": "Importparfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "57",
+  "street": "Bälliz",
+  "postcode": "3601",
+  "city": "Thun",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8486944498",
@@ -6440,14 +6672,17 @@
   "name": "Marionnaud",
   "brand": "Marionnaud",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "9",
+  "street": "Bälliz",
+  "postcode": "3600",
+  "city": "Thun",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/860658012",
@@ -6466,7 +6701,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Th 09:00-18:30; Fr 09:00-21:00; Sa 08:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/8625536669",
@@ -6479,12 +6715,13 @@
   "shop": "beauty",
   "housenumber": "106",
   "street": "Frauenfelderstrasse",
-  "postcode": null,
-  "city": null,
+  "postcode": "8404",
+  "city": "Winterthur",
   "mall": null,
   "website": null,
   "check_date": "2025-07-02",
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true
  },
  {
   "osm": "node/875822688",
@@ -6495,7 +6732,7 @@
   "name": "The Corner Shop",
   "brand": null,
   "shop": "hairdresser",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Fischerweg",
   "postcode": "3012",
   "city": "Bern",
@@ -6503,7 +6740,9 @@
   "website": "https://the-corner-shop.ch/",
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/885950742",
@@ -6514,14 +6753,17 @@
   "name": "Wax Inn",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Effingerstrasse",
   "postcode": "3008",
   "city": "Bern",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8880352817",
@@ -6532,14 +6774,16 @@
   "name": "Import Parfumerie",
   "brand": "Import Parfumerie",
   "shop": "perfumery",
-  "housenumber": null,
-  "street": null,
-  "postcode": null,
-  "city": null,
+  "housenumber": "39",
+  "street": "Rue de Nidau / Nidaugasse",
+  "postcode": "2502",
+  "city": "Biel/Bienne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8894388559",
@@ -6552,12 +6796,13 @@
   "shop": "perfumery",
   "housenumber": "9",
   "street": "Rue de l'Hôpital",
-  "postcode": null,
-  "city": null,
+  "postcode": "2000",
+  "city": "Neuchâtel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-18:00"
+  "opening_hours": "Mo-Fr 09:00-18:30; Sa 09:00-18:00",
+  "reverse_done": true
  },
  {
   "osm": "node/9115025606",
@@ -6630,7 +6875,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9530338984",
@@ -6648,7 +6894,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9794447820",
@@ -6659,7 +6907,7 @@
   "name": "Mizensir",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue Verdaine",
   "postcode": "1204",
   "city": "Genève",
@@ -6667,7 +6915,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/9979701993",
@@ -6718,7 +6968,7 @@
   "name": "Manor",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "9",
   "street": "Brunneggstrasse",
   "postcode": "9000",
   "city": "St. Gallen",
@@ -6726,7 +6976,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/1152718220",
@@ -6921,7 +7173,7 @@
   "name": "Coop City",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Bundesplatz",
   "postcode": "6300",
   "city": "Zug",
@@ -6929,7 +7181,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": "Mo-Fr 08:00-19:00; Th 08:00-21:00; Sa 08:00-17:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/379354229",
@@ -6948,7 +7202,8 @@
   "website": "https://www.marionnaud.ch/",
   "check_date": null,
   "opening_hours": "Mo-Fr 09:00-21:00; Sa 09:00-20:00; Su 10:00-20:00",
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/380099498",
@@ -7002,7 +7257,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/58166777",
@@ -7013,14 +7270,17 @@
   "name": "Coop City",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
+  "housenumber": "18",
+  "street": "Marktgasse",
   "postcode": "3600",
-  "city": null,
+  "city": "Thun",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": "Mo-We,Fr 08:00-18:30; Th 08:00-21:00; Sa 08:00-17:00"
+  "opening_hours": "Mo-We,Fr 08:00-18:30; Th 08:00-21:00; Sa 08:00-17:00",
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/80361673",
@@ -7031,7 +7291,7 @@
   "name": "CoopCity Rhône",
   "brand": "Coop City",
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Place de la Fusterie",
   "postcode": "1204",
   "city": "Genève",
@@ -7039,7 +7299,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/95288291",
@@ -7077,7 +7339,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/973585038",
@@ -7095,7 +7359,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/10037504136",
@@ -7196,14 +7462,17 @@
   "name": "Beauty Home Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "70",
   "street": "Steglitzer Damm",
   "postcode": "12169",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10238028918",
@@ -7366,7 +7635,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/10595210798",
@@ -7431,14 +7701,17 @@
   "name": "cosmetic lounge Leipzig",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "91b",
   "street": "William-Zipperer-Straße",
   "postcode": "04179",
   "city": "Leipzig",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1064696990",
@@ -7449,14 +7722,17 @@
   "name": "Parfümerie Pieper",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "51",
   "street": "Große Straße",
   "postcode": "49074",
   "city": "Osnabrück",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10648363513",
@@ -7539,14 +7815,17 @@
   "name": "Beauty Room Leipzig",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Schützenhausstraße",
   "postcode": "04315",
   "city": "Leipzig",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10870643475",
@@ -7557,14 +7836,17 @@
   "name": "Parfum Du",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Gutenbergstraße",
   "postcode": "47051",
   "city": "Duisburg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10940515954",
@@ -7719,14 +8001,17 @@
   "name": "Sylter Seifen Manufaktur",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Bi Miiren",
   "postcode": "25980",
   "city": "Morsum",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11167642705",
@@ -7791,7 +8076,7 @@
   "name": "Amarino Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1a",
   "street": "Limbecker Platz",
   "postcode": "45127",
   "city": "Essen",
@@ -7799,7 +8084,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11262517730",
@@ -7884,14 +8171,17 @@
   "name": "Areej Essence of Berlin",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "9",
   "street": "Am Nußbaum",
   "postcode": "10178",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11370748119",
@@ -7902,14 +8192,17 @@
   "name": "Mainz Nails City",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Neubrunnenstraße",
   "postcode": "55116",
   "city": "Mainz",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11385731117",
@@ -7928,7 +8221,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/11396600474",
@@ -8065,14 +8359,17 @@
   "name": "Hamburger Seifenwerkstatt",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Mönckebergstraße",
   "postcode": "20095",
   "city": "Hamburg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11708096499",
@@ -8101,7 +8398,7 @@
   "name": "Das Parfum & Beauty",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "21",
   "street": "Zum Quellenpark",
   "postcode": "65812",
   "city": "Bad Soden am Taunus",
@@ -8109,7 +8406,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11739232492",
@@ -8127,7 +8426,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1175615334",
@@ -8174,14 +8475,17 @@
   "name": "Hamburg Faces",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "95",
   "street": "Eiffestraße",
   "postcode": "20537",
   "city": "Hamburg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11878693514",
@@ -8264,14 +8568,17 @@
   "name": "OLE BERLIN",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Tieckstraße",
   "postcode": "10115",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1210996857",
@@ -8336,14 +8643,17 @@
   "name": "Beauty Nails Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "43",
   "street": "Güntzelstraße",
   "postcode": "10717",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12165822424",
@@ -8372,7 +8682,7 @@
   "name": "7Sky Parfumerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "36",
   "street": "Kurfürstendamm",
   "postcode": "10719",
   "city": "Berlin",
@@ -8380,7 +8690,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12212893086",
@@ -8391,14 +8703,17 @@
   "name": "IPL-SHR Studio Dortmund",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "109",
   "street": "Brackeler Hellweg",
   "postcode": "44309",
   "city": "Dortmund",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12319162967",
@@ -8417,7 +8732,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/12377572727",
@@ -8490,7 +8806,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1254201244",
@@ -8501,14 +8818,17 @@
   "name": "Berlin Beauty",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "50",
   "street": "Brunowstraße",
   "postcode": "13507",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12568536100",
@@ -8629,14 +8949,17 @@
   "name": "Infinity Beauty Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "46",
   "street": "Schillerstraße",
   "postcode": "10627",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12737422901",
@@ -8721,7 +9044,7 @@
   "name": "BARDI PERFUMES",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Prager Straße",
   "postcode": "01069",
   "city": "Dresden",
@@ -8729,7 +9052,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12909856631",
@@ -8740,7 +9065,7 @@
   "name": "Parfümerie de Vries",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "75",
   "street": "Berliner Allee",
   "postcode": "13088",
   "city": "Berlin",
@@ -8748,7 +9073,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12998545301",
@@ -8777,14 +9104,16 @@
   "name": "Parfüm Paradies",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "14;15",
   "street": "Kamp",
   "postcode": "49074",
   "city": "Osnabrück",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13031397850",
@@ -8831,14 +9160,17 @@
   "name": "Ulmer Kosmetik Haus Prestige",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "18",
   "street": "Fischergasse",
   "postcode": "89073",
   "city": "Ulm",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13136553468",
@@ -8849,7 +9181,7 @@
   "name": "City Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Wittelsbacherstraße",
   "postcode": "82319",
   "city": "Starnberg",
@@ -8857,7 +9189,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13136612453",
@@ -9014,7 +9348,7 @@
   "name": "Mery Parfum by Alina",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "44A",
   "street": "Pestalozzistraße",
   "postcode": "10627",
   "city": "Berlin",
@@ -9022,7 +9356,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13305434731",
@@ -9076,7 +9412,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1332867322",
@@ -9285,14 +9623,17 @@
   "name": "Skin Perfection Dresden",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "76a",
   "street": "Königsbrücker Straße",
   "postcode": "01099",
   "city": "Dresden",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13596808788",
@@ -9357,14 +9698,17 @@
   "name": "Skin Boutique Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Schönholzer Straße",
   "postcode": "13187",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13710927500",
@@ -9393,14 +9737,17 @@
   "name": "Trierer Kaufhaus",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "77",
   "street": "Fleischstraße",
   "postcode": "54290",
   "city": "Trier",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13845608084",
@@ -9429,7 +9776,7 @@
   "name": "Parfümerie Gabriel",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12/20",
   "street": "Gorkistraße",
   "postcode": "13507",
   "city": "Berlin",
@@ -9437,7 +9784,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13938411842",
@@ -9448,14 +9797,17 @@
   "name": "Hautpflegepraxis Stuttgart",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "159",
   "street": "Alexanderstraße",
   "postcode": "70180",
   "city": "Stuttgart",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13955577101",
@@ -9502,7 +9854,7 @@
   "name": "Kosmetik Parfümerie Ursula Heilig",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "2b",
   "street": "Brunnenstraße",
   "postcode": "65812",
   "city": "Bad Soden am Taunus",
@@ -9510,7 +9862,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1406573783",
@@ -9539,7 +9893,7 @@
   "name": "D&P perfumum",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Schillerstraße",
   "postcode": "27570",
   "city": "Bremerhaven",
@@ -9547,7 +9901,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/14096211473",
@@ -9692,7 +10048,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1547634421",
@@ -9711,7 +10068,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1570453802",
@@ -9812,7 +10170,7 @@
   "name": "Breuninger",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "59",
   "street": "Am Main-Taunus-Zentrum",
   "postcode": "65843",
   "city": "Sulzbach (Taunus)",
@@ -9820,7 +10178,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1616653599",
@@ -9885,7 +10245,7 @@
   "name": "Parfümerie Kämmerer",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "105",
   "street": "Waldfriedhofstraße",
   "postcode": "81377",
   "city": "München",
@@ -9893,7 +10253,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1717731677",
@@ -10038,7 +10400,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1912208500",
@@ -10103,7 +10466,7 @@
   "name": "Gabriel Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "43",
   "street": "Berkaer Straße",
   "postcode": "14199",
   "city": "Berlin",
@@ -10111,7 +10474,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2000958138",
@@ -10130,7 +10495,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2010268220",
@@ -10149,7 +10515,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2056624173",
@@ -10178,7 +10545,7 @@
   "name": "HC Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "25",
   "street": "Rathausplatz",
   "postcode": "22926",
   "city": "Ahrensburg",
@@ -10186,7 +10553,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2107753765",
@@ -10215,7 +10584,7 @@
   "name": "Parfümerie Becker",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "99",
   "street": "Luegallee",
   "postcode": "40545",
   "city": "Düsseldorf",
@@ -10223,7 +10592,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2171109897",
@@ -10252,7 +10623,7 @@
   "name": "Engelhorn GmbH",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Johannes-Reidel-Straße",
   "postcode": "69181",
   "city": "Leimen",
@@ -10260,7 +10631,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2190254101",
@@ -10333,7 +10706,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2283391057",
@@ -10434,14 +10808,17 @@
   "name": "Parfümerie Anne Schmidt",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "258",
   "street": "Saarbrücker Straße",
   "postcode": "66125",
   "city": "Saarbrücken",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2380608814",
@@ -10585,7 +10962,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2530886555",
@@ -10614,14 +10993,17 @@
   "name": "hairfree Institut Dresden Süd",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "6",
   "street": "Wilsdruffer Straße",
   "postcode": "01067",
   "city": "Dresden",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2613786448",
@@ -10632,7 +11014,7 @@
   "name": "Parfümerie Eltville",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Schwalbacher Straße",
   "postcode": "65343",
   "city": "Eltville",
@@ -10640,7 +11022,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2630545220",
@@ -10705,7 +11089,7 @@
   "name": "Parfümerie M. Krüger",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "295",
   "street": "Johannisthaler Chaussee",
   "postcode": "12351",
   "city": "Berlin",
@@ -10713,7 +11097,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2660067875",
@@ -10814,14 +11200,17 @@
   "name": "Medical One Beratungszentrum Mannheim",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "22",
   "street": "Augustaanlage",
   "postcode": "68165",
   "city": "Mannheim",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2795213717",
@@ -10958,7 +11347,7 @@
   "name": "Parfümerie Douglas",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "40",
   "street": "Königstraße",
   "postcode": "25335",
   "city": "Elmshorn",
@@ -10966,7 +11355,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2962573942",
@@ -10995,7 +11386,7 @@
   "name": "Beauty Corner Parfümerie Frank",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Arndtstraße",
   "postcode": "68259",
   "city": "Mannheim",
@@ -11003,7 +11394,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3011627747",
@@ -11126,7 +11519,7 @@
   "name": "Parfümerie Klink",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "1B",
   "street": "Epplestraße",
   "postcode": "70597",
   "city": "Stuttgart",
@@ -11134,7 +11527,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3168583649",
@@ -11145,14 +11540,17 @@
   "name": "Duft und Wärme",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "27",
   "street": "Hafengasse",
   "postcode": "89073",
   "city": "Ulm",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/319138413",
@@ -11235,7 +11633,7 @@
   "name": "Parfümerie Wiedemann",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Rosenkavalierplatz",
   "postcode": "81925",
   "city": "München",
@@ -11243,7 +11641,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3265346421",
@@ -11254,14 +11654,17 @@
   "name": "Parfümerie Temme",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "71",
   "street": "Neue Straße",
   "postcode": "89073",
   "city": "Ulm",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3276192625",
@@ -11380,14 +11783,16 @@
   "name": "CB Parfümerie",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
-  "street": "Klosterplatz",
+  "housenumber": "3",
+  "street": "Dänische Straße",
   "postcode": "24103",
   "city": "Kiel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3327874115",
@@ -11578,14 +11983,17 @@
   "name": "Nail Lounge Stuttgart",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Marienstraße",
   "postcode": "70178",
   "city": "Stuttgart",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3558718316",
@@ -11686,14 +12094,17 @@
   "name": "Beauty Life Bonn",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "18",
   "street": "Breite Straße",
   "postcode": "53111",
   "city": "Bonn",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/365108852",
@@ -11938,7 +12349,7 @@
   "name": "Parfümerie Schmitz",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Hansastraße",
   "postcode": "45276",
   "city": "Essen",
@@ -11946,7 +12357,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3977012183",
@@ -12155,14 +12568,17 @@
   "name": "O.C. Hairsystems | Frankfurt",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Taubenstraße",
   "postcode": "60313",
   "city": "Frankfurt am Main",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4280932040",
@@ -12353,14 +12769,17 @@
   "name": "Berlin Cosmetics Fabrikverkauf",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Bitterfelder Straße",
   "postcode": "12681",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/444782796",
@@ -12389,7 +12808,7 @@
   "name": "Apropos",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "12-14",
   "street": "Mittelstraße",
   "postcode": "50672",
   "city": "Köln",
@@ -12397,7 +12816,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4448386315",
@@ -12408,14 +12829,17 @@
   "name": "Berlin Beauty Lounge",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "46",
   "street": "Scharnweberstraße",
   "postcode": "13405",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4453817745",
@@ -12451,7 +12875,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4503167709",
@@ -12462,14 +12888,17 @@
   "name": "alessandro Berlin - Nail Lounge & Beauty SPA",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Habichtstraße",
   "postcode": "13505",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4506280545",
@@ -12498,7 +12927,7 @@
   "name": "Parfümerie Nickel",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Beim Hoophof",
   "postcode": "22880",
   "city": "Wedel",
@@ -12506,7 +12935,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4529580391",
@@ -12609,7 +13040,7 @@
   "name": "Parfümerie Pieper",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "411",
   "street": "Altenessener Straße",
   "postcode": "45329",
   "city": "Essen",
@@ -12617,7 +13048,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4582594589",
@@ -12709,7 +13142,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4754036013",
@@ -12720,7 +13155,7 @@
   "name": "Gabriel Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Bahnhofstraße",
   "postcode": "12305",
   "city": "Berlin",
@@ -12728,7 +13163,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4755998227",
@@ -12813,7 +13250,7 @@
   "name": "Parfümerie CB",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "26",
   "street": "Breite Straße",
   "postcode": "55124",
   "city": "Mainz",
@@ -12821,7 +13258,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4795171542",
@@ -12960,14 +13399,17 @@
   "name": "GxBar München",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Fritz-Hommel-Weg",
   "postcode": "80805",
   "city": "München",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4992789487",
@@ -13014,7 +13456,7 @@
   "name": "Aroma Oud & Parfüm",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "48",
   "street": "Badstraße",
   "postcode": "13357",
   "city": "Berlin",
@@ -13022,7 +13464,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5037135529",
@@ -13123,7 +13567,7 @@
   "name": "Parfümerie Pieper",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "27",
   "street": "Kölner Straße",
   "postcode": "51379",
   "city": "Leverkusen",
@@ -13131,7 +13575,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5265667722",
@@ -13214,14 +13660,17 @@
   "name": "kostüm berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "63",
   "street": "Pflügerstraße",
   "postcode": "12047",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/534156609",
@@ -13250,7 +13699,7 @@
   "name": "Parfümerie Becker",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Lessenicher Straße",
   "postcode": "53123",
   "city": "Bonn",
@@ -13258,7 +13707,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5407707940",
@@ -13323,14 +13774,17 @@
   "name": "perfect skin Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "15",
   "street": "Reinhardtstraße",
   "postcode": "10117",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5632858952",
@@ -13449,14 +13903,16 @@
   "name": "NagelStudio Wiesbaden",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Grabenstraße",
   "postcode": "65183",
   "city": "Wiesbaden",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5873399815",
@@ -13577,14 +14033,17 @@
   "name": "Parfum König",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "337",
   "street": "Friedrich-Engels-Allee",
   "postcode": "42283",
   "city": "Wuppertal",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6213544472",
@@ -13711,7 +14170,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6418434577",
@@ -13812,7 +14272,7 @@
   "name": "Dufte-Düfte Parfum-Lagerverkauf",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "87",
   "street": "Lützenkirchener Straße",
   "postcode": "51379",
   "city": "Leverkusen",
@@ -13820,7 +14280,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/655034975",
@@ -13849,14 +14311,17 @@
   "name": "Parfümerie Pieper",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "101",
   "street": "Hochstraße",
   "postcode": "47798",
   "city": "Krefeld",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6551824655",
@@ -13867,14 +14332,17 @@
   "name": "Parfüm Alamir",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "100",
   "street": "Ostwall",
   "postcode": "47799",
   "city": "Krefeld",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6589249874",
@@ -13975,7 +14443,7 @@
   "name": "Breuninger Outlet",
   "brand": null,
   "shop": "clothes",
-  "housenumber": null,
+  "housenumber": "23",
   "street": "Rotebühlplatz",
   "postcode": "70178",
   "city": "Stuttgart",
@@ -13983,7 +14451,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6710838659",
@@ -14030,14 +14500,17 @@
   "name": "Best Beauty Berlin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "47",
   "street": "Yorckstraße",
   "postcode": "10965",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6820719231",
@@ -14130,7 +14603,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/701495539",
@@ -14195,14 +14669,16 @@
   "name": "Prana Freiburg",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "54",
   "street": "Eisenbahnstraße",
   "postcode": "79098",
   "city": "Freiburg im Breisgau",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7223105998",
@@ -14321,14 +14797,17 @@
   "name": "The Sixteen",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Preußergäßchen",
   "postcode": "04109",
   "city": "Leipzig",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7552558925",
@@ -14465,14 +14944,17 @@
   "name": "Berlin Skin",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "41",
   "street": "Mommsenstraße",
   "postcode": "10629",
   "city": "Berlin",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8041658601",
@@ -14771,7 +15253,7 @@
   "name": "Parfümerie Becker",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "626f",
   "street": "Königswinterer Straße",
   "postcode": "53227",
   "city": "Bonn",
@@ -14779,7 +15261,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8989431422",
@@ -14916,14 +15400,17 @@
   "name": "Beautybar Erfurt",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Kürschnergasse",
   "postcode": "99084",
   "city": "Erfurt",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/977801740",
@@ -14959,7 +15446,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9801204173",
@@ -15014,7 +15503,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9879638287",
@@ -15043,7 +15533,7 @@
   "name": "Harbeck Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "19",
   "street": "Lankwitzer Straße",
   "postcode": "12209",
   "city": "Berlin",
@@ -15051,7 +15541,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/9913450379",
@@ -15142,7 +15634,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/1321651821",
@@ -15160,7 +15653,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/1321651830",
@@ -15178,7 +15673,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/1382095845",
@@ -15197,7 +15694,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/188186403",
@@ -15226,7 +15724,7 @@
   "name": "Parfümerie Schuback",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "133-135",
   "street": "Osdorfer Landstraße",
   "postcode": "22609",
   "city": "Hamburg",
@@ -15234,7 +15732,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/29359438",
@@ -15271,7 +15771,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/302865692",
@@ -15290,7 +15791,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/309621906",
@@ -15337,14 +15839,17 @@
   "name": "Yasmin Alsham Parfüms",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Kaiserpassage",
   "postcode": "76133",
   "city": "Karlsruhe",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/373751800",
@@ -15363,7 +15868,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/39878608",
@@ -15418,7 +15924,8 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/442585233",
@@ -15474,7 +15981,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/894757716",
@@ -15485,7 +15994,7 @@
   "name": "Sahling Düfte",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "36",
   "street": "Große Bleichen",
   "postcode": "20354",
   "city": "Hamburg",
@@ -15493,7 +16002,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/894757727",
@@ -15504,7 +16015,7 @@
   "name": "Ersan Parfümerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Heuberg",
   "postcode": "20354",
   "city": "Hamburg",
@@ -15512,7 +16023,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/910156680",
@@ -15530,7 +16043,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/951536430",
@@ -15559,14 +16074,17 @@
   "name": "Paris golden nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "72",
   "street": "Rue du Temple",
   "postcode": "75003",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10147468918",
@@ -15577,7 +16095,7 @@
   "name": "parfumerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "13",
   "street": "Avenue de Verdun",
   "postcode": "94200",
   "city": "Ivry-sur-Seine",
@@ -15585,7 +16103,9 @@
   "website": null,
   "check_date": null,
   "opening_hours": null,
-  "reverse_done": true
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10282169754",
@@ -15596,14 +16116,17 @@
   "name": "Paris XV Nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "119",
   "street": "Rue de la Convention",
   "postcode": "75015",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10307453862",
@@ -15614,14 +16137,17 @@
   "name": "Paris Queen Nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "89",
   "street": "Rue de Rennes",
   "postcode": "75006",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1031904781",
@@ -15650,14 +16176,17 @@
   "name": "Parfumerie de Reuilly",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "41",
   "street": "Boulevard de Reuilly",
   "postcode": "75012",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10706642345",
@@ -15668,14 +16197,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "44 bis",
   "street": "Place du Châtelet",
   "postcode": "45000",
   "city": "Orléans",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10707295337",
@@ -15686,14 +16218,17 @@
   "name": "Parfumerie Elisabeth",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Rue Théodore Dubois",
   "postcode": "51100",
   "city": "Reims",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10743135370",
@@ -15722,14 +16257,17 @@
   "name": "Paris Nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Rue Linné",
   "postcode": "75005",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10813987957",
@@ -15740,14 +16278,17 @@
   "name": "Paris Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "448",
   "street": "Rue Jean Jaurès",
   "postcode": "83137",
   "city": "Toulon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10926206474",
@@ -15758,14 +16299,17 @@
   "name": "Viet Nails Paris 7",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue du Sabot",
   "postcode": "75006",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10943139336",
@@ -15776,14 +16320,17 @@
   "name": "Parle Moi de Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "22",
   "street": "Rue du Four",
   "postcode": "75006",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10948470218",
@@ -15794,14 +16341,17 @@
   "name": "Paris 09",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "63",
   "street": "Rue de Maubeuge",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10968099699",
@@ -15830,14 +16380,17 @@
   "name": "Chris Nails Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "73",
   "street": "Rue Monge",
   "postcode": "75005",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11186474253",
@@ -15848,14 +16401,17 @@
   "name": "Bordeaux Manucure",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "24",
   "street": "Cours Portal",
   "postcode": "33000",
   "city": "Bordeaux",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11283095736",
@@ -15866,14 +16422,17 @@
   "name": "MS Beauté Parisienne",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "242",
   "street": "Rue du Faubourg Saint-Martin",
   "postcode": "75010",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11379666355",
@@ -15884,14 +16443,17 @@
   "name": "Savon de Marseille",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue du Docteur Denis Avierinos",
   "postcode": "13001",
   "city": "Marseille",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11528164152",
@@ -15956,14 +16518,17 @@
   "name": "L'Artisan Parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "167",
   "street": "Boulevard Saint-Germain",
   "postcode": "75006",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11748528985",
@@ -15974,14 +16539,17 @@
   "name": "Essential parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "182",
   "street": "Boulevard Saint-Germain",
   "postcode": "75006",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11773869613",
@@ -15992,14 +16560,17 @@
   "name": "Paris Nails",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "20b",
   "street": "Boulevard Voltaire",
   "postcode": "75011",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11783642821",
@@ -16010,14 +16581,17 @@
   "name": "perfume workshop",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "41",
   "street": "Rue de Provence",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12032862309",
@@ -16028,14 +16602,17 @@
   "name": "Beauté Parisienne",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "50",
   "street": "Boulevard de Vaugirard",
   "postcode": "75015",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12115995311",
@@ -16082,14 +16659,17 @@
   "name": "Nail Glam Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Rue de Naples",
   "postcode": "75008",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12156013708",
@@ -16154,14 +16734,17 @@
   "name": "La Parfumerie Autrement",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Rue Port Neuf",
   "postcode": "64100",
   "city": "Bayonne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12424874849",
@@ -16172,14 +16755,17 @@
   "name": "Aux ongles des Parisiens",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "90",
   "street": "Avenue Philippe Auguste",
   "postcode": "75011",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12441372581",
@@ -16233,7 +16819,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/12695378187",
@@ -16244,14 +16832,17 @@
   "name": "Laser Beauty Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "28",
   "street": "Avenue de Laumière",
   "postcode": "75019",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12748232510",
@@ -16269,7 +16860,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/12757263876",
@@ -16280,14 +16873,17 @@
   "name": "LC parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "82",
   "street": "Rue Guillaume Puy",
   "postcode": "84000",
   "city": "Avignon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12828521654",
@@ -16298,14 +16894,17 @@
   "name": "La Bel Parfumerie",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "132",
   "street": "Rue Maubèc",
   "postcode": "64100",
   "city": "Bayonne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12879082745",
@@ -16334,14 +16933,17 @@
   "name": "Bon parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Rue Sainte-Croix de la Bretonnerie",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12961534662",
@@ -16370,14 +16972,17 @@
   "name": "Parfums et senteurs du Pays Basque",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue de la Salie",
   "postcode": "64100",
   "city": "Bayonne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12992507401",
@@ -16388,14 +16993,17 @@
   "name": "Tahiti Sun Avignon",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "286",
   "street": "Rue du Bon Vent",
   "postcode": "84140",
   "city": "Avignon",
-  "mall": null,
+  "mall": "ZA La Cristole",
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13004244879",
@@ -16424,14 +17032,17 @@
   "name": "Eau de Menton",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "19",
   "street": "Rue Saint-Michel",
   "postcode": "06500",
   "city": "Menton",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13098461162",
@@ -16442,14 +17053,17 @@
   "name": "BDK Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "312",
   "street": "Rue Saint-Honoré",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13098461166",
@@ -16460,14 +17074,17 @@
   "name": "Parfums de Marly",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "326",
   "street": "Rue Saint-Honoré",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13152364784",
@@ -16496,14 +17113,17 @@
   "name": "Histoires de parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Rue du Roi Doré",
   "postcode": "75003",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13201403321",
@@ -16514,14 +17134,17 @@
   "name": "Institut Paris Sophie Beauté",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue Gossec",
   "postcode": "75012",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13241666111",
@@ -16532,14 +17155,17 @@
   "name": "Bureau du parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "30",
   "street": "Rue du Château d'Eau",
   "postcode": "75010",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13250019920",
@@ -16586,14 +17212,17 @@
   "name": "Henna beauté Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Place du 19 Mars 1962",
   "postcode": "93230",
   "city": "Romainville",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13376371687",
@@ -16604,14 +17233,17 @@
   "name": "Le Parfum Mythique",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Rue Pythéas",
   "postcode": "13001",
   "city": "Marseille",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13376584490",
@@ -16622,14 +17254,17 @@
   "name": "1850 Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Rue de l'Église",
   "postcode": "73120",
   "city": "Courchevel",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13416055701",
@@ -16640,14 +17275,17 @@
   "name": "Colin Bryan Opticien - Audioptic - Opticien Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "30",
   "street": "Rue de Chaillot",
   "postcode": "75116",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13620901201",
@@ -16658,14 +17296,17 @@
   "name": "Alya Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue du Sergent Bobillot",
   "postcode": "93100",
   "city": "Montreuil",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13684368782",
@@ -16676,14 +17317,17 @@
   "name": "Cocoonin Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Boulevard Saint-Marcel",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13725270327",
@@ -16748,14 +17392,17 @@
   "name": "Santé bien vivre Toulouse",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "131 bis",
   "street": "Avenue Antoine de Saint-Exupéry",
   "postcode": "31400",
   "city": "Toulouse",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1387678702",
@@ -16773,7 +17420,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/13974911369",
@@ -16784,14 +17433,17 @@
   "name": "Mademoiselle Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "18",
   "street": "Rue Manin",
   "postcode": "75019",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/14128786901",
@@ -16802,14 +17454,17 @@
   "name": "Lazen Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "26",
   "street": "Rue Godot-de-Mauroy",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/14131356596",
@@ -16820,14 +17475,17 @@
   "name": "Viet nails Paris 7",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "26",
   "street": "Rue Malar",
   "postcode": "75007",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/14212426001",
@@ -16845,7 +17503,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/14242424101",
@@ -16892,14 +17552,17 @@
   "name": "Hayari Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "16",
   "street": "Place Vendôme",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1636594186",
@@ -16910,14 +17573,17 @@
   "name": "Ongles de Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "131",
   "street": "Rue Michel-Ange",
   "postcode": "75016",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1788380520",
@@ -16935,7 +17601,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/1999876938",
@@ -16946,14 +17614,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "110",
   "street": "Rue de Provence",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2003145925",
@@ -16964,14 +17635,17 @@
   "name": "Queen Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Rue Brantôme",
   "postcode": "75003",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2124341548",
@@ -16982,14 +17656,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "23",
   "street": "Cours de Vincennes",
   "postcode": "75020",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2306418341",
@@ -17007,7 +17684,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2382295792",
@@ -17036,14 +17715,17 @@
   "name": "L'Artisan Parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "19",
   "street": "Rue des Francs Bourgeois",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/252521187",
@@ -17054,14 +17736,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "27",
   "street": "Rue du Palais Grillet",
   "postcode": "69002",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2621332316",
@@ -17090,14 +17775,17 @@
   "name": "Beleza Parfums",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "140",
   "street": "Boulevard Berthier",
   "postcode": "75017",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2922612714",
@@ -17108,14 +17796,17 @@
   "name": "Parfum Crush",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "107",
   "street": "Rue Manin",
   "postcode": "75019",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2986113935",
@@ -17126,14 +17817,17 @@
   "name": "Le 7 Parfumerie d'auteurs",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Rue du Sanglier",
   "postcode": "67000",
   "city": "Strasbourg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3007362445",
@@ -17144,14 +17838,17 @@
   "name": "Elle Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Rue du Rhin",
   "postcode": "75019",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3044139203",
@@ -17180,14 +17877,17 @@
   "name": "Amyra Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "361",
   "street": "Rue des Pyrénées",
   "postcode": "75020",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3203195775",
@@ -17198,14 +17898,17 @@
   "name": "Beauty Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "2",
   "street": "Rue Jean-Pierre Timbaud",
   "postcode": "75011",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3234042329",
@@ -17216,14 +17919,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "15",
   "street": "Route de la Sablière",
   "postcode": "13011",
   "city": "Marseille",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/331347360",
@@ -17252,14 +17958,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "31",
   "street": "Place du Châtelet",
   "postcode": "45000",
   "city": "Orléans",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/364001299",
@@ -17277,7 +17986,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3673517635",
@@ -17306,14 +18017,17 @@
   "name": "EstheClinic Paris 9e - Madeleine",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Rue de Caumartin",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3851637883",
@@ -17342,14 +18056,17 @@
   "name": "L’Atelier Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "224",
   "street": "Rue de Rivoli",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3980764071",
@@ -17360,14 +18077,17 @@
   "name": "L'Artisan Parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "209",
   "street": "Rue Saint-Honoré",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3980826552",
@@ -17378,14 +18098,17 @@
   "name": "Christian Dior Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "326",
   "street": "Rue Saint-Honoré",
   "postcode": "75001",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4222359333",
@@ -17414,14 +18137,17 @@
   "name": "Isaïa Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "19",
   "street": "Rue de Turin",
   "postcode": "75008",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4405542492",
@@ -17432,14 +18158,17 @@
   "name": "Espace beauté Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "37",
   "street": "Rue Nationale",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4416201807",
@@ -17450,14 +18179,17 @@
   "name": "Parfumerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "39",
   "street": "Rue de Tolbiac",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4430430366",
@@ -17468,14 +18200,17 @@
   "name": "Parfum & Cosmétique",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "137",
   "street": "Boulevard National",
   "postcode": "13003",
   "city": "Marseille",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4430481090",
@@ -17504,14 +18239,17 @@
   "name": "Rennes Beauty",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "37",
   "street": "Avenue Jean Janvier",
   "postcode": "35000",
   "city": "Rennes",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4544665921",
@@ -17522,14 +18260,17 @@
   "name": "Les Ateliers du Parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Rue Mably",
   "postcode": "21000",
   "city": "Dijon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4556243299",
@@ -17558,14 +18299,17 @@
   "name": "Parfums Beauté",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Rue Auguste Gervais",
   "postcode": "92130",
   "city": "Issy-les-Moulineaux",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4682063793",
@@ -17576,14 +18320,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "42",
   "street": "Place de la République",
   "postcode": "69002",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4716436191",
@@ -17594,14 +18341,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "15",
   "street": "Rue de Borda",
   "postcode": "40100",
   "city": "Dax",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4798399431",
@@ -17612,14 +18362,17 @@
   "name": "Institut de Beauté Anaïs",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Avenue André Ithurralde",
   "postcode": "64500",
   "city": "Saint-Jean-de-Luz",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4820458125",
@@ -17630,14 +18383,17 @@
   "name": "Amber Nail Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Boulevard Arago",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4867781117",
@@ -17648,14 +18404,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Rue de Rohan",
   "postcode": "35000",
   "city": "Rennes",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4921983821",
@@ -17673,7 +18432,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/497670355",
@@ -17702,14 +18463,17 @@
   "name": "Parfumerie Burdin",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Boulevard de Denain",
   "postcode": "75010",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5437489821",
@@ -17738,14 +18502,17 @@
   "name": "Essential parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "8",
   "street": "Rue des Francs Bourgeois",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5625316621",
@@ -17756,14 +18523,17 @@
   "name": "Montale Parfums",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
-  "street": "Rue Pierre Charron",
+  "housenumber": "68",
+  "street": "Rue Pierre-Charron",
   "postcode": "75008",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5919857169",
@@ -17774,14 +18544,17 @@
   "name": "Nicebear",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "4",
   "street": "Rue Mascoïnat",
   "postcode": "06000",
   "city": "Nice",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5919857171",
@@ -17792,14 +18565,17 @@
   "name": "Nice Organic",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "22",
   "street": "Rue Pairolière",
   "postcode": "06300",
   "city": "Nice",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5975803053",
@@ -17810,14 +18586,17 @@
   "name": "AGR Paris Cosmetic",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "70",
   "street": "Rue Doudeauville",
   "postcode": "75018",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6024439189",
@@ -17828,14 +18607,17 @@
   "name": "L'Eau de Cassis",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "21",
   "street": "Rue du Bourg Tibourg",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6035102988",
@@ -17846,14 +18628,17 @@
   "name": "Arcach'ongle",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "51",
   "street": "Cours Lamarque de Plaisance",
   "postcode": "33120",
   "city": "Arcachon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6050031125",
@@ -17864,14 +18649,17 @@
   "name": "Beyond Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "69",
   "street": "Rue de Croulebarbe",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6126229946",
@@ -17889,7 +18677,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6236014767",
@@ -17900,14 +18690,17 @@
   "name": "Atelier du Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Rue Jules Charpentier",
   "postcode": "37000",
   "city": "Tours",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6244086813",
@@ -17918,14 +18711,17 @@
   "name": "Parfumerie Burdin",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "3",
   "street": "Rue Dolomieu",
   "postcode": "75005",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6362566178",
@@ -17943,7 +18739,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/6431669885",
@@ -17972,14 +18770,17 @@
   "name": "Han Paris Nail",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "39",
   "street": "Rue de Clichy",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/6611851137",
@@ -18098,14 +18899,17 @@
   "name": "Manucure de Vincennes",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Rue de l'Église",
   "postcode": "94300",
   "city": "Vincennes",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7011219779",
@@ -18116,14 +18920,17 @@
   "name": "Paris Look",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "24",
   "street": "Boulevard Haussmann",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7033258055",
@@ -18134,14 +18941,17 @@
   "name": "Galeries Lafayettes Beaugrenelle",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "9",
   "street": "Rue Linois",
   "postcode": "75015",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7090395615",
@@ -18152,14 +18962,17 @@
   "name": "Parfumerie Florentine",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "167",
   "street": "Avenue Félix Faure",
   "postcode": "69003",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7237303476",
@@ -18170,14 +18983,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "108",
   "street": "Avenue du Docteur Vaillant",
   "postcode": "93230",
   "city": "Romainville",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7301436164",
@@ -18188,14 +19004,17 @@
   "name": "L'Artisan Parfumeur 1976",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "38",
   "street": "Passage de l'Argue",
   "postcode": "69002",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/738106219",
@@ -18206,14 +19025,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Rue Mathurin Berthome",
   "postcode": "79000",
   "city": "Niort",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7430033427",
@@ -18242,14 +19064,17 @@
   "name": "La bulle parisienne",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "20",
   "street": "Rue de la Glacière",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7534121211",
@@ -18260,14 +19085,17 @@
   "name": "L'Atelier Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "51",
   "street": "Place de la République",
   "postcode": "69002",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7566315101",
@@ -18278,14 +19106,17 @@
   "name": "L'Atelier Parfumé",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "27",
   "street": "Rue Tupin",
   "postcode": "69002",
   "city": "Lyon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7578372020",
@@ -18296,14 +19127,17 @@
   "name": "Parfumerie Damiette",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "35",
   "street": "Rue Damiette",
   "postcode": "76000",
   "city": "Rouen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7670969852",
@@ -18336,10 +19170,12 @@
   "street": "Rue Haute",
   "postcode": "31560",
   "city": "Nailloux",
-  "mall": null,
+  "mall": "Nailloux Outlet Village",
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7765645695",
@@ -18357,7 +19193,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/7772943850",
@@ -18368,14 +19206,17 @@
   "name": "Al-Jazeera Perfume",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "97",
   "street": "Avenue des Champs-Élysées",
   "postcode": "75008",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7778255898",
@@ -18386,14 +19227,17 @@
   "name": "Essential Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "32",
   "street": "Rue du Bourg Tibourg",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7899424906",
@@ -18404,14 +19248,17 @@
   "name": "Papillon Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "34",
   "street": "Rue Dunois",
   "postcode": "75013",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7904061585",
@@ -18422,14 +19269,17 @@
   "name": "Bon Parfumeur",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "11",
   "street": "Rue des Francs Bourgeois",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7904267486",
@@ -18440,14 +19290,17 @@
   "name": "L'atelier Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Rue Madame de Sévigné",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7904632744",
@@ -18458,14 +19311,17 @@
   "name": "Parle moi de Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "10",
   "street": "Rue Madame de Sévigné",
   "postcode": "75004",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/7925474506",
@@ -18483,7 +19339,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/8204027824",
@@ -18516,10 +19374,12 @@
   "street": "Rue du Bocage",
   "postcode": "49280",
   "city": "La Séguinière",
-  "mall": null,
+  "mall": "Zone d'activités de la Ménardière",
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/8405649589",
@@ -18530,14 +19390,17 @@
   "name": "Parfumelle",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "107bis",
   "street": "Rue Dalayrac",
   "postcode": "94120",
   "city": "Fontenay-sous-Bois",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8407657661",
@@ -18566,14 +19429,17 @@
   "name": "Institut de beauté Muriel",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
-  "street": "Boulevard victor hugo",
+  "housenumber": "35t",
+  "street": "Boulevard Victor Hugo",
   "postcode": "64500",
   "city": "Saint-Jean-de-Luz",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8825556816",
@@ -18609,7 +19475,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/8869732085",
@@ -18645,7 +19513,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/9048786411",
@@ -18674,14 +19544,17 @@
   "name": "Belle à Paris",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "68",
   "street": "Rue du Cardinal Lemoine",
   "postcode": "75005",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/997119417",
@@ -18692,14 +19565,16 @@
   "name": "Parfumerie Ambre et Musc",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "248",
   "street": "Boulevard Jean Jaurès",
   "postcode": "92100",
   "city": "Boulogne-Billancourt",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/9994766095",
@@ -18710,14 +19585,17 @@
   "name": "Élysées Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "7",
   "street": "Place Georges Clemenceau",
   "postcode": "64200",
   "city": "Biarritz",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "relation/10166422",
@@ -18728,14 +19606,16 @@
   "name": "Le Bon Marché",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue du Bac",
+  "housenumber": "24",
+  "street": "Rue de Sèvres",
   "postcode": "75007",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "relation/157606",
@@ -18764,14 +19644,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue Saint-Antoine",
+  "housenumber": "8",
+  "street": "Rue Notre-Dame",
   "postcode": "73000",
   "city": "Chambéry",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/1043734706",
@@ -18789,7 +19671,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/106243761",
@@ -18825,7 +19709,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/1138624454",
@@ -18843,7 +19729,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/121568522",
@@ -18854,14 +19742,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue de la Banque",
+  "housenumber": "17",
+  "street": "Boulevard de la République",
   "postcode": "71100",
   "city": "Chalon-sur-Saône",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/1293208898",
@@ -18872,14 +19762,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "8",
   "street": "Rue Guizot",
   "postcode": "30033",
   "city": "Nîmes",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/1329091406",
@@ -18890,14 +19783,16 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue Bellivet",
+  "housenumber": "74",
+  "street": "Rue de Bernières",
   "postcode": "14000",
   "city": "Caen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/133221344",
@@ -18945,13 +19840,15 @@
   "brand": null,
   "shop": "department_store",
   "housenumber": null,
-  "street": null,
+  "street": "D 580",
   "postcode": "14600",
   "city": "Honfleur",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/143926246",
@@ -18962,14 +19859,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "6",
   "street": "Avenue Jean Médecin",
   "postcode": "06000",
   "city": "Nice",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/145359186",
@@ -19005,7 +19905,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/155629480",
@@ -19016,14 +19918,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue Pierre-Aimé Lair",
+  "housenumber": "9",
+  "street": "Rue de la Fontaine",
   "postcode": "14000",
   "city": "Caen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/268150630",
@@ -19034,14 +19938,16 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": null,
+  "housenumber": "2",
+  "street": "Avenue de l'Europe",
   "postcode": "78140",
   "city": "Vélizy-Villacoublay",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/32568042",
@@ -19077,7 +19983,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/36699306",
@@ -19088,14 +19996,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "4-8",
   "street": "Rue Lapeyrouse",
   "postcode": "31000",
   "city": "Toulouse",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/379435553",
@@ -19113,7 +20023,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/38347516",
@@ -19124,14 +20036,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "102",
   "street": "Rue Nationale",
   "postcode": "37000",
   "city": "Tours",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/40426340",
@@ -19167,7 +20082,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/44050231",
@@ -19178,14 +20095,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Rue Jean Fougerat",
   "postcode": "16000",
   "city": "Angoulême",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/470231717",
@@ -19203,7 +20123,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/473049831",
@@ -19221,7 +20143,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/485065193",
@@ -19239,7 +20163,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/63222574",
@@ -19268,14 +20194,16 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue des Carmes",
+  "housenumber": "4",
+  "street": "Rue du Gros-Horloge",
   "postcode": "76000",
   "city": "Rouen",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/63613098",
@@ -19293,7 +20221,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/69224062",
@@ -19347,7 +20277,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/69226605",
@@ -19365,7 +20297,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/69226711",
@@ -19376,14 +20310,17 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "112",
   "street": "Rue de Provence",
   "postcode": "75009",
   "city": "Paris",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/69791153",
@@ -19412,14 +20349,16 @@
   "name": "Printemps",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "22",
   "street": "Rue Casimir Périer",
   "postcode": "76600",
   "city": "Le Havre",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/71999235",
@@ -19430,14 +20369,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Place Georges Clemenceau",
+  "housenumber": "3",
+  "street": "Rue Lavernis",
   "postcode": "64200",
   "city": "Biarritz",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/72684602",
@@ -19448,14 +20389,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "22",
   "street": "Rue Albert 1er",
   "postcode": "64100",
   "city": "Bayonne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/78081812",
@@ -19466,14 +20410,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Cours du 14 Juillet",
   "postcode": "33210",
   "city": "Langon",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/793052798",
@@ -19491,7 +20438,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "way/79336202",
@@ -19502,14 +20451,17 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Rue Gambetta",
   "postcode": "33500",
   "city": "Libourne",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/79979037",
@@ -19520,14 +20472,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Rue Saige",
+  "housenumber": "11",
+  "street": "Rue Sainte-Catherine",
   "postcode": "33000",
   "city": "Bordeaux",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/79980577",
@@ -19538,14 +20492,16 @@
   "name": "Galeries Lafayette",
   "brand": null,
   "shop": "department_store",
-  "housenumber": null,
-  "street": "Passage Bordefranque",
+  "housenumber": "14",
+  "street": "Rue Porte Dijeaux",
   "postcode": "33000",
   "city": "Bordeaux",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "way/86243852",
@@ -19628,14 +20584,17 @@
   "name": "Parfumerie Milady",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "59",
   "street": "Rue de Hollerich",
   "postcode": "1741",
   "city": "Luxembourg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3839161944",
@@ -19671,7 +20630,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/5589119902",
@@ -19700,14 +20661,17 @@
   "name": "Paris 8",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Rue Dominique Lang",
   "postcode": "3441",
   "city": "Dudelange",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/8593047485",
@@ -19736,14 +20700,17 @@
   "name": "Paris 8",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "60",
   "street": "Grand-Rue",
   "postcode": "1660",
   "city": "Luxembourg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10207279735",
@@ -19754,14 +20721,17 @@
   "name": "Loris Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "70",
   "street": "Duindoorn",
   "postcode": "2262 CN",
   "city": "Leidschendam",
-  "mall": null,
+  "mall": "Westfield Mall of the Netherlands",
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/10789718045",
@@ -19851,7 +20821,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/11645666305",
@@ -19869,7 +20841,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/11834699263",
@@ -19880,14 +20854,17 @@
   "name": "Scentique Parfumerie",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "9",
   "street": "Gasthuisstraat",
   "postcode": "5911 JK",
   "city": "Venlo",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/11997779536",
@@ -19898,14 +20875,17 @@
   "name": "Loris Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "14",
   "street": "Lomstraat",
   "postcode": "5911 GM",
   "city": "Venlo",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12091995531",
@@ -19916,14 +20896,17 @@
   "name": "Babassu",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "5",
   "street": "Burgsteeg",
   "postcode": "2312 JR",
   "city": "Leiden",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12138027449",
@@ -19934,14 +20917,17 @@
   "name": "Amsterdam Skin Clinic",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "71-1",
   "street": "Bilderdijkstraat",
   "postcode": "1053 XV",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1222424073",
@@ -19952,14 +20938,17 @@
   "name": "Amsterdam nail art studio",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "180-H",
   "street": "Haarlemmerdijk",
   "postcode": "1013 JG",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12750058252",
@@ -19970,14 +20959,17 @@
   "name": "Laser Clinic Amsterdam",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "42E",
   "street": "Hogeweg",
   "postcode": "1098 BW",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/12875624730",
@@ -19988,14 +20980,17 @@
   "name": "Pardole Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "196",
   "street": "Kalverstraat",
   "postcode": "1012 XH",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13005097692",
@@ -20006,14 +21001,17 @@
   "name": "Atelier Beauty Tilburg",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "139e",
   "street": "Groenstraat",
   "postcode": "5021 LN",
   "city": "Tilburg",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/13522213301",
@@ -20042,14 +21040,17 @@
   "name": "Beauty Amersfoort",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "9",
   "street": "Grote Sint Jansstraat",
   "postcode": "3811 HX",
   "city": "Amersfoort",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/1437208623",
@@ -20103,7 +21104,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/2498664283",
@@ -20744,14 +21747,17 @@
   "name": "Loris Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "1",
   "street": "Spilstraat",
   "postcode": "6211 CN",
   "city": "Maastricht",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/2804898810",
@@ -21140,14 +22146,17 @@
   "name": "Kappé Perfumes & Colours",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "109",
   "street": "Vertrekpassage",
   "postcode": "1118 AZ",
   "city": "Haarlemmermeer",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/3467376967",
@@ -21165,7 +22174,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/3940466460",
@@ -21219,7 +22230,9 @@
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true
  },
  {
   "osm": "node/4455062076",
@@ -21248,14 +22261,17 @@
   "name": "Skins Cosmetics",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
+  "housenumber": "135A",
   "street": "Van Oldenbarneveltstraat",
   "postcode": "3012 GW",
   "city": "Rotterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4606224749",
@@ -21284,14 +22300,17 @@
   "name": "Ariane Inden Noordwijkerhout",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "17",
   "street": "Zeestraat",
   "postcode": "2211 XA",
   "city": "Noordwijk",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/4688265763",
@@ -21428,14 +22447,17 @@
   "name": "Parfumerie Douglas",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "12",
   "street": "Molenstraat",
   "postcode": "2242 HT",
   "city": "Wassenaar",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/5567654511",
@@ -21464,14 +22486,17 @@
   "name": "Amsterdam Nail Art Studio",
   "brand": null,
   "shop": "beauty",
-  "housenumber": null,
+  "housenumber": "447A",
   "street": "Singel",
   "postcode": "1012 WP",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/590389090",
@@ -21500,14 +22525,17 @@
   "name": "Pien Parfum",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "33",
   "street": "David Vosstraat",
   "postcode": "1063 HV",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/600512855",
@@ -21554,14 +22582,17 @@
   "name": "Celeste Parfums",
   "brand": null,
   "shop": "perfumery",
-  "housenumber": null,
+  "housenumber": "965A",
   "street": "Frederikstraat",
   "postcode": "2514 LR",
   "city": "Den Haag",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "photon_reverse_done": true,
+  "address_from": "reverse"
  },
  {
   "osm": "node/848971561",
@@ -21608,13 +22639,15 @@
   "name": "Skins Cosmetics",
   "brand": null,
   "shop": "cosmetics",
-  "housenumber": null,
-  "street": "Van Baerlestraat",
+  "housenumber": "50",
+  "street": "Paulus Potterstraat",
   "postcode": "1071 AN",
   "city": "Amsterdam",
   "mall": null,
   "website": null,
   "check_date": null,
-  "opening_hours": null
+  "opening_hours": null,
+  "reverse_done": true,
+  "address_from": "reverse"
  }
 ]

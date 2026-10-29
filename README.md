@@ -16,7 +16,8 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 
 ## Usage
 ```bash
-python3 harvest_osm.py         # refresh OSM data (slow: Overpass + Nominatim rate limits)
+python3 harvest_osm.py         # refresh OSM data (slow: Overpass + Photon + Nominatim rate limits)
+python3 harvest_osm.py photon-cities reverse   # Overpass down: Photon-only refresh
 python3 build_perfumeries.py   # rebuild after editing RAW or the harvest
 open index.html                # or: python3 -m http.server
 ```
@@ -26,19 +27,27 @@ open index.html                # or: python3 -m http.server
    one by one. They win over any OSM duplicate (same name within 150 m).
 2. **OSM harvest**:
    - every `shop=perfumery` / `shop=department_store`, and beauty shops whose name says
-     perfume, inside ~100 target cities (Paris → Courchevel, Knokke, Laren, Sylt, Gstaad…);
+     perfume, inside ~230 target cities and affluent municipalities (all Paris arrondissements,
+     Courchevel, Knokke, Laren, Wassenaar, Sylt, Baden-Baden, Gstaad, Zermatt, Esch-sur-Alzette…);
+   - Photon text search per city (perfume words + the city's own name), splitting the bbox
+     into quadrants whenever a query hits Photon's 50-result cap;
    - luxury networks country-wide by name (Galeries Lafayette, Printemps, INNO, De Bijenkorf,
      Breuninger, Globus, Manor, Bongénie, Skins, Paris 8, Apropos…).
 3. **Filtering** (`classify`): known networks get a network profile; mass-market chains
    (Douglas, Sephora, Marionnaud, ICI Paris XL, Rituals…) and monobrand houses (Chanel,
    Guerlain, Diptyque, Le Labo…, brand fit = 0) are dropped; remaining perfumeries are
    kept as *independent perfumeries* with a neutral profile.
-4. **Validation**: type/openness enums, score ranges, coordinates inside the country,
+   `EXCLUDE` also drops outlets, food halls, lingerie floors, nail/brow salons, dupe/oud/import
+   discounters, workshops and monobrand houses the `MONO` list misses.
+4. **Addresses**: shops without a house number get one from Nominatim reverse (zoom 18), then
+   from the nearest numbered OSM address within 40 m on the same street (Photon reverse).
+5. **Validation**: type/openness enums, score ranges, coordinates inside the country,
    street + house number + postcode present, no duplicates, no monobrand. The build fails
    on any error.
 
 ## Schema
-`id, name, type, country, country_name, city, full_address, lat, lng, tier_score (1-100),
+`id, name, type, country, country_name, city, district (Paris/Lyon/Marseille arrondissement or
+Brussels commune, else null), full_address, lat, lng, tier_score (1-100),
 brand_alignment_score (0-100), single_sku_openness (High/Med/Low),
 customer_experience_rating (1-5 or null), cx_traits[], sentiment_summary, network,
 address_confidence, address_source, source, google_maps_url, instagram_search_url`
@@ -57,6 +66,6 @@ address_confidence, address_source, source, google_maps_url, instagram_search_ur
 
 ## Map
 - Marker colour = store type, radius = tier score; canvas renderer keeps 300+ markers smooth.
-- Filters: country toggles, type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
+- Filters: country toggles, city (follows selected countries), type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).
 - Click a column header to sort (tier, fit, CX…). Click a row → map flies to store.

@@ -315,6 +315,18 @@ MONO = re.compile(
     r"maison de parfum berry|j\.f\. schwarzlose|schwarzlose|t\. le clerc|officine|hugh parsons|"
     r"atelier du parfum|studio des parfums|grandiflora",
     re.I)
+# Not a fragrance retail floor, even inside a kept network (outlets, food halls, lingerie,
+# salons whose name only looks like "perf…"), plus dupe/import/oud discounters and workshops.
+EXCLUDE = re.compile(
+    r"outlet|lebensmittel|dessous|w[äa]sche|\bsport|\bfood\b|living lab|nails?\b|brows|lash|coiff|"
+    r"frank provost|perfect|beautyperformance|my geisha|^bl$|"
+    r"[ée]quivalence|lagerverkauf|import ?parf|\bhc.?parf|\boud\b|paradies|\bwelt\b|pien parf|7sky|"
+    r"d&p perf|bardi|amarino|mery parfum|alsham|alamir|latakia|jouja|amo.?ash|areej|abuaisha|"
+    r"claudi[ao] lopez|^parfum du$|parf[üu]merei 123|workshop|atelier parfum|ateliers du parfumeur|"
+    # monobrand houses missed by MONO
+    r"guy delforge|4711|bon parfumeur|eau de menton|eau de cassis|parfums de la bastide|"
+    r"senteurs du pays basque|hayari|yagan",
+    re.I)
 KEEP_SHOPS = {"perfumery", "cosmetics", "beauty", "department_store", "clothes", "boutique", "fashion",
               "gift", "interior_decoration", "houseware", "variety_store", "fashion_accessories"}
 
@@ -340,7 +352,7 @@ def classify(r):
     label = f"{name} {r.get('brand') or ''}"
     if not name or r.get("shop") not in KEEP_SHOPS:
         return None
-    if MONO.search(label):
+    if MONO.search(label) or EXCLUDE.search(label):
         return None
     for pattern, chain, *profile in CHAIN_PROFILES:
         if re.search(pattern, name, re.I) or (r.get("brand") and re.search(pattern, r["brand"], re.I)):
@@ -348,7 +360,7 @@ def classify(r):
     if MASS.search(label):
         return None
     if r["shop"] in ("perfumery",) or (r["shop"] in ("cosmetics", "beauty")
-                                       and re.search(r"parf|perf|duft|profum|fragr", name, re.I)):
+                                       and re.search(r"parf|perfum|duft|profum|fragr", name, re.I)):
         return INDEPENDENT
     return None
 
@@ -443,8 +455,33 @@ def validate(recs):
     return errors
 
 
+# One spelling per city so the city filter does not split curated and OSM rows
+CITY_ALIASES = {
+    "Antwerpen": "Antwerp", "Gent": "Ghent", "Brugge": "Bruges", "Bruxelles": "Brussels",
+    "Genève": "Geneva", "Luzern": "Lucerne", "St.Gallen": "St. Gallen", "München": "Munich",
+    "Köln": "Cologne", "Nürnberg": "Nuremberg", "Freiburg": "Freiburg im Breisgau",
+    "Eltville": "Eltville am Rhein", "'s-Gravenhage": "The Hague", "Den Haag": "The Hague",
+}
+BRUSSELS_COMMUNES = {"Ixelles", "Uccle", "Woluwe-Saint-Lambert", "Woluwe-Saint-Pierre", "Etterbeek",
+                     "Saint-Gilles", "Schaerbeek", "Forest", "Auderghem", "Watermael-Boitsfort", "Anderlecht",
+                     "Saint-Josse-ten-Noode", "Jette", "Evere", "Molenbeek-Saint-Jean", "Koekelberg",
+                     "Ganshoren", "Berchem-Sainte-Agathe"}
+
+
+def canonical_city(cc, city):
+    """(city, commune) — bilingual Belgian names keep the first part; Brussels communes roll up."""
+    if cc == "BE" and " - " in city:
+        city = city.split(" - ")[0]
+    if cc == "BE" and city in BRUSSELS_COMMUNES:
+        return "Brussels", city
+    return CITY_ALIASES.get(city, city), None
+
+
 def district(r):
-    """Paris / Lyon / Marseille arrondissement from the postcode (75008 -> "Paris 8e")."""
+    """Paris / Lyon / Marseille arrondissement from the postcode (75008 -> "Paris 8e"),
+    or the Brussels commune."""
+    if r.get("commune"):
+        return f"Brussels – {r['commune']}"
     m = re.search(r"\b(75|69|13)0(\d\d)\b", r["full_address"])
     city = {"75": "Paris", "69": "Lyon", "13": "Marseille"}.get(m.group(1)) if m else None
     if r["country"] != "FR" or not city or slug(r["city"]) != slug(city):
@@ -456,8 +493,10 @@ def district(r):
 def build():
     merged, dropped = merge()
     errors = validate(merged)
-    merged.sort(key=lambda r: (r["country"], r["city"], -r["tier_score"], r["name"]))
     records = []
+    for r in merged:
+        r["city"], r["commune"] = canonical_city(r["country"], r["city"])
+    merged.sort(key=lambda r: (r["country"], r["city"], -r["tier_score"], r["name"]))
     for i, r in enumerate(merged, 1):
         records.append({
             "id": i,

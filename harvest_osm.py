@@ -341,6 +341,45 @@ def complete_addresses(rows):
             save(rows)
 
 
+def complete_numbers(rows):
+    """Nominatim found no number: take the nearest numbered OSM address within 40 m on the
+    same street (Photon reverse), so the address points at the shop's own building."""
+    def norm(x):
+        return "".join(ch for ch in (x or "").lower() if ch.isalnum())
+    todo = [r for r in rows.values() if not r["housenumber"] and r["lat"] and not r.get("photon_reverse_done")]
+    print(f"  photon reverse for {len(todo)} rows")
+    for i, r in enumerate(todo, 1):
+        r["photon_reverse_done"] = True
+        try:
+            feats = get("https://photon.komoot.io/reverse?" + urllib.parse.urlencode(
+                {"lat": r["lat"], "lon": r["lng"], "limit": 15, "radius": 0.04}), timeout=60)["features"]
+        except Exception as ex:
+            print(f"    photon reverse {r['osm']}: {ex}", file=sys.stderr)
+            continue
+        time.sleep(0.4)
+        street = norm(r["street"])
+        best = None
+        for f in feats:
+            p = f["properties"]
+            if not p.get("housenumber") or not p.get("street"):
+                continue
+            if street and norm(p["street"]) != street:
+                continue
+            lng, lat = f["geometry"]["coordinates"]
+            d = (lat - r["lat"]) ** 2 + ((lng - r["lng"]) * 0.66) ** 2
+            if best is None or d < best[0]:
+                best = (d, p)
+        if best:
+            p = best[1]
+            r["housenumber"], r["street"] = p["housenumber"], p["street"]
+            r["postcode"] = r["postcode"] or p.get("postcode")
+            r["city"] = r["city"] or p.get("city")
+            r["address_from"] = "reverse"
+        if i % 50 == 0:
+            print(f"    {i}/{len(todo)}")
+            save(rows)
+
+
 def save(rows):
     (SRC / "osm_raw.json").write_text(
         json.dumps(sorted(rows.values(), key=lambda r: (r["cc"], r["osm"])), ensure_ascii=False, indent=1) + "\n",
@@ -351,7 +390,7 @@ def main():
     SRC.mkdir(exist_ok=True)
     path = SRC / "osm_raw.json"
     rows = {r["osm"]: r for r in json.loads(path.read_text())} if path.exists() else {}
-    steps = sys.argv[1:] or ["cities", "photon-cities", "chains", "reverse"]
+    steps = sys.argv[1:] or ["cities", "photon-cities", "chains", "reverse"]  # "reverse" includes the Photon pass
     if "cities" in steps:
         harvest_cities(city_bboxes(), rows)
         save(rows)
@@ -365,6 +404,9 @@ def main():
         save(rows)
     if "reverse" in steps:
         complete_addresses(rows)
+        save(rows)
+    if "reverse" in steps or "reverse-photon" in steps:
+        complete_numbers(rows)
         save(rows)
     print(f"{len(rows)} raw OSM rows -> {path.relative_to(ROOT)}")
 

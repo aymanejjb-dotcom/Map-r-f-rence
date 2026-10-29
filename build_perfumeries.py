@@ -16,6 +16,14 @@ neutral default and no CX rating. Every row carries street + house number + post
 and building-level coordinates, so `address_confidence` is always "confirmed".
 Monobrand flagships (no third-party brands, brand fit = 0) and generic placeholders
 are deliberately excluded.
+
+B2B sales fields (single-SKU launch pipeline) are added to every row:
+  launch_priority       derived from store type (indie niche = Tier 1 quick win)
+  decision_maker_role   who to pitch, derived from type + network
+  pipeline_status       "Not Contacted" unless sources/crm.json says otherwise
+  notes_prospections    free text, from sources/crm.json
+sources/crm.json maps `crm_key` -> {pipeline_status, decision_maker_role, notes_prospections};
+export it from the map ("Export CRM JSON") so outreach progress survives rebuilds.
 """
 import json
 import math
@@ -214,6 +222,14 @@ BBOX = {
     "FR": (41.3, 51.2, -5.2, 9.6), "BE": (49.5, 51.5, 2.5, 6.4), "NL": (50.7, 53.6, 3.3, 7.3),
     "DE": (47.2, 55.1, 5.8, 15.1), "LU": (49.4, 50.2, 5.7, 6.6), "CH": (45.8, 47.9, 5.9, 10.5),
 }
+PIPELINE = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"]
+PRIORITY = {NB: "Tier 1 - Quick Win (Indie Niche)", CS: "Tier 2 - Selective Concept Store",
+            DS: "Tier 3 - Long-term Dept Store"}
+ROLES = {"Head Buyer", "Store Manager", "Founder"}
+# Estimated confidence (%) that the address reaches the shop door, by where it came from
+ADDRESS_SCORE = {"curated": 100, "osm_tags": 90, "osm_reverse": 75}
+CRM_FIELDS = ("pipeline_status", "decision_maker_role", "notes_prospections")
+CRM_FILE = Path(__file__).parent / "sources" / "crm.json"
 COUNTRY_NAMES = {"FR": "France", "BE": "Belgium", "NL": "Netherlands", "DE": "Germany", "LU": "Luxembourg", "CH": "Switzerland"}
 COUNTRY_SUFFIX = {"FR": "France", "BE": "Belgique", "NL": "Pays-Bas", "DE": "Allemagne", "LU": "Luxembourg", "CH": "Suisse"}
 
@@ -490,9 +506,32 @@ def district(r):
     return f"{city} {n}{'er' if n == 1 else 'e'}"
 
 
+def crm_key(r):
+    """Stable across rebuilds (ids are not): name slug + coordinates to ~100 m."""
+    return f"{slug(r['name']).replace(' ', '-')}@{r['lat']:.3f},{r['lng']:.3f}"
+
+
+def decision_maker(r):
+    # Chains and department stores buy centrally; independents are run by their founder
+    chain = r["network"] not in (None, INDEPENDENT[0])
+    if r["type"] == DS or (chain and r["type"] == NB):
+        return "Head Buyer"
+    return "Store Manager" if chain else "Founder"
+
+
+def load_crm():
+    crm = json.loads(CRM_FILE.read_text(encoding="utf-8")) if CRM_FILE.exists() else {}
+    errors = [f"crm.json {k}: bad pipeline_status {v['pipeline_status']}"
+              for k, v in crm.items() if v.get("pipeline_status", PIPELINE[0]) not in PIPELINE]
+    errors += [f"crm.json {k}: bad decision_maker_role {v['decision_maker_role']}"
+               for k, v in crm.items() if v.get("decision_maker_role", "Founder") not in ROLES]
+    return crm, errors
+
+
 def build():
     merged, dropped = merge()
-    errors = validate(merged)
+    crm, crm_errors = load_crm()
+    errors = validate(merged) + crm_errors
     records = []
     for r in merged:
         r["city"], r["commune"] = canonical_city(r["country"], r["city"])
@@ -517,11 +556,24 @@ def build():
             "sentiment_summary": r["sentiment_summary"],
             "network": r["network"],
             "address_confidence": "confirmed",
+            "address_confidence_score": ADDRESS_SCORE[r["address_source"]],
             "address_source": r["address_source"],
             "source": r["source"],
             "google_maps_url": "https://www.google.com/maps/search/?api=1&query=" + quote_plus(f"{r['name']}, {r['full_address']}"),
             "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=" + quote_plus(f"{r['name']} {r['city']}"),
+            "crm_key": crm_key(r),
+            "launch_priority": PRIORITY[r["type"]],
+            "decision_maker_role": decision_maker(r),
+            "pipeline_status": PIPELINE[0],
+            "notes_prospections": "",
         })
+        records[-1].update({k: v for k, v in crm.get(records[-1]["crm_key"], {}).items() if k in CRM_FIELDS})
+    keys = Counter(r["crm_key"] for r in records)
+    errors += [f"duplicate crm_key: {k}" for k, n in keys.items() if n > 1]
+    # Stores that left the harvest keep their CRM history in crm.json; only warn
+    orphans = [k for k in crm if k not in keys]
+    if orphans:
+        print(f"warning: {len(orphans)} crm.json entries match no store: {', '.join(orphans[:5])}", file=sys.stderr)
     return records, errors, dropped
 
 
@@ -538,6 +590,7 @@ def main():
     print(f"{len(records)} stores -> perfumeries.json / perfumeries.js ({dropped} OSM rows filtered out)")
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("country")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("type")))
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("pipeline_status")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("source") if k == "curated") +
           f", osm: {sum(r['source'].startswith('osm') for r in records)}")
 

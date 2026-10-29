@@ -8,6 +8,7 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 |---|---|
 | `harvest_osm.py` | Network step: harvests stockists from OpenStreetMap into `sources/osm_raw.json` |
 | `sources/cities.json` | Cached bounding boxes of the target cities |
+| `sources/crm.json` | Optional: pipeline status / decision maker / notes per `crm_key`, exported from the map |
 | `sources/osm_raw.json` | Raw OSM harvest (everything looked at, before filtering) |
 | `build_perfumeries.py` | Offline: curated rows + filtered OSM rows → validation → `perfumeries.json` / `.js` |
 | `perfumeries.json` | Canonical dataset |
@@ -50,7 +51,21 @@ open index.html                # or: python3 -m http.server
 Brussels commune, else null), full_address, lat, lng, tier_score (1-100),
 brand_alignment_score (0-100), single_sku_openness (High/Med/Low),
 customer_experience_rating (1-5 or null), cx_traits[], sentiment_summary, network,
-address_confidence, address_source, source, google_maps_url, instagram_search_url`
+address_confidence, address_confidence_score, address_source, source, google_maps_url, instagram_search_url,
+crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospections`
+
+### B2B sales fields (single-SKU launch)
+| Field | Values |
+|---|---|
+| `launch_priority` | `Tier 1 - Quick Win (Indie Niche)` (niche boutiques), `Tier 2 - Selective Concept Store`, `Tier 3 - Long-term Dept Store` |
+| `decision_maker_role` | `Founder` (independents), `Store Manager` (concept-store chains), `Head Buyer` (niche chains, department stores) |
+| `pipeline_status` | `Not Contacted`, `Sample Sent`, `Meeting Booked`, `Partner Active`, `Declined` |
+| `notes_prospections` | free text logged after each contact |
+| `address_confidence_score` | estimated % that the address reaches the door: curated 100, OSM tags 90, inferred house number 75 |
+| `crm_key` | `name-slug@lat,lng` (3 decimals), stable across rebuilds; ids are not |
+
+Defaults are derived in `build_perfumeries.py`; `sources/crm.json` overrides them. The build
+fails on an unknown status or role and warns about entries that no longer match a store.
 
 ## Data caveats
 - `address_confidence` is always `confirmed`: every row has street, house number and
@@ -69,3 +84,15 @@ address_confidence, address_source, source, google_maps_url, instagram_search_ur
 - Filters: country toggles, city (follows selected countries), type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).
 - Click a column header to sort (tier, fit, CX…). Click a row → map flies to store.
+
+## Sales pipeline (CRM)
+- Dashboard: total target stores, high-priority (Tier 1) targets and quick wins, active pipeline
+  (sample sent + meeting booked + partner active) with a status funnel, average address confidence.
+  All tiles follow the filters.
+- Filters: pipeline status, launch priority, and a **High-Priority Quick Wins** toggle
+  (Tier 1, High single-SKU openness, fit ≥ 70, not yet partner or declined).
+- Status, decision maker and notes are editable in the table; marker rings take the status colour.
+  Edits are kept in this browser (localStorage) until exported.
+- **Export CSV**: rows currently shown, in table order, for outreach campaigns (UTF-8, Excel-ready).
+- **Export CRM JSON**: save as `sources/crm.json` and run `python3 build_perfumeries.py` to bake
+  the pipeline into `perfumeries.json` and share it through git.

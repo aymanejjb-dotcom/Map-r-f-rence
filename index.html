@@ -13,16 +13,19 @@
   --bg: #f7f4ef; --panel: #ffffff; --ink: #1f1b16; --muted: #6f665b; --line: #e4ddd2;
   --accent: #8a6a3b;
   --niche: #7b2d5b; --concept: #2f6f6a; --dept: #b8862f;
+  --s-nc: #a59c90; --s-sample: #3d6fb4; --s-meet: #c27a12; --s-partner: #2e8a4f; --s-declined: #b23a3a;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
     --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
+  --s-nc: #6f665b; --s-sample: #6f9fe0; --s-meet: #e3a043; --s-partner: #5cc27f; --s-declined: #e06a6a;
   }
 }
 :root[data-theme="dark"] {
   --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
   --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
+  --s-nc: #6f665b; --s-sample: #6f9fe0; --s-meet: #e3a043; --s-partner: #5cc27f; --s-declined: #e06a6a;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
@@ -30,15 +33,33 @@ body { background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-u
 header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 16px 6px; }
 h1 { font: 600 26px/1.1 "Cormorant Garamond", Georgia, serif; margin: 0; letter-spacing: .2px; }
 .sub { color: var(--muted); font-size: 13px; }
-.kpis { margin-left: auto; display: flex; gap: 14px; font-size: 13px; color: var(--muted); }
-.kpis b { color: var(--ink); font-weight: 600; }
+/* Pipeline dashboard */
+.dash { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 6px 16px 8px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.tile .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.tile b { font: 600 26px/1.15 "Cormorant Garamond", Georgia, serif; }
+.tile b small { font: 500 13px Inter, system-ui, sans-serif; color: var(--muted); }
+.tile .hint { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.funnel { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--line); margin-top: 4px; gap: 1px; }
+.funnel i { display: block; }
+.st { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; white-space: nowrap; }
+.st::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--muted)); flex: none; }
+.pri { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid var(--line); }
+.pri.t1 { color: var(--niche); border-color: currentColor; }
+.pri.t2 { color: var(--concept); border-color: currentColor; }
+.pri.t3 { color: var(--muted); }
+.tabulator-cell.editable { cursor: text; }
+.tabulator-cell.editable:hover { box-shadow: inset 0 0 0 1px var(--accent); }
+.note { color: var(--muted); }
+.actions { display: flex; gap: 6px; margin-left: auto; align-self: end; flex-wrap: wrap; }
+button.primary { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: var(--panel); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-weight: 600; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: end; padding: 8px 16px 10px; border-bottom: 1px solid var(--line); }
 .f { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
 .f select, .f input[type=search] { font: inherit; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 120px; }
 .f input[type=search] { min-width: 200px; }
 .f input[type=range] { width: 130px; accent-color: var(--accent); }
-.chips { display: flex; gap: 6px; }
-.chip { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink); border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; cursor: pointer; user-select: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { white-space: nowrap; text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink); border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; cursor: pointer; user-select: none; }
 .chip input { display: none; }
 .chip:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, var(--panel)); }
 button.reset { font: inherit; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
@@ -69,7 +90,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 .typ { font-size: 12px; white-space: nowrap; }
 .tabulator a { color: var(--accent); }
 @media (max-width: 700px) {
-  .kpis { margin-left: 0; width: 100%; }
+  .dash { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .actions { margin-left: 0; }
   .f input[type=search] { min-width: 0; width: 100%; }
   .f.search { width: 100%; }
   main { grid-template-rows: 300px 1fr; }
@@ -80,8 +102,13 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 <header>
   <h1>Niche Perfumery Atlas</h1>
   <span class="sub">BE · NL · DE · FR · LU · CH — niche boutiques, concept stores & department stores</span>
-  <div class="kpis"><span><b id="k-n">0</b> shown</span><span>avg tier <b id="k-t">–</b></span><span>avg fit <b id="k-a">–</b></span><span><b id="k-h">0</b> open to single-SKU</span></div>
 </header>
+<section class="dash" aria-label="Pipeline metrics">
+  <div class="tile"><span class="lbl">Total target stores</span><b id="m-total">0</b><span class="hint" id="m-total-h"></span></div>
+  <div class="tile"><span class="lbl">High-priority targets</span><b id="m-high">0</b><span class="hint" id="m-high-h"></span></div>
+  <div class="tile"><span class="lbl">Active pipeline</span><b id="m-pipe">0</b><span class="hint" id="m-pipe-h"></span><div class="funnel" id="m-funnel"></div></div>
+  <div class="tile"><span class="lbl">Est. address confidence</span><b id="m-addr">–</b><span class="hint" id="m-addr-h"></span></div>
+</section>
 <section class="filters">
   <label class="f search">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
   <div class="f">Country<div class="chips" id="countries"></div></div>
@@ -102,8 +129,16 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       <label class="chip"><input type="checkbox" name="src" value="osm" checked>OSM</label>
     </div>
   </div>
+  <label class="f">Pipeline status<select id="status"><option value="">All</option></select></label>
+  <label class="f">Launch priority<select id="priority"><option value="">All</option></select></label>
+  <div class="f">Focus<span class="chips"><label class="chip" title="Tier 1 indie niche, High single-SKU openness, fit ≥ 70, not yet won or declined"><input id="quick" type="checkbox">High-Priority Quick Wins</label></span></div>
   <label class="f">Map sync<span class="chips"><label class="chip"><input id="inview" type="checkbox">Only in view</label></span></label>
-  <button class="reset" id="reset">Reset</button>
+  <div class="actions">
+    <button class="primary" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
+    <button class="reset" id="crm" title="Save as sources/crm.json, then run build_perfumeries.py to bake edits into the dataset">Export CRM JSON</button>
+    <button class="reset" id="discard" title="Forget pipeline edits stored in this browser">Discard edits</button>
+    <button class="reset" id="reset">Reset filters</button>
+  </div>
 </section>
 <main>
   <div id="map"></div>
@@ -129,6 +164,23 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase(); });
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+  // ---- CRM: pipeline edits live in this browser until exported to sources/crm.json
+  const STATUSES = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"];
+  const ACTIVE = new Set(["Sample Sent", "Meeting Booked", "Partner Active"]);
+  const ROLES = ["Founder", "Store Manager", "Head Buyer"];
+  const CRM_FIELDS = ["pipeline_status", "decision_maker_role", "notes_prospections"];
+  const STORE_KEY = "perfumery-crm-v1";
+  const statusVar = { "Not Contacted": "--s-nc", "Sample Sent": "--s-sample", "Meeting Booked": "--s-meet", "Partner Active": "--s-partner", "Declined": "--s-declined" };
+  const statusColor = s => css.getPropertyValue(statusVar[s] || "--s-nc").trim();
+  const priShort = p => p.slice(0, 6).replace("Tier ", "T");   // "Tier 1 - Quick…" -> "T1"
+  const isQuickWin = r => r.launch_priority.startsWith("Tier 1") && r.single_sku_openness === "High" &&
+    r.brand_alignment_score >= 70 && r.pipeline_status !== "Partner Active" && r.pipeline_status !== "Declined";
+  let edits = {};
+  try { edits = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { edits = {}; }
+  const saveEdits = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(edits)); } catch (e) { /* private mode: edits last this session */ } };
+  data.forEach(r => Object.assign(r, edits[r.crm_key] || {}));
+  const byId = new Map(data.map(r => [r.id, r]));
+
   // ---- Map
   const map = L.map("map", { zoomControl: true, preferCanvas: true }).setView([49.5, 5.5], 5);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -149,6 +201,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.type)} · ${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
     <div>${esc(r.full_address)}</div>
+    <div class="meta"><span class="st" style="--c:${statusColor(r.pipeline_status)}">${esc(r.pipeline_status)}</span> · ${esc(r.launch_priority)} · pitch ${esc(r.decision_maker_role)}</div>
+    ${r.notes_prospections ? `<div class="meta">“${esc(r.notes_prospections)}”</div>` : ""}
     <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${stars(r.customer_experience_rating)}</b></span></div>
     ${r.network ? `<div class="meta">Network: ${esc(r.network)}</div>` : ""}
     <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
@@ -160,21 +214,32 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const markers = new Map();
   const layer = L.layerGroup().addTo(map);
   // Draw small markers last so big ones don't hide them
+  // Ring colour = pipeline status once a store has been contacted
+  const ring = r => r.pipeline_status === "Not Contacted" ? { color: "#fff", weight: 1.2 } : { color: statusColor(r.pipeline_status), weight: 3 };
   [...data].sort((a, b) => b.tier_score - a.tier_score).forEach(r => {
     const m = L.circleMarker([r.lat, r.lng], {
-      radius: radius(r.tier_score), color: "#fff", weight: 1.2, fillColor: color(r.type), fillOpacity: .85
-    }).bindPopup(popup(r), { maxWidth: 320 }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
+      radius: radius(r.tier_score), ...ring(r), fillColor: color(r.type), fillOpacity: .85
+    }).bindPopup(() => popup(r), { maxWidth: 320 }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
     m.on("click", () => focusRow(r.id));
     markers.set(r.id, m);
   });
 
   // ---- Table
   const bar = cell => `<div class="bar" title="${cell.getValue()}"><i style="width:${cell.getValue()}%"></i></div>`;
+  const stop = e => e.stopPropagation();   // editing a cell must not fly the map
   const table = new Tabulator("#table", {
     data, index: "id", layout: "fitColumns", height: "100%", selectableRows: false,
     initialSort: [{ column: "tier_score", dir: "desc" }],
     columns: [
       { title: "Name", field: "name", minWidth: 190, widthGrow: 2, formatter: c => `<b>${esc(c.getValue())}</b>` },
+      { title: "Priority", field: "launch_priority", width: 80, formatter: c =>
+          `<span class="pri t${c.getValue()[5]}" title="${esc(c.getValue())}">${priShort(c.getValue())}</span>` },
+      { title: "Status", field: "pipeline_status", width: 140, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
+        sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop,
+        formatter: c => `<span class="st" style="--c:${statusColor(c.getValue())}">${esc(c.getValue())}</span>` },
+      { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
+      { title: "Prospection notes", field: "notes_prospections", minWidth: 200, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
+        formatter: c => c.getValue() ? `<span title="${esc(c.getValue())}">${esc(c.getValue())}</span>` : `<span class="note">Add note…</span>` },
       { title: "Type", field: "type", minWidth: 120, formatter: c =>
           `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
       { title: "City", field: "city", minWidth: 100, formatter: c => esc(c.getRow().getData().district || c.getValue()) },
@@ -191,6 +256,16 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
           return `<a href="${r.google_maps_url}" target="_blank" rel="noopener">Maps</a> · <a href="${r.instagram_search_url}" target="_blank" rel="noopener">IG</a>`;
         }, cellClick: e => e.stopPropagation() },
     ],
+  });
+
+  table.on("cellEdited", cell => {
+    const field = cell.getField(), r = byId.get(cell.getRow().getData().id);
+    if (!CRM_FIELDS.includes(field)) return;
+    r[field] = field === "notes_prospections" ? String(cell.getValue() ?? "").trim() : cell.getValue();
+    edits[r.crm_key] = Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]));
+    saveEdits();
+    markers.get(r.id).setStyle(ring(r));
+    apply();
   });
 
   let openPending = null;
@@ -224,6 +299,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span style="color:var(--muted)">${n}</span></label>`);
   });
   uniq("type").forEach(t => $("type").add(new Option(t, t)));
+  STATUSES.forEach(t => $("status").add(new Option(t, t)));
+  uniq("launch_priority").forEach(t => $("priority").add(new Option(t, t)));
   // City list follows the selected countries; keeps the current pick when still available
   function fillCities() {
     const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), cur = $("city").value;
@@ -243,6 +320,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
     const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
+    const st = $("status").value, pri = $("priority").value, quick = $("quick").checked;
     $("tier-v").textContent = minT; $("align-v").textContent = minA;
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
@@ -250,19 +328,72 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       ccs.has(r.country) && (!ty || r.type === ty) && (!city || r.city === city) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
       srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
+      (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
       (!q || r._q.includes(q)));
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
     table.setFilter(r => ids.has(r.id));
     markers.forEach((m, id) => baseIds.has(id) ? layer.addLayer(m) : layer.removeLayer(m));
 
-    const avg = k => keep.length ? Math.round(keep.reduce((s, r) => s + r[k], 0) / keep.length) : "–";
-    $("k-n").textContent = keep.length;
-    $("k-t").textContent = avg("tier_score");
-    $("k-a").textContent = avg("brand_alignment_score");
-    $("k-h").textContent = keep.filter(r => r.single_sku_openness === "High").length;
+    dashboard(keep);
     return keep;
   }
+
+  function dashboard(rows) {
+    const avg = k => rows.length ? Math.round(rows.reduce((s, r) => s + r[k], 0) / rows.length) : null;
+    const by = Object.fromEntries(STATUSES.map(s => [s, 0]));
+    rows.forEach(r => by[r.pipeline_status]++);
+    const active = rows.filter(r => ACTIVE.has(r.pipeline_status)).length;
+    const fit = avg("brand_alignment_score"), addr = avg("address_confidence_score");
+    $("m-total").innerHTML = `${rows.length}<small> / ${data.length}</small>`;
+    $("m-total-h").textContent = `avg fit ${fit ?? "–"} · ${rows.filter(r => r.single_sku_openness === "High").length} open to single-SKU`;
+    $("m-high").textContent = rows.filter(r => r.launch_priority.startsWith("Tier 1")).length;
+    $("m-high-h").textContent = `Tier 1 indie niche · ${rows.filter(isQuickWin).length} quick wins`;
+    const pct = rows.length ? 100 * active / rows.length : 0;
+    $("m-pipe").innerHTML = `${active}<small> ${active && pct < 1 ? "<1" : Math.round(pct)}% engaged</small>`;
+    $("m-pipe-h").textContent = `${by["Sample Sent"]} samples · ${by["Meeting Booked"]} meetings · ${by["Partner Active"]} partners · ${by["Declined"]} declined`;
+    $("m-funnel").innerHTML = rows.length ? STATUSES.filter(s => by[s]).map(s =>
+      `<i title="${s}: ${by[s]}" style="flex:${by[s]};background:${statusColor(s)}"></i>`).join("") : "";
+    $("m-addr").textContent = addr == null ? "–" : addr + "%";
+    $("m-addr-h").textContent = `${rows.filter(r => r.address_source === "curated").length} hand-checked · ${rows.filter(r => r.address_source === "osm_reverse").length} inferred number`;
+  }
+
+  // ---- Exports
+  function download(name, text, type) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type }));
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  const CSV_COLS = [
+    ["Store", "name"], ["Launch priority", "launch_priority"], ["Pipeline status", "pipeline_status"],
+    ["Decision maker", "decision_maker_role"], ["Prospection notes", "notes_prospections"], ["Type", "type"],
+    ["Network", "network"], ["City", "city"], ["District", "district"], ["Country", "country_name"], ["Address", "full_address"],
+    ["Tier score", "tier_score"], ["Brand fit", "brand_alignment_score"], ["Single-SKU openness", "single_sku_openness"],
+    ["Address confidence %", "address_confidence_score"], ["Google Maps", "google_maps_url"], ["Instagram", "instagram_search_url"],
+    ["CRM key", "crm_key"],
+  ];
+  const csvCell = v => {
+    const s = v == null ? "" : String(v);
+    return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  $("csv").addEventListener("click", () => {
+    const rows = table.getData("active").map(r => byId.get(r.id));
+    const lines = [CSV_COLS.map(c => c[0]), ...rows.map(r => CSV_COLS.map(c => r[c[1]]))].map(l => l.map(csvCell).join(","));
+    // BOM so Excel reads accents (Bongénie, Düsseldorf…) correctly
+    download(`outreach-${new Date().toISOString().slice(0, 10)}.csv`, "\ufeff" + lines.join("\r\n"), "text/csv;charset=utf-8");
+  });
+  $("crm").addEventListener("click", () => {
+    const crm = Object.fromEntries(data.map(r => [r.crm_key, Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]))]));
+    download("crm.json", JSON.stringify(crm, null, 1) + "\n", "application/json");
+  });
+  $("discard").addEventListener("click", () => {
+    const n = Object.keys(edits).length;
+    if (!n || !confirm(`Discard ${n} pipeline edit(s) stored in this browser? Export CRM JSON first to keep them.`)) return;
+    edits = {}; saveEdits();
+    location.reload();
+  });
 
   let firstFit = true;
   function applyAndFit() {
@@ -275,6 +406,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 
   $("type").addEventListener("change", applyAndFit);
   $("city").addEventListener("change", applyAndFit);
+  ["status", "priority", "quick"].forEach(id => $(id).addEventListener("change", applyAndFit));
   document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", () => { fillCities(); applyAndFit(); }));
   let qTimer;
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
@@ -288,6 +420,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
     fillCities(); $("city").value = "";
     $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
+    $("status").value = ""; $("priority").value = ""; $("quick").checked = false;
     document.querySelectorAll("input[name=open], input[name=src]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);
     map.closePopup();

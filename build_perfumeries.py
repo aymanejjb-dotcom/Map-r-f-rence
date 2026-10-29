@@ -443,6 +443,16 @@ def validate(recs):
     return errors
 
 
+def district(r):
+    """Paris / Lyon / Marseille arrondissement from the postcode (75008 -> "Paris 8e")."""
+    m = re.search(r"\b(75|69|13)0(\d\d)\b", r["full_address"])
+    city = {"75": "Paris", "69": "Lyon", "13": "Marseille"}.get(m.group(1)) if m else None
+    if r["country"] != "FR" or not city or slug(r["city"]) != slug(city):
+        return None
+    n = int(m.group(2)) or 16  # 75116 -> 16e
+    return f"{city} {n}{'er' if n == 1 else 'e'}"
+
+
 def build():
     merged, dropped = merge()
     errors = validate(merged)
@@ -456,6 +466,7 @@ def build():
             "country": r["country"],
             "country_name": COUNTRY_NAMES[r["country"]],
             "city": r["city"],
+            "district": district(r),
             "full_address": r["full_address"],
             "lat": r["lat"],
             "lng": r["lng"],

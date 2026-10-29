@@ -85,6 +85,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 <section class="filters">
   <label class="f search">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
   <div class="f">Country<div class="chips" id="countries"></div></div>
+  <label class="f">City<select id="city"><option value="">All</option></select></label>
   <label class="f">Type<select id="type"><option value="">All</option></select></label>
   <label class="f">Min tier <span id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
   <label class="f">Min alignment <span id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
@@ -125,7 +126,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
   const stars = v => v == null ? "–" : v.toFixed(1) + "★";
   // Lower-cased search haystack built once, so typing never re-joins 300+ records
-  data.forEach(r => { r._q = [r.name, r.city, r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase(); });
+  data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase(); });
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // ---- Map
@@ -146,7 +147,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 
   const popup = r => `<div class="pop">
     <h3>${esc(r.name)}</h3>
-    <div class="meta">${esc(r.type)} · ${esc(r.city)}, ${esc(r.country_name)}</div>
+    <div class="meta">${esc(r.type)} · ${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
     <div>${esc(r.full_address)}</div>
     <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${stars(r.customer_experience_rating)}</b></span></div>
     ${r.network ? `<div class="meta">Network: ${esc(r.network)}</div>` : ""}
@@ -176,7 +177,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       { title: "Name", field: "name", minWidth: 190, widthGrow: 2, formatter: c => `<b>${esc(c.getValue())}</b>` },
       { title: "Type", field: "type", minWidth: 120, formatter: c =>
           `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
-      { title: "City", field: "city", minWidth: 100 },
+      { title: "City", field: "city", minWidth: 100, formatter: c => esc(c.getRow().getData().district || c.getValue()) },
       { title: "Address", field: "full_address", minWidth: 200, widthGrow: 2, formatter: c => esc(c.getValue()) },
       { title: "CC", field: "country", width: 60 },
       { title: "Tier", field: "tier_score", width: 70, hozAlign: "right", sorter: "number" },
@@ -223,10 +224,21 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span style="color:var(--muted)">${n}</span></label>`);
   });
   uniq("type").forEach(t => $("type").add(new Option(t, t)));
+  // City list follows the selected countries; keeps the current pick when still available
+  function fillCities() {
+    const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), cur = $("city").value;
+    const counts = {};
+    data.forEach(r => ccs.has(r.country) && (counts[r.city] = (counts[r.city] || 0) + 1));
+    $("city").length = 1;
+    Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b))
+      .forEach(c => $("city").add(new Option(`${c} (${counts[c]})`, c)));
+    $("city").value = counts[cur] ? cur : "";
+  }
+  fillCities();
 
   function apply() {
     const q = $("q").value.trim().toLowerCase();
-    const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value;
+    const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value, city = $("city").value;
     const minT = +$("tier").value, minA = +$("align").value;
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
     const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
@@ -235,7 +247,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
     const base = data.filter(r =>
-      ccs.has(r.country) && (!ty || r.type === ty) &&
+      ccs.has(r.country) && (!ty || r.type === ty) && (!city || r.city === city) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
       srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
       (!q || r._q.includes(q)));
@@ -262,7 +274,8 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   }
 
   $("type").addEventListener("change", applyAndFit);
-  document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", applyAndFit));
+  $("city").addEventListener("change", applyAndFit);
+  document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", () => { fillCities(); applyAndFit(); }));
   let qTimer;
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
   ["tier", "align"].forEach(id => $(id).addEventListener("input", apply));
@@ -273,6 +286,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   $("reset").addEventListener("click", () => {
     $("q").value = ""; $("type").value = "";
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
+    fillCities(); $("city").value = "";
     $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
     document.querySelectorAll("input[name=open], input[name=src]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);

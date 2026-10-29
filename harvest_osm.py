@@ -30,21 +30,34 @@ OVERPASS = ["https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 OVERPASS_CH = "https://overpass.osm.ch/api/interpreter"  # Swiss mirror, CH only
 
 CITIES = {
-    "FR": ["Paris", "Neuilly-sur-Seine", "Boulogne-Billancourt", "Versailles", "Saint-Germain-en-Laye",
-           "Lyon", "Marseille", "Bordeaux", "Lille", "Cannes", "Nice", "Strasbourg", "Toulouse", "Nantes",
-           "Aix-en-Provence", "Megève", "Courchevel", "Saint-Tropez", "Biarritz", "Montpellier", "Rennes",
-           "Annecy", "Deauville"],
+    "FR": ["Paris", "Neuilly-sur-Seine", "Boulogne-Billancourt", "Levallois-Perret", "Saint-Cloud", "Vincennes",
+           "Le Vésinet", "Sceaux", "Versailles", "Saint-Germain-en-Laye", "Lyon", "Villeurbanne", "Marseille",
+           "Bordeaux", "Arcachon", "Lille", "Marcq-en-Barœul", "Cannes", "Antibes", "Nice", "Menton", "Strasbourg",
+           "Toulouse", "Nantes", "La Baule-Escoublac", "Aix-en-Provence", "Montpellier", "Rennes", "Annecy",
+           "Megève", "Courchevel", "Chamonix-Mont-Blanc", "Val-d'Isère", "Saint-Tropez", "Biarritz",
+           "Saint-Jean-de-Luz", "Bayonne", "Deauville", "Le Touquet-Paris-Plage", "Grenoble", "Dijon", "Reims",
+           "Metz", "Nancy", "Tours", "Avignon", "Toulon", "Rouen", "Caen", "Clermont-Ferrand", "Colmar"],
     "BE": ["Région de Bruxelles-Capitale", "Antwerpen", "Gent", "Brugge", "Liège", "Namur", "Wezembeek-Oppem",
-           "Knokke-Heist", "Hasselt", "Waterloo", "Leuven", "Mechelen", "Kortrijk", "Sint-Martens-Latem", "Aalst"],
+           "Knokke-Heist", "Hasselt", "Waterloo", "Leuven", "Mechelen", "Kortrijk", "Sint-Martens-Latem", "Aalst",
+           "Lasne", "Rhode-Saint-Genèse", "Brasschaat", "Schilde", "Oostende", "Mons", "Charleroi", "Genk",
+           "Tongeren", "Sint-Niklaas", "Lier", "Turnhout", "Spa"],
     "NL": ["Amsterdam", "Rotterdam", "Den Haag", "Utrecht", "Laren", "Wassenaar", "Maastricht", "Eindhoven",
            "Arnhem", "Haarlem", "Amstelveen", "Bloemendaal", "Groningen", "'s-Hertogenbosch", "Breda",
-           "Blaricum", "Oosterbeek"],
-    "DE": ["Berlin", "München", "Hamburg", "Düsseldorf", "Frankfurt am Main", "Köln", "Stuttgart", "Baden-Baden",
-           "Sylt", "Wiesbaden", "Bad Homburg vor der Höhe", "Starnberg", "Hannover", "Bremen", "Essen", "Nürnberg",
-           "Leipzig", "Dresden", "Mannheim", "Heidelberg", "Bonn", "Münster", "Freiburg im Breisgau", "Konstanz"],
+           "Blaricum", "Oosterbeek", "Hilversum", "Naarden", "Bussum", "Heemstede", "Leiden", "Delft", "Nijmegen",
+           "Zwolle", "Tilburg", "Amersfoort", "Zeist", "Venlo", "Roermond", "Middelburg", "Noordwijk"],
+    "DE": ["Berlin", "Potsdam", "München", "Hamburg", "Düsseldorf", "Frankfurt am Main", "Köln", "Stuttgart",
+           "Baden-Baden", "Sylt", "Wiesbaden", "Bad Homburg vor der Höhe", "Kronberg im Taunus", "Starnberg",
+           "Hannover", "Bremen", "Essen", "Nürnberg", "Leipzig", "Dresden", "Mannheim", "Heidelberg", "Bonn",
+           "Münster", "Freiburg im Breisgau", "Konstanz", "Augsburg", "Regensburg", "Würzburg", "Karlsruhe",
+           "Kiel", "Lübeck", "Aachen", "Dortmund", "Bielefeld", "Mainz", "Ulm", "Garmisch-Partenkirchen",
+           "Timmendorfer Strand", "Erfurt", "Braunschweig", "Duisburg", "Wuppertal", "Bochum", "Krefeld",
+           "Oldenburg", "Osnabrück", "Darmstadt", "Saarbrücken", "Trier", "Rosenheim", "Ingolstadt"],
     "CH": ["Zürich", "Genève", "Lausanne", "Basel", "St. Moritz", "Gstaad", "Luzern", "Lugano", "Bern", "Zug",
-           "Montreux", "Crans-Montana", "Verbier", "Davos"],
-    "LU": ["Luxembourg", "Strassen", "Bertrange"],
+           "Montreux", "Crans-Montana", "Verbier", "Davos", "Zermatt", "Winterthur", "St. Gallen", "Neuchâtel",
+           "Fribourg", "Sion", "Vevey", "Nyon", "Küsnacht", "Thun", "Interlaken", "Chur", "Locarno", "Ascona",
+           "Baden", "Aarau", "Schaffhausen", "Biel/Bienne", "Pfäffikon SZ", "Wollerau", "Klosters"],
+    "LU": ["Luxembourg", "Strassen", "Bertrange", "Esch-sur-Alzette", "Differdange", "Ettelbruck", "Mersch",
+           "Mondorf-les-Bains", "Remich", "Walferdange"],
 }
 
 # Named concept stores / niche houses tagged with generic shop values (clothes, gift…)
@@ -205,7 +218,7 @@ PHOTON_WORDS = {
     "NL": ["parfumerie", "parfum", "perfume", "parfums"],
     "DE": ["parfümerie", "parfumerie", "parfum", "duft", "perfume"],
 }
-PHOTON_SHOPS = ["shop:perfumery", "shop:cosmetics", "shop:beauty"]
+PHOTON_SHOPS = ["shop:perfumery", "shop:cosmetics", "shop:beauty", "shop:department_store"]
 
 
 def photon_row(f, origin):
@@ -220,28 +233,53 @@ def photon_row(f, origin):
     }
 
 
+def photon_box(q, box, depth=0):
+    """Photon caps a query at 50 hits: split the bbox into quadrants until it stops hitting the cap."""
+    s, w, n, e = box
+    params = [("q", q), ("limit", 50), ("bbox", f"{w},{s},{e},{n}")] + [("osm_tag", t) for t in PHOTON_SHOPS]
+    for attempt in range(3):
+        try:
+            feats = get("https://photon.komoot.io/api/?" + urllib.parse.urlencode(params), timeout=60)["features"]
+            break
+        except Exception as ex:
+            print(f"    photon {q}/{box}: {ex}", file=sys.stderr)
+            time.sleep(5 * (attempt + 1))
+    else:
+        return []
+    time.sleep(0.4)
+    if len(feats) < 50 or depth >= 4:
+        return feats
+    ms, mw = (s + n) / 2, (w + e) / 2
+    out = []
+    for sub in ((s, w, ms, mw), (s, mw, ms, e), (ms, w, n, mw), (ms, mw, n, e)):
+        out += photon_box(q, sub, depth + 1)
+    return out
+
+
 def harvest_photon_cities(bboxes, rows):
-    """Overpass fallback: Photon text search per city bbox, restricted to beauty shop tags."""
-    for key, (s, w, n, e) in bboxes.items():
+    """Overpass fallback: Photon text search per city bbox, restricted to beauty shop tags.
+
+    Queries the perfume words plus the city's own name (matches every shop whose address
+    is in that city, whatever its name)."""
+    done_path = SRC / ".photon_done.json"
+    done = set(json.loads(done_path.read_text())) if done_path.exists() else set()
+    for key, box in bboxes.items():
+        if key in done:
+            continue
         cc, city = key.split(":", 1)
         new = 0
-        for word in PHOTON_WORDS[cc]:
-            params = [("q", word), ("limit", 50), ("bbox", f"{w},{s},{e},{n}")] + [("osm_tag", t) for t in PHOTON_SHOPS]
-            try:
-                feats = get("https://photon.komoot.io/api/?" + urllib.parse.urlencode(params), timeout=60)["features"]
-            except Exception as ex:
-                print(f"    photon {key}/{word}: {ex}", file=sys.stderr)
-                continue
-            for f in feats:
+        for word in PHOTON_WORDS[cc] + [city.split("/")[0]]:
+            for f in photon_box(word, box):
                 if not f["properties"].get("name"):
                     continue
                 r = photon_row(f, f"photon-city:{city}")
                 if r["cc"] == cc and r["osm"] not in rows:
                     rows[r["osm"]] = r
                     new += 1
-            time.sleep(0.5)
-        print(f"  {key}: {new} new")
-    save(rows)
+        print(f"  {key}: {new} new", flush=True)
+        done.add(key)
+        save(rows)
+        done_path.write_text(json.dumps(sorted(done)))
 
 
 # Photon caps a query at 50 hits: big networks are searched per region (lon/lat boxes)

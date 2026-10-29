@@ -54,7 +54,6 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 .pop .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
 .pop .tag { background: #f1ebe1; border-radius: 4px; padding: 1px 6px; font-size: 11px; }
 .pop a { color: #8a6a3b; font-weight: 600; margin-right: 10px; }
-.warn { color: #a5502a; font-size: 11px; }
 /* Tabulator theme */
 .tabulator { background: var(--panel); border: 0; font-size: 13px; color: var(--ink); }
 .tabulator .tabulator-header { background: var(--panel); color: var(--muted); border-bottom: 1px solid var(--line); }
@@ -140,7 +139,6 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.type)} · ${esc(r.city)}, ${esc(r.country_name)}</div>
     <div>${esc(r.address)}</div>
-    ${r.address_confidence !== "verified" ? `<div class="warn">Address ${r.address_confidence === "to_verify" ? "to verify" : "approximate"}</div>` : ""}
     <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${r.customer_experience_rating.toFixed(1)}★</b></span></div>
     <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
     <div style="margin:4px 0 8px">${esc(r.sentiment_summary)}</div>

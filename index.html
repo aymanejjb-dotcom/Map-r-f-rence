@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Niche Perfumery Atlas</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f7f4ef; --panel: #ffffff; --ink: #1f1b16; --muted: #6f665b; --line: #e4ddd2;
+  --accent: #8a6a3b;
+  --niche: #7b2d5b; --concept: #2f6f6a; --dept: #b8862f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
+    --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
+  --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-ui, sans-serif; display: flex; flex-direction: column; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 16px 6px; }
+h1 { font: 600 26px/1.1 "Cormorant Garamond", Georgia, serif; margin: 0; letter-spacing: .2px; }
+.sub { color: var(--muted); font-size: 13px; }
+.kpis { margin-left: auto; display: flex; gap: 14px; font-size: 13px; color: var(--muted); }
+.kpis b { color: var(--ink); font-weight: 600; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: end; padding: 8px 16px 10px; border-bottom: 1px solid var(--line); }
+.f { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.f select, .f input[type=search] { font: inherit; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 120px; }
+.f input[type=search] { min-width: 200px; }
+.f input[type=range] { width: 130px; accent-color: var(--accent); }
+.chips { display: flex; gap: 6px; }
+.chip { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink); border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; cursor: pointer; user-select: none; }
+.chip input { display: none; }
+.chip:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, var(--panel)); }
+button.reset { font: inherit; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-height: 0; }
+#map { min-height: 260px; border-bottom: 1px solid var(--line); }
+#table { min-height: 0; }
+.legend { background: var(--panel); color: var(--ink); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); font-size: 12px; line-height: 1.7; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.leaflet-popup-content { margin: 12px 14px; font: 13px/1.45 Inter, system-ui, sans-serif; }
+.pop h3 { margin: 0 0 2px; font: 600 18px/1.15 "Cormorant Garamond", Georgia, serif; }
+.pop .meta { color: #6f665b; font-size: 12px; margin-bottom: 6px; }
+.pop .scores { display: flex; gap: 10px; margin: 6px 0; font-size: 12px; }
+.pop .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+.pop .tag { background: #f1ebe1; border-radius: 4px; padding: 1px 6px; font-size: 11px; }
+.pop a { color: #8a6a3b; font-weight: 600; margin-right: 10px; }
+.warn { color: #a5502a; font-size: 11px; }
+/* Tabulator theme */
+.tabulator { background: var(--panel); border: 0; font-size: 13px; color: var(--ink); }
+.tabulator .tabulator-header { background: var(--panel); color: var(--muted); border-bottom: 1px solid var(--line); }
+.tabulator .tabulator-header .tabulator-col { background: var(--panel); border-right: 0; }
+.tabulator .tabulator-tableholder .tabulator-table { background: var(--panel); color: var(--ink); }
+.tabulator-row { background: var(--panel); border-bottom: 1px solid var(--line); }
+.tabulator-row.tabulator-row-even { background: color-mix(in srgb, var(--panel) 94%, var(--ink)); }
+.tabulator-row.tabulator-selectable:hover { background: color-mix(in srgb, var(--accent) 12%, var(--panel)); cursor: pointer; }
+.tabulator-row.active { background: color-mix(in srgb, var(--accent) 24%, var(--panel)) !important; }
+.tabulator .tabulator-footer { background: var(--panel); color: var(--muted); border-top: 1px solid var(--line); }
+.bar { height: 6px; border-radius: 3px; background: var(--line); position: relative; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.typ { font-size: 12px; white-space: nowrap; }
+.tabulator a { color: var(--accent); }
+@media (max-width: 700px) {
+  .kpis { margin-left: 0; width: 100%; }
+  .f input[type=search] { min-width: 0; width: 100%; }
+  .f.search { width: 100%; }
+  main { grid-template-rows: 300px 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Niche Perfumery Atlas</h1>
+  <span class="sub">BE · NL · DE · FR · LU · CH — niche boutiques, concept stores & department stores</span>
+  <div class="kpis"><span><b id="k-n">0</b> shown</span><span>avg tier <b id="k-t">–</b></span><span>avg fit <b id="k-a">–</b></span><span><b id="k-h">0</b> open to single-SKU</span></div>
+</header>
+<section class="filters">
+  <label class="f search">Search<input id="q" type="search" placeholder="Name, city, trait…"></label>
+  <label class="f">Country<select id="country"><option value="">All</option></select></label>
+  <label class="f">Type<select id="type"><option value="">All</option></select></label>
+  <label class="f">Min tier <span id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
+  <label class="f">Min alignment <span id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
+  <div class="f">Single-SKU openness
+    <div class="chips">
+      <label class="chip"><input type="checkbox" name="open" value="High" checked>High</label>
+      <label class="chip"><input type="checkbox" name="open" value="Med" checked>Med</label>
+      <label class="chip"><input type="checkbox" name="open" value="Low" checked>Low</label>
+    </div>
+  </div>
+  <label class="f">Map sync<span class="chips"><label class="chip"><input id="inview" type="checkbox">Only in view</label></span></label>
+  <button class="reset" id="reset">Reset</button>
+</section>
+<main>
+  <div id="map"></div>
+  <div id="table"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+<script src="perfumeries.js"></script>
+<script>
+(async function () {
+  let data = window.PERFUMERIES;
+  if (!data) {
+    try { data = await (await fetch("perfumeries.json")).json(); } catch (e) { data = []; }
+  }
+
+  const css = getComputedStyle(document.documentElement);
+  const color = t => css.getPropertyValue(
+    t === "Niche Boutique" ? "--niche" : t === "Independent Concept Store" ? "--concept" : "--dept").trim();
+  const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // ---- Map
+  const map = L.map("map", { zoomControl: true }).setView([49.5, 5.5], 5);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  const legend = L.control({ position: "bottomright" });
+  legend.onAdd = () => {
+    const d = L.DomUtil.create("div", "legend");
+    d.innerHTML = ["Niche Boutique", "Independent Concept Store", "Department Store"]
+      .map(t => `<div><span class="dot" style="background:${color(t)}"></span>${t}</div>`).join("") +
+      `<div style="color:var(--muted)">Marker size = tier score</div>`;
+    return d;
+  };
+  legend.addTo(map);
+
+  const popup = r => `<div class="pop">
+    <h3>${esc(r.name)}</h3>
+    <div class="meta">${esc(r.type)} · ${esc(r.city)}, ${esc(r.country_name)}</div>
+    <div>${esc(r.address)}</div>
+    ${r.address_confidence !== "verified" ? `<div class="warn">Address ${r.address_confidence === "to_verify" ? "to verify" : "approximate"}</div>` : ""}
+    <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${r.customer_experience_rating.toFixed(1)}★</b></span></div>
+    <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+    <div style="margin:4px 0 8px">${esc(r.sentiment_summary)}</div>
+    <a href="${r.google_maps_url}" target="_blank" rel="noopener">Google Maps</a><a href="${r.instagram_search_url}" target="_blank" rel="noopener">Instagram</a>
+  </div>`;
+
+  const markers = new Map();
+  const layer = L.layerGroup().addTo(map);
+  // Draw small markers last so big ones don't hide them
+  [...data].sort((a, b) => b.tier_score - a.tier_score).forEach(r => {
+    const m = L.circleMarker([r.lat, r.lng], {
+      radius: radius(r.tier_score), color: "#fff", weight: 1.2, fillColor: color(r.type), fillOpacity: .85
+    }).bindPopup(popup(r), { maxWidth: 320 }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
+    m.on("click", () => focusRow(r.id));
+    markers.set(r.id, m);
+  });
+
+  // ---- Table
+  const bar = cell => `<div class="bar" title="${cell.getValue()}"><i style="width:${cell.getValue()}%"></i></div>`;
+  const table = new Tabulator("#table", {
+    data, index: "id", layout: "fitColumns", height: "100%", selectableRows: false,
+    initialSort: [{ column: "tier_score", dir: "desc" }],
+    columns: [
+      { title: "Name", field: "name", minWidth: 190, widthGrow: 2, formatter: c => `<b>${esc(c.getValue())}</b>` },
+      { title: "Type", field: "type", minWidth: 120, formatter: c =>
+          `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
+      { title: "City", field: "city", minWidth: 100 },
+      { title: "CC", field: "country", width: 60 },
+      { title: "Tier", field: "tier_score", width: 70, hozAlign: "right", sorter: "number" },
+      { title: "Fit", field: "brand_alignment_score", width: 110, sorter: "number", formatter: c =>
+          `<div style="display:flex;gap:6px;align-items:center"><span style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c)}</div></div>` },
+      { title: "SKU", field: "single_sku_openness", width: 70, sorter: (a, b) => ({ High: 3, Med: 2, Low: 1 }[a] - { High: 3, Med: 2, Low: 1 }[b]) },
+      { title: "CX", field: "customer_experience_rating", width: 70, hozAlign: "right", formatter: c => c.getValue().toFixed(1) + "★" },
+      { title: "Traits", field: "cx_traits", minWidth: 180, widthGrow: 2, headerSort: false, formatter: c => esc(c.getValue().join(" · ")) },
+      { title: "Links", field: "google_maps_url", width: 110, headerSort: false, formatter: c => {
+          const r = c.getRow().getData();
+          return `<a href="${r.google_maps_url}" target="_blank" rel="noopener">Maps</a> · <a href="${r.instagram_search_url}" target="_blank" rel="noopener">IG</a>`;
+        }, cellClick: e => e.stopPropagation() },
+    ],
+  });
+
+  let openPending = null;
+  table.on("rowClick", (e, row) => {
+    const r = row.getData(), m = markers.get(r.id);
+    map.off("moveend", openPending);
+    openPending = () => m.openPopup();
+    map.once("moveend", openPending);
+    map.flyTo([r.lat, r.lng], Math.max(map.getZoom(), 14), { duration: .6 });
+    highlight(r.id);
+  });
+
+  let activeId = null;
+  function highlight(id) {
+    if (activeId != null) table.getRow(activeId)?.getElement().classList.remove("active");
+    activeId = id;
+    table.getRow(id)?.getElement().classList.add("active");
+  }
+  function focusRow(id) {
+    table.scrollToRow(id, "center", false).catch(() => {});
+    highlight(id);
+  }
+  table.on("renderComplete", () => activeId != null && table.getRow(activeId)?.getElement().classList.add("active"));
+
+  // ---- Filters
+  const $ = id => document.getElementById(id);
+  const uniq = k => [...new Set(data.map(r => r[k]))].sort();
+  uniq("country").forEach(c => $("country").add(new Option(`${data.find(r => r.country === c).country_name} (${c})`, c)));
+  uniq("type").forEach(t => $("type").add(new Option(t, t)));
+
+  function apply() {
+    const q = $("q").value.trim().toLowerCase();
+    const cc = $("country").value, ty = $("type").value;
+    const minT = +$("tier").value, minA = +$("align").value;
+    const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
+    const bounds = $("inview").checked ? map.getBounds() : null;
+    $("tier-v").textContent = minT; $("align-v").textContent = minA;
+
+    // Map shows every match; "Only in view" narrows the table to the visible map area
+    const base = data.filter(r =>
+      (!cc || r.country === cc) && (!ty || r.type === ty) &&
+      r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
+      (!q || [r.name, r.city, r.country_name, r.address, r.type, r.sentiment_summary, ...r.cx_traits].join(" ").toLowerCase().includes(q)));
+    const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
+    const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
+    table.setFilter(r => ids.has(r.id));
+    markers.forEach((m, id) => baseIds.has(id) ? layer.addLayer(m) : layer.removeLayer(m));
+
+    const avg = k => keep.length ? Math.round(keep.reduce((s, r) => s + r[k], 0) / keep.length) : "–";
+    $("k-n").textContent = keep.length;
+    $("k-t").textContent = avg("tier_score");
+    $("k-a").textContent = avg("brand_alignment_score");
+    $("k-h").textContent = keep.filter(r => r.single_sku_openness === "High").length;
+    return keep;
+  }
+
+  let firstFit = true;
+  function applyAndFit() {
+    const keep = apply();
+    if (keep.length && !$("inview").checked) {
+      map.fitBounds(L.latLngBounds(keep.map(r => [r.lat, r.lng])).pad(0.1), { maxZoom: 13, animate: !firstFit });
+    }
+    firstFit = false;
+  }
+
+  ["country", "type"].forEach(id => $(id).addEventListener("change", applyAndFit));
+  ["tier", "align", "q"].forEach(id => $(id).addEventListener("input", apply));
+  document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
+  $("inview").addEventListener("change", apply);
+  map.on("moveend", () => $("inview").checked && apply());
+  $("reset").addEventListener("click", () => {
+    $("q").value = ""; $("country").value = ""; $("type").value = "";
+    $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
+    document.querySelectorAll("input[name=open]").forEach(i => (i.checked = true));
+    map.off("moveend", openPending);
+    map.closePopup();
+    applyAndFit();
+  });
+
+  table.on("tableBuilt", applyAndFit);
+})();
+</script>
+</body>
+</html>

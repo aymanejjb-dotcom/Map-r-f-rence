@@ -1,1 +1,4 @@
 sources/.tiles_done.json
+data/raw/
+__pycache__/
+data/run.log

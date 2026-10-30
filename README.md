@@ -60,3 +60,57 @@ address_confidence, address_source, source, google_maps_url, instagram_search_ur
 - Filters: country toggles, type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).
 - Click a column header to sort (tier, fit, CX…). Click a row → map flies to store.
+
+---
+
+# Perfume Intelligence (`perfume_db/`, `dashboard.html`)
+
+Master fragrance base + review corpus for French niche / emerging houses, NLP friction
+analysis and White Space detection. `index.html` (atlas) links to `dashboard.html`.
+
+## Run
+```bash
+python3 -m perfume_db.pipeline              # inbox import → collection → NLP → dashboard data
+python3 -m perfume_db.pipeline --offline    # re-analyse + rebuild without network
+python3 -m perfume_db.pipeline "Lutens"     # collect a single brand
+python3 -m perfume_db.importer file.csv     # merge one file now (CSV / JSON / JSONL / HTML)
+```
+Drop files in `data/inbox/`: every pipeline run merges them, then moves them to `data/inbox/done/`.
+
+## Files
+| File | Role |
+|---|---|
+| `perfume_db/schema.sql` | `master_perfumes` (pyramid, nose, tenue, sillage, price/ml…) + `reviews` (with NLP columns) |
+| `perfume_db/core.py` | SQLite access, dedup fingerprint `brand|name|concentration`, merge-on-insert |
+| `perfume_db/importer.py` | CSV/JSON/HTML import, FR/EN column aliases, no-duplicate merge |
+| `perfume_db/sources.py` | Brand list (domain, segment, country) |
+| `perfume_db/collect.py` | Brand catalogues (Shopify `products.json`, schema.org JSON-LD via sitemap) + public review widgets (Judge.me, Okendo, Yotpo) |
+| `perfume_db/extract.py` | Notes lexicon (FR/EN → canonical), pyramid, nose, year, declared tenue/sillage, family |
+| `perfume_db/nlp.py` | Lexicon aspect sentiment FR/EN: overall, tenue, sillage, prix (−1..1) |
+| `perfume_db/analytics.py` | Friction rates by brand/perfume, family × €/ml White Space grid |
+| `data/perfumes.sqlite` | The database |
+| `perfumes_data.js` | Dashboard payload (`window.PERFUME_DASH`) |
+
+## Dedup rules
+- Perfume key: normalised brand + name (sizes, "eau de parfum", "sample"… stripped) + concentration.
+  A record without concentration joins the single stored variant of that scent.
+  On merge, existing values are kept, empty fields filled, `sources` / `notes_all` unioned.
+- Review key: `sha1(source | perfume | normalised body)`.
+
+## Sources & compliance
+- Only first-party brand sites and the public review widgets they embed; `robots.txt` honoured,
+  ~1 request/s per host, responses cached in `data/raw/` (git-ignored). Reviewer names are not stored.
+- **Not collected**: Parfumo (its robots.txt blocks AI agents and disallows its search/API),
+  Fragrantica, Jovoy, Luckyscent, Skins (no open product/review feed; not scraped).
+  Data from those can still be added by hand through `data/inbox/` (CSV/JSON/HTML export).
+- Unreachable/closed to automation at run time: Frédéric Malle (403), L'Artisan Parfumeur and
+  Parfum d'Empire (no product JSON-LD), see `data/run.log`.
+
+## Method caveats
+- Notes come from brand copy; a full pyramid exists only where the brand publishes tiers.
+- Tenue / sillage: declared value when the brand gives one, else `2.5 + 2.5 × mean aspect score`
+  from reviews (needs reviews that mention it).
+- Friction = share of mentions with aspect score < −0.2 (≥ 3 mentions required).
+- White Space (0–100) = scarcity of French supply in the family × €/ml cell ×
+  (0.45 demand [review volume] + 0.25 satisfaction + 0.30 tenue/sillage pain + bonus if only foreign brands sit there).
+- Brand-site reviews skew positive (moderated, buyers only): read friction rates relatively, brand vs brand.

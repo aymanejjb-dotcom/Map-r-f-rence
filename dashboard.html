@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Niche Perfume Intelligence</title>
+<link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f7f4ef; --panel: #ffffff; --ink: #1f1b16; --muted: #6f665b; --line: #e4ddd2; --accent: #8a6a3b;
+  --bar: #2a78d6; --bar-neg: #e34948; --track: #efe9df;
+  --seq-0: #f3f0ea; --seq-1: #cfe0f6; --seq-2: #9cc1ee; --seq-3: #5f9be2; --seq-4: #2a78d6; --seq-5: #1b4f91;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27; --accent: #d1ad72;
+    --bar: #3987e5; --bar-neg: #e66767; --track: #2a261f;
+    --seq-0: #24211c; --seq-1: #1d3352; --seq-2: #24497a; --seq-3: #2f63a6; --seq-4: #3987e5; --seq-5: #8fbdf3;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27; --accent: #d1ad72;
+  --bar: #3987e5; --bar-neg: #e66767; --track: #2a261f;
+  --seq-0: #24211c; --seq-1: #1d3352; --seq-2: #24497a; --seq-3: #2f63a6; --seq-4: #3987e5; --seq-5: #8fbdf3;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-ui, sans-serif; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 14px 16px 4px; }
+h1 { font: 600 28px/1.1 "Cormorant Garamond", Georgia, serif; margin: 0; }
+h2 { font: 600 20px/1.2 "Cormorant Garamond", Georgia, serif; margin: 0 0 4px; }
+.sub, .hint { color: var(--muted); font-size: 13px; }
+nav a { color: var(--accent); font-weight: 600; text-decoration: none; margin-left: auto; }
+.wrap { padding: 8px 16px 32px; display: grid; gap: 16px; max-width: 1400px; margin: 0 auto; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.kpi b { display: block; font-size: 24px; font-weight: 600; }
+.kpi span { color: var(--muted); font-size: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-width: 0; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; }
+@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.bars { display: grid; gap: 5px; margin-top: 8px; }
+.row { display: grid; grid-template-columns: 130px 1fr 44px; gap: 8px; align-items: center; font-size: 12px; cursor: default; }
+.row .lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.track { height: 12px; background: var(--track); border-radius: 0 4px 4px 0; position: relative; }
+.fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
+.row:hover .fill { filter: brightness(1.12); }
+.heat { width: 100%; border-collapse: separate; border-spacing: 2px; font-size: 12px; }
+.heat th { color: var(--muted); font-weight: 500; text-align: left; padding: 2px 4px; }
+.heat td { height: 34px; text-align: center; border-radius: 4px; font-variant-numeric: tabular-nums; cursor: default; }
+.heat td.hi { color: #fff; }
+.legend-seq { display: flex; gap: 2px; align-items: center; font-size: 11px; color: var(--muted); margin-top: 8px; }
+.legend-seq i { width: 22px; height: 10px; border-radius: 2px; display: inline-block; }
+ol.ws { margin: 6px 0 0; padding-left: 20px; }
+ol.ws li { margin: 6px 0; }
+ol.ws small { color: var(--muted); display: block; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 8px 0; }
+.filters select, .filters input { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+#tip { position: fixed; pointer-events: none; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; max-width: 280px; z-index: 10; }
+.tabulator { background: var(--panel); border: 0; font-size: 13px; color: var(--ink); }
+.tabulator .tabulator-header, .tabulator .tabulator-header .tabulator-col { background: var(--panel); color: var(--muted); border-color: var(--line); }
+.tabulator-row { background: var(--panel); color: var(--ink); border-bottom: 1px solid var(--line); }
+.tabulator-row.tabulator-row-even { background: color-mix(in srgb, var(--panel) 94%, var(--ink)); }
+.tabulator .tabulator-footer { background: var(--panel); color: var(--muted); border-color: var(--line); }
+.tabulator a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Niche Perfume Intelligence</h1>
+  <span class="sub" id="asof"></span>
+  <nav><a href="index.html">← Atlas des boutiques</a></nav>
+</header>
+<div class="wrap">
+  <section class="kpis" id="kpis"></section>
+
+  <section class="card">
+    <h2>Zones de friction par marque</h2>
+    <div class="hint">Part des mentions négatives dans les avis qui parlent de tenue, sillage ou prix (marques avec ≥ 3 mentions). Plus la barre est longue, plus la friction est forte.</div>
+    <div class="grid3" id="friction"></div>
+  </section>
+
+  <section class="grid2">
+    <div class="card">
+      <h2>White Space — famille × prix au ml</h2>
+      <div class="hint">Score 0–100 : rareté de l'offre française dans la case × demande (volume d'avis), satisfaction et friction tenue/sillage. Chiffre = nb de parfums FR.</div>
+      <div style="overflow-x:auto"><table class="heat" id="heat"></table></div>
+      <div class="legend-seq" id="heatLegend"></div>
+    </div>
+    <div class="card">
+      <h2>Opportunités prioritaires</h2>
+      <ol class="ws" id="wsList"></ol>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Fiches parfums</h2>
+    <div class="filters">
+      <select id="fBrand"><option value="">Toutes marques</option></select>
+      <select id="fSeg"><option value="">Tous segments</option><option value="niche_fr">Niche FR</option><option value="niche_emergent">Émergente FR</option><option value="niche_intl">Benchmark intl</option></select>
+      <select id="fFam"><option value="">Toutes familles</option></select>
+      <input type="search" id="fq" placeholder="Nom, nez, note…">
+    </div>
+    <div id="table"></div>
+  </section>
+</div>
+<div id="tip"></div>
+<script src="perfumes_data.js"></script>
+<script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+<script>
+const D = window.PERFUME_DASH;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pct = v => v == null ? "—" : Math.round(v * 100) + " %";
+const fmt = n => n.toLocaleString("fr-FR");
+const SEG = {niche_fr: "Niche FR", niche_emergent: "Émergente FR", niche_intl: "Benchmark intl"};
+
+$("#asof").textContent = `Mis à jour ${D.generated}`;
+const T = D.totals;
+$("#kpis").innerHTML = [
+  [fmt(T.perfumes), "fiches parfums"], [fmt(T.reviews), "avis clients intégrés"],
+  [fmt(T.fr_perfumes), "fiches marques FR"], [fmt(T.fr_reviews), "avis marques FR"],
+  [T.brands, "marques"], [pct(T.market.longevity_friction), "friction tenue (marché)"],
+  [pct(T.market.sillage_friction), "friction sillage"], [pct(T.market.price_friction), "friction prix"],
+].map(([v, l]) => `<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join("");
+
+// tooltip
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) { tip.style.display = "none"; return; }
+  tip.innerHTML = t.dataset.tip; tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8);
+  tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
+});
+
+// friction small multiples
+const ASP = [["longevity", "Tenue"], ["sillage", "Sillage"], ["price", "Prix"]];
+$("#friction").innerHTML = ASP.map(([k, label]) => {
+  const rows = D.brands.filter(b => b[k + "_friction"] != null).sort((a, b) => b[k + "_friction"] - a[k + "_friction"]);
+  const max = Math.max(0.01, ...rows.map(r => r[k + "_friction"]));
+  return `<div><h2 style="font-size:17px">${label}</h2><div class="bars">` + (rows.length ? rows.map(r => {
+    const v = r[k + "_friction"];
+    const t = `<b>${esc(r.brand)}</b><br>${label} : ${pct(v)} de mentions négatives<br>${r[k + "_mentions"]} mentions / ${fmt(r.reviews)} avis<br>Note moyenne ${r.rating ?? "—"}`;
+    return `<div class="row" data-tip="${esc(t)}"><span class="lab">${esc(r.brand)}</span><span class="track"><span class="fill" style="display:block;width:${v / max * 100}%"></span></span><span class="val">${pct(v)}</span></div>`;
+  }).join("") : `<div class="hint">Pas assez de mentions.</div>`) + `</div></div>`;
+}).join("");
+
+// white space heatmap
+const steps = 6, seq = i => `var(--seq-${i})`;
+const maxWs = Math.max(1, ...D.grid.map(g => g.white_space));
+const cell = g => {
+  const i = g.white_space <= 0 ? 0 : Math.min(steps - 1, 1 + Math.floor(g.white_space / maxWs * (steps - 1.001)));
+  const t = `<b>${esc(g.family)} · ${esc(g.band)}</b><br>White space ${g.white_space}<br>${g.fr} parfums FR · ${g.intl} benchmark<br>${fmt(g.reviews)} avis · note ${g.rating ?? "—"}<br>Friction tenue ${pct(g.longevity_friction)} · sillage ${pct(g.sillage_friction)}`;
+  return `<td class="${i >= 4 ? "hi" : ""}" style="background:${seq(i)}" data-tip="${esc(t)}">${g.fr}</td>`;
+};
+$("#heat").innerHTML = `<tr><th></th>${D.bands.map(b => `<th>${esc(b)}</th>`).join("")}</tr>` +
+  D.families.map(f => `<tr><th>${esc(f)}</th>${D.bands.map(b => cell(D.grid.find(g => g.family === f && g.band === b))).join("")}</tr>`).join("");
+$("#heatLegend").innerHTML = "Faible " + [...Array(steps).keys()].map(i => `<i style="background:${seq(i)}"></i>`).join("") + " Fort";
+$("#wsList").innerHTML = D.top_white_space.map(g => `<li><b>${esc(g.family)} · ${esc(g.band)}</b> — score ${g.white_space}<small>${g.fr} parfums FR, ${g.intl} benchmark, ${fmt(g.reviews)} avis, note ${g.rating ?? "—"}; friction tenue ${pct(g.longevity_friction)}, sillage ${pct(g.sillage_friction)}</small></li>`).join("");
+
+// table
+const brands = [...new Set(D.perfumes.map(p => p.brand))].sort();
+$("#fBrand").innerHTML += brands.map(b => `<option>${esc(b)}</option>`).join("");
+$("#fFam").innerHTML += D.families.map(f => `<option>${esc(f)}</option>`).join("");
+const notesTxt = p => (p.notes_top.length || p.notes_base.length)
+  ? `T: ${p.notes_top.join(", ")} | C: ${p.notes_heart.join(", ")} | F: ${p.notes_base.join(", ")}` : p.notes_all.join(", ");
+const table = new Tabulator("#table", {
+  data: D.perfumes, layout: "fitDataStretch", height: "520px", pagination: false,
+  columns: [
+    {title: "Marque", field: "brand", frozen: true},
+    {title: "Parfum", field: "name", formatter: c => { const p = c.getData(); return p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.name)}</a>` : esc(p.name); }},
+    {title: "Conc.", field: "concentration"},
+    {title: "Segment", field: "segment", formatter: c => SEG[c.getValue()] || ""},
+    {title: "Famille", field: "family"},
+    {title: "Nez", field: "nose"},
+    {title: "Pyramide / notes", field: "notes_all", formatter: c => esc(notesTxt(c.getData())), width: 320, headerSort: false},
+    {title: "Tenue /5", field: "longevity", hozAlign: "right"},
+    {title: "Sillage /5", field: "sillage", hozAlign: "right"},
+    {title: "Prix €", field: "price_eur", hozAlign: "right"},
+    {title: "ml", field: "size_ml", hozAlign: "right"},
+    {title: "€/ml", field: "price_per_ml", hozAlign: "right"},
+    {title: "Note", field: "f_rating", hozAlign: "right"},
+    {title: "Avis", field: "f_reviews", hozAlign: "right", sorter: "number"},
+    {title: "Frict. tenue", field: "f_longevity_friction", formatter: c => pct(c.getValue()), hozAlign: "right"},
+    {title: "Frict. sillage", field: "f_sillage_friction", formatter: c => pct(c.getValue()), hozAlign: "right"},
+    {title: "Frict. prix", field: "f_price_friction", formatter: c => pct(c.getValue()), hozAlign: "right"},
+  ],
+  initialSort: [{column: "f_reviews", dir: "desc"}],
+});
+let qT;
+const applyFilters = () => {
+  const b = $("#fBrand").value, s = $("#fSeg").value, f = $("#fFam").value, q = $("#fq").value.toLowerCase().trim();
+  table.setFilter(p => (!b || p.brand === b) && (!s || p.segment === s) && (!f || p.family === f) &&
+    (!q || [p.name, p.brand, p.nose, notesTxt(p)].join(" ").toLowerCase().includes(q)));
+};
+["#fBrand", "#fSeg", "#fFam"].forEach(id => $(id).addEventListener("change", applyFilters));
+$("#fq").addEventListener("input", () => { clearTimeout(qT); qT = setTimeout(applyFilters, 200); });
+</script>
+</body>
+</html>

@@ -1,164 +1,403 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Niche Perfumery Atlas</title>
+<title>Maison Atlas · Niche Launch CRM</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
 <style>
+/* Luxury Dark / Studio */
 :root {
-  --bg: #f7f4ef; --panel: #ffffff; --ink: #1f1b16; --muted: #6f665b; --line: #e4ddd2;
-  --accent: #8a6a3b;
-  --niche: #7b2d5b; --concept: #2f6f6a; --dept: #b8862f;
-  --s-nc: #a59c90; --s-sample: #3d6fb4; --s-meet: #c27a12; --s-partner: #2e8a4f; --s-declined: #b23a3a;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
-    --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
-  --s-nc: #6f665b; --s-sample: #6f9fe0; --s-meet: #e3a043; --s-partner: #5cc27f; --s-declined: #e06a6a;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #15130f; --panel: #1e1b17; --ink: #efe9df; --muted: #a59c90; --line: #332e27;
-  --accent: #d1ad72; --niche: #c46a9e; --concept: #5fb3ab; --dept: #e0b25a;
-  --s-nc: #6f665b; --s-sample: #6f9fe0; --s-meet: #e3a043; --s-partner: #5cc27f; --s-declined: #e06a6a;
+  color-scheme: dark;
+  --bg: #0f0f12; --bg2: #15151a; --glass: rgba(255,255,255,.035); --glass-hi: rgba(255,255,255,.06);
+  --ink: #f2eee6; --muted: #9a958c; --faint: #6b6760; --line: rgba(212,175,55,.16); --line-soft: rgba(255,255,255,.07);
+  --gold: #d4af37; --gold-hi: #ecd27a; --gold-lo: rgba(212,175,55,.14);
+  --niche: #c98bb0; --concept: #6fc2b8; --dept: #d9b46a;
+  --s-nc: #6b6b75; --s-disc: #8fb3ff; --s-follow: #f0a35e; --s-meet: #c39cff; --s-partner: #5fd08a; --s-key: #d4af37; --s-declined: #e06a6a;
+  --warn: #f0a35e; --ok: #5fd08a; --bad: #e06a6a;
+  --radius: 14px;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
-body { background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-ui, sans-serif; display: flex; flex-direction: column; }
-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 16px 6px; }
-h1 { font: 600 26px/1.1 "Cormorant Garamond", Georgia, serif; margin: 0; letter-spacing: .2px; }
-.sub { color: var(--muted); font-size: 13px; }
-/* Pipeline dashboard */
-.dash { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 6px 16px 8px; }
-.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-.tile .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-.tile b { font: 600 26px/1.15 "Cormorant Garamond", Georgia, serif; }
-.tile b small { font: 500 13px Inter, system-ui, sans-serif; color: var(--muted); }
-.tile .hint { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.funnel { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--line); margin-top: 4px; gap: 1px; }
+html, body { margin: 0; }
+body {
+  background: radial-gradient(1200px 600px at 85% -10%, rgba(212,175,55,.09), transparent 60%),
+              radial-gradient(900px 500px at -10% 30%, rgba(120,90,160,.07), transparent 60%), var(--bg);
+  background-attachment: fixed;
+  color: var(--ink); font: 14px/1.5 Inter, system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;
+}
+a { color: var(--gold); }
+.wrap { max-width: 1680px; margin: 0 auto; padding: 0 20px 28px; }
+.glass { background: var(--glass); border: 1px solid var(--line-soft); border-radius: var(--radius);
+  backdrop-filter: blur(14px) saturate(120%); -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -24px rgba(0,0,0,.8); }
+.eyebrow { font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.serif { font-family: "Cormorant Garamond", Georgia, serif; }
+
+/* Header */
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 18px 0 14px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mark { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--gold); display: grid; place-items: center;
+  color: var(--gold); font: 700 18px "Cormorant Garamond", serif; flex: none; box-shadow: 0 0 24px -6px rgba(212,175,55,.55); }
+h1 { font: 600 28px/1.05 "Cormorant Garamond", Georgia, serif; margin: 0; letter-spacing: .4px; }
+h1 em { color: var(--gold); font-style: normal; }
+.sub { color: var(--muted); font-size: 12.5px; }
+.head-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 500 13px Inter, system-ui, sans-serif; border: 1px solid var(--line-soft); background: var(--glass-hi); color: var(--ink);
+  border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: border-color .15s, background .15s; white-space: nowrap; }
+.btn:hover { border-color: var(--gold); }
+.btn.gold { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: #19150a; border-color: transparent; font-weight: 600; }
+.btn.gold:hover { filter: brightness(1.06); }
+.btn.ghost { background: transparent; color: var(--muted); }
+.btn.sm { padding: 4px 10px; font-size: 12px; }
+
+/* Executive metrics */
+.metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.tile { padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; position: relative; overflow: hidden; }
+.tile::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,.45), transparent); }
+.tile b { font: 600 30px/1.1 "Cormorant Garamond", Georgia, serif; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile b small { font: 500 12px Inter, system-ui, sans-serif; color: var(--muted); }
+.tile.hero b { color: var(--gold-hi); }
+.tile .hint { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.funnel { display: flex; height: 5px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,.06); margin-top: 5px; gap: 1px; }
 .funnel i { display: block; }
-.st { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; white-space: nowrap; }
-.st::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--muted)); flex: none; }
-.pri { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid var(--line); }
-.pri.t1 { color: var(--niche); border-color: currentColor; }
-.pri.t2 { color: var(--concept); border-color: currentColor; }
-.pri.t3 { color: var(--muted); }
-.tabulator-cell.editable { cursor: text; }
-.tabulator-cell.editable:hover { box-shadow: inset 0 0 0 1px var(--accent); }
-.note { color: var(--muted); }
-.actions { display: flex; gap: 6px; margin-left: auto; align-self: end; flex-wrap: wrap; }
-button.primary { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: var(--panel); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-weight: 600; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: end; padding: 8px 16px 10px; border-bottom: 1px solid var(--line); }
-.f { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-.f select, .f input[type=search] { font: inherit; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 120px; }
-.f input[type=search] { min-width: 200px; }
-.f input[type=range] { width: 130px; accent-color: var(--accent); }
+
+/* Control panel */
+details.panel { margin-bottom: 14px; }
+details.panel > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 12px 16px; user-select: none; }
+details.panel > summary::-webkit-details-marker { display: none; }
+details.panel > summary .chev { margin-left: auto; color: var(--gold); transition: transform .2s; font-size: 12px; }
+details.panel[open] > summary .chev { transform: rotate(180deg); }
+details.panel > summary h2 { margin: 0; font: 600 19px "Cormorant Garamond", serif; letter-spacing: .3px; }
+.pill { font-size: 11px; color: var(--gold); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
+.ctl-body { padding: 4px 16px 16px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 24px; border-top: 1px solid var(--line-soft); }
+.filters { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; padding-top: 12px; min-width: 0; }
+.f { display: flex; flex-direction: column; gap: 5px; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; min-width: 0; }
+.f > span.v { color: var(--gold); }
+select, input[type=search], input[type=number], input[type=text], textarea {
+  font: 13px Inter, system-ui, sans-serif; color: var(--ink); background: rgba(0,0,0,.35); border: 1px solid var(--line-soft);
+  border-radius: 8px; padding: 7px 9px; min-width: 0; outline: none; transition: border-color .15s; }
+select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+select { min-width: 130px; }
+select option { background: #1a1a20; }
+.f input[type=search] { width: 240px; max-width: 100%; }
+input[type=range] { width: 130px; accent-color: var(--gold); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { white-space: nowrap; text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink); border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; cursor: pointer; user-select: none; }
+.chip { white-space: nowrap; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 12.5px; color: var(--muted);
+  border: 1px solid var(--line-soft); background: rgba(255,255,255,.02); border-radius: 999px; padding: 4px 11px; cursor: pointer; user-select: none; transition: all .15s; }
 .chip input { display: none; }
-.chip:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, var(--panel)); }
-button.reset { font: inherit; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
-main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-height: 0; }
-#map { min-height: 260px; border-bottom: 1px solid var(--line); }
-#table { min-height: 0; }
-.legend { background: var(--panel); color: var(--ink); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); font-size: 12px; line-height: 1.7; }
-.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
-.leaflet-popup-content { margin: 12px 14px; font: 13px/1.45 Inter, system-ui, sans-serif; }
-.pop h3 { margin: 0 0 2px; font: 600 18px/1.15 "Cormorant Garamond", Georgia, serif; }
-.pop .meta { color: #6f665b; font-size: 12px; margin-bottom: 6px; }
-.pop .scores { display: flex; gap: 10px; margin: 6px 0; font-size: 12px; }
-.pop .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
-.pop .tag { background: #f1ebe1; border-radius: 4px; padding: 1px 6px; font-size: 11px; }
-.pop a { color: #8a6a3b; font-weight: 600; margin-right: 10px; }
-.pop .seg { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
-.pop .badge { font-size: 11px; font-weight: 600; border-radius: 4px; padding: 1px 6px; border: 1px solid currentColor; }
-.pop .cx { margin: 8px 0; border-top: 1px solid #e4ddd2; padding-top: 6px; }
-.pop .cx h4 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #6f665b; }
-.pop .cx dl { display: grid; grid-template-columns: 74px 1fr; gap: 3px 8px; margin: 0; font-size: 12px; }
-.pop .cx dt { color: #6f665b; }
-.pop .cx dd { margin: 0; }
-.pop .cx .warn { color: #a3402a; }
-.pop .pitch { background: #f6efe3; border-left: 3px solid #8a6a3b; padding: 5px 8px; font-size: 12px; margin: 6px 0; }
-.pop .basis { color: #8d8478; font-size: 11px; font-style: italic; }
-.seg-1 { color: #2e7d4f; } .seg-2 { color: #5e8a2e; } .seg-3 { color: #2f6f6a; } .seg-4 { color: #8a6a3b; } .seg-5 { color: #7b5c99; } .seg-6 { color: #8d8478; }
-.leaflet-control-layers { font-size: 12px; }
-@media (max-width: 700px) { .leaflet-popup-content { max-width: 78vw; } .pop .cx dl { grid-template-columns: 64px 1fr; } }
-/* Tabulator theme */
-.tabulator { background: var(--panel); border: 0; font-size: 13px; color: var(--ink); }
-.tabulator .tabulator-header { background: var(--panel); color: var(--muted); border-bottom: 1px solid var(--line); }
-.tabulator .tabulator-header .tabulator-col { background: var(--panel); border-right: 0; }
-.tabulator .tabulator-tableholder .tabulator-table { background: var(--panel); color: var(--ink); }
-.tabulator-row { background: var(--panel); border-bottom: 1px solid var(--line); }
-.tabulator-row.tabulator-row-even { background: color-mix(in srgb, var(--panel) 94%, var(--ink)); }
-.tabulator-row.tabulator-selectable:hover { background: color-mix(in srgb, var(--accent) 12%, var(--panel)); cursor: pointer; }
-.tabulator-row.active { background: color-mix(in srgb, var(--accent) 24%, var(--panel)) !important; }
-.tabulator .tabulator-footer { background: var(--panel); color: var(--muted); border-top: 1px solid var(--line); }
-.bar { height: 6px; border-radius: 3px; background: var(--line); position: relative; overflow: hidden; }
-.bar i { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.chip:has(input:checked) { border-color: rgba(212,175,55,.55); color: var(--ink); background: var(--gold-lo); }
+.chip .n { color: var(--faint); }
+.side-ctl { padding-top: 12px; display: flex; flex-direction: column; gap: 12px; border-left: 1px solid var(--line-soft); padding-left: 20px; }
+.zone-box { border: 1px dashed rgba(212,175,55,.4); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.zone-box .row { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.zone-box .hint { font-size: 11.5px; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Split view */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 14px; height: min(68vh, 720px); min-height: 460px; margin-bottom: 14px; }
+.map-card { position: relative; overflow: hidden; padding: 0; }
+#map { position: absolute; inset: 0; background: #1b1b20; }
+.side { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.tabs { display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid var(--line-soft); }
+.tabs button { flex: 1; font: 600 12px Inter, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: transparent;
+  border: 1px solid transparent; border-radius: 9px; padding: 8px; cursor: pointer; }
+.tabs button[aria-selected=true] { color: var(--gold-hi); border-color: var(--line); background: var(--gold-lo); }
+.pane { flex: 1; overflow: auto; padding: 14px 16px 18px; min-height: 0; }
+.pane[hidden] { display: none; }
+.empty { color: var(--muted); text-align: center; padding: 40px 10px; }
+.empty .serif { font-size: 22px; color: var(--ink); display: block; margin-bottom: 6px; }
+
+/* Dossier */
+.dos h3 { margin: 2px 0 2px; font: 600 26px/1.1 "Cormorant Garamond", serif; }
+.dos .meta { color: var(--muted); font-size: 12.5px; }
+.dos .addr { font-size: 12.5px; margin: 6px 0 10px; }
+.kv { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; }
+.kv div { background: rgba(0,0,0,.25); border: 1px solid var(--line-soft); border-radius: 9px; padding: 6px 8px; }
+.kv span { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.kv b { font-size: 15px; }
+.dos .ctrl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.dos .ctrl select { width: 100%; }
+.dos dl { display: grid; grid-template-columns: 82px 1fr; gap: 5px 10px; margin: 10px 0; font-size: 12.5px; }
+.dos dt { color: var(--muted); }
+.dos dd { margin: 0; }
+.dos .warn { color: var(--warn); }
+.callout { border-left: 2px solid var(--gold); background: var(--gold-lo); padding: 8px 10px; border-radius: 0 8px 8px 0; font-size: 12.5px; margin: 10px 0; }
+.callout.alert { border-color: var(--warn); background: rgba(240,163,94,.1); }
+.callout.safe { border-color: var(--ok); background: rgba(95,208,138,.08); }
+.dos .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; letter-spacing: .3px; border-radius: 999px; padding: 2px 9px;
+  border: 1px solid color-mix(in srgb, var(--c, var(--muted)) 55%, transparent); color: var(--c, var(--muted));
+  background: color-mix(in srgb, var(--c, var(--muted)) 12%, transparent); white-space: nowrap; }
+.badge.dotted::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line-soft); border-radius: 6px; padding: 1px 7px; }
+
+/* Simulator */
+.sim .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sim label { display: flex; flex-direction: column; gap: 4px; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.sim label.wide { grid-column: 1 / -1; }
+.sim input { width: 100%; }
+.sim h4 { margin: 16px 0 8px; font: 600 17px "Cormorant Garamond", serif; color: var(--gold-hi); letter-spacing: .3px; }
+.ledger { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.ledger td { padding: 6px 0; border-bottom: 1px solid var(--line-soft); }
+.ledger td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.ledger tr.total td { color: var(--gold-hi); border-bottom: 0; font-size: 14px; }
+.meter { height: 8px; border-radius: 4px; overflow: hidden; display: flex; background: rgba(255,255,255,.05); margin: 6px 0 2px; }
+.meter i { display: block; }
+.legend-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--muted); }
+.proj { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.proj div { background: rgba(0,0,0,.25); border: 1px solid var(--line-soft); border-radius: 10px; padding: 8px 10px; }
+.proj span { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.proj b { font: 600 21px "Cormorant Garamond", serif; }
+.proj .hero b { color: var(--gold-hi); }
+.note { font-size: 11.5px; color: var(--muted); margin: 8px 0 0; }
+.health { font-size: 12px; margin-top: 8px; }
+
+/* Pipeline table */
+.table-card { overflow: hidden; }
+.table-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); flex-wrap: wrap; }
+.table-head h2 { margin: 0; font: 600 20px "Cormorant Garamond", serif; }
+.tabulator { background: transparent; border: 0; font-size: 12.5px; color: var(--ink); }
+.tabulator .tabulator-header { background: rgba(0,0,0,.3); color: var(--muted); border-bottom: 1px solid var(--line); font-size: 10.5px; letter-spacing: .9px; text-transform: uppercase; }
+.tabulator .tabulator-header .tabulator-col { background: transparent; border-right: 0; }
+.tabulator .tabulator-header .tabulator-col:hover { background: rgba(255,255,255,.03); }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-sorter .tabulator-arrow { border-bottom-color: var(--gold); }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-sorter .tabulator-arrow { border-top-color: var(--gold); }
+.tabulator .tabulator-tableholder { background: transparent; }
+.tabulator .tabulator-tableholder .tabulator-table { background: transparent; color: var(--ink); }
+.tabulator-row { background: transparent; border-bottom: 1px solid var(--line-soft); min-height: 38px; }
+.tabulator-row .tabulator-cell { padding: 9px 8px; border-right: 0; }
+.tabulator-row.tabulator-row-even { background: rgba(255,255,255,.015); }
+.tabulator-row.tabulator-selectable:hover { background: rgba(212,175,55,.06); cursor: pointer; }
+.tabulator-row.active { background: rgba(212,175,55,.14) !important; box-shadow: inset 2px 0 0 var(--gold); }
+.tabulator .tabulator-footer { background: transparent; color: var(--muted); border-top: 1px solid var(--line-soft); }
+.tabulator-cell.editable { cursor: text; }
+.tabulator-cell.editable:hover { box-shadow: inset 0 0 0 1px rgba(212,175,55,.5); border-radius: 4px; }
+.tabulator-cell.tabulator-editing { border: 1px solid var(--gold) !important; background: #1a1a20 !important; }
+.tabulator-cell.tabulator-editing input, .tabulator-cell.tabulator-editing textarea { color: var(--ink); background: #1a1a20; }
+.tabulator-edit-list { background: #1a1a20 !important; border: 1px solid var(--line) !important; color: var(--ink); font-size: 12.5px; }
+.tabulator-edit-list .tabulator-edit-list-item { color: var(--ink) !important; }
+.tabulator-edit-list .tabulator-edit-list-item:hover, .tabulator-edit-list .tabulator-edit-list-item.focused { background: var(--gold-lo) !important; color: var(--gold-hi) !important; }
+.tabulator-edit-list .tabulator-edit-list-item.active { background: var(--gold) !important; color: #19150a !important; }
+.bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,.08); position: relative; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, #8a6f22, var(--gold-hi)); }
 .typ { font-size: 12px; white-space: nowrap; }
-.tabulator a { color: var(--accent); }
+.pri { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 7px; border: 1px solid var(--line-soft); color: var(--muted); }
+.pri.t1 { color: var(--gold-hi); border-color: rgba(212,175,55,.6); background: var(--gold-lo); }
+.pri.t2 { color: var(--concept); border-color: color-mix(in srgb, var(--concept) 45%, transparent); }
+.muted { color: var(--faint); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Map chrome */
+.leaflet-container { font-family: Inter, system-ui, sans-serif; }
+.leaflet-bar a, .leaflet-control-layers { background: rgba(20,20,24,.92) !important; color: var(--ink) !important; border-color: var(--line-soft) !important; }
+.leaflet-control-layers { border-radius: 10px !important; font-size: 12px; }
+.leaflet-control-attribution { background: rgba(15,15,18,.75) !important; color: var(--muted) !important; }
+.leaflet-control-attribution a { color: var(--gold) !important; }
+.leaflet-control-scale-line { background: rgba(15,15,18,.7); color: var(--ink); border-color: var(--muted); }
+.legend { background: rgba(15,15,18,.88); color: var(--ink); padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line-soft); font-size: 11.5px; line-height: 1.75; backdrop-filter: blur(8px); }
+.legend .zl { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed var(--gold); margin-right: 6px; vertical-align: -2px; background: rgba(212,175,55,.12); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: rgba(20,20,24,.96); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 20px 40px -12px rgba(0,0,0,.8); }
+.leaflet-popup-content-wrapper { border-radius: 14px; }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
+.leaflet-popup-content { margin: 13px 15px; font: 12.5px/1.5 Inter, system-ui, sans-serif; }
+.leaflet-tooltip { background: rgba(20,20,24,.95); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+.leaflet-tooltip-top::before { border-top-color: rgba(20,20,24,.95); }
+.pop h3 { margin: 0 0 2px; font: 600 20px/1.15 "Cormorant Garamond", Georgia, serif; }
+.pop .meta { color: var(--muted); font-size: 12px; }
+.pop .btns { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+
+/* Modal */
+dialog { border: 1px solid var(--line); background: rgba(18,18,22,.97); color: var(--ink); border-radius: 18px; padding: 0; width: min(760px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px); box-shadow: 0 40px 80px -20px rgba(0,0,0,.9); }
+dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
+.modal { display: flex; flex-direction: column; max-height: calc(100vh - 34px); }
+.modal-head { display: flex; gap: 12px; align-items: start; padding: 18px 20px 12px; border-bottom: 1px solid var(--line-soft); }
+.modal-head h3 { margin: 2px 0 0; font: 600 24px/1.1 "Cormorant Garamond", serif; }
+.modal-head .x { margin-left: auto; }
+.modal-body { padding: 14px 20px; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+.modal-body input, .modal-body textarea { width: 100%; }
+.modal-body textarea { min-height: 330px; resize: vertical; line-height: 1.55; font-size: 13px; }
+.modal-foot { display: flex; gap: 8px; padding: 12px 20px 18px; border-top: 1px solid var(--line-soft); flex-wrap: wrap; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; }
+.seg-ctl button { font: 600 12px Inter, sans-serif; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+.seg-ctl button[aria-pressed=true] { background: var(--gold); color: #19150a; }
+.ctx { display: flex; flex-wrap: wrap; gap: 5px; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; background: var(--gold); color: #19150a; font-weight: 600;
+  padding: 9px 16px; border-radius: 999px; transition: all .2s; pointer-events: none; z-index: 9999; }
+.toast.show { opacity: 1; transform: translateX(-50%); }
+
+/* Cormorant defaults to old-style figures (1 → I, 0 → O); metrics need lining numerals */
+.tile b, .proj b, .kv b, h1, h2, h3, .tile b small { font-variant-numeric: lining-nums; }
+@media (max-width: 1280px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1080px) {
+  .ctl-body { grid-template-columns: 1fr; }
+  .side-ctl { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-soft); }
+  .split { grid-template-columns: 1fr; height: auto; }
+  .map-card { height: 420px; }
+  .side { max-height: none; }
+  .pane { overflow: visible; }
+}
 @media (max-width: 700px) {
-  .dash { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .actions { margin-left: 0; }
-  .f input[type=search] { min-width: 0; width: 100%; }
-  .f.search { width: 100%; }
-  main { grid-template-rows: 300px 1fr; }
+  .wrap { padding: 0 16px 20px; }
+  h1 { font-size: 23px; }
+  .head-actions { margin-left: 0; width: 100%; }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .tile b { font-size: 24px; }
+  .map-card { height: 340px; }
+  .f, .f input[type=search], .f select { width: 100%; }
+  .kv { grid-template-columns: repeat(2, 1fr); }
+  .modal-body textarea { min-height: 260px; }
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 <header>
-  <h1>Niche Perfumery Atlas</h1>
-  <span class="sub">BE · NL · DE · FR · LU · CH — niche boutiques, concept stores & department stores</span>
+  <div class="brand">
+    <div class="mark">M</div>
+    <div>
+      <h1>Maison <em>Atlas</em></h1>
+      <div class="sub">Niche fragrance launch CRM · BE · NL · DE · FR · LU · CH</div>
+    </div>
+  </div>
+  <div class="head-actions">
+    <button class="btn" id="go-sim">Margin simulator</button>
+    <button class="btn gold" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
+  </div>
 </header>
-<section class="dash" aria-label="Pipeline metrics">
-  <div class="tile"><span class="lbl">Total target stores</span><b id="m-total">0</b><span class="hint" id="m-total-h"></span></div>
-  <div class="tile"><span class="lbl">High-priority targets</span><b id="m-high">0</b><span class="hint" id="m-high-h"></span></div>
-  <div class="tile"><span class="lbl">Active pipeline</span><b id="m-pipe">0</b><span class="hint" id="m-pipe-h"></span><div class="funnel" id="m-funnel"></div></div>
-  <div class="tile"><span class="lbl">Est. address confidence</span><b id="m-addr">–</b><span class="hint" id="m-addr-h"></span></div>
+
+<section class="metrics" aria-label="Executive metrics">
+  <div class="tile glass"><span class="eyebrow">Target stores</span><b id="m-total">0</b><span class="hint" id="m-total-h"></span></div>
+  <div class="tile glass"><span class="eyebrow">Tier 1 quick wins</span><b id="m-high">0</b><span class="hint" id="m-high-h"></span></div>
+  <div class="tile glass"><span class="eyebrow">Active pipeline</span><b id="m-pipe">0</b><span class="hint" id="m-pipe-h"></span><div class="funnel" id="m-funnel"></div></div>
+  <div class="tile glass"><span class="eyebrow">Sampling workflow</span><b id="m-samp">0</b><span class="hint" id="m-samp-h"></span></div>
+  <div class="tile glass hero"><span class="eyebrow">Weighted pipeline · yr 1</span><b id="m-rev">–</b><span class="hint" id="m-rev-h"></span></div>
+  <div class="tile glass"><span class="eyebrow">Protected territories</span><b id="m-zone">0</b><span class="hint" id="m-zone-h"></span></div>
 </section>
-<section class="filters">
-  <label class="f search">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
-  <div class="f">Country<div class="chips" id="countries"></div></div>
-  <label class="f">City<select id="city"><option value="">All</option></select></label>
-  <label class="f">Type<select id="type"><option value="">All</option></select></label>
-  <div class="f" title="Market segment for a single-SKU indie launch">Market segment<div class="chips" id="segments"></div></div>
-  <label class="f">Min tier <span id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
-  <label class="f">Min alignment <span id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
-  <div class="f">Single-SKU openness
-    <div class="chips">
-      <label class="chip"><input type="checkbox" name="open" value="High" checked>High</label>
-      <label class="chip"><input type="checkbox" name="open" value="Med" checked>Med</label>
-      <label class="chip"><input type="checkbox" name="open" value="Low" checked>Low</label>
+
+<details class="panel glass" id="ctl" open>
+  <summary><h2>Control Panel</h2><span class="pill" id="f-count">All stores</span><span class="chev">▼</span></summary>
+  <div class="ctl-body">
+    <div class="filters">
+      <label class="f">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
+      <div class="f">Country<div class="chips" id="countries"></div></div>
+      <label class="f">City<select id="city"><option value="">All</option></select></label>
+      <label class="f">Type<select id="type"><option value="">All</option></select></label>
+      <label class="f">Pipeline status<select id="status"><option value="">All</option></select></label>
+      <label class="f">Launch priority<select id="priority"><option value="">All</option></select></label>
+      <div class="f" title="Market segment for a single-SKU indie launch">Market segment<div class="chips" id="segments"></div></div>
+      <label class="f">Min tier <span class="v" id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
+      <label class="f">Min alignment <span class="v" id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
+      <div class="f">Single-SKU openness
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="open" value="High" checked>High</label>
+          <label class="chip"><input type="checkbox" name="open" value="Med" checked>Med</label>
+          <label class="chip"><input type="checkbox" name="open" value="Low" checked>Low</label>
+        </div>
+      </div>
+      <div class="f">Source
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="src" value="curated" checked>Curated</label>
+          <label class="chip"><input type="checkbox" name="src" value="osm" checked>OSM</label>
+        </div>
+      </div>
+      <div class="f">Focus<span class="chips">
+        <label class="chip" title="Verified true indie niche (High single-SKU openness), fit ≥ 70, not yet won or declined"><input id="quick" type="checkbox">Quick wins</label>
+        <label class="chip" title="Partner Active and Key Account only"><input id="accounts" type="checkbox">Partners &amp; key accounts</label>
+        <label class="chip" title="Discovery set out or follow-up due"><input id="sampling" type="checkbox">Sampling in flight</label>
+        <label class="chip"><input id="inview" type="checkbox">Only in view</label>
+      </span></div>
+    </div>
+    <div class="side-ctl">
+      <div class="zone-box">
+        <div class="row"><span class="f" style="gap:2px">Territorial exclusivity</span>
+          <label class="chip"><input id="zones" type="checkbox">Show zones</label></div>
+        <label class="f">Exclusion radius <span class="v" id="radius-v">2.0 km</span><input id="radius" type="range" min="0.5" max="10" step="0.5" value="2" style="width:100%"></label>
+        <span class="hint" id="zone-hint">Zones turn on automatically when filtering partners or key accounts.</span>
+      </div>
+      <div class="actions">
+        <button class="btn sm" id="crm" title="Save as sources/crm.json, then run build_perfumeries.py to bake edits into the dataset">Export CRM JSON</button>
+        <button class="btn sm ghost" id="discard" title="Forget pipeline edits stored in this browser">Discard edits</button>
+        <button class="btn sm ghost" id="reset">Reset filters</button>
+      </div>
     </div>
   </div>
-  <div class="f">Source
-    <div class="chips">
-      <label class="chip"><input type="checkbox" name="src" value="curated" checked>Curated</label>
-      <label class="chip"><input type="checkbox" name="src" value="osm" checked>OSM</label>
+</details>
+
+<section class="split">
+  <div class="map-card glass"><div id="map"></div></div>
+  <aside class="side glass">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-dos" aria-selected="true" aria-controls="pane-dos">Store dossier</button>
+      <button role="tab" id="tab-sim" aria-selected="false" aria-controls="pane-sim">Margin simulator</button>
     </div>
-  </div>
-  <label class="f">Pipeline status<select id="status"><option value="">All</option></select></label>
-  <label class="f">Launch priority<select id="priority"><option value="">All</option></select></label>
-  <div class="f">Focus<span class="chips"><label class="chip" title="Verified true indie niche (High single-SKU openness), fit ≥ 70, not yet won or declined"><input id="quick" type="checkbox">High-Priority Quick Wins</label></span></div>
-  <label class="f">Map sync<span class="chips"><label class="chip"><input id="inview" type="checkbox">Only in view</label></span></label>
-  <div class="actions">
-    <button class="primary" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
-    <button class="reset" id="crm" title="Save as sources/crm.json, then run build_perfumeries.py to bake edits into the dataset">Export CRM JSON</button>
-    <button class="reset" id="discard" title="Forget pipeline edits stored in this browser">Discard edits</button>
-    <button class="reset" id="reset">Reset filters</button>
-  </div>
+    <div class="pane" id="pane-dos" role="tabpanel">
+      <div class="empty"><span class="serif">Select a boutique</span>Click a marker or a pipeline row to open its dossier, update its status and generate a tailored pitch.</div>
+    </div>
+    <div class="pane sim" id="pane-sim" role="tabpanel" hidden>
+      <div class="grid">
+        <label>Maison / brand<input id="s-brand" type="text" placeholder="Your house"></label>
+        <label>Fragrance<input id="s-scent" type="text" placeholder="Hero SKU name"></label>
+        <label>MSRP · PVP TTC (€)<input id="s-msrp" type="number" min="1" step="1" value="185"></label>
+        <label>COGS · coût de fab. (€)<input id="s-cogs" type="number" min="0" step="0.5" value="24"></label>
+        <label>VAT · TVA (%)<input id="s-vat" type="number" min="0" max="30" step="0.5" value="20"></label>
+        <label title="Retail price excl. VAT ÷ wholesale price">Retailer coefficient<input id="s-coef" type="number" min="1.2" max="4" step="0.05" value="2"></label>
+        <label title="Minimum value of an opening order">Opening order target (€)<input id="s-open" type="number" min="0" step="50" value="900"></label>
+        <label>Case pack (units)<input id="s-pack" type="number" min="1" step="1" value="6"></label>
+        <label class="wide" title="Replenishment orders per store over the first 12 months">Reorders in year 1 <input id="s-re" type="range" min="0" max="8" step="1" value="3" style="width:100%"></label>
+      </div>
+      <h4>Unit economics</h4>
+      <table class="ledger" id="s-ledger"></table>
+      <div class="meter" id="s-meter"></div>
+      <div class="legend-row"><span><span class="dot" style="background:#6b6b75"></span>COGS</span><span><span class="dot" style="background:var(--gold)"></span>Brand margin</span><span><span class="dot" style="background:var(--concept)"></span>Retailer margin</span><span><span class="dot" style="background:#3a3a44"></span>VAT</span></div>
+      <div class="health" id="s-health"></div>
+      <h4>Recommended MOQ</h4>
+      <table class="ledger" id="s-moq"></table>
+      <h4>Pipeline projection <span class="pill" id="s-scope"></span></h4>
+      <div class="proj" id="s-proj"></div>
+      <p class="note">Weighted = Σ store value × close probability by status (Not contacted 5 %, Discovery set 15 %, Follow-up 25 %, Meeting 45 %, Partner / Key account 100 %). Store value = MOQ × (1 + reorders) × wholesale price. Follows the filters.</p>
+    </div>
+  </aside>
 </section>
-<main>
-  <div id="map"></div>
+
+<section class="table-card glass">
+  <div class="table-head"><h2>B2B Pipeline</h2><span class="pill" id="t-count"></span><span class="sub">Status, decision maker and notes are editable inline · edits stay in this browser until exported</span></div>
   <div id="table"></div>
-</main>
+</section>
+</div>
+
+<dialog id="pitch">
+  <div class="modal">
+    <div class="modal-head">
+      <div><span class="eyebrow">Smart pitch generator</span><h3 id="p-title"></h3><div class="sub" id="p-sub"></div></div>
+      <button class="btn sm ghost x" id="p-close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="seg-ctl" role="group" aria-label="Language"><button data-lang="fr" aria-pressed="true">Français</button><button data-lang="en" aria-pressed="false">English</button></div>
+        <div class="ctx" id="p-ctx"></div>
+      </div>
+      <div id="p-alert"></div>
+      <label class="f">Subject<input id="p-subject" type="text"></label>
+      <label class="f">Email<textarea id="p-body" spellcheck="true"></textarea></label>
+    </div>
+    <div class="modal-foot">
+      <button class="btn gold" id="p-copy">Copy email</button>
+      <button class="btn" id="p-mail">Open in mail app</button>
+      <button class="btn" id="p-sent" title="Set status to Discovery Set Sent">Mark discovery set sent</button>
+      <span class="sub" style="margin-left:auto">Edit freely before sending · placeholders in [brackets]</span>
+    </div>
+  </div>
+</dialog>
+<div class="toast" id="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
@@ -171,62 +410,106 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   if (!data) {
     try { data = await (await fetch("perfumeries.json")).json(); } catch (e) { data = []; }
   }
-
+  const $ = id => document.getElementById(id);
+  if (matchMedia("(max-width: 700px)").matches) $("ctl").open = false;   // phones: map first
   const css = getComputedStyle(document.documentElement);
-  const color = t => css.getPropertyValue(
-    t === "Niche Boutique" ? "--niche" : t === "Independent Concept Store" ? "--concept" : "--dept").trim();
+  const cssVar = v => css.getPropertyValue(v).trim();
+  const color = t => cssVar(t === "Niche Boutique" ? "--niche" : t === "Independent Concept Store" ? "--concept" : "--dept");
   const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
   const stars = v => v == null ? "–" : v.toFixed(1) + "★";
-  // Lower-cased search haystack built once, so typing never re-joins 300+ records
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const eur2 = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const short = v => v >= 1e6 ? (v / 1e6).toFixed(2).replace(".", ",") + " M€" : v >= 1e4 ? Math.round(v / 1e3) + " k€" : eur.format(v);
+  const pct = v => isFinite(v) ? Math.round(v * 100) + " %" : "–";
+  const store = {
+    get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode: keep for this session */ } },
+  };
+  // Lower-cased search haystack built once, so typing never re-joins 400 records
   data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, r.segment, ...Object.values(r.cx_insights), ...r.cx_traits].join(" ").toLowerCase(); });
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // ---- CRM: pipeline edits live in this browser until exported to sources/crm.json
-  const STATUSES = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"];
-  const ACTIVE = new Set(["Sample Sent", "Meeting Booked", "Partner Active"]);
+  const STATUSES = ["Not Contacted", "Discovery Set Sent", "Follow-up Required", "Meeting Booked", "Partner Active", "Key Account", "Declined"];
+  const LEGACY_STATUS = { "Sample Sent": "Discovery Set Sent" };
+  const ENGAGED = new Set(["Discovery Set Sent", "Follow-up Required", "Meeting Booked", "Partner Active", "Key Account"]);
+  const SAMPLING = new Set(["Discovery Set Sent", "Follow-up Required"]);
+  const PROTECTED = new Set(["Partner Active", "Key Account"]);
+  const PROB = { "Not Contacted": .05, "Discovery Set Sent": .15, "Follow-up Required": .25, "Meeting Booked": .45, "Partner Active": 1, "Key Account": 1, "Declined": 0 };
+  const statusVar = { "Not Contacted": "--s-nc", "Discovery Set Sent": "--s-disc", "Follow-up Required": "--s-follow", "Meeting Booked": "--s-meet",
+    "Partner Active": "--s-partner", "Key Account": "--s-key", "Declined": "--s-declined" };
+  const statusColor = s => cssVar(statusVar[s] || "--s-nc");
+  const badge = s => `<span class="badge dotted" style="--c:${statusColor(s)}">${esc(s)}</span>`;
   const ROLES = ["Founder", "Store Manager", "Head Buyer"];
   const BARRIERS = ["Low", "Med", "High", "Very High"];
   const CRM_FIELDS = ["pipeline_status", "decision_maker_role", "notes_prospections"];
   const SEGMENTS = ["True Indie Niche Boutique", "Indie Niche (to verify)", "Specialist Niche House",
     "Traditional Prestige Perfumery", "Selective Concept Store", "Department Store"];
   const SEG_SHORT = ["True indie", "Indie (verify)", "Specialist", "Traditional", "Selective concept", "Department"];
-  const STORE_KEY = "perfumery-crm-v1";
-  const statusVar = { "Not Contacted": "--s-nc", "Sample Sent": "--s-sample", "Meeting Booked": "--s-meet", "Partner Active": "--s-partner", "Declined": "--s-declined" };
-  const statusColor = s => css.getPropertyValue(statusVar[s] || "--s-nc").trim();
+  const SEG_COLOR = ["#5fd08a", "#a6c96a", "#6fc2b8", "#d9b46a", "#c39cff", "#9a958c"];
+  const STORE_KEY = "perfumery-crm-v1", SIM_KEY = "perfumery-sim-v1";
   const priShort = p => p.slice(0, 6).replace("Tier ", "T");   // "Tier 1 - Quick…" -> "T1"
   const isQuickWin = r => r.launch_priority.startsWith("Tier 1") && r.single_sku_openness === "High" &&
-    r.brand_alignment_score >= 70 && r.pipeline_status !== "Partner Active" && r.pipeline_status !== "Declined";
-  let edits = {};
-  try { edits = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { edits = {}; }
-  const saveEdits = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(edits)); } catch (e) { /* private mode: edits last this session */ } };
-  data.forEach(r => Object.assign(r, edits[r.crm_key] || {}));
+    r.brand_alignment_score >= 70 && !PROTECTED.has(r.pipeline_status) && r.pipeline_status !== "Declined";
+  let edits = store.get(STORE_KEY, {});
+  Object.values(edits).forEach(e => { if (LEGACY_STATUS[e.pipeline_status]) e.pipeline_status = LEGACY_STATUS[e.pipeline_status]; });
+  data.forEach(r => {
+    Object.assign(r, edits[r.crm_key] || {});
+    if (!STATUSES.includes(r.pipeline_status)) r.pipeline_status = LEGACY_STATUS[r.pipeline_status] || STATUSES[0];
+  });
   const byId = new Map(data.map(r => [r.id, r]));
 
-  // ---- Map
+  // ---- Simulator state
+  const SIM_FIELDS = { brand: "s-brand", scent: "s-scent", msrp: "s-msrp", cogs: "s-cogs", vat: "s-vat", coef: "s-coef", open: "s-open", pack: "s-pack", re: "s-re" };
+  const savedSim = store.get(SIM_KEY, {});
+  Object.entries(SIM_FIELDS).forEach(([k, id]) => { if (savedSim[k] != null && savedSim[k] !== "") $(id).value = savedSim[k]; });
+  function readSim() {
+    const n = (id, d) => { const v = parseFloat($(id).value); return isFinite(v) ? v : d; };
+    const s = { brand: $("s-brand").value.trim(), scent: $("s-scent").value.trim(), msrp: Math.max(1, n("s-msrp", 185)), cogs: Math.max(0, n("s-cogs", 24)),
+      vat: Math.min(30, Math.max(0, n("s-vat", 20))), coef: Math.max(1.01, n("s-coef", 2)), open: Math.max(0, n("s-open", 900)),
+      pack: Math.max(1, Math.round(n("s-pack", 6))), re: Math.max(0, Math.round(n("s-re", 3))) };
+    s.ht = s.msrp / (1 + s.vat / 100);
+    s.wholesale = s.ht / s.coef;
+    s.retail = s.ht - s.wholesale;
+    s.brandM = s.wholesale - s.cogs;
+    s.moq = Math.max(s.pack, Math.ceil(s.open / s.wholesale / s.pack) * s.pack);
+    return s;
+  }
+  let sim = readSim();
+  // Department stores open with a deeper first order (multiple doors / counters)
+  const moqFor = r => r.type === "Department Store" ? sim.moq * 2 : sim.moq;
+  const storeValue = r => moqFor(r) * (1 + sim.re) * sim.wholesale;
+
+  // ---- Territorial exclusivity: every store gets the nearest protected account within the radius
+  let zoneKm = +$("radius").value;
+  function computeZones() {
+    const partners = data.filter(r => PROTECTED.has(r.pipeline_status));
+    data.forEach(r => {
+      r._zone = null;
+      if (PROTECTED.has(r.pipeline_status)) return;
+      const here = L.latLng(r.lat, r.lng);
+      let best = null;
+      partners.forEach(p => { const d = here.distanceTo([p.lat, p.lng]) / 1000; if (d <= zoneKm && (!best || d < best.km)) best = { name: p.name, id: p.id, km: d }; });
+      r._zone = best;
+    });
+    return partners;
+  }
+  let partners = computeZones();
+
+  // ---- Map. CARTO basemaps now watermark tiles requested without an API key, so the default is
+  // OpenFreeMap (no key, no quota): vector tiles drawn by MapLibre GL, Voyager-like "Liberty" palette.
+  // CARTO Voyager stays in the switcher for accounts that have CARTO access; OSM raster without WebGL.
   const map = L.map("map", { zoomControl: true, preferCanvas: true, maxZoom: 20, zoomSnap: .5 }).setView([49.5, 5.5], 5);
-  // OpenFreeMap vector basemaps (no API key, no quota) drawn by MapLibre GL inside Leaflet:
-  // city, district and street labels are rendered as vector text, so they stay crisp and
-  // re-layout at every zoom on desktop and retina phones. Raster fallback without WebGL.
-  const ATTR = '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  const webgl = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch (e) { return false; } })();
-  const vector = style => L.maplibreGL({ style: `https://tiles.openfreemap.org/styles/${style}`, attribution: ATTR });
-  // CARTO Voyager raster (retina @2x, no key): Google-like palette, also the no-WebGL fallback
+  const OFM_ATTR = '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const CARTO_ATTR = '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  const carto = style => L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, {
-    subdomains: "abcd", maxZoom: 20, detectRetina: false, attribution: CARTO_ATTR });
-  const BASEMAPS = webgl && L.maplibreGL ? {
-    "Streets": vector("liberty"),
-    "Voyager": carto("rastertiles/voyager"),
-    "Positron": vector("positron"),
-    "Dark": vector("dark"),
-  } : {
-    "Streets": carto("rastertiles/voyager"),
-    "Positron": carto("light_all"),
-    "Dark": carto("dark_all"),
-  };
-  const theme = document.documentElement.dataset.theme;
-  const dark = theme ? theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  (BASEMAPS[dark ? "Dark" : "Streets"] || BASEMAPS.Streets).addTo(map);
+  const webgl = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch (e) { return false; } })();
+  const vector = style => L.maplibreGL({ style: `https://tiles.openfreemap.org/styles/${style}`, attribution: OFM_ATTR });
+  const carto = style => L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, { subdomains: "abcd", maxZoom: 20, attribution: CARTO_ATTR });
+  const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
+  const BASEMAPS = webgl && L.maplibreGL
+    ? { "Voyager (OpenFreeMap)": vector("liberty"), "Studio Dark": vector("dark"), "Positron": vector("positron"), "CARTO Voyager (key)": carto("rastertiles/voyager") }
+    : { "OpenStreetMap": osm, "CARTO Voyager (key)": carto("rastertiles/voyager") };
+  Object.values(BASEMAPS)[0].addTo(map);
   L.control.layers(BASEMAPS, null, { position: "topright" }).addTo(map);
   L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
 
@@ -235,90 +518,107 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const d = L.DomUtil.create("div", "legend");
     d.innerHTML = ["Niche Boutique", "Independent Concept Store", "Department Store"]
       .map(t => `<div><span class="dot" style="background:${color(t)}"></span>${t}</div>`).join("") +
-      `<div style="color:var(--muted)">Marker size = tier score</div>`;
+      `<div><span class="zl"></span>Exclusivity zone</div><div style="color:var(--muted)">Size = tier · ring = status</div>`;
     return d;
   };
   legend.addTo(map);
 
-  const INSIGHT_ROWS = [["staff", "Staff"], ["footfall", "Footfall"], ["sampling", "Sampling"], ["atmosphere", "Atmosphere"], ["watch_out", "Watch out"]];
-  const insights = cx => `<div class="cx"><h4>Consumer insights</h4><dl>${INSIGHT_ROWS.map(([k, l]) =>
-      `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
-    <div class="pitch"><b>Pitch prep:</b> ${esc(cx.pitch)}</div><div class="basis">${esc(cx.basis)}</div></div>`;
   const popup = r => `<div class="pop">
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.type)} · ${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
-    <div>${esc(r.full_address)}</div>
-    <div class="meta"><span class="st" style="--c:${statusColor(r.pipeline_status)}">${esc(r.pipeline_status)}</span> · ${esc(r.launch_priority)} · pitch ${esc(r.decision_maker_role)}</div>
-    ${r.notes_prospections ? `<div class="meta">“${esc(r.notes_prospections)}”</div>` : ""}
-    <div class="scores"><span>Tier <b>${r.tier_score}</b></span><span>Fit <b>${r.brand_alignment_score}</b></span><span>SKU <b>${r.single_sku_openness}</b></span><span>CX <b>${stars(r.customer_experience_rating)}</b></span></div>
-    ${r.network ? `<div class="meta">Network: ${esc(r.network)}</div>` : ""}
-    <div class="seg"><span class="badge seg-${SEGMENTS.indexOf(r.segment) + 1}">${esc(r.segment)}</span><span class="badge" title="Entry barrier for a single-SKU indie brand">Barrier ${esc(r.entry_barrier)}</span>${r.openness_verified ? `<span class="badge seg-1" title="Editorially verified as micro-brand friendly">✓ micro-brand friendly</span>` : ""}</div>
-    <div class="tags">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-    <div style="margin:4px 0 8px">${esc(r.sentiment_summary)}</div>
-    ${insights(r.cx_insights)}
-    <a href="${r.google_maps_url}" target="_blank" rel="noopener">Google Maps</a><a href="${r.instagram_search_url}" target="_blank" rel="noopener">Instagram</a>${
-      r.source.startsWith("osm:") ? `<a href="https://www.openstreetmap.org/${r.source.slice(4)}" target="_blank" rel="noopener">OSM</a>` : ""}
+    <div class="badges">${badge(r.pipeline_status)}<span class="badge" style="--c:${SEG_COLOR[SEGMENTS.indexOf(r.segment)]}">${esc(SEG_SHORT[SEGMENTS.indexOf(r.segment)])}</span>${
+      r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km from partner</span>` : ""}</div>
+    <div class="meta">Tier ${r.tier_score} · Fit ${r.brand_alignment_score} · SKU ${r.single_sku_openness} · pitch ${esc(r.decision_maker_role)}</div>
+    <div class="btns"><button class="btn gold sm" data-pitch="${r.id}">Generate pitch</button><button class="btn sm" data-dossier="${r.id}">Dossier</button></div>
   </div>`;
 
   const markers = new Map();
   const layer = L.layerGroup().addTo(map);
-  // Draw small markers last so big ones don't hide them
+  const zoneLayer = L.layerGroup().addTo(map);
   // Ring colour = pipeline status once a store has been contacted
-  const ring = r => r.pipeline_status === "Not Contacted" ? { color: "#fff", weight: 1.2 } : { color: statusColor(r.pipeline_status), weight: 3 };
+  const ring = r => r.pipeline_status === "Not Contacted" ? { color: "rgba(15,15,18,.9)", weight: 1.2 } : { color: statusColor(r.pipeline_status), weight: 3 };
+  // Draw small markers last so big ones don't hide them
   [...data].sort((a, b) => b.tier_score - a.tier_score).forEach(r => {
     const m = L.circleMarker([r.lat, r.lng], {
-      radius: radius(r.tier_score), ...ring(r), fillColor: color(r.type), fillOpacity: .85
-    }).bindPopup(() => popup(r), { maxWidth: 340, autoPanPadding: [20, 20] }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
-    m.on("click", () => focusRow(r.id));
+      radius: radius(r.tier_score), ...ring(r), fillColor: color(r.type), fillOpacity: .9
+    }).bindPopup(() => popup(r), { maxWidth: 320, autoPanPadding: [20, 20] }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
+    m.on("click", () => { focusRow(r.id); showDossier(r.id); });
     markers.set(r.id, m);
   });
 
   // ---- Table
-  const bar = cell => `<div class="bar" title="${cell.getValue()}"><i style="width:${cell.getValue()}%"></i></div>`;
+  const bar = v => `<div class="bar"><i style="width:${v}%"></i></div>`;
   const stop = e => e.stopPropagation();   // editing a cell must not fly the map
+  const zoneCell = r => PROTECTED.has(r.pipeline_status) ? `<span class="badge" style="--c:var(--gold)">◎ Protected</span>`
+    : r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s ${zoneKm} km zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : `<span class="muted">Open</span>`;
   const table = new Tabulator("#table", {
-    data, index: "id", layout: "fitColumns", height: "100%", selectableRows: false,
+    data, index: "id", layout: "fitColumns", height: matchMedia("(max-width: 700px)").matches ? 480 : 560, selectableRows: false,
     initialSort: [{ column: "tier_score", dir: "desc" }],
     columns: [
-      { title: "Name", field: "name", minWidth: 190, widthGrow: 2, formatter: c => `<b>${esc(c.getValue())}</b>` },
+      { title: "Name", field: "name", minWidth: 190, widthGrow: 2, frozen: true, formatter: c => `<b>${esc(c.getValue())}</b>` },
       { title: "Priority", field: "launch_priority", width: 80, formatter: c =>
           `<span class="pri t${c.getValue()[5]}" title="${esc(c.getValue())}">${priShort(c.getValue())}</span>` },
-      { title: "Status", field: "pipeline_status", width: 140, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
-        sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop,
-        formatter: c => `<span class="st" style="--c:${statusColor(c.getValue())}">${esc(c.getValue())}</span>` },
+      { title: "Status", field: "pipeline_status", width: 170, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
+        sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop, formatter: c => badge(c.getValue()) },
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
-      { title: "Prospection notes", field: "notes_prospections", minWidth: 200, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
-        formatter: c => c.getValue() ? `<span title="${esc(c.getValue())}">${esc(c.getValue())}</span>` : `<span class="note">Add note…</span>` },
-      { title: "Segment", field: "segment", minWidth: 130, sorter: (a, b) => SEGMENTS.indexOf(a) - SEGMENTS.indexOf(b), formatter: c =>
-          `<span class="typ seg-${SEGMENTS.indexOf(c.getValue()) + 1}" title="${esc(c.getValue())}">${c.getRow().getData().openness_verified ? "✓ " : ""}${SEG_SHORT[SEGMENTS.indexOf(c.getValue())]}</span>` },
+      { title: "Pitch", field: "id", width: 84, headerSort: false, hozAlign: "center", cellClick: (e, c) => { e.stopPropagation(); openPitch(c.getValue()); },
+        formatter: () => `<button class="btn sm" type="button">✉ Pitch</button>` },
+      { title: "Territory", field: "_zoneKm", width: 120, sorter: "number", formatter: c => zoneCell(byId.get(c.getRow().getData().id)) },
+      { title: "Yr-1 value", field: "_val", width: 105, hozAlign: "right", sorter: "number", formatter: c => `<span class="num" title="Weighted: ${eur.format(byId.get(c.getRow().getData().id)._wval || 0)}">${short(c.getValue() || 0)}</span>` },
+      { title: "Prospection notes", field: "notes_prospections", minWidth: 190, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
+        formatter: c => c.getValue() ? `<span title="${esc(c.getValue())}">${esc(c.getValue())}</span>` : `<span class="muted">Add note…</span>` },
+      { title: "Segment", field: "segment", minWidth: 130, sorter: (a, b) => SEGMENTS.indexOf(a) - SEGMENTS.indexOf(b), formatter: c => {
+          const i = SEGMENTS.indexOf(c.getValue());
+          return `<span class="typ" style="color:${SEG_COLOR[i]}" title="${esc(c.getValue())}">${c.getRow().getData().openness_verified ? "✓ " : ""}${SEG_SHORT[i]}</span>`; } },
       { title: "Barrier", field: "entry_barrier", width: 85, sorter: (a, b) => BARRIERS.indexOf(a) - BARRIERS.indexOf(b) },
-      { title: "Type", field: "type", minWidth: 120, formatter: c =>
+      { title: "Type", field: "type", minWidth: 130, formatter: c =>
           `<span class="typ"><span class="dot" style="background:${color(c.getValue())}"></span>${esc(c.getValue())}</span>` },
       { title: "City", field: "city", minWidth: 100, formatter: c => esc(c.getRow().getData().district || c.getValue()) },
       { title: "Address", field: "full_address", minWidth: 200, widthGrow: 2, formatter: c => esc(c.getValue()) },
-      { title: "CC", field: "country", width: 60 },
-      { title: "Tier", field: "tier_score", width: 70, hozAlign: "right", sorter: "number" },
-      { title: "Fit", field: "brand_alignment_score", width: 110, sorter: "number", formatter: c =>
-          `<div style="display:flex;gap:6px;align-items:center"><span style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c)}</div></div>` },
-      { title: "SKU", field: "single_sku_openness", width: 70, sorter: (a, b) => ({ High: 3, Med: 2, Low: 1 }[a] - { High: 3, Med: 2, Low: 1 }[b]) },
-      { title: "CX", field: "customer_experience_rating", width: 70, hozAlign: "right", sorter: "number", formatter: c => stars(c.getValue()) },
-      { title: "Traits", field: "cx_traits", minWidth: 180, widthGrow: 2, headerSort: false, formatter: c => esc(c.getValue().join(" · ")) },
-      { title: "Links", field: "google_maps_url", width: 110, headerSort: false, formatter: c => {
+      { title: "CC", field: "country", width: 56 },
+      { title: "Tier", field: "tier_score", width: 64, hozAlign: "right", sorter: "number" },
+      { title: "Fit", field: "brand_alignment_score", width: 100, sorter: "number", formatter: c =>
+          `<div style="display:flex;gap:6px;align-items:center"><span class="num" style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c.getValue())}</div></div>` },
+      { title: "SKU", field: "single_sku_openness", width: 64, sorter: (a, b) => ({ High: 3, Med: 2, Low: 1 }[a] - { High: 3, Med: 2, Low: 1 }[b]) },
+      { title: "CX", field: "customer_experience_rating", width: 64, hozAlign: "right", sorter: "number", formatter: c => stars(c.getValue()) },
+      { title: "Links", field: "google_maps_url", width: 100, headerSort: false, cellClick: stop, formatter: c => {
           const r = c.getRow().getData();
-          return `<a href="${r.google_maps_url}" target="_blank" rel="noopener">Maps</a> · <a href="${r.instagram_search_url}" target="_blank" rel="noopener">IG</a>`;
-        }, cellClick: e => e.stopPropagation() },
+          return `<a href="${esc(r.google_maps_url)}" target="_blank" rel="noopener">Maps</a> · <a href="${esc(r.instagram_search_url)}" target="_blank" rel="noopener">IG</a>`; } },
     ],
   });
+  let tableReady = false;
 
-  table.on("cellEdited", cell => {
-    const field = cell.getField(), r = byId.get(cell.getRow().getData().id);
-    if (!CRM_FIELDS.includes(field)) return;
-    r[field] = field === "notes_prospections" ? String(cell.getValue() ?? "").trim() : cell.getValue();
+  // Single entry point for a CRM change, from the table, the dossier or the pitch modal
+  function setCrm(id, patch) {
+    const r = byId.get(id);
+    Object.assign(r, patch);
+    if (r.notes_prospections != null) r.notes_prospections = String(r.notes_prospections).trim();
     edits[r.crm_key] = Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]));
-    saveEdits();
-    markers.get(r.id).setStyle(ring(r));
+    store.set(STORE_KEY, edits);
+    const m = markers.get(r.id);
+    m.setStyle(ring(r));
+    if (m.isPopupOpen()) m.setPopupContent(popup(r));
+    if ("pipeline_status" in patch) partners = computeZones();
+    refreshDerived();
     apply();
+    if (dossierId === id) showDossier(id);
+  }
+  table.on("cellEdited", cell => {
+    const field = cell.getField();
+    if (CRM_FIELDS.includes(field)) setCrm(cell.getRow().getData().id, { [field]: cell.getValue() });
   });
+
+  // Derived columns (projected value, territory) follow the simulator and the zones
+  function refreshDerived() {
+    data.forEach(r => {
+      r._val = r.pipeline_status === "Declined" ? 0 : storeValue(r);
+      r._wval = r._val * PROB[r.pipeline_status];
+      r._zoneKm = PROTECTED.has(r.pipeline_status) ? -1 : r._zone ? r._zone.km : 99;
+    });
+    if (tableReady) table.updateData(data.map(r => ({ id: r.id, _val: r._val, _zoneKm: r._zoneKm, pipeline_status: r.pipeline_status,
+      decision_maker_role: r.decision_maker_role, notes_prospections: r.notes_prospections }))).catch(() => {});
+  }
+  refreshDerived();
 
   let openPending = null;
   table.on("rowClick", (e, row) => {
@@ -328,6 +628,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     map.once("moveend", openPending);
     map.flyTo([r.lat, r.lng], Math.max(map.getZoom(), 14), { duration: .6 });
     highlight(r.id);
+    showDossier(r.id);
   });
 
   let activeId = null;
@@ -342,17 +643,181 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   }
   table.on("renderComplete", () => activeId != null && table.getRow(activeId)?.getElement().classList.add("active"));
 
+  // ---- Side panel tabs
+  function showTab(name) {
+    ["dos", "sim"].forEach(t => { $("tab-" + t).setAttribute("aria-selected", t === name); $("pane-" + t).hidden = t !== name; });
+  }
+  $("tab-dos").addEventListener("click", () => showTab("dos"));
+  $("tab-sim").addEventListener("click", () => showTab("sim"));
+  $("go-sim").addEventListener("click", () => { showTab("sim"); $("pane-sim").closest(".split").scrollIntoView({ behavior: "smooth", block: "start" }); });
+
+  // ---- Dossier
+  let dossierId = null;
+  const INSIGHT_ROWS = [["staff", "Staff"], ["footfall", "Footfall"], ["sampling", "Sampling"], ["atmosphere", "Atmosphere"], ["watch_out", "Watch out"]];
+  function showDossier(id) {
+    const r = byId.get(id);
+    if (!r) return;
+    dossierId = id;
+    const cx = r.cx_insights, si = SEGMENTS.indexOf(r.segment);
+    const zone = PROTECTED.has(r.pipeline_status)
+      ? `<div class="callout safe"><b>Protected account.</b> No other door is pitched within ${zoneKm} km while exclusivity holds.</div>`
+      : r._zone ? `<div class="callout alert"><b>Inside an exclusivity zone:</b> ${esc(r._zone.name)} is ${r._zone.km.toFixed(1)} km away. Clear the territory before pitching.</div>` : "";
+    $("pane-dos").innerHTML = `<div class="dos">
+      <span class="eyebrow">${esc(r.type)} · ${esc(r.launch_priority)}</span>
+      <h3>${esc(r.name)}</h3>
+      <div class="meta">${esc(r.district || r.city)}, ${esc(r.country_name)}${r.network ? ` · ${esc(r.network)}` : ""}</div>
+      <div class="addr">${esc(r.full_address)}</div>
+      <div class="badges">${badge(r.pipeline_status)}<span class="badge" style="--c:${SEG_COLOR[si]}">${esc(r.segment)}</span><span class="badge" title="Entry barrier for a single-SKU indie brand">Barrier ${esc(r.entry_barrier)}</span>${r.openness_verified ? `<span class="badge" style="--c:var(--ok)">✓ micro-brand friendly</span>` : ""}</div>
+      ${zone}
+      <div class="kv"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>CX</span><b>${stars(r.customer_experience_rating)}</b></div></div>
+      <div class="ctrl">
+        <label class="f">Pipeline status<select id="d-status">${STATUSES.map(s => `<option${s === r.pipeline_status ? " selected" : ""}>${s}</option>`).join("")}</select></label>
+        <label class="f">Decision maker<select id="d-role">${ROLES.map(s => `<option${s === r.decision_maker_role ? " selected" : ""}>${s}</option>`).join("")}</select></label>
+      </div>
+      <div class="kv" style="grid-template-columns:1fr 1fr 1fr"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>
+      <div class="callout"><b>Pitch prep:</b> ${esc(cx.pitch)}</div>
+      <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
+      <div class="badges">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      <div class="meta" style="margin-top:6px">${esc(r.sentiment_summary)} <i>(${esc(cx.basis)})</i></div>
+      <label class="f" style="margin-top:12px">Prospection notes<textarea id="d-notes" rows="3" placeholder="Add a note…">${esc(r.notes_prospections)}</textarea></label>
+      <div class="btns">
+        <button class="btn gold" data-pitch="${r.id}">✉ Generate pitch</button>
+        <a class="btn" href="${esc(r.google_maps_url)}" target="_blank" rel="noopener">Google Maps</a>
+        <a class="btn" href="${esc(r.instagram_search_url)}" target="_blank" rel="noopener">Instagram</a>${
+        r.source.startsWith("osm:") ? `<a class="btn" href="https://www.openstreetmap.org/${esc(r.source.slice(4))}" target="_blank" rel="noopener">OSM</a>` : ""}
+      </div></div>`;
+    $("d-status").addEventListener("change", e => setCrm(id, { pipeline_status: e.target.value }));
+    $("d-role").addEventListener("change", e => setCrm(id, { decision_maker_role: e.target.value }));
+    $("d-notes").addEventListener("change", e => setCrm(id, { notes_prospections: e.target.value }));
+    showTab("dos");
+  }
+  // Buttons inside popups / dossier
+  document.addEventListener("click", e => {
+    const p = e.target.closest("[data-pitch]"), d = e.target.closest("[data-dossier]");
+    if (p) openPitch(+p.dataset.pitch);
+    else if (d) { showDossier(+d.dataset.dossier); focusRow(+d.dataset.dossier); }
+  });
+
+  // ---- Smart pitch generator (FR / EN)
+  const COUNTRY_FR_IN = { BE: "en Belgique", NL: "aux Pays-Bas", DE: "en Allemagne", FR: "en France", LU: "au Luxembourg", CH: "en Suisse" };
+  function samplingPolicy(r) {
+    const s = r.cx_insights.sampling.toLowerCase(), t = r.cx_traits;
+    if (t.includes("Generous samples") || /generous|on request/.test(s) || t.includes("Discovery bar / blotters")) return "open";
+    if (/strict|rare|testers/.test(s)) return "strict";
+    if (/purchase|regulars|clients/.test(s)) return "purchase";
+    return "unknown";
+  }
+  const SAMPLING_LABEL = { open: "Open sampling", purchase: "Samples with purchase", strict: "Strict sampling", unknown: "Sampling policy unknown" };
+  function pitchText(r, lang) {
+    const fr = lang === "fr";
+    const brand = sim.brand || (fr ? "[Votre Maison]" : "[Your House]");
+    const scent = sim.scent || (fr ? "[Nom du parfum]" : "[Fragrance name]");
+    const city = r.district || r.city, role = r.decision_maker_role, pol = samplingPolicy(r);
+    const follow = SAMPLING.has(r.pipeline_status);
+    const T = (a, b) => fr ? a : b;
+    const subject = follow
+      ? T(`${scent} — suite au coffret découverte envoyé chez ${r.name}`, `${scent} — following up on the discovery set for ${r.name}`)
+      : T(`${scent} par ${brand} — un lancement niche mono-référence pour ${r.name}`, `${scent} by ${brand} — a single-SKU niche launch for ${r.name}`);
+    const greet = T("Bonjour [Prénom],", "Dear [First name],");
+    const opener = follow
+      ? T(`Je reviens vers vous suite au coffret découverte envoyé chez ${r.name} — j'espère que votre équipe a eu l'occasion de porter ${scent}.`,
+          `I'm following up on the discovery set we sent to ${r.name} — I hope your team has had a chance to wear ${scent}.`)
+      : role === "Founder"
+        ? T(`Je me permets de vous écrire directement : ${r.name} est exactement le type d'adresse indépendante avec laquelle nous rêvions de lancer à ${city}.`,
+            `I'm writing to you directly because ${r.name} is exactly the kind of independent address we hoped to launch with in ${city}.`)
+        : role === "Head Buyer"
+          ? T(`Je vous contacte en tant qu'acheteur·se parfum de ${r.name}${r.network ? ` (${r.network})` : ""}, en amont de votre prochaine fenêtre de référencement.`,
+              `I'm reaching out to you as fragrance buyer for ${r.name}${r.network ? ` (${r.network})` : ""}, ahead of your next buying window.`)
+          : T(`Je vous écris car vous êtes la personne qui connaît le mieux les attentes des clients en boutique chez ${r.name}.`,
+              `I'm writing to you as the person who best knows what clients ask for on the floor at ${r.name}.`);
+    const t = r.cx_traits;
+    const hook = t.includes("Curated indie brands")
+      ? T(`Votre sélection de maisons indépendantes est l'une des plus pointues ${COUNTRY_FR_IN[r.country]}.`, `Your edit of independent houses is one of the sharpest in ${r.country_name}.`)
+      : t.includes("Discovery bar / blotters")
+        ? T(`Votre bar de découverte est la scène idéale pour une signature olfactive unique.`, `Your discovery bar is the ideal stage for a single signature scent.`)
+        : t.includes("Expert staff")
+          ? T(`L'expertise olfactive de votre équipe est précisément ce dont un parfum unique et narratif a besoin.`, `Your team's olfactory expertise is precisely what a single, story-driven fragrance needs.`)
+          : t.includes("Luxury service")
+            ? T(`Le niveau de service de ${r.name} correspond au positionnement que nous avons construit pour ${scent}.`, `The level of service at ${r.name} matches the positioning we built for ${scent}.`)
+            : t.includes("Tourist crowds")
+              ? T(`Avec votre clientèle internationale, une référence héros unique est simple à raconter — et à emporter en souvenir.`, `With your international clientele, a single hero SKU is easy to explain — and to take home as a keepsake.`)
+              : T(`${r.name} réunit la curation et la clientèle que nous recherchons à ${city}.`, `${r.name} has the curation and clientele we are looking for in ${city}.`);
+    const product = T(
+      `${brand} lance ${scent} : un seul parfum, pas de collection tentaculaire — une signature que vos conseillers peuvent défendre avec conviction.`,
+      `${brand} is launching ${scent}: one fragrance, no sprawling collection — a single signature your advisors can sell with conviction.`);
+    const samp = {
+      open: T(`Comme vous pratiquez déjà un échantillonnage généreux, nous fournirons un coffret découverte pour l'équipe et 50 vials pour vos clients, offerts.`,
+              `As you already run an open sampling culture, we'll supply a discovery set for your team plus 50 sample vials for your clients, free of charge.`),
+      purchase: T(`Vos échantillons accompagnant surtout les achats, nous fournirons des vials 2 ml pensés comme cadeau de fidélité pour vos meilleurs clients — sans coût pour vous.`,
+              `Since your samples mostly go with purchases, we'll provide 2 ml vials designed as a gift-with-purchase for your best clients — at no cost to you.`),
+      strict: T(`Je sais que votre échantillonnage est sélectif ; restons simples : un testeur et un coffret découverte réservé à l'équipe, aucun échantillon client requis.`,
+              `I know your sampling is selective, so let's keep it simple: one tester and a staff-only discovery set, no consumer samples required.`),
+      unknown: T(`Dites-moi comment vous préférez échantillonner — décants, étagère découverte ou testeurs seuls — et nous adapterons le kit.`,
+              `Let me know how you prefer to sample — decants, a discovery shelf or testers only — and we'll tailor the kit.`),
+    }[pol];
+    const money = T(
+      `Prix public conseillé ${eur.format(sim.msrp)} TTC, prix de gros ${eur2.format(sim.wholesale)} HT, soit ${pct(sim.retail / sim.ht)} de marge détaillant (coefficient ${sim.coef.toFixed(2).replace(".", ",")}). Commande d'ouverture : ${moqFor(r)} unités.`,
+      `Suggested retail ${eur.format(sim.msrp)} incl. VAT, wholesale ${eur2.format(sim.wholesale)} excl. VAT — a ${pct(sim.retail / sim.ht)} retailer margin (${sim.coef.toFixed(2)}× coefficient). Opening order: ${moqFor(r)} units.`);
+    const pilot = BARRIERS.indexOf(r.entry_barrier) >= 2 || r.single_sku_openness === "Low"
+      ? " " + T(`Pour limiter le risque, nous proposons un pilote de 90 jours sur une seule façade, avec reprise des invendus.`,
+                `To de-risk it, we offer a 90-day pilot on a single facing, with buy-back of unsold stock.`) : "";
+    const network = r.network && r.type === "Department Store"
+      ? T(`Je sais que les référencements chez ${r.network} passent par la centrale d'achat ; je peux transmettre le dossier marque au format attendu.`,
+          `I understand listings at ${r.network} go through the central buying office; I'm happy to send the brand deck in whatever format your team uses.`) : "";
+    const cta = follow
+      ? T(`Pourrions-nous prendre 15 minutes pour recueillir les retours de votre équipe ?`, `Could we take 15 minutes to hear your team's feedback?`)
+      : role === "Founder"
+        ? T(`Auriez-vous 20 minutes la semaine prochaine pour un appel, ou une visite avec le jus ?`, `Would you have 20 minutes next week for a quick call, or a visit with the juice?`)
+        : role === "Head Buyer"
+          ? T(`Puis-je vous envoyer la fiche produit et nos projections de sell-through, et réserver un créneau lors de votre prochaine revue d'assortiment ?`,
+              `May I send you the line sheet and sell-through projections, and book a slot in your next assortment review?`)
+          : T(`Si le parfum séduit votre équipe, accepteriez-vous de nous mettre en relation avec la direction ou l'acheteur ?`,
+              `If the scent wins your team over, would you be open to introducing us to the owner or buyer?`);
+    const sign = T(`Bien cordialement,\n[Votre nom]\nFondateur·rice, ${brand}\n[Téléphone] · [Site web]`, `Warm regards,\n[Your name]\nFounder, ${brand}\n[Phone] · [Website]`);
+    const body = [greet, "", opener + " " + hook, "", product, "", samp, "", money + pilot, network ? "\n" + network : "", "", cta, "", sign].join("\n").replace(/\n{3,}/g, "\n\n");
+    return { subject, body, pol };
+  }
+  let pitchId = null, pitchLang = "fr";
+  function renderPitch() {
+    const r = byId.get(pitchId), p = pitchText(r, pitchLang);
+    $("p-title").textContent = r.name;
+    $("p-sub").textContent = `${r.type} · ${r.district || r.city}, ${r.country_name}`;
+    $("p-ctx").innerHTML = `<span class="badge" style="--c:var(--gold)">${esc(r.decision_maker_role)}</span><span class="badge" style="--c:var(--concept)">${SAMPLING_LABEL[p.pol]}</span>${badge(r.pipeline_status)}<span class="badge">SKU ${esc(r.single_sku_openness)}</span>`;
+    $("p-alert").innerHTML = r._zone ? `<div class="callout alert"><b>Territory check:</b> inside ${esc(r._zone.name)}'s ${zoneKm} km exclusivity zone (${r._zone.km.toFixed(1)} km).</div>` : "";
+    $("p-subject").value = p.subject;
+    $("p-body").value = p.body;
+    document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === pitchLang));
+  }
+  function openPitch(id) {
+    if (!byId.has(id)) return;
+    pitchId = id;
+    renderPitch();
+    if (!$("pitch").open) $("pitch").showModal();
+  }
+  document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { pitchLang = b.dataset.lang; renderPitch(); }));
+  $("p-close").addEventListener("click", () => $("pitch").close());
+  $("pitch").addEventListener("click", e => { if (e.target === $("pitch")) $("pitch").close(); });
+  function toast(msg) { $("toast").textContent = msg; $("toast").classList.add("show"); setTimeout(() => $("toast").classList.remove("show"), 1600); }
+  $("p-copy").addEventListener("click", async () => {
+    const text = `${$("p-subject").value}\n\n${$("p-body").value}`;
+    try { await navigator.clipboard.writeText(text); toast("Email copied"); }
+    catch (e) { $("p-body").select(); document.execCommand && document.execCommand("copy"); toast("Email selected — copy with ⌘/Ctrl+C"); }
+  });
+  $("p-mail").addEventListener("click", () => {
+    location.href = `mailto:?subject=${encodeURIComponent($("p-subject").value)}&body=${encodeURIComponent($("p-body").value)}`;
+  });
+  $("p-sent").addEventListener("click", () => { setCrm(pitchId, { pipeline_status: "Discovery Set Sent" }); renderPitch(); toast("Status → Discovery Set Sent"); });
+
   // ---- Filters
-  const $ = id => document.getElementById(id);
   const uniq = k => [...new Set(data.map(r => r[k]))].sort();
   uniq("country").forEach(c => {
     const n = data.filter(r => r.country === c).length;
     $("countries").insertAdjacentHTML("beforeend",
-      `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span style="color:var(--muted)">${n}</span></label>`);
+      `<label class="chip" title="${esc(data.find(r => r.country === c).country_name)}"><input type="checkbox" name="cc" value="${c}" checked>${c} <span class="n">${n}</span></label>`);
   });
   uniq("type").forEach(t => $("type").add(new Option(t, t)));
   SEGMENTS.forEach((s, i) => $("segments").insertAdjacentHTML("beforeend",
-    `<label class="chip" title="${esc(s)}"><input type="checkbox" name="seg" value="${esc(s)}" checked><span class="seg-${i + 1}">●</span> ${SEG_SHORT[i]} <span style="color:var(--muted)">${data.filter(r => r.segment === s).length}</span></label>`));
+    `<label class="chip" title="${esc(s)}"><input type="checkbox" name="seg" value="${esc(s)}" checked><span style="color:${SEG_COLOR[i]}">●</span> ${SEG_SHORT[i]} <span class="n">${data.filter(r => r.segment === s).length}</span></label>`));
   STATUSES.forEach(t => $("status").add(new Option(t, t)));
   uniq("launch_priority").forEach(t => $("priority").add(new Option(t, t)));
   // City list follows the selected countries; keeps the current pick when still available
@@ -367,6 +832,21 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   }
   fillCities();
 
+  // Zones are drawn when asked, or whenever the filter narrows to protected accounts
+  const zonesOn = () => $("zones").checked || $("accounts").checked || PROTECTED.has($("status").value);
+  function drawZones(base) {
+    zoneLayer.clearLayers();
+    const on = zonesOn(), shown = base.filter(r => PROTECTED.has(r.pipeline_status));
+    if (on) shown.forEach(r => {
+      L.circle([r.lat, r.lng], { radius: zoneKm * 1000, color: cssVar("--gold"), weight: 1.5, dashArray: "6 6", fillColor: cssVar("--gold"), fillOpacity: .1, interactive: false }).addTo(zoneLayer);
+      L.circleMarker([r.lat, r.lng], { radius: radius(r.tier_score) + 5, color: cssVar("--gold"), weight: 1, fill: false, interactive: false }).addTo(zoneLayer);
+    });
+    $("zone-hint").textContent = !partners.length
+      ? "No protected accounts yet — set a store to Partner Active or Key Account."
+      : on ? `${shown.length} protected zone${shown.length === 1 ? "" : "s"} drawn at ${zoneKm} km · ${data.filter(r => r._zone).length} stores inside a zone.`
+        : "Zones turn on automatically when filtering partners or key accounts.";
+  }
+
   function apply() {
     const q = $("q").value.trim().toLowerCase();
     const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value, city = $("city").value;
@@ -375,7 +855,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
     const segs = new Set([...document.querySelectorAll("input[name=seg]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
-    const st = $("status").value, pri = $("priority").value, quick = $("quick").checked;
+    const st = $("status").value, pri = $("priority").value, quick = $("quick").checked, acc = $("accounts").checked, samp = $("sampling").checked;
     $("tier-v").textContent = minT; $("align-v").textContent = minA;
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
@@ -384,34 +864,93 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
       srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
       (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
+      (!acc || PROTECTED.has(r.pipeline_status)) && (!samp || SAMPLING.has(r.pipeline_status)) &&
       (!q || r._q.includes(q)));
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
     table.setFilter(r => ids.has(r.id));
     markers.forEach((m, id) => baseIds.has(id) ? layer.addLayer(m) : layer.removeLayer(m));
-
+    drawZones(base);
     dashboard(keep);
+    simulate(keep);
     return keep;
   }
 
   function dashboard(rows) {
-    const avg = k => rows.length ? Math.round(rows.reduce((s, r) => s + r[k], 0) / rows.length) : null;
     const by = Object.fromEntries(STATUSES.map(s => [s, 0]));
     rows.forEach(r => by[r.pipeline_status]++);
-    const active = rows.filter(r => ACTIVE.has(r.pipeline_status)).length;
-    const fit = avg("brand_alignment_score"), addr = avg("address_confidence_score");
+    const engaged = rows.filter(r => ENGAGED.has(r.pipeline_status)).length;
+    const fit = rows.length ? Math.round(rows.reduce((s, r) => s + r.brand_alignment_score, 0) / rows.length) : "–";
     $("m-total").innerHTML = `${rows.length}<small> / ${data.length}</small>`;
-    $("m-total-h").textContent = `avg fit ${fit ?? "–"} · ${rows.filter(r => r.single_sku_openness === "High").length} open to single-SKU`;
-    $("m-high").textContent = rows.filter(r => r.launch_priority.startsWith("Tier 1")).length;
-    $("m-high-h").textContent = `Tier 1 indie niche · ${rows.filter(isQuickWin).length} quick wins`;
-    const pct = rows.length ? 100 * active / rows.length : 0;
-    $("m-pipe").innerHTML = `${active}<small> ${active && pct < 1 ? "<1" : Math.round(pct)}% engaged</small>`;
-    $("m-pipe-h").textContent = `${by["Sample Sent"]} samples · ${by["Meeting Booked"]} meetings · ${by["Partner Active"]} partners · ${by["Declined"]} declined`;
+    $("m-total-h").textContent = `avg fit ${fit} · ${rows.filter(r => r.single_sku_openness === "High").length} open to single-SKU`;
+    $("m-high").textContent = rows.filter(isQuickWin).length;
+    $("m-high-h").textContent = `${rows.filter(r => r.launch_priority.startsWith("Tier 1")).length} Tier 1 indie niche in view`;
+    const p = rows.length ? 100 * engaged / rows.length : 0;
+    $("m-pipe").innerHTML = `${engaged}<small> ${engaged && p < 1 ? "<1" : Math.round(p)}% engaged</small>`;
+    $("m-pipe-h").textContent = `${by["Meeting Booked"]} meetings · ${by["Partner Active"]} partners · ${by["Declined"]} declined`;
     $("m-funnel").innerHTML = rows.length ? STATUSES.filter(s => by[s]).map(s =>
       `<i title="${s}: ${by[s]}" style="flex:${by[s]};background:${statusColor(s)}"></i>`).join("") : "";
-    $("m-addr").textContent = addr == null ? "–" : addr + "%";
-    $("m-addr-h").textContent = `${rows.filter(r => r.address_source === "curated").length} hand-checked · ${rows.filter(r => r.address_source === "osm_reverse").length} inferred number`;
+    $("m-samp").innerHTML = `${by["Discovery Set Sent"]}<small> sets out</small>`;
+    $("m-samp-h").textContent = `${by["Follow-up Required"]} follow-up${by["Follow-up Required"] === 1 ? "" : "s"} required`;
+    const zoned = rows.filter(r => r._zone).length;
+    $("m-zone").innerHTML = `${by["Partner Active"] + by["Key Account"]}<small> accounts</small>`;
+    $("m-zone-h").textContent = `${by["Key Account"]} key · ${zoned} store${zoned === 1 ? "" : "s"} blocked at ${zoneKm} km`;
+    $("f-count").textContent = rows.length === data.length ? "All stores" : `${rows.length} of ${data.length} stores`;
+    $("t-count").textContent = `${rows.length} stores`;
   }
+
+  // ---- Margin & revenue simulator
+  function simulate(rows) {
+    const s = sim, vatEur = s.msrp - s.ht;
+    const row = (l, v, cls = "") => `<tr class="${cls}"><td>${l}</td><td>${v}</td></tr>`;
+    $("s-ledger").innerHTML = [
+      row("Retail price excl. VAT · PVP HT", eur2.format(s.ht)),
+      row(`Wholesale price · prix de gros HT (÷ ${s.coef.toFixed(2)})`, eur2.format(s.wholesale)),
+      row("Retailer margin", `${eur2.format(s.retail)} · ${pct(s.retail / s.ht)}`),
+      row("COGS", eur2.format(s.cogs)),
+      row("Brand gross margin per unit", `${eur2.format(s.brandM)} · ${pct(s.brandM / s.wholesale)}`, "total"),
+    ].join("");
+    const seg = (v, c, t) => v > 0 ? `<i title="${t}" style="flex:${v};background:${c}"></i>` : "";
+    $("s-meter").innerHTML = seg(Math.min(s.cogs, s.wholesale), "#6b6b75", "COGS") + seg(Math.max(0, s.brandM), cssVar("--gold"), "Brand margin") +
+      seg(s.retail, cssVar("--concept"), "Retailer margin") + seg(vatEur, "#3a3a44", "VAT");
+    const gm = s.brandM / s.wholesale, mk = s.wholesale / Math.max(s.cogs, .01);
+    $("s-health").innerHTML = s.brandM <= 0 ? `<span style="color:var(--bad)">● Wholesale below COGS — every unit loses money.</span>`
+      : gm < .6 ? `<span style="color:var(--warn)">● Brand margin ${pct(gm)} (${mk.toFixed(1)}× COGS): below the 65–80 % niche benchmark; raise MSRP or cut COGS.</span>`
+        : `<span style="color:var(--ok)">● Brand margin ${pct(gm)} (${mk.toFixed(1)}× COGS): healthy for a niche single SKU.</span>`;
+    $("s-moq").innerHTML = [
+      row(`Boutique / concept store`, `${s.moq} units · ${eur.format(s.moq * s.wholesale)}`),
+      row(`Department store (2× depth)`, `${s.moq * 2} units · ${eur.format(s.moq * 2 * s.wholesale)}`),
+      row(`Annual units / boutique (1 + ${s.re} reorders)`, `${s.moq * (1 + s.re)} units`),
+    ].join("") + `<tr><td colspan="2" class="note" style="border:0;padding-top:4px">Smallest multiple of the ${s.pack}-unit case reaching the ${eur.format(s.open)} opening-order target.</td></tr>`;
+    const live = rows.filter(r => r.pipeline_status !== "Declined");
+    const weighted = live.reduce((a, r) => a + r._wval, 0);
+    const committed = live.filter(r => PROTECTED.has(r.pipeline_status)).reduce((a, r) => a + r._val, 0);
+    const potential = live.reduce((a, r) => a + r._val, 0);
+    const profit = weighted * (s.brandM / s.wholesale);
+    const units = live.reduce((a, r) => a + moqFor(r) * (1 + s.re) * PROB[r.pipeline_status], 0);
+    $("s-scope").textContent = `${rows.length} stores`;
+    $("s-proj").innerHTML = `
+      <div class="hero"><span>Weighted revenue</span><b>${short(weighted)}</b></div>
+      <div><span>Weighted gross profit</span><b>${short(profit)}</b></div>
+      <div><span>Committed (partners)</span><b>${short(committed)}</b></div>
+      <div><span>Full potential</span><b>${short(potential)}</b></div>
+      <div><span>Weighted units</span><b>${Math.round(units).toLocaleString("fr-FR")}</b></div>
+      <div><span>Cost of goods</span><b>${short(units * s.cogs)}</b></div>`;
+    $("m-rev").textContent = short(weighted);
+    $("m-rev-h").textContent = `${short(potential)} potential · ${eur2.format(s.wholesale)} wholesale`;
+  }
+  let simTimer;
+  Object.values(SIM_FIELDS).forEach(id => $(id).addEventListener("input", () => {
+    clearTimeout(simTimer);
+    simTimer = setTimeout(() => {
+      sim = readSim();
+      store.set(SIM_KEY, Object.fromEntries(Object.entries(SIM_FIELDS).map(([k, i]) => [k, $(i).value])));
+      refreshDerived();
+      apply();
+      if (dossierId != null && !$("pane-dos").hidden) showDossier(dossierId);
+      if ($("pitch").open) renderPitch();
+    }, 120);
+  }));
 
   // ---- Exports
   function download(name, text, type) {
@@ -427,6 +966,9 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     ["Network", "network"], ["City", "city"], ["District", "district"], ["Country", "country_name"], ["Address", "full_address"],
     ["Tier score", "tier_score"], ["Brand fit", "brand_alignment_score"], ["Single-SKU openness", "single_sku_openness"],
     ["Segment", "segment"], ["Entry barrier", "entry_barrier"], ["Openness verified", "openness_verified"],
+    ["Sampling policy", r => SAMPLING_LABEL[samplingPolicy(r)]], ["Recommended MOQ", r => moqFor(r)],
+    ["Year-1 value EUR", r => Math.round(r._val)], ["Weighted value EUR", r => Math.round(r._wval)],
+    ["Territory", r => PROTECTED.has(r.pipeline_status) ? "Protected" : r._zone ? `In zone of ${r._zone.name} (${r._zone.km.toFixed(1)} km)` : "Open"],
     ["Staff", r => r.cx_insights.staff], ["Footfall", r => r.cx_insights.footfall], ["Sampling", r => r.cx_insights.sampling],
     ["Atmosphere", r => r.cx_insights.atmosphere], ["Watch out", r => r.cx_insights.watch_out], ["Pitch prep", r => r.cx_insights.pitch],
     ["Insight basis", r => r.cx_insights.basis],
@@ -441,7 +983,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
     const rows = table.getData("active").map(r => byId.get(r.id));
     const lines = [CSV_COLS.map(c => c[0]), ...rows.map(r => CSV_COLS.map(c => typeof c[1] === "function" ? c[1](r) : r[c[1]]))].map(l => l.map(csvCell).join(","));
     // BOM so Excel reads accents (Bongénie, Düsseldorf…) correctly
-    download(`outreach-${new Date().toISOString().slice(0, 10)}.csv`, "\ufeff" + lines.join("\r\n"), "text/csv;charset=utf-8");
+    download(`outreach-${new Date().toISOString().slice(0, 10)}.csv`, "﻿" + lines.join("\r\n"), "text/csv;charset=utf-8");
   });
   $("crm").addEventListener("click", () => {
     const crm = Object.fromEntries(data.map(r => [r.crm_key, Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]))]));
@@ -450,7 +992,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   $("discard").addEventListener("click", () => {
     const n = Object.keys(edits).length;
     if (!n || !confirm(`Discard ${n} pipeline edit(s) stored in this browser? Export CRM JSON first to keep them.`)) return;
-    edits = {}; saveEdits();
+    edits = {}; store.set(STORE_KEY, edits);
     location.reload();
   });
 
@@ -465,7 +1007,7 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
 
   $("type").addEventListener("change", applyAndFit);
   $("city").addEventListener("change", applyAndFit);
-  ["status", "priority", "quick"].forEach(id => $(id).addEventListener("change", applyAndFit));
+  ["status", "priority", "quick", "accounts", "sampling"].forEach(id => $(id).addEventListener("change", applyAndFit));
   document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", () => { fillCities(); applyAndFit(); }));
   let qTimer;
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
@@ -473,20 +1015,30 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
   document.querySelectorAll("input[name=src], input[name=seg]").forEach(i => i.addEventListener("change", applyAndFit));
   $("inview").addEventListener("change", apply);
+  $("zones").addEventListener("change", apply);
+  $("radius").addEventListener("input", () => {
+    zoneKm = +$("radius").value;
+    $("radius-v").textContent = zoneKm.toFixed(1) + " km";
+    partners = computeZones();
+    refreshDerived();
+    apply();
+    if (dossierId != null && !$("pane-dos").hidden) showDossier(dossierId);
+  });
   map.on("moveend", () => $("inview").checked && apply());
   $("reset").addEventListener("click", () => {
     $("q").value = ""; $("type").value = "";
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
     fillCities(); $("city").value = "";
-    $("tier").value = 0; $("align").value = 0; $("inview").checked = false;
-    $("status").value = ""; $("priority").value = ""; $("quick").checked = false;
+    $("tier").value = 0; $("align").value = 0;
+    ["inview", "quick", "accounts", "sampling", "zones"].forEach(id => ($(id).checked = false));
+    $("status").value = ""; $("priority").value = "";
     document.querySelectorAll("input[name=open], input[name=src], input[name=seg]").forEach(i => (i.checked = true));
     map.off("moveend", openPending);
     map.closePopup();
     applyAndFit();
   });
 
-  table.on("tableBuilt", applyAndFit);
+  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); applyAndFit(); });
 })();
 </script>
 </body>

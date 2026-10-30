@@ -60,7 +60,7 @@ crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospectio
 |---|---|
 | `launch_priority` | `Tier 1 - Quick Win (Indie Niche)` (true indie + indie to verify), `Tier 2 - Selective (Specialist / Concept)`, `Tier 3 - Long-term Dept Store` |
 | `decision_maker_role` | `Founder` (independents), `Store Manager` (concept-store chains), `Head Buyer` (niche chains, department stores) |
-| `pipeline_status` | `Not Contacted`, `Sample Sent`, `Meeting Booked`, `Partner Active`, `Declined` |
+| `pipeline_status` | `Not Contacted`, `Discovery Set Sent`, `Follow-up Required`, `Meeting Booked`, `Partner Active`, `Key Account`, `Declined` (legacy `Sample Sent` loads as `Discovery Set Sent`) |
 | `notes_prospections` | free text logged after each contact |
 | `address_confidence_score` | estimated % that the address reaches the door: curated 100, OSM tags 90, inferred house number 75 |
 | `crm_key` | `name-slug@lat,lng` (3 decimals), stable across rebuilds; ids are not |
@@ -105,13 +105,14 @@ The build fails if a curated store has no insight entry.
   Galeries Lafayette Berlin (2024).
 
 ## Map
-- Basemap: OpenFreeMap vector tiles (no API key) rendered by MapLibre GL — city, district and
-  street labels are vector text that stays sharp and re-lays out at every zoom (Streets /
-  Voyager / Positron / Dark switcher, dark by default in dark mode). CARTO Voyager raster (retina, no key) as extra layer and no-WebGL fallback.
-- Marker colour = store type, radius = tier score; canvas renderer keeps 300+ markers smooth.
-- Filters: country toggles, city (follows selected countries), type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
-  text search (name, city, street, network), "only in view" (table follows map viewport).
-- Click a column header to sort (tier, fit, CX…). Click a row → map flies to store.
+- Luxury dark "Studio" UI: executive metrics bar, collapsible control panel, map split view
+  (map + store dossier / margin simulator), B2B pipeline table. Responsive down to phone width.
+- Basemap: OpenFreeMap vector tiles (no API key) via MapLibre GL — Voyager-like "Liberty" by default,
+  Studio Dark and Positron in the switcher. CARTO Voyager is listed too, but CARTO now watermarks
+  tiles requested without an API key. OSM raster fallback without WebGL.
+- Marker colour = store type, radius = tier score, ring = pipeline status.
+- Filters: country, city, type, segment, tier, alignment, openness, source, status, priority, search,
+  focus toggles (quick wins, partners & key accounts, sampling in flight, only in view).
 
 ## Sales pipeline (CRM)
 - Dashboard: total target stores, high-priority (Tier 1) targets and quick wins, active pipeline
@@ -119,7 +120,19 @@ The build fails if a curated store has no insight entry.
   All tiles follow the filters.
 - Filters: pipeline status, launch priority, and a **High-Priority Quick Wins** toggle
   (Tier 1, High single-SKU openness, fit ≥ 70, not yet partner or declined).
-- Status, decision maker and notes are editable in the table; marker rings take the status colour.
+- Sampling workflow statuses: Not Contacted → Discovery Set Sent → Follow-up Required →
+  Meeting Booked → Partner Active / Key Account (or Declined).
+- **Smart pitch generator** (popup, dossier, table): FR/EN outreach email built from the store
+  profile, decision-maker role, sampling policy, entry barrier and the simulator economics;
+  copy, open in mail app, or mark the discovery set as sent.
+- **Single-SKU margin & revenue simulator**: MSRP (TTC), COGS, VAT, retailer coefficient →
+  wholesale price, retailer and brand margins, recommended MOQ (case-pack multiple reaching the
+  opening-order target, 2× for department stores) and weighted year-1 pipeline revenue by status.
+  Inputs are remembered in this browser.
+- **Territorial exclusivity**: Partner Active / Key Account stores get an exclusion radius
+  (0.5–10 km, default 2 km) drawn on the map when filtering those accounts or with "Show zones";
+  stores inside a zone are flagged in the table, dossier and pitch.
+- Status, decision maker and notes are editable in the table and dossier; marker rings take the status colour.
   Edits are kept in this browser (localStorage) until exported.
 - **Export CSV**: rows currently shown, in table order, for outreach campaigns (UTF-8, Excel-ready).
 - **Export CRM JSON**: save as `sources/crm.json` and run `python3 build_perfumeries.py` to bake

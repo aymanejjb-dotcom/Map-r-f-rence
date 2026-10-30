@@ -222,7 +222,10 @@ BBOX = {
     "FR": (41.3, 51.2, -5.2, 9.6), "BE": (49.5, 51.5, 2.5, 6.4), "NL": (50.7, 53.6, 3.3, 7.3),
     "DE": (47.2, 55.1, 5.8, 15.1), "LU": (49.4, 50.2, 5.7, 6.6), "CH": (45.8, 47.9, 5.9, 10.5),
 }
-PIPELINE = ["Not Contacted", "Sample Sent", "Meeting Booked", "Partner Active", "Declined"]
+PIPELINE = ["Not Contacted", "Discovery Set Sent", "Follow-up Required", "Meeting Booked",
+            "Partner Active", "Key Account", "Declined"]
+# Statuses renamed in the sampling workflow; old crm.json exports still load
+LEGACY_STATUS = {"Sample Sent": "Discovery Set Sent"}
 ROLES = {"Head Buyer", "Store Manager", "Founder"}
 # Estimated confidence (%) that the address reaches the shop door, by where it came from
 ADDRESS_SCORE = {"curated": 100, "osm_tags": 90, "osm_reverse": 75}
@@ -874,6 +877,9 @@ def decision_maker(r):
 
 def load_crm():
     crm = json.loads(CRM_FILE.read_text(encoding="utf-8")) if CRM_FILE.exists() else {}
+    for v in crm.values():
+        if v.get("pipeline_status") in LEGACY_STATUS:
+            v["pipeline_status"] = LEGACY_STATUS[v["pipeline_status"]]
     errors = [f"crm.json {k}: bad pipeline_status {v['pipeline_status']}"
               for k, v in crm.items() if v.get("pipeline_status", PIPELINE[0]) not in PIPELINE]
     errors += [f"crm.json {k}: bad decision_maker_role {v['decision_maker_role']}"

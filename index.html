@@ -625,6 +625,95 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
   .pin.qw::before { display: none; }
 }
+
+/* ——— Predictive modules: export potential · restock · territory guard · sequencer ——— */
+.ico { width: 14px; height: 14px; flex: none; }
+.kv.three { grid-template-columns: repeat(3, 1fr); }
+.kv b small { font-size: 11px; font-weight: 500; color: var(--muted); }
+.bar.ep i { background: linear-gradient(90deg, var(--gold-deep), var(--gold-hi)); }
+.ep-num { color: var(--gold-hi); font-variant-numeric: tabular-nums; }
+.ep { display: grid; gap: 10px; margin: 0 0 6px; }
+.ep-row { display: grid; grid-template-columns: 118px 1fr 28px; grid-template-rows: auto auto; column-gap: 10px; align-items: center; }
+.ep-row > span { font-size: 12px; color: var(--ink-2); }
+.ep-row > i { height: 6px; border-radius: 6px; background: rgba(255,255,255,.07); overflow: hidden; }
+.ep-row > i b { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold-deep), var(--gold-hi));
+  transform-origin: left; animation: grow .7s var(--ease) both; }
+.ep-row > em { font: 600 13px/1 var(--sans); font-style: normal; text-align: right; color: var(--ink); }
+.ep-row > small { grid-column: 2 / -1; font-size: 11px; color: var(--muted); margin-top: 3px; }
+.ep-pill small { opacity: .6; margin-left: 1px; }
+@keyframes grow { from { transform: scaleX(0); } }
+.badge.stock i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; animation: pulse-dot 1.6s ease-in-out infinite; }
+@keyframes pulse-dot { 50% { opacity: .35; transform: scale(.7); } }
+.restock-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: var(--muted); margin: -2px 0 10px; }
+.restock { margin: 14px 0 6px; padding: 14px; border-radius: 14px; background: rgba(0,0,0,.32); box-shadow: inset 0 0 0 1px var(--hair); }
+.restock.bad { box-shadow: inset 0 0 0 1px rgba(255,107,107,.32); background: linear-gradient(180deg, rgba(255,107,107,.07), rgba(0,0,0,.3)); }
+.restock.warn { box-shadow: inset 0 0 0 1px rgba(242,166,94,.3); background: linear-gradient(180deg, rgba(242,166,94,.06), rgba(0,0,0,.3)); }
+.rs-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rs-h .pill { margin-left: auto; }
+.restock .kv { margin: 12px 0 10px; }
+.cover { position: relative; height: 6px; border-radius: 6px; background: rgba(255,255,255,.07); margin: 4px 0 10px; }
+.cover i { position: absolute; inset: 0 auto 0 0; border-radius: 6px; background: linear-gradient(90deg, var(--bad), var(--warn) 30%, var(--ok) 70%); transition: width .6s var(--ease); }
+.cover span { position: absolute; top: -3px; bottom: -3px; width: 2px; border-radius: 2px; background: var(--ink); opacity: .7; }
+.restock .sub b { color: var(--ink); }
+.rs-skus { display: grid; gap: 4px; margin: 8px 0 10px; font-size: 12px; }
+.rs-skus div { display: grid; grid-template-columns: 1fr 60px 44px; gap: 8px; }
+.rs-skus div span + span { text-align: right; }
+.guard { margin: 14px 0; padding: 14px; border-radius: 14px; background: rgba(255,255,255,.025); box-shadow: inset 0 0 0 1px var(--hair); --tone: var(--ok); }
+.guard.warn { --tone: var(--warn); } .guard.bad { --tone: var(--bad); }
+.guard { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tone) 30%, transparent); background: color-mix(in srgb, var(--tone) 5%, transparent); }
+.guard-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.guard-h b { font-weight: 600; }
+.guard-h .pill, .guard-h .sub { margin-left: auto; }
+.g-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tone); box-shadow: 0 0 10px var(--tone); }
+.guard-b { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; margin: 12px 0 8px; }
+.guard-map { width: 150px; height: 150px; border-radius: 14px; }
+.guard ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 12px; min-width: 0; }
+.guard li { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; }
+.guard li .badge { grid-column: 1 / -1; justify-self: start; padding: 3px 8px; font-size: 10.5px; }
+.guard li .num { color: var(--muted); }
+.guard .sub { margin: 0; }
+.linkish { all: unset; cursor: pointer; color: var(--ink); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: 4px; }
+.linkish:hover { color: var(--gold-hi); }
+.linkish:focus-visible { outline: 2px solid var(--gold); }
+.p-single { display: flex; flex-direction: column; gap: 14px; flex: 1; min-height: 0; }
+.seq-ctl { display: flex; align-items: end; gap: 12px; flex-wrap: wrap; }
+.seq-ctl .f { max-width: 220px; }
+.seq-ctl input[type=date] { color-scheme: dark; }
+.seq { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.step { display: grid; grid-template-columns: 30px 1fr; gap: 12px; }
+.st-rail { position: relative; display: flex; justify-content: center; }
+.st-rail::after { content: ""; position: absolute; top: 30px; bottom: -4px; width: 1px; background: var(--hair-2); }
+.step:last-child .st-rail::after { display: none; }
+.st-rail span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 600 12px/1 var(--sans); color: var(--gold-hi);
+  box-shadow: inset 0 0 0 1px var(--gold-line); background: var(--gold-lo); transition: background .3s, color .3s; }
+.step.done .st-rail span { background: var(--ok); color: #04150b; box-shadow: none; }
+.step.due .st-rail span { background: var(--bad); color: #1a0505; box-shadow: 0 0 0 4px rgba(255,107,107,.18); }
+.st-body { padding: 0 0 18px; min-width: 0; display: grid; gap: 8px; }
+.st-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.st-h b { font: 500 17px/1.1 var(--serif); }
+.st-h .badge { margin-left: auto; }
+.st-body details summary { cursor: pointer; font-size: 12px; color: var(--muted); list-style: none; padding: 2px 0; }
+.st-body details summary::before { content: "▸ "; display: inline-block; transition: transform .25s var(--ease); }
+.st-body details[open] summary::before { transform: rotate(90deg); }
+.modal-body .seq textarea { min-height: 0; flex: none; margin-top: 6px; font-size: 13px; }
+.st-act { display: flex; gap: 6px; flex-wrap: wrap; }
+/* Haptic-like press: every control compresses on contact, springs back on release */
+.btn, .chip, .seg-ctl button, .cur button, .mode button, .sl-chip, .linkish { -webkit-user-select: none; user-select: none; }
+.chip, .seg-ctl button, .mode button { transition: transform .18s var(--ease-out), background .2s, color .2s, box-shadow .2s; }
+.chip:active, .seg-ctl button:active, .mode button:active, .cur button:active { transform: scale(.95); transition-duration: .06s; }
+.btn.pressed { animation: press .32s var(--ease-out); }
+@keyframes press { 30% { transform: scale(.955); } 70% { transform: scale(1.012); } }
+/* Zero layout shift: reserve the scrollbar, keep numbers fixed-width */
+html { scrollbar-gutter: stable; }
+.val, .kv b, .sc .stats b, .ep-row em, .pill { font-variant-numeric: tabular-nums; }
+h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
+@media (max-width: 700px) {
+  .guard-b { grid-template-columns: 1fr; justify-items: center; }
+  .guard-map { width: 200px; height: 200px; }
+  .guard ul { width: 100%; }
+  .ep-row { grid-template-columns: 104px 1fr 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .badge.stock i, .ep-row > i b { animation: none; } }
 </style>
 </head>
 <body>
@@ -646,6 +735,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
         <button data-cur="GBP" aria-pressed="false" title="Pound sterling · UK export">£</button>
       </div>
       <button class="btn" id="go-sim">Margin simulator</button>
+      <button class="btn" id="pdf" title="Executive A4 PDF of the current view or selected city — choose “Save as PDF”"><svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6.5 9.5 8.5 11.5l2-2M8.5 11.5V7"/></svg><span class="long">Board&nbsp;</span>PDF</button>
       <button class="btn gold" id="csv" title="Download the rows currently shown, in table order"><span class="long">Export&nbsp;</span>CSV</button>
     </div>
   </div>
@@ -696,6 +786,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       <div class="f" title="Market segment for a single-SKU indie launch">Market segment<div class="chips" id="segments"></div></div>
       <label class="f">Min tier <span class="v" id="tier-v">0</span><input id="tier" type="range" min="0" max="100" step="5" value="0"></label>
       <label class="f">Min alignment <span class="v" id="align-v">0</span><input id="align" type="range" min="0" max="100" step="5" value="0"></label>
+      <label class="f" title="Export Potential Score: purchasing power, luxury-hub proximity, high-end clientele density">Min export potential <span class="v" id="ep-v">0</span><input id="ep" type="range" min="0" max="100" step="5" value="0"></label>
       <div class="f">Single-SKU openness
         <div class="chips">
           <label class="chip"><input type="checkbox" name="open" value="High" checked>High</label>
@@ -755,6 +846,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       <select id="sort" aria-label="Sort by">
         <option value="tier_score:desc">Tier score</option>
         <option value="brand_alignment_score:desc">Brand fit</option>
+        <option value="export_potential_score:desc">Export potential</option>
+        <option value="_stock:asc">Restock urgency</option>
         <option value="_val:desc">Year-1 value</option>
         <option value="_rev:desc">Revenue invoiced</option>
         <option value="_units:desc">Units delivered</option>
@@ -824,18 +917,34 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   </div>
   <div class="modal-body">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <div class="seg-ctl" role="group" aria-label="Language"><button data-lang="fr" aria-pressed="true">Français</button><button data-lang="en" aria-pressed="false">English</button></div>
+      <div class="seg-ctl" role="tablist" aria-label="Outreach mode"><button data-pmode="single" aria-pressed="true">Email</button><button data-pmode="seq" aria-pressed="false">3-step sequence</button></div>
+      <div class="seg-ctl" role="group" aria-label="Language"><button data-lang="fr" aria-pressed="true">FR</button><button data-lang="en" aria-pressed="false">EN</button></div>
       <div class="ctx" id="p-ctx"></div>
     </div>
     <div id="p-alert"></div>
-    <label class="f">Subject<input id="p-subject" type="text"></label>
-    <label class="f" style="flex:1">Email<textarea id="p-body" spellcheck="true"></textarea></label>
+    <div class="p-single" id="p-single">
+      <label class="f">Subject<input id="p-subject" type="text"></label>
+      <label class="f" style="flex:1">Email<textarea id="p-body" spellcheck="true"></textarea></label>
+    </div>
+    <div class="p-seq" id="p-seq" hidden>
+      <div class="seq-ctl">
+        <label class="f">Sequence start · Day 0<input id="q-start" type="date"></label>
+        <div class="seq-state" id="q-state"></div>
+      </div>
+      <ol class="seq" id="q-steps"></ol>
+    </div>
   </div>
-  <div class="modal-foot">
+  <div class="modal-foot" id="p-foot-single">
     <button class="btn gold" id="p-copy">Copy email</button>
     <button class="btn" id="p-mail">Open in Mail</button>
     <button class="btn" id="p-sent" title="Set status to Discovery Set Sent">Mark set sent</button>
     <span class="sub">Edit freely · placeholders in [brackets]</span>
+  </div>
+  <div class="modal-foot" id="p-foot-seq" hidden>
+    <button class="btn gold" id="q-schedule">Schedule sequence</button>
+    <button class="btn" id="q-ics" title="Three calendar reminders (Day 0, 7, 14)">Add to calendar (.ics)</button>
+    <button class="btn ghost" id="q-stop" hidden>Stop sequence</button>
+    <span class="sub">Due steps surface in Sillage AI and on store cards</span>
   </div>
 </dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -846,6 +955,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 <script src="perfumeries.js"></script>
+<script src="intelligence.js"></script>
 <script src="ai_assistant.js" defer></script>
 <script>
 (async function () {
@@ -911,7 +1021,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     "Partner Active": "--s-partner", "Key Account": "--s-key", "Declined": "--s-declined" };
   const statusColor = s => cssVar(statusVar[s] || "--s-nc");
   const badge = s => `<span class="badge dotted" style="--c:${statusColor(s)}">${esc(s)}</span>`;
-  const ROLES = ["Founder", "Store Manager", "Head Buyer"];
+  const ROLES = ["Founder", "Head Buyer", "General Manager"];
+  const LEGACY_ROLE = { "Store Manager": "General Manager" };
   const BARRIERS = ["Low", "Med", "High", "Very High"];
   const CRM_FIELDS = ["pipeline_status", "decision_maker_role", "notes_prospections"];
   const SEGMENTS = ["True Indie Niche Boutique", "Indie Niche (to verify)", "Specialist Niche House",
@@ -925,7 +1036,10 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   let edits = store.get(STORE_KEY, {});
   // Date of the last status change per crm_key (feeds the Sillage AI stagnation audit)
   const touched = store.get(TOUCH_KEY, {});
-  Object.values(edits).forEach(e => { if (LEGACY_STATUS[e.pipeline_status]) e.pipeline_status = LEGACY_STATUS[e.pipeline_status]; });
+  Object.values(edits).forEach(e => {
+    if (LEGACY_STATUS[e.pipeline_status]) e.pipeline_status = LEGACY_STATUS[e.pipeline_status];
+    if (LEGACY_ROLE[e.decision_maker_role]) e.decision_maker_role = LEGACY_ROLE[e.decision_maker_role];
+  });
   data.forEach(r => {
     Object.assign(r, edits[r.crm_key] || {});
     if (!STATUSES.includes(r.pipeline_status)) r.pipeline_status = LEGACY_STATUS[r.pipeline_status] || STATUSES[0];
@@ -1016,6 +1130,33 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   const moqFor = r => listOf(r).moq * (r.type === "Department Store" ? 2 : 1);
   const storeValue = r => moqFor(r) * (1 + sim.re) * listOf(r).eurPerUnit;
 
+  // ---- Predictive restock: sell-through velocity per partner from its delivery log (intelligence.js)
+  const Intel = window.SillageIntel;
+  const restockOf = r => PROTECTED.has(r.pipeline_status) ? Intel.restock(r._ws, TODAY, sim.pack) : null;
+  data.forEach(r => { r._rs = restockOf(r); });
+  const TONE = { bad: "--bad", warn: "--warn", ok: "--ok" };
+  const stockBadge = (rs, short) => rs ? `<span class="badge stock ${rs.tone}" style="--c:var(${TONE[rs.tone]})" title="${esc(rs.label)} · ${Math.round(rs.onHand)} u. on hand ≈ ${Math.round(rs.cover)} d of cover · ${rs.perMonth.toFixed(1)} u./month">${
+    rs.tone === "ok" ? "" : "<i></i>"}${short ? (rs.tone === "ok" ? `${Math.round(rs.cover)} d` : esc(rs.label)) : esc(rs.label)}</span>` : "";
+  // Outreach sequences: Day 0 intro · Day 7 value-add · Day 14 sample delivery confirmation (per crm_key, this browser)
+  const SEQ_KEY = "perfumery-seq-v1";
+  let sequences = store.get(SEQ_KEY, {});
+  const SEQ_DAYS = [0, 7, 14];
+  // Steps due today or late, across every scheduled sequence
+  function dueSteps() {
+    const out = [];
+    data.forEach(r => {
+      const q = sequences[r.crm_key];
+      if (!q) return;
+      SEQ_DAYS.forEach((d, i) => {
+        if (q.sent[i]) return;
+        const date = Intel.addDays(q.start, d);
+        if (date <= TODAY) out.push({ r, step: i, date, late: Intel.days(date, TODAY) });
+      });
+    });
+    return out.sort((a, b) => b.late - a.late);
+  }
+  const notifyAlerts = () => document.dispatchEvent(new CustomEvent("sillage:alerts"));
+
   // ---- Territorial exclusivity: every store gets the nearest protected account within the radius
   let zoneKm = +$("radius").value;
   function computeZones() {
@@ -1031,6 +1172,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     return partners;
   }
   let partners = computeZones();
+  // Cannibalization guard: partner zones intersecting the zone this store would get if signed
+  const guardOf = r => Intel.guard(r, partners, zoneKm);
 
   // ---- Map. CARTO basemaps now watermark tiles requested without an API key, so the default is
   // OpenFreeMap (no key, no quota): vector tiles drawn by MapLibre GL, Voyager-like "Liberty" palette.
@@ -1093,19 +1236,20 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     <h3>${esc(r.name)}</h3>
     <div class="meta">${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
     <div class="badges">${badge(r.pipeline_status)}${segBadge(r)}${
-      r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : ""}</div>
+      r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : ""}${stockBadge(r._rs)}</div>
     ${r._ws && PROTECTED.has(r.pipeline_status)
       ? `<div class="stats"><div><span>Units</span><b>${r._ws.units}</b></div><div><span>Revenue</span><b>${short(r._ws.revenue)}</b></div><div><span>Due</span><b>${short(r._ws.outstanding)}</b></div><div><span>Inv.</span><b>${r._ws.invoices.length}</b></div></div>
     <div class="meta">Partner since ${fmtDate(r._ws.since)} · last invoice ${fmtDate(r._ws.last)}</div>
     <div class="btns"><button class="btn gold sm" data-dossier="${r.id}">Stock &amp; invoices</button><button class="btn sm" data-pitch="${r.id}">Pitch</button></div>`
       : `<div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>CX</span><b>${stars(r.customer_experience_rating)}</b></div></div>
-    <div class="meta">Pitch the ${esc(r.decision_maker_role.toLowerCase())}</div>
+    <div class="meta">Pitch the ${esc(r.decision_maker_role.toLowerCase())} · export potential <b class="ep-num">${r.export_potential_score}</b></div>
     <div class="btns"><button class="btn gold sm" data-pitch="${r.id}">Generate pitch</button><button class="btn sm" data-dossier="${r.id}">Dossier</button></div>`}
   </div>`;
 
   const markers = new Map();
   const layer = L.layerGroup().addTo(map);
   const zoneLayer = L.layerGroup().addTo(map);
+  const guardLayer = L.layerGroup().addTo(map);
   // DOM markers: glowing dot sized by tier, halo = pipeline status once contacted, pulse = Tier 1 quick win.
   // A fixed 26 px hit box keeps small dots tappable on phones.
   const pinIcon = r => {
@@ -1165,6 +1309,9 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
           return !w ? `<span class="muted">–</span>` : w.overdueN ? `<span class="num" style="color:var(--bad)" title="${w.overdueN} overdue">${money(w.outstanding)}</span>`
             : `<span class="num">${money(w.outstanding)}</span>`; } },
       { title: "Last invoice", field: "_last", width: 110, visible: false, formatter: c => fmtDate(c.getValue()) },
+      { title: "Stock", field: "_stock", width: 150, sorter: "number", visible: false, formatter: c => {
+          const rs = byId.get(c.getRow().getData().id)._rs;
+          return rs ? `${stockBadge(rs, true)}<span class="muted num" style="margin-left:6px">${Math.round(rs.onHand)} u.</span>` : `<span class="muted">–</span>`; } },
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
       { title: "Pitch", field: "id", width: 84, headerSort: false, hozAlign: "center", cellClick: (e, c) => { e.stopPropagation(); openPitch(c.getValue()); },
         formatter: () => `<button class="btn sm" type="button">Pitch</button>` },
@@ -1182,6 +1329,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       { title: "Address", field: "full_address", minWidth: 200, widthGrow: 2, formatter: c => esc(c.getValue()) },
       { title: "CC", field: "country", width: 56 },
       { title: "Tier", field: "tier_score", width: 64, hozAlign: "right", sorter: "number" },
+      { title: "Export", field: "export_potential_score", width: 100, sorter: "number", headerTooltip: "Export Potential Score: purchasing power · luxury-hub proximity · high-end clientele density",
+        formatter: c => `<div style="display:flex;gap:6px;align-items:center"><span class="num" style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c.getValue()).replace('class="bar"', 'class="bar ep"')}</div></div>` },
       { title: "Fit", field: "brand_alignment_score", width: 100, sorter: "number", formatter: c =>
           `<div style="display:flex;gap:6px;align-items:center"><span class="num" style="width:22px;text-align:right">${c.getValue()}</span><div style="flex:1">${bar(c.getValue())}</div></div>` },
       { title: "SKU", field: "single_sku_openness", width: 64, sorter: (a, b) => ({ High: 3, Med: 2, Low: 1 }[a] - { High: 3, Med: 2, Low: 1 }[b]) },
@@ -1204,7 +1353,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const m = markers.get(r.id);
     refreshPin(r);
     if (m.isPopupOpen()) m.setPopupContent(popup(r));
-    if ("pipeline_status" in patch) partners = computeZones();
+    if ("pipeline_status" in patch) { partners = computeZones(); r._rs = restockOf(r); notifyAlerts(); }
     refreshDerived();
     apply();
     if (dossierId === id) showDossier(id, false);
@@ -1221,10 +1370,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       r._wval = r._val * PROB[r.pipeline_status];
       r._zoneKm = PROTECTED.has(r.pipeline_status) ? -1 : r._zone ? r._zone.km : 99;
       r._units = r._ws?.units || 0; r._rev = r._ws?.revenue || 0; r._out = r._ws?.outstanding || 0; r._last = r._ws?.last || null;
+      r._stock = r._rs ? r._rs.rank * 1000 + Math.min(999, Math.round(r._rs.cover)) : 99999;
     });
     maxRev = Math.max(1, ...data.filter(r => PROTECTED.has(r.pipeline_status)).map(r => r._rev));
     if (tableReady) table.updateData(data.map(r => ({ id: r.id, _val: r._val, _zoneKm: r._zoneKm, pipeline_status: r.pipeline_status,
-      _units: r._units, _rev: r._rev, _out: r._out, _last: r._last,
+      _units: r._units, _rev: r._rev, _out: r._out, _last: r._last, _stock: r._stock,
       decision_maker_role: r.decision_maker_role, notes_prospections: r.notes_prospections }))).catch(() => {});
   }
   refreshDerived();
@@ -1264,9 +1414,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   const cardHTML = r => `<article class="sc${r.id === activeId ? " on" : ""}" data-id="${r.id}" tabindex="0">
       <div class="top"><span class="eyebrow">${esc(r.type)} · ${esc(r.district || r.city)}</span><span class="pri t${r.launch_priority[5]}" title="${esc(r.launch_priority)}">${priShort(r.launch_priority)}</span></div>
       <div class="id"><h3>${esc(r.name)}</h3><div class="addr">${esc(r.full_address)}</div></div>
+      ${sequences[r.crm_key] ? `<div class="restock-line">${seqBadge(r)}</div>` : ""}
+      ${r._rs ? `<div class="restock-line">${stockBadge(r._rs)}<span>${Math.round(r._rs.onHand)} u. on hand · ${r._rs.perMonth.toFixed(1)} u./mo${r._rs.alert ? ` · reorder ${r._rs.suggest} u.` : ""}</span></div>` : ""}
       ${partnerMode() && r._ws
         ? `<div class="stats"><div><span>Units</span><b>${r._ws.units}</b></div><div><span>Revenue</span><b>${short(r._ws.revenue)}</b></div><div><span>Due</span><b${r._ws.overdueN ? ' style="color:var(--bad)"' : ""}>${short(r._ws.outstanding)}</b></div><div><span>Inv.</span><b>${r._ws.invoices.length}</b></div></div>`
-        : `<div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>Yr-1</span><b>${short(r._val || 0)}</b></div></div>`}
+        : `<div class="stats"><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div title="Export Potential Score"><span>Export</span><b class="ep-num">${r.export_potential_score}</b></div><div><span>Yr-1</span><b>${short(r._val || 0)}</b></div></div>`}
       <div class="foot">${statusSelect(r)}<button class="btn sm" type="button" data-pitch="${r.id}">Pitch</button></div>
     </article>`;
   let cardsFrame = 0;
@@ -1317,6 +1469,16 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     ["pointerup", "pointercancel", "pointerleave"].forEach(t => w.addEventListener(t, () => w.classList.remove("touch"), { passive: true }));
   });
 
+  // ---- Haptic-like feedback: a spring on release and, on phones that support it, a 6 ms tick
+  const PRESSABLE = ".btn, .chip, .seg-ctl button, .cur button, .mode button";
+  document.addEventListener("pointerup", e => {
+    const b = e.target.closest(PRESSABLE);
+    if (!b) return;
+    if (b.classList.contains("btn")) { b.classList.remove("pressed"); void b.offsetWidth; b.classList.add("pressed"); }
+    if (e.pointerType === "touch" && navigator.vibrate && navigator.userActivation?.hasBeenActive) { try { navigator.vibrate(6); } catch (err) { /* unsupported */ } }
+  }, { passive: true });
+  document.addEventListener("animationend", e => e.target.classList?.remove("pressed"), { passive: true });
+
   // ---- Slide-over sheet: from the right on wide screens, a draggable bottom sheet on phones
   const sheet = $("sheet"), scrim = $("scrim");
   function sheetOpen() { return sheet.classList.contains("open"); }
@@ -1332,6 +1494,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     if (phone.matches) document.documentElement.style.overflow = "hidden";
   }
   function closeSheet() {
+    guardLayer.clearLayers();
     sheet.classList.remove("open", "dragging"); sheet.setAttribute("aria-hidden", "true");
     sheet.style.removeProperty("--drag");
     scrim.classList.remove("on");
@@ -1375,9 +1538,10 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     if (!r) return;
     dossierId = id;
     const cx = r.cx_insights, si = SEGMENTS.indexOf(r.segment);
-    const zone = PROTECTED.has(r.pipeline_status)
-      ? `<div class="callout safe"><b>Protected account.</b> No other door is pitched within ${zoneKm} km while exclusivity holds.</div>`
-      : r._zone ? `<div class="callout alert"><b>Inside an exclusivity zone:</b> ${esc(r._zone.name)} is ${r._zone.km.toFixed(1)} km away. Clear the territory before pitching.</div>` : "";
+    const g = PROTECTED.has(r.pipeline_status) ? null : guardOf(r);
+    const zone = g ? guardHTML(r, g)
+      : `<div class="callout safe"><b>Protected account.</b> No other door is pitched within ${zoneKm} km while exclusivity holds.</div>`;
+    drawGuard(r, g);
     $("pane-dos").innerHTML = `<div class="dos">
       <span class="eyebrow">${esc(r.type)} · ${esc(r.launch_priority.replace(" - ", " · "))}</span>
       <h3>${esc(r.name)}</h3>
@@ -1392,6 +1556,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       </div>
       ${PROTECTED.has(r.pipeline_status) ? drawerHTML(r) : `<div class="kv three gold" style="grid-template-columns:repeat(3,1fr)"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>`}
       ${marketLine(r)}
+      ${epHTML(r)}
       <div class="callout"><b>Pitch prep.</b> ${esc(cx.pitch)}</div>
       <h4>Store intelligence</h4>
       <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
@@ -1400,7 +1565,9 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       <h4>CRM notes</h4>
       <textarea id="d-notes" rows="3" placeholder="Add a note…" aria-label="Prospection notes">${esc(r.notes_prospections)}</textarea>
       <div class="btns">
-        <button class="btn gold" data-pitch="${r.id}">Generate pitch</button>
+        <button class="btn gold" data-pitch="${r.id}">Generate pitch &amp; sequence</button>
+        <button class="btn" data-pdf-store="${r.id}" title="Luxury A4 dossier for investors or the board — choose “Save as PDF”"><svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6.5 9.5 8.5 11.5l2-2M8.5 11.5V7"/></svg>Store PDF</button>
+        <button class="btn" data-pdf-city="${esc(r.city)}" title="Distribution overview of ${esc(r.city)} as an A4 PDF">${esc(r.city)} overview PDF</button>
         <a class="btn" href="${esc(r.google_maps_url)}" target="_blank" rel="noopener">Google Maps</a>
         <a class="btn" href="${esc(r.instagram_search_url)}" target="_blank" rel="noopener">Instagram</a>${
         r.source.startsWith("osm:") ? `<a class="btn" href="https://www.openstreetmap.org/${esc(r.source.slice(4))}" target="_blank" rel="noopener">OSM</a>` : ""}
@@ -1409,6 +1576,56 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     $("d-role").addEventListener("change", e => setCrm(id, { decision_maker_role: e.target.value }));
     $("d-notes").addEventListener("change", e => setCrm(id, { notes_prospections: e.target.value }));
     if (open) showTab("dos");
+  }
+  // Territory guard panel: risk, to-scale schematic, intersecting partners
+  function guardHTML(r, g) {
+    const colors = { gold: cssVar("--gold"), warn: cssVar("--warn"), bad: cssVar("--bad"), muted: cssVar("--muted") };
+    const tone = { blocked: "bad", high: "bad", moderate: "warn", clear: "ok" }[g.risk];
+    if (!g.near.length) return `<div class="guard ok"><div class="guard-h"><span class="g-dot"></span><b>${g.label}</b><span class="sub">no partner within ${(3 * zoneKm).toFixed(1)} km</span></div></div>`;
+    const row = x => {
+      const inside = x.km <= zoneKm, ov = x.km < 2 * zoneKm;
+      return `<li><button class="linkish" data-focus="${x.p.id}">${esc(x.p.name)}</button><span class="num">${x.km.toFixed(1)} km</span>${
+        inside ? `<span class="badge" style="--c:var(--bad)">Inside zone</span>` : ov ? `<span class="badge" style="--c:var(--warn)">${pct(Intel.overlapShare(x.km, zoneKm))} overlap</span>` : `<span class="badge">Adjacent</span>`}</li>`;
+    };
+    const advice = g.risk === "blocked" ? `Signing ${esc(r.name)} breaches ${esc(g.inside[0].p.name)}'s exclusivity. Get written consent or skip this door.`
+      : g.risk === "high" ? `Its ${zoneKm} km zone would cover ${pct(g.share)} of existing partner territory: offer non-exclusive terms or a reduced radius.`
+      : g.risk === "moderate" ? `Partial overlap: define street-level boundaries in the contract before outreach.`
+      : `Partners nearby stay clear of this zone.`;
+    return `<div class="guard ${tone}">
+      <div class="guard-h"><span class="g-dot"></span><b>${g.label}</b><span class="pill">${pct(g.share)} overlap</span></div>
+      <div class="guard-b">${Intel.guardSVG(r, g, colors)}<ul>${g.near.slice(0, 6).map(row).join("")}</ul></div>
+      <p class="sub">${advice}</p></div>`;
+  }
+  // Prospect selected: draw its would-be zone and the partner zones it touches, on the map itself
+  function drawGuard(r, g) {
+    guardLayer.clearLayers();
+    if (!g || !g.near.length) return;
+    const tone = x => cssVar(x.km <= zoneKm ? "--bad" : x.km < 2 * zoneKm ? "--warn" : "--muted");
+    g.near.forEach(x => L.circle([x.p.lat, x.p.lng], { radius: zoneKm * 1000, color: tone(x), weight: 1.2, fillColor: tone(x), fillOpacity: .1, interactive: false }).addTo(guardLayer));
+    L.circle([r.lat, r.lng], { radius: zoneKm * 1000, color: cssVar("--gold"), weight: 1.6, dashArray: "6 6", fill: false, interactive: false }).addTo(guardLayer);
+  }
+  // Export Potential Score breakdown (computed by build_perfumeries.py)
+  function epHTML(r) {
+    const e = r.export_potential;
+    const line = (label, v, note) => `<div class="ep-row"><span>${label}</span><i><b style="width:${v}%"></b></i><em class="num">${v}</em><small>${note}</small></div>`;
+    return `<h4>Export potential <span class="pill ep-pill">${r.export_potential_score}<small>/100</small></span></h4>
+      <div class="ep">${line("Purchasing power", e.purchasing_power, `≈ ${money(e.purchasing_power_eur)} / capita`)}${
+        line("Luxury hub", e.luxury_hub, `${esc(e.nearest_hub)} · ${e.hub_km} km`)}${
+        line("Clientele density", e.clientele_density, `${e.high_end_doors_5km} high-end door${e.high_end_doors_5km === 1 ? "" : "s"} ≤ 5 km`)}</div>`;
+  }
+  // Sell-through forecast block inside the partner drawer
+  function restockHTML(r) {
+    const rs = r._rs;
+    if (!rs) return "";
+    const fill = Math.min(100, 100 * rs.cover / Math.max(rs.cadence + Intel.LEAD_DAYS, 1));
+    const trend = rs.trend == null ? "" : ` · trend <b style="color:var(${rs.trend >= 0 ? "--ok" : "--warn"})">${rs.trend >= 0 ? "+" : ""}${Math.round(rs.trend * 100)} %</b>`;
+    return `<div class="restock ${rs.tone}">
+      <div class="rs-h"><span class="eyebrow">Sell-through forecast</span>${stockBadge(rs)}<span class="pill" title="Based on ${rs.orders.length} order${rs.orders.length > 1 ? "s" : ""}">${rs.confidence} confidence</span></div>
+      <div class="kv three"><div><span>On hand ≈</span><b>${Math.round(rs.onHand)} u.</b></div><div><span>Cover</span><b>${Math.round(rs.cover)} d</b></div><div><span>Velocity</span><b>${rs.perMonth.toFixed(1)}<small> u./mo</small></b></div></div>
+      <div class="cover"><i style="width:${fill.toFixed(1)}%"></i><span style="left:${Math.min(100, 100 * Intel.LEAD_DAYS / (rs.cadence + Intel.LEAD_DAYS)).toFixed(1)}%" title="Lead time ${Intel.LEAD_DAYS} d"></span></div>
+      <p class="sub">${rs.alert ? `<b>Reorder by ${fmtDate(rs.reorderDate)}</b>` : `Next reorder expected ${fmtDate(rs.nextOrder)}`} · suggested <b>${rs.suggest} u.</b> (${sim.pack}-pack) · cadence ${Math.round(rs.cadence)} d${trend}</p>
+      ${rs.skus.length > 1 ? `<div class="rs-skus">${rs.skus.map(k => `<div><span>${esc(k.sku)}</span><span class="num">${Math.round(k.onHand)} u.</span><span class="num muted">${Math.round(k.cover)} d</span></div>`).join("")}</div>` : ""}
+      ${rs.alert ? `<button class="btn sm gold" data-prefill-reorder="${rs.suggest}">Log ${rs.suggest}-unit reorder</button>` : ""}</div>`;
   }
   // Store's own price list (its market currency), opening order vs the free-shipping threshold, customs
   function marketLine(r) {
@@ -1420,7 +1637,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       L.c !== "EUR" ? `<div class="callout alert"><b>Cross-border export.</b> ${esc(L.m.duty)} Clearance ≈ ${local(L.m.customs, L.c)} per shipment: consolidate reorders.</div>` : ""}`;
   }
   // ---- Wholesale Stock & Invoicing drawer
-  let drawerTab = "inv", drawerOpen = true;
+  let drawerTab = "inv", drawerOpen = true, prefillUnits = null;
   function sparkline(w) {
     if (!w.invoices.length) return "";
     const t0 = Date.parse(w.since || w.invoices[0].date), last = Date.parse(w.invoices[w.invoices.length - 1].date);
@@ -1451,12 +1668,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
           <label>Due date<input name="due" type="date"></label><label>Status<select name="status"><option>Pending</option><option>Paid</option></select></label>
           <button class="btn sm gold" type="submit">Add invoice</button></form>`
       : `<form class="addline" data-add="dl"><label>Delivery date<input name="date" type="date" value="${TODAY}" required></label>
-          <label>Units<input name="units" type="number" inputmode="numeric" min="1" step="1" required value="${moqFor(r)}"></label>
+          <label>Units<input name="units" type="number" inputmode="numeric" min="1" step="1" required value="${prefillUnits || moqFor(r)}"></label>
           <label style="grid-column:1/-1">Reference / SKU<input name="sku" type="text" list="sku-list" required value="${esc(skus[0] || sim.scent || "")}" placeholder="Hero SKU"><datalist id="sku-list">${skus.map(k => `<option value="${esc(k)}">`).join("")}</datalist></label>
           <button class="btn sm gold" type="submit">Log delivery</button></form>`;
     return `<details class="drawer" id="drawer"${drawerOpen ? " open" : ""}>
       <summary><span class="eyebrow">Wholesale</span><b>Stock &amp; Invoicing</b>${isDemo(r) ? `<span class="pill" title="Illustrative figures from sources/wholesale.json">Demo</span>` : ""}<span class="chev" aria-hidden="true"></span></summary>
       <div class="drawer-body">
+        ${restockHTML(r)}
         ${w ? `<div class="kv gold"><div><span>Units</span><b>${w.units}</b></div><div><span>Revenue</span><b>${short(w.revenue)}</b></div><div><span>Collected</span><b>${short(w.paid)}</b></div><div><span>Due</span><b${w.overdueN ? ' style="color:var(--bad)"' : ""}>${short(w.outstanding)}</b></div></div>${sparkline(w)}` : ""}
         <div class="seg-ctl" role="tablist"><button data-dtab="inv" aria-pressed="${inv}">Invoices · ${w?.invoices.length || 0}</button><button data-dtab="dl" aria-pressed="${!inv}">Stock · ${w?.deliveries.length || 0}</button></div>
         <div class="lines">${lines || empty}</div>
@@ -1472,9 +1690,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     ledgerEdits[r.crm_key] = copy;
     store.set(LEDGER_KEY, ledgerEdits);
     r._ws = summarize(r);
+    r._rs = restockOf(r);
     refreshDerived();
     apply();
     data.filter(x => PROTECTED.has(x.pipeline_status)).forEach(refreshPin);
+    notifyAlerts();
     const m = markers.get(r.id);
     if (m.isPopupOpen()) m.setPopupContent(popup(r));
     modeDOM();
@@ -1484,8 +1704,15 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   $("pane-dos").addEventListener("click", e => {
     const r = byId.get(dossierId), t = e.target;
     if (!r) return;
-    const tab = t.closest("[data-dtab]"), paid = t.closest("[data-paid]"), del = t.closest("[data-del-dl]");
-    if (tab) { drawerTab = tab.dataset.dtab; showDossier(r.id, false); }
+    const tab = t.closest("[data-dtab]"), paid = t.closest("[data-paid]"), del = t.closest("[data-del-dl]"), pre = t.closest("[data-prefill-reorder]");
+    const foc = t.closest("[data-focus]");
+    if (foc) { focusStore(+foc.dataset.focus); return; }
+    if (pre) {
+      drawerTab = "dl"; prefillUnits = +pre.dataset.prefillReorder; showDossier(r.id, false); prefillUnits = null;
+      const f = $("pane-dos").querySelector("[data-add=dl] [name=units]");
+      f?.focus({ preventScroll: false }); f?.select();
+    }
+    else if (tab) { drawerTab = tab.dataset.dtab; showDossier(r.id, false); }
     else if (paid) {
       editLedger(r, l => { const i = l.invoices.find(i => i.no === paid.dataset.paid); i.status = i.status === "Paid" ? "Pending" : "Paid"; });
       toast(`${paid.dataset.paid} → ${r._ws.invoices.find(i => i.no === paid.dataset.paid).state}`);
@@ -1602,20 +1829,27 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const body = [greet, "", opener + " " + hook, "", product, "", samp, "", terms + pilot, network ? "\n" + network : "", "", cta, "", sign].join("\n").replace(/\n{3,}/g, "\n\n");
     return { subject, body, pol };
   }
-  let pitchId = null, pitchLang = "fr";
+  let pitchId = null, pitchLang = "fr", pitchMode = "single";
   function renderPitch() {
     const r = byId.get(pitchId), p = pitchText(r, pitchLang);
+    document.querySelectorAll("[data-pmode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.pmode === pitchMode));
+    ["single", "seq"].forEach(m => { $("p-" + m).hidden = m !== pitchMode; $("p-foot-" + m).hidden = m !== pitchMode; });
+    if (pitchMode === "seq") renderSequence(r);
     $("p-title").textContent = r.name;
     $("p-sub").textContent = `${r.type} · ${r.district || r.city}, ${r.country_name}`;
     $("p-ctx").innerHTML = `<span class="badge" style="--c:var(--gold)">${esc(r.decision_maker_role)}</span><span class="badge" style="--c:var(--concept)">${SAMPLING_LABEL[p.pol]}</span>${badge(r.pipeline_status)}<span class="badge">SKU ${esc(r.single_sku_openness)}</span>`;
-    $("p-alert").innerHTML = r._zone ? `<div class="callout alert"><b>Territory check:</b> inside ${esc(r._zone.name)}'s ${zoneKm} km exclusivity zone (${r._zone.km.toFixed(1)} km).</div>` : "";
+    const g = PROTECTED.has(r.pipeline_status) ? null : guardOf(r);
+    $("p-alert").innerHTML = g && g.risk !== "clear" ? `<div class="callout ${g.risk === "moderate" ? "" : "alert"}"><b>Cannibalization guard · ${esc(g.label)}.</b> ${
+      g.inside.length ? `Inside ${esc(g.inside[0].p.name)}'s ${zoneKm} km zone (${g.inside[0].km.toFixed(1)} km).` : `Its zone would overlap ${pct(g.share)} of ${g.overlaps.map(x => esc(x.p.name)).join(", ")}'s territory.`}</div>` : "";
     $("p-subject").value = p.subject;
     $("p-body").value = p.body;
     document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === pitchLang));
   }
-  function openPitch(id) {
+  function openPitch(id, mode) {
     if (!byId.has(id)) return;
+    if (id !== pitchId) seqDraft = {};
     pitchId = id;
+    pitchMode = mode || (sequences[byId.get(id).crm_key] ? "seq" : pitchMode);
     renderPitch();
     $("pitch").classList.remove("closing");
     if (!$("pitch").open) $("pitch").showModal();
@@ -1643,6 +1877,227 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     location.href = `mailto:?subject=${encodeURIComponent($("p-subject").value)}&body=${encodeURIComponent($("p-body").value)}`;
   });
   $("p-sent").addEventListener("click", () => { setCrm(pitchId, { pipeline_status: "Discovery Set Sent" }); renderPitch(); toast("Status → Discovery Set Sent"); });
+  document.querySelectorAll("[data-pmode]").forEach(b => b.addEventListener("click", () => { pitchMode = b.dataset.pmode; renderPitch(); }));
+
+  // ---- Automated multi-channel outreach sequencer: Day 0 intro · Day 7 value-add with local market stats · Day 14 sample delivery check
+  function marketStats(r) {
+    const city = data.filter(x => x.city === r.city), e = r.export_potential;
+    const cc = data.filter(x => x.country === r.country && x._rs);
+    const vel = cc.length ? cc.reduce((a, x) => a + x._rs.perMonth, 0) / cc.length : null;
+    const all = data.filter(x => x._rs), velAll = all.length ? all.reduce((a, x) => a + x._rs.perMonth, 0) / all.length : null;
+    const rank = 1 + data.filter(x => x.export_potential_score > r.export_potential_score).length;
+    return { doors: city.length, highEnd: e.high_end_doors_5km, hub: e.nearest_hub, hubKm: e.hub_km, pp: e.purchasing_power, ppEur: e.purchasing_power_eur,
+      ep: r.export_potential_score, rank, partnersCC: cc.length, vel: vel ?? velAll, velScope: vel != null ? "country" : "network", partnersAll: all.length };
+  }
+  function sequenceSteps(r, lang) {
+    const fr = lang === "fr", T = (a, b) => fr ? a : b;
+    const brand = sim.brand || T("[Votre Maison]", "[Your House]"), scent = sim.scent || T("[Nom du parfum]", "[Fragrance name]");
+    const city = r.district || r.city, m = marketStats(r), greet = T("Bonjour [Prénom],", "Dear [First name],");
+    const sign = T(`Bien cordialement,\n[Votre nom]\n${brand}`, `Warm regards,\n[Your name]\n${brand}`);
+    const intro = pitchText(r, lang);
+    const velLine = m.vel != null ? (m.velScope === "country"
+      ? T(`Nos ${m.partnersCC} points de vente ${COUNTRY_FR_IN[r.country]} écoulent en moyenne ${m.vel.toFixed(1).replace(".", ",")} unités par mois et par porte.`,
+          `Our ${m.partnersCC} partner door${m.partnersCC > 1 ? "s" : ""} in ${r.country_name} sell through ${m.vel.toFixed(1)} units per month on average.`)
+      : T(`Sur l'ensemble de nos ${m.partnersAll} partenaires, la rotation moyenne est de ${m.vel.toFixed(1).replace(".", ",")} unités par mois et par porte.`,
+          `Across our ${m.partnersAll} partner doors, average sell-through is ${m.vel.toFixed(1)} units per month.`)) : "";
+    const value = [greet, "",
+      T(`Je me permets de revenir vers vous avec quelques repères sur votre marché, qui expliquent pourquoi ${r.name} est notre priorité à ${city} :`,
+        `I wanted to follow up with a few data points on your market — they explain why ${r.name} is our priority in ${city}:`), "",
+      T(`• ${m.highEnd} adresses haut de gamme dans un rayon de 5 km : la clientèle luxe est déjà là.`, `• ${m.highEnd} high-end door${m.highEnd === 1 ? "" : "s"} within 5 km: the luxury clientele is already there.`),
+      T(`• Indice de pouvoir d'achat local ${m.pp}/100 (≈ ${money(m.ppEur)} par habitant).`, `• Local purchasing-power index ${m.pp}/100 (≈ ${money(m.ppEur)} per capita).`),
+      T(`• ${m.hub} à ${String(m.hubKm).replace(".", ",")} km : flux touristique et clientèle prescriptrice.`, `• ${m.hub} ${m.hubKm} km away: destination shoppers and tastemakers.`),
+      T(`• Score de potentiel export ${m.ep}/100 — ${m.rank}e sur ${data.length} adresses suivies.`, `• Export potential score ${m.ep}/100 — #${m.rank} of ${data.length} doors we track.`),
+      velLine ? "• " + velLine : "", "",
+      T(`Une seule référence, ${scent}, pensée pour tourner vite sans encombrer votre linéaire. Je peux vous réserver l'exclusivité sur votre quartier (${zoneKm} km).`,
+        `One reference, ${scent}, built to turn fast without crowding your shelf. I can hold exclusivity for your neighbourhood (${zoneKm} km).`), "",
+      T(`Puis-je vous faire parvenir un coffret découverte cette semaine ?`, `May I send a discovery set over this week?`), "", sign].filter((x, i, a) => x !== "" || a[i - 1] !== "").join("\n");
+    const pol = samplingPolicy(r);
+    const confirm = [greet, "",
+      T(`Le coffret découverte de ${scent} a été livré chez ${r.name} (suivi : [N° de suivi]). Je voulais m'assurer qu'il est bien arrivé entre les mains de ${r.decision_maker_role === "Founder" ? "vous-même" : "votre équipe"}.`,
+        `The ${scent} discovery set was delivered to ${r.name} (tracking: [tracking no.]). I wanted to make sure it reached ${r.decision_maker_role === "Founder" ? "you" : "your team"}.`), "",
+      pol === "strict" ? T(`Comme convenu, il est réservé à l'équipe : aucun échantillon client n'est attendu.`, `As agreed, it is for the team only — no consumer sampling expected.`)
+        : T(`Les vials peuvent accompagner vos meilleures ventes de la semaine : c'est le meilleur test de rotation.`, `The vials can go out with this week's best sales — the most honest sell-through test.`), "",
+      T(`Quels sont les premiers retours de l'équipe ? Je peux passer en boutique ou caler un appel de 15 minutes pour en parler et préparer une commande d'ouverture de ${moqFor(r)} unités.`,
+        `What were the team's first impressions? I can visit or book a 15-minute call to discuss, and prepare an opening order of ${moqFor(r)} units.`), "", sign].join("\n");
+    return [
+      { day: 0, title: T("Email d'introduction", "Initial email"), channel: "Email", subject: intro.subject, body: intro.body },
+      { day: 7, title: T("Relance à valeur ajoutée · marché local", "Value-add follow-up · local market"), channel: "Email + LinkedIn",
+        subject: T(`${r.name} × ${scent} : votre marché à ${city} en chiffres`, `${r.name} × ${scent}: your ${city} market in numbers`), body: value },
+      { day: 14, title: T("Confirmation de livraison des échantillons", "Sample delivery confirmation"), channel: "Email + phone",
+        subject: T(`Coffret découverte ${scent} bien reçu ?`, `Did the ${scent} discovery set arrive?`), body: confirm },
+    ];
+  }
+  let seqDraft = {};
+  function renderSequence(r) {
+    const q = sequences[r.crm_key], start = q?.start || seqDraft.start || TODAY;
+    $("q-start").value = start;
+    $("q-start").disabled = !!q;
+    const steps = sequenceSteps(r, pitchLang);
+    $("q-state").innerHTML = q ? `<span class="badge" style="--c:var(--ok)">Scheduled · ${q.sent.filter(Boolean).length}/3 sent</span>` : `<span class="badge">Draft</span>`;
+    $("q-schedule").hidden = !!q; $("q-stop").hidden = !q;
+    $("q-steps").innerHTML = steps.map((st, i) => {
+      const date = Intel.addDays(start, st.day), sent = q?.sent[i], due = q && !sent && date <= TODAY;
+      const state = sent ? `<span class="badge" style="--c:var(--ok)">Sent ${fmtDate(sent)}</span>` : due ? `<span class="badge" style="--c:var(--bad)">${date < TODAY ? `Late ${Intel.days(date, TODAY)} d` : "Due today"}</span>`
+        : `<span class="badge">${q ? "Scheduled" : "Planned"} ${fmtDate(date)}</span>`;
+      return `<li class="step${sent ? " done" : ""}${due ? " due" : ""}" data-step="${i}">
+        <div class="st-rail"><span>${i + 1}</span></div>
+        <div class="st-body"><div class="st-h"><b>Day ${st.day}</b><span class="sub">${esc(st.title)} · ${esc(st.channel)}</span>${state}</div>
+          <input class="st-subj" type="text" value="${esc(st.subject)}" aria-label="Step ${i + 1} subject">
+          <details${due || (!q && i === 0) ? " open" : ""}><summary>Message</summary><textarea class="st-text" rows="9" aria-label="Step ${i + 1} message">${esc(st.body)}</textarea></details>
+          <div class="st-act"><button class="btn sm" data-q="copy">Copy</button><button class="btn sm" data-q="mail">Open in Mail</button>${q && !sent ? `<button class="btn sm gold" data-q="sent">Mark sent</button>` : ""}</div></div></li>`;
+    }).join("");
+  }
+  const stepText = i => { const li = $("q-steps").querySelector(`[data-step="${i}"]`); return { subject: li.querySelector(".st-subj").value, body: li.querySelector(".st-text").value }; };
+  $("q-start").addEventListener("change", e => { seqDraft.start = e.target.value || TODAY; renderPitch(); });
+  $("q-schedule").addEventListener("click", () => {
+    const r = byId.get(pitchId);
+    sequences[r.crm_key] = { start: $("q-start").value || TODAY, lang: pitchLang, sent: [null, null, null] };
+    store.set(SEQ_KEY, sequences);
+    notifyAlerts(); renderPitch(); scheduleCards();
+    toast(`Sequence scheduled · Day 0 ${fmtDate(sequences[r.crm_key].start)}`);
+  });
+  $("q-stop").addEventListener("click", () => {
+    const r = byId.get(pitchId);
+    delete sequences[r.crm_key]; store.set(SEQ_KEY, sequences);
+    notifyAlerts(); renderPitch(); scheduleCards(); toast("Sequence stopped");
+  });
+  $("q-steps").addEventListener("click", async e => {
+    const b = e.target.closest("[data-q]");
+    if (!b) return;
+    const i = +b.closest("[data-step]").dataset.step, r = byId.get(pitchId), t = stepText(i);
+    if (b.dataset.q === "copy") {
+      try { await navigator.clipboard.writeText(`${t.subject}\n\n${t.body}`); toast(`Step ${i + 1} copied`); } catch (err) { toast("Copy blocked — select the text"); }
+    } else if (b.dataset.q === "mail") {
+      location.href = `mailto:?subject=${encodeURIComponent(t.subject)}&body=${encodeURIComponent(t.body)}`;
+    } else if (b.dataset.q === "sent") {
+      const q = sequences[r.crm_key];
+      q.sent[i] = TODAY; store.set(SEQ_KEY, sequences);
+      const note = `[${TODAY}] Sequence step ${i + 1} (Day ${SEQ_DAYS[i]}) sent`;
+      const patch = { notes_prospections: r.notes_prospections ? `${r.notes_prospections}\n${note}` : note };
+      if (i === 2 && ["Not Contacted", "Follow-up Required"].includes(r.pipeline_status)) patch.pipeline_status = "Discovery Set Sent";
+      setCrm(r.id, patch);
+      notifyAlerts(); renderPitch(); scheduleCards();
+      toast(`Step ${i + 1} sent${patch.pipeline_status ? " · status → Discovery Set Sent" : ""}`);
+    }
+  });
+  $("q-ics").addEventListener("click", () => {
+    const r = byId.get(pitchId), start = $("q-start").value || TODAY;
+    const icsEsc = v => String(v).replace(/[\\;,]/g, m => "\\" + m).replace(/\n/g, "\\n");
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+    const ev = sequenceSteps(r, pitchLang).map((st, i) => {
+      const d = Intel.addDays(start, st.day).replace(/-/g, ""), d1 = Intel.addDays(start, st.day + 1).replace(/-/g, "");
+      return ["BEGIN:VEVENT", `UID:${r.crm_key.replace(/[^a-z0-9]/gi, "")}-${i}-${d}@maison-atlas`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${d1}`,
+        `SUMMARY:${icsEsc(`Day ${st.day} · ${st.title} — ${r.name}`)}`, `DESCRIPTION:${icsEsc(`${stepText(i).subject}\n\n${stepText(i).body}`)}`,
+        `LOCATION:${icsEsc(r.full_address)}`, "BEGIN:VALARM", "ACTION:DISPLAY", "TRIGGER:PT9H", `DESCRIPTION:${icsEsc(st.title)}`, "END:VALARM", "END:VEVENT"].join("\r\n");
+    });
+    download(`sequence-${r.crm_key.split("@")[0]}.ics`, ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Maison Atlas//Outreach Sequencer//EN", "CALSCALE:GREGORIAN", ...ev, "END:VCALENDAR"].join("\r\n"), "text/calendar;charset=utf-8");
+  });
+  const seqBadge = r => {
+    const q = sequences[r.crm_key];
+    if (!q) return "";
+    const next = q.sent.findIndex(x => !x);
+    if (next < 0) return `<span class="badge" style="--c:var(--ok)">Sequence done</span>`;
+    const date = Intel.addDays(q.start, SEQ_DAYS[next]);
+    return `<span class="badge" style="--c:var(${date <= TODAY ? "--bad" : "--s-disc"})">Step ${next + 1} · ${date <= TODAY ? "due" : fmtDate(date)}</span>`;
+  };
+
+  // ---- Executive PDF export: store dossier or city distribution overview (A4, print engine → "Save as PDF")
+  const pdfEsc = esc;
+  const pdfDate = () => new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const pdfFoot = title => `<div class="foot"><span>Maison Atlas · ${pdfEsc(title)}</span><span>Confidential · ${pdfDate()} · figures in ${cur}</span></div>`;
+  const pdfBars = (rows) => `<div class="bars">${rows.map(([l, v, note]) => `<span>${l}${note ? `<br><small class="meta">${note}</small>` : ""}</span><i><b style="width:${v}%"></b></i><em>${v}</em>`).join("")}</div>`;
+  function storePDF(r) {
+    const e = r.export_potential, cx = r.cx_insights, L = listOf(r), p = msrpFor(r), g = PROTECTED.has(r.pipeline_status) ? null : guardOf(r), rs = r._rs, w = r._ws;
+    const brand = sim.brand || "Maison Atlas";
+    const body = `<section class="cover">
+      <div><div class="brand">${pdfEsc(brand)} · Store dossier</div><div class="rule"></div></div>
+      <div><div class="eyebrow">${pdfEsc(r.type)} · ${pdfEsc(r.segment)}</div>
+        <h1>${pdfEsc(r.name)}</h1>
+        <p class="lede">${pdfEsc(r.full_address)}<br>${pdfEsc(r.sentiment_summary)}</p>
+        <div class="kpis gold"><div><span>Export potential</span><b>${r.export_potential_score}</b></div><div><span>Brand fit</span><b>${r.brand_alignment_score}</b></div><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Status</span><b style="font-size:10.5pt">${pdfEsc(r.pipeline_status)}</b></div></div></div>
+      <div class="meta">Prepared ${pdfDate()} · Decision maker: ${pdfEsc(r.decision_maker_role)} · ${pdfEsc(r.launch_priority)}</div>
+    </section>
+    <h2>Market intelligence</h2>
+    ${pdfBars([["Purchasing power", e.purchasing_power, `≈ ${money(e.purchasing_power_eur)} per capita`], ["Luxury hub proximity", e.luxury_hub, `${pdfEsc(e.nearest_hub)} · ${e.hub_km} km`],
+      ["Clientele density", e.clientele_density, `${e.high_end_doors_5km} high-end doors within 5 km`]])}
+    <p class="meta">Export Potential Score = 40 % purchasing power + 30 % luxury-hub proximity + 30 % high-end clientele density. Editorial index: it ranks markets, it does not size them.</p>
+    <div class="two"><div><h3>Unit economics · ${pdfEsc(L.m.name)}</h3><table>
+      <tr><td>Shelf price (TTC, VAT ${p.vat} %)</td><td class="r">${local(p.v, p.c)}</td></tr>
+      <tr><td>Wholesale (HT)</td><td class="r">${local(L.wholesale, L.c, 2)}</td></tr>
+      <tr><td>Opening order (MOQ)</td><td class="r">${moqFor(r)} units · ${local(moqFor(r) * L.wholesale, L.c)}</td></tr>
+      <tr><td>Year-1 value</td><td class="r">${money(r._val || 0)}</td></tr>
+      <tr><td>Weighted (close probability)</td><td class="r">${money(r._wval || 0)}</td></tr></table></div>
+      <div><h3>Territory</h3>${g ? `<div class="callout ${g.risk === "clear" ? "" : g.risk === "moderate" ? "alert" : "bad"}"><b>${pdfEsc(g.label)}</b><br>${g.near.length
+        ? g.near.slice(0, 5).map(x => `${pdfEsc(x.p.name)} — ${x.km.toFixed(1)} km${x.km < 2 * zoneKm ? ` (${pct(Intel.overlapShare(x.km, zoneKm))} overlap)` : ""}`).join("<br>") : `No partner within ${(3 * zoneKm).toFixed(1)} km.`}</div>`
+        : `<div class="callout"><b>Protected account</b><br>Exclusivity radius ${zoneKm} km.</div>`}</div></div>
+    ${rs ? `<h2>Sell-through &amp; restock forecast</h2>
+      <div class="kpis"><div><span>Stock status</span><b style="font-size:11pt">${pdfEsc(rs.label)}</b></div><div><span>On hand (est.)</span><b>${Math.round(rs.onHand)} u.</b></div><div><span>Velocity</span><b>${rs.perMonth.toFixed(1)} u./mo</b></div><div><span>Reorder by</span><b style="font-size:11pt">${fmtDate(rs.reorderDate)}</b></div></div>
+      <table><tr><th>Reference</th><th class="r">On hand</th><th class="r">Velocity / month</th><th class="r">Cover</th></tr>${rs.skus.map(k => `<tr><td>${pdfEsc(k.sku)}</td><td class="r">${Math.round(k.onHand)}</td><td class="r">${k.perMonth.toFixed(1)}</td><td class="r">${Math.round(k.cover)} d</td></tr>`).join("")}</table>
+      <p class="meta">Cadence ${Math.round(rs.cadence)} days · suggested reorder ${rs.suggest} units · ${rs.confidence} confidence (${rs.orders.length} orders). Velocity assumes each delivery sells through before the next.</p>` : ""}
+    ${w ? `<h3>Wholesale ledger</h3><div class="kpis gold"><div><span>Units delivered</span><b>${w.units}</b></div><div><span>Revenue</span><b>${money(w.revenue)}</b></div><div><span>Collected</span><b>${money(w.paid)}</b></div><div><span>Outstanding</span><b>${money(w.outstanding)}</b></div></div>` : ""}
+    <h2>Store intelligence</h2>
+    <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd>${pdfEsc(cx[k])}</dd>`).join("")}<dt>Pitch prep</dt><dd>${pdfEsc(cx.pitch)}</dd></dl>
+    <div>${r.cx_traits.map(t => `<span class="tag">${pdfEsc(t)}</span>`).join("")}</div>
+    <p class="meta">Source: ${pdfEsc(cx.basis)} · address confidence ${r.address_confidence_score} %.</p>
+    ${pdfFoot(r.name)}`;
+    return Intel.printDocument(`${r.name} — Store dossier`, body);
+  }
+  // Static to-scale map of a set of doors, for print
+  function pdfMap(rows) {
+    if (!rows.length) return "";
+    const la = rows.map(r => r.lat), lo = rows.map(r => r.lng), k = Math.cos((Math.min(...la) + Math.max(...la)) / 2 * Math.PI / 180);
+    const w0 = Math.max(.01, (Math.max(...lo) - Math.min(...lo)) * k), h0 = Math.max(.01, Math.max(...la) - Math.min(...la));
+    const W = 520, H = Math.min(300, Math.max(180, W * h0 / w0)), sc = Math.min((W - 40) / w0, (H - 40) / h0);
+    const ox = (W - w0 * sc) / 2, oy = (H - h0 * sc) / 2;
+    const P = r => [ox + (r.lng - Math.min(...lo)) * k * sc, H - oy - (r.lat - Math.min(...la)) * sc];
+    const fill = r => PROTECTED.has(r.pipeline_status) ? "#c5a059" : { "Niche Boutique": "#9c4f78", "Independent Concept Store": "#2f7d72", "Department Store": "#a4874a" }[r.type];
+    return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="border:.6pt solid #e3dccd;border-radius:3mm;background:#fcfaf6;margin:3mm 0">${
+      rows.filter(r => PROTECTED.has(r.pipeline_status)).map(r => { const [x, y] = P(r); return `<circle cx="${x}" cy="${y}" r="${Math.max(6, zoneKm * sc / 111)}" fill="#c5a059" fill-opacity=".12" stroke="#c5a059" stroke-dasharray="3 3" stroke-width=".8"/>`; }).join("")}${
+      rows.map(r => { const [x, y] = P(r); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2 + r.export_potential_score / 25).toFixed(1)}" fill="${fill(r)}" fill-opacity=".85" stroke="#fff" stroke-width=".8"/>`; }).join("")}</svg>
+      <p class="meta">Dot size = export potential · gold = partner accounts with their ${zoneKm} km exclusivity zone · plum = niche · teal = concept · bronze = department store.</p>`;
+  }
+  function cityPDF(rows, label) {
+    rows = [...rows].sort((a, b) => b.export_potential_score - a.export_potential_score || b.brand_alignment_score - a.brand_alignment_score);
+    const P = rows.filter(r => PROTECTED.has(r.pipeline_status)), ws = P.map(r => r._ws).filter(Boolean);
+    const rev = ws.reduce((a, w) => a + w.revenue, 0), units = ws.reduce((a, w) => a + w.units, 0);
+    const avg = f => rows.length ? Math.round(rows.reduce((a, r) => a + f(r), 0) / rows.length) : 0;
+    const segs = SEGMENTS.map((s, i) => [SEG_SHORT[i], rows.filter(r => r.segment === s).length]).filter(x => x[1]);
+    const by = STATUSES.map(s => [s, rows.filter(r => r.pipeline_status === s).length]).filter(x => x[1]);
+    const alerts = rows.filter(r => r._rs?.alert);
+    const weighted = rows.reduce((a, r) => a + (r._wval || 0), 0);
+    const quick = rows.filter(isQuickWin);
+    const brand = sim.brand || "Maison Atlas";
+    const body = `<section class="cover">
+      <div><div class="brand">${pdfEsc(brand)} · Distribution overview</div><div class="rule"></div></div>
+      <div><div class="eyebrow">Board &amp; investor briefing</div><h1>${pdfEsc(label)}<br><em>distribution map.</em></h1>
+        <p class="lede">${rows.length} doors · ${P.length} partner account${P.length === 1 ? "" : "s"} · ${quick.length} quick win${quick.length === 1 ? "" : "s"} · ${new Set(rows.map(r => r.city)).size} cit${new Set(rows.map(r => r.city)).size === 1 ? "y" : "ies"}.</p>
+        <div class="kpis gold"><div><span>Avg export potential</span><b>${avg(r => r.export_potential_score)}</b></div><div><span>Revenue invoiced</span><b>${money(rev)}</b></div><div><span>Weighted pipeline</span><b>${money(weighted)}</b></div><div><span>Units engaged</span><b>${units}</b></div></div></div>
+      <div class="meta">Prepared ${pdfDate()} · exclusivity radius ${zoneKm} km · figures in ${cur}</div></section>
+    <h2>Territory map</h2>${pdfMap(rows)}
+    <div class="two"><div><h3>Segment mix</h3><table>${segs.map(([s, n]) => `<tr><td>${s}</td><td class="r">${n}</td><td class="r">${pct(n / rows.length)}</td></tr>`).join("")}</table></div>
+      <div><h3>Pipeline</h3><table>${by.map(([s, n]) => `<tr><td>${s}</td><td class="r">${n}</td></tr>`).join("")}</table></div></div>
+    ${alerts.length ? `<div class="callout alert"><b>${alerts.length} restock alert${alerts.length > 1 ? "s" : ""}:</b> ${alerts.map(r => `${pdfEsc(r.name)} (${pdfEsc(r._rs.label)}, ${Math.round(r._rs.cover)} d cover)`).join(" · ")}</div>` : ""}
+    <h2 class="page">Doors ranked by export potential</h2>
+    <table><tr><th>#</th><th>Store</th><th>Segment</th><th>Status</th><th class="r">Export</th><th class="r">Fit</th><th class="r">Tier</th><th class="r">Yr-1 value</th><th>Territory</th></tr>${
+      rows.slice(0, 60).map((r, i) => { const g = PROTECTED.has(r.pipeline_status) ? null : guardOf(r);
+        return `<tr><td>${i + 1}</td><td><b>${pdfEsc(r.name)}</b><br><span class="meta">${pdfEsc(r.district || r.city)}</span></td><td>${SEG_SHORT[SEGMENTS.indexOf(r.segment)]}</td><td>${pdfEsc(r.pipeline_status)}</td><td class="r"><b>${r.export_potential_score}</b></td><td class="r">${r.brand_alignment_score}</td><td class="r">${r.tier_score}</td><td class="r">${money(r._val || 0)}</td><td>${g ? (g.risk === "clear" ? "Clear" : pdfEsc(g.label.split(" ·")[0])) : "Protected"}</td></tr>`; }).join("")}</table>
+    ${rows.length > 60 ? `<p class="meta">Top 60 of ${rows.length} doors shown.</p>` : ""}
+    ${pdfFoot(label + " distribution overview")}`;
+    return Intel.printDocument(`${label} — Distribution overview`, body);
+  }
+  function exportPDF(kind, arg) {
+    toast("Preparing PDF · choose “Save as PDF”");
+    if (kind === "store") return storePDF(byId.get(arg));
+    if (kind === "city") return cityPDF(data.filter(r => r.city === arg), arg);
+    const rows = shown.length ? shown : data, city = $("city").value;
+    return cityPDF(rows, city || (rows.length === data.length ? "Six-market" : `${rows.length}-door selection`));
+  }
+  document.addEventListener("click", e => {
+    const s = e.target.closest("[data-pdf-store]"), c = e.target.closest("[data-pdf-city]");
+    if (s) exportPDF("store", +s.dataset.pdfStore);
+    else if (c) exportPDF("city", c.dataset.pdfCity);
+  });
+  $("pdf").addEventListener("click", () => exportPDF("view"));
 
   // ---- Filters
   const uniq = k => [...new Set(data.map(r => r[k]))].sort();
@@ -1692,18 +2147,18 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     if (applyFrame) { cancelAnimationFrame(applyFrame); applyFrame = 0; }
     const q = $("q").value.trim().toLowerCase();
     const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value, city = $("city").value;
-    const minT = +$("tier").value, minA = +$("align").value;
+    const minT = +$("tier").value, minA = +$("align").value, minE = +$("ep").value;
     const open = new Set([...document.querySelectorAll("input[name=open]:checked")].map(i => i.value));
     const srcs = new Set([...document.querySelectorAll("input[name=src]:checked")].map(i => i.value));
     const segs = new Set([...document.querySelectorAll("input[name=seg]:checked")].map(i => i.value));
     const bounds = $("inview").checked ? map.getBounds() : null;
     const st = $("status").value, pri = $("priority").value, quick = $("quick").checked, acc = $("accounts").checked, samp = $("sampling").checked;
-    $("tier-v").textContent = minT; $("align-v").textContent = minA;
+    $("tier-v").textContent = minT; $("align-v").textContent = minA; $("ep-v").textContent = minE;
 
     // Map shows every match; "Only in view" narrows the table to the visible map area
     const base = data.filter(r =>
       ccs.has(r.country) && (!ty || r.type === ty) && segs.has(r.segment) && (!city || r.city === city) &&
-      r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
+      r.tier_score >= minT && r.brand_alignment_score >= minA && r.export_potential_score >= minE && open.has(r.single_sku_openness) &&
       srcs.has(r._src) &&
       (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
       (!acc || PROTECTED.has(r.pipeline_status)) && (!samp || SAMPLING.has(r.pipeline_status)) &&
@@ -1891,6 +2346,9 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     ["Decision maker", "decision_maker_role"], ["Prospection notes", "notes_prospections"], ["Type", "type"],
     ["Network", "network"], ["City", "city"], ["District", "district"], ["Country", "country_name"], ["Address", "full_address"],
     ["Tier score", "tier_score"], ["Brand fit", "brand_alignment_score"], ["Single-SKU openness", "single_sku_openness"],
+    ["Export potential", "export_potential_score"], ["Purchasing power index", r => r.export_potential.purchasing_power],
+    ["Nearest luxury hub", r => `${r.export_potential.nearest_hub} (${r.export_potential.hub_km} km)`],
+    ["High-end doors within 5 km", r => r.export_potential.high_end_doors_5km], ["Postcode", "postcode"],
     ["Segment", "segment"], ["Entry barrier", "entry_barrier"], ["Openness verified", "openness_verified"],
     ["Sampling policy", r => SAMPLING_LABEL[samplingPolicy(r)]], ["Recommended MOQ", r => moqFor(r)],
     ["Market", r => mkOf(r)], ["VAT %", r => msrpFor(r).vat], ["Local MSRP TTC", r => msrpFor(r).v],
@@ -1899,6 +2357,9 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     ["Year-1 value (display currency)", r => `${Math.round(r._val * fx[cur])} ${cur}`],
     ["Units delivered", r => r._ws ? r._ws.units : ""], ["Revenue invoiced EUR", r => r._ws ? r._ws.revenue.toFixed(2) : ""],
     ["Outstanding EUR", r => r._ws ? r._ws.outstanding.toFixed(2) : ""], ["Last invoice", r => r._ws?.last || ""],
+    ["Stock status", r => r._rs?.label || ""], ["Units on hand (est.)", r => r._rs ? Math.round(r._rs.onHand) : ""],
+    ["Sell-through units / month", r => r._rs ? r._rs.perMonth.toFixed(1) : ""], ["Reorder by", r => r._rs?.reorderDate || ""],
+    ["Suggested reorder units", r => r._rs?.suggest ?? ""], ["Territory risk", r => PROTECTED.has(r.pipeline_status) ? "" : guardOf(r).label],
     ["Territory", r => PROTECTED.has(r.pipeline_status) ? "Protected" : r._zone ? `In zone of ${r._zone.name} (${r._zone.km.toFixed(1)} km)` : "Open"],
     ["Staff", r => r.cx_insights.staff], ["Footfall", r => r.cx_insights.footfall], ["Sampling", r => r.cx_insights.sampling],
     ["Atmosphere", r => r.cx_insights.atmosphere], ["Watch out", r => r.cx_insights.watch_out], ["Pitch prep", r => r.cx_insights.pitch],
@@ -1941,7 +2402,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   });
 
   // ---- Mode switch: same data, two maps
-  const PARTNER_COLS = ["_units", "_rev", "_out", "_last"];
+  const PARTNER_COLS = ["_stock", "_units", "_rev", "_out", "_last"];
   const PROSPECT_COLS = ["launch_priority", "id", "_zoneKm", "_val", "segment", "entry_barrier", "tier_score", "brand_alignment_score", "single_sku_openness", "customer_experience_rating"];
   function setMode(m) {
     mode = m;
@@ -2034,7 +2495,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", () => { fillCities(); applyAndFit(); }));
   let qTimer;
   $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(scheduleApply, 90); });
-  ["tier", "align"].forEach(id => $(id).addEventListener("input", scheduleApply));
+  ["tier", "align", "ep"].forEach(id => $(id).addEventListener("input", scheduleApply));
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
   document.querySelectorAll("input[name=src], input[name=seg]").forEach(i => i.addEventListener("change", applyAndFit));
   $("inview").addEventListener("change", apply);
@@ -2052,7 +2513,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     $("q").value = ""; $("type").value = "";
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
     fillCities(); $("city").value = "";
-    $("tier").value = 0; $("align").value = 0;
+    $("tier").value = 0; $("align").value = 0; $("ep").value = 0;
     ["inview", "quick", "accounts", "sampling", "zones"].forEach(id => ($(id).checked = false));
     $("status").value = ""; $("priority").value = "";
     document.querySelectorAll("input[name=open], input[name=src], input[name=seg]").forEach(i => (i.checked = true));
@@ -2070,6 +2531,10 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     get currency() { return cur; }, get fx() { return fx; }, get lists() { return lists; }, markets: MARKETS, vat: VAT,
     money, short, local, marketOf: mkOf, priceOf: listOf, msrpFor, moqFor,
     touched: key => touched[key] || null,
+    restock: r => r._rs, guard: r => PROTECTED.has(r.pipeline_status) ? null : guardOf(r), dueSteps, marketStats,
+    sequence: key => sequences[key] || null, seqDays: SEQ_DAYS,
+    alerts: () => ({ restock: data.filter(r => r._rs?.alert).sort((a, b) => a._rs.rank - b._rs.rank || a._rs.cover - b._rs.cover), steps: dueSteps() }),
+    openPitch: (id, mode) => openPitch(id, mode), exportPDF,
     focus: id => { focusStore(id); $("map").scrollIntoView({ behavior: "smooth", block: "center" }); },
     setStatus: (ids, status) => ids.forEach(id => setCrm(id, { pipeline_status: status })),
     toast,

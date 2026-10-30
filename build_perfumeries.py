@@ -147,11 +147,11 @@ RAW = [
      "Dutch design concept store in the W Hotel; showcases local makers including fragrance."),
 
     # ------------------------------------------------------------ LUXEMBOURG
-    ("Parfumerie Celeste", NB, "LU", "Luxembourg", "Grand-Rue 41, 1661 Luxembourg", 49.61187, 6.13018, 78, 75, "High", 4.5, "ES FS IB",
+    ("Parfumerie Celeste", NB, "LU", "Luxembourg", "Grand-Rue 41, L-1661 Luxembourg, Luxembourg", 49.61187, 6.13018, 78, 75, "High", 4.5, "ES FS IB",
      "Boutique niche address in the capital with personal, multilingual service."),
-    ("Paris 8 Haute Parfumerie – Grand-Rue", NB, "LU", "Luxembourg", "Grand-Rue 56, 1660 Luxembourg", 49.61233, 6.12877, 80, 60, "Med", 4.3, "ES LX FS GW",
+    ("Paris 8 Haute Parfumerie – Grand-Rue", NB, "LU", "Luxembourg", "Grand-Rue 56, L-1660 Luxembourg, Luxembourg", 49.61233, 6.12877, 80, 60, "Med", 4.3, "ES LX FS GW",
      "Luxembourg's selective multi-brand perfumery chain; Grand-Rue store carries prestige and a growing niche shelf."),
-    ("Sephora – Grand-Rue (Place d'Armes)", CS, "LU", "Luxembourg", "Grand-Rue 73, 1661 Luxembourg", 49.61186, 6.12868, 74, 45, "Med", 4.0, "PS BW FS",
+    ("Sephora – Grand-Rue (Place d'Armes)", CS, "LU", "Luxembourg", "Grand-Rue 73, L-1661 Luxembourg, Luxembourg", 49.61186, 6.12868, 74, 45, "Med", 4.0, "PS BW FS",
      "Busiest beauty address of the old town, steps from Place d'Armes; wide multi-brand range including selective niche labels."),
 
     # ---------------------------------------------------------------- GERMANY
@@ -302,13 +302,94 @@ PIPELINE = ["Not Contacted", "Discovery Set Sent", "Follow-up Required", "Meetin
             "Partner Active", "Key Account", "Declined"]
 # Statuses renamed in the sampling workflow; old crm.json exports still load
 LEGACY_STATUS = {"Sample Sent": "Discovery Set Sent"}
-ROLES = {"Head Buyer", "Store Manager", "Founder"}
+ROLES = {"Founder", "Head Buyer", "General Manager"}
+# Role renamed in the buyer-contact audit; old crm.json exports still load
+LEGACY_ROLE = {"Store Manager": "General Manager"}
 # Estimated confidence (%) that the address reaches the shop door, by where it came from
 ADDRESS_SCORE = {"curated": 100, "osm_tags": 90, "osm_reverse": 75}
 CRM_FIELDS = ("pipeline_status", "decision_maker_role", "notes_prospections")
 CRM_FILE = Path(__file__).parent / "sources" / "crm.json"
 COUNTRY_NAMES = {"FR": "France", "BE": "Belgium", "NL": "Netherlands", "DE": "Germany", "LU": "Luxembourg", "CH": "Switzerland"}
 COUNTRY_SUFFIX = {"FR": "France", "BE": "Belgique", "NL": "Pays-Bas", "DE": "Allemagne", "LU": "Luxembourg", "CH": "Suisse"}
+# National postcode formats (the "<postcode> <city>" segment of full_address) and their valid ranges
+POSTCODE = {
+    "FR": (re.compile(r"^(\d{5}) "), 1000, 98999), "DE": (re.compile(r"^(\d{5}) "), 1001, 99998),
+    "BE": (re.compile(r"^(\d{4}) "), 1000, 9992), "NL": (re.compile(r"^(\d{4}) [A-Z]{2} "), 1000, 9999),
+    "LU": (re.compile(r"^L-(\d{4}) "), 1009, 9999), "CH": (re.compile(r"^(\d{4}) "), 1000, 9658),
+}
+# A postcode area (FR/DE: first 2 digits, BE/NL/CH/LU: first digit) must stay this close to its own median
+POSTCODE_AREA_KM = {"FR": 160, "DE": 200, "BE": 110, "NL": 140, "CH": 140, "LU": 60}
+
+# ------------------------------------------------------------------ Export Potential Score
+# Editorial purchasing-power index: national per-capita retail purchasing power (EUR, 2024 GfK/Eurostat
+# order of magnitude) × an affluence multiplier for the municipality or Paris / Brussels district.
+# Not a measured statistic: it ranks markets, it does not size them.
+PP_NATIONAL = {"CH": 49000, "LU": 36500, "DE": 27800, "NL": 26300, "BE": 25600, "FR": 24300}
+PP_CITY = {
+    # France
+    "Paris": 1.25, "Boulogne-Billancourt": 1.35, "Le Chesnay-Rocquencourt": 1.3, "Issy-les-Moulineaux": 1.2,
+    "Vélizy-Villacoublay": 1.15, "Courchevel": 2.2, "Cannes": 1.3, "Biarritz": 1.25, "Saint-Jean-de-Luz": 1.15,
+    "Annecy": 1.2, "Aix-en-Provence": 1.15, "Caluire-et-Cuire": 1.15, "Lyon": 1.08, "Bordeaux": 1.05, "Nice": 1.05,
+    "Saint-Laurent-du-Var": 1.05, "Strasbourg": 1.02, "La Madeleine": 1.1, "Roubaix": .72, "Romainville": .85,
+    "Ivry-sur-Seine": .88, "Fontenay-sous-Bois": .97, "Béziers": .82, "Nîmes": .88, "Le Havre": .88, "Amiens": .88,
+    "Beauvais": .9, "Dax": .9, "Agen": .9, "Langon": .9, "Saintes": .92, "La Roche-sur-Yon": .93,
+    # Belgium
+    "Wezembeek-Oppem": 1.35, "Brasschaat": 1.25, "Schoten": 1.12, "Lochristi": 1.15, "Antwerp": 1.0, "Ghent": 1.02,
+    "Bruges": 1.0, "Brussels": .92, "Charleroi": .8, "Liège": .88, "Chênée": .88, "Namur": .97, "Oostende": .95,
+    # Netherlands
+    "Wassenaar": 1.7, "Laren": 1.7, "Bloemendaal": 1.75, "Amstelveen": 1.25, "Oosterbeek": 1.2, "Soest": 1.15,
+    "Amsterdam": 1.08, "The Hague": 1.0, "Leidschendam": 1.05, "Haarlem": 1.08, "Utrecht": 1.05, "Rotterdam": .92,
+    "Schiedam": .88, "Den Helder": .88, "Venlo": .92,
+    # Germany
+    "Starnberg": 1.55, "Rottach-Egern": 1.5, "Gmund": 1.45, "Bad Soden am Taunus": 1.4, "Ismaning": 1.3,
+    "Munich": 1.3, "Baden-Baden": 1.2, "Düsseldorf": 1.12, "Hamburg": 1.12, "Frankfurt am Main": 1.1,
+    "Wiesbaden": 1.1, "Stuttgart": 1.12, "Ditzingen": 1.2, "Sindelfingen": 1.15, "Ludwigsburg": 1.1,
+    "Sulzbach (Taunus)": 1.2, "Eltville am Rhein": 1.1, "Garmisch-Partenkirchen": 1.1, "Heidelberg": 1.02,
+    "Potsdam": 1.02, "Berlin": .98, "Cologne": 1.03, "Duisburg": .83, "Leipzig": .9, "Erfurt": .9,
+    "Völklingen": .85, "Delmenhorst": .88, "Itzehoe": .92, "Varel": .92, "Bochum": .9, "Witten": .92, "Wuppertal": .9,
+    # Switzerland
+    "Zug": 1.45, "Vésenaz": 1.45, "Pfäffikon SZ": 1.3, "Zürich": 1.15, "Geneva": 1.1, "Wallisellen": 1.1,
+    "Ascona": 1.12, "Lugano": 1.05, "Montreux": 1.05, "Nyon": 1.12, "Morges": 1.08, "Lucerne": 1.05,
+    "La Chaux-de-Fonds": .85, "Delémont": .85, "Biasca": .82, "Payerne": .88, "Wattwil": .88,
+    # Luxembourg
+    "Luxembourg": 1.1, "Bereldange": 1.1, "Helmsange": 1.08, "Dudelange": .92,
+}
+# Districts outrank their city (Paris arrondissement / Brussels commune)
+PP_DISTRICT = {
+    "Paris 1er": 1.45, "Paris 2e": 1.3, "Paris 3e": 1.35, "Paris 4e": 1.45, "Paris 5e": 1.45, "Paris 6e": 1.7,
+    "Paris 7e": 1.85, "Paris 8e": 1.8, "Paris 9e": 1.3, "Paris 10e": 1.0, "Paris 11e": 1.1, "Paris 12e": 1.12,
+    "Paris 13e": 1.0, "Paris 14e": 1.15, "Paris 15e": 1.3, "Paris 16e": 1.9, "Paris 17e": 1.4, "Paris 18e": .95,
+    "Paris 19e": .82, "Paris 20e": .88, "Lyon 2e": 1.25, "Lyon 6e": 1.35, "Marseille 8e": 1.15,
+    "Brussels – Uccle": 1.35, "Brussels – Woluwe-Saint-Pierre": 1.35, "Brussels – Woluwe-Saint-Lambert": 1.2,
+    "Brussels – Ixelles": 1.05, "Brussels – Etterbeek": 1.0, "Brussels – Watermael-Boitsfort": 1.25,
+    "Brussels – Saint-Gilles": .85, "Brussels – Schaerbeek": .78, "Brussels – Anderlecht": .72,
+}
+PP_FLOOR, PP_CEIL = 15000, 60000   # index 0 / 100
+# Luxury retail hubs: flagship streets where high-end fragrance clientele concentrates
+LUXURY_HUBS = [
+    ("Paris – Triangle d'Or", 48.8686, 2.3050), ("Paris – Faubourg Saint-Honoré", 48.8697, 2.3182),
+    ("Paris – Saint-Germain", 48.8530, 2.3330), ("Paris – Le Marais", 48.8590, 2.3610),
+    ("Cannes – La Croisette", 43.5508, 7.0230), ("Nice – Promenade", 43.6955, 7.2650),
+    ("Courchevel 1850", 45.4153, 6.6347), ("Lyon – Presqu'île", 45.7600, 4.8340),
+    ("Bordeaux – Triangle", 44.8420, -0.5760), ("Lille – Vieux-Lille", 50.6400, 3.0630),
+    ("Biarritz", 43.4832, -1.5586), ("Strasbourg – Grande Île", 48.5830, 7.7480),
+    ("Brussels – Avenue Louise", 50.8320, 4.3600), ("Antwerp – Meir / Schuttershof", 51.2170, 4.4080),
+    ("Knokke – Kustlaan", 51.3510, 3.2870), ("Ghent – Veldstraat", 51.0520, 3.7230),
+    ("Amsterdam – P.C. Hooftstraat", 52.3600, 4.8800), ("The Hague – Denneweg", 52.0850, 4.3150),
+    ("Laren / Het Gooi", 52.2560, 5.2280), ("Maastricht – Stokstraat", 50.8490, 5.6930),
+    ("Munich – Maximilianstraße", 48.1390, 11.5810), ("Düsseldorf – Königsallee", 51.2230, 6.7790),
+    ("Hamburg – Neuer Wall", 53.5510, 9.9910), ("Frankfurt – Goethestraße", 50.1150, 8.6750),
+    ("Berlin – Kurfürstendamm", 52.5020, 13.3290), ("Stuttgart – Königstraße", 48.7770, 9.1780),
+    ("Cologne – Mittelstraße", 50.9360, 6.9420), ("Baden-Baden", 48.7600, 8.2400), ("Sylt – Kampen", 54.9600, 8.3400),
+    ("Zürich – Bahnhofstrasse", 47.3700, 8.5390), ("Geneva – Rue du Rhône", 46.2030, 6.1480),
+    ("Basel – Freie Strasse", 47.5570, 7.5890), ("Lucerne – Schwanenplatz", 47.0520, 8.3090),
+    ("Lugano – Via Nassa", 46.0030, 8.9500), ("Zug", 47.1700, 8.5150), ("St. Moritz", 46.4980, 9.8390),
+    ("Gstaad", 46.4750, 7.2860), ("Luxembourg – Grand-Rue", 49.6118, 6.1300),
+]
+HUB_HALF_KM = 12        # hub score halves every 12 km from the nearest hub
+CLIENTELE_KM = 5        # high-end peers counted within this radius
+HIGH_END_TIER = 75
+EXPORT_WEIGHTS = {"purchasing_power": .4, "luxury_hub": .3, "clientele_density": .3}
 
 # ------------------------------------------------------------------ OSM harvest
 # Rows from sources/osm_raw.json (see harvest_osm.py) are kept only when they match
@@ -882,6 +963,68 @@ def merge():
     return merged, dropped
 
 
+def normalize_address(r):
+    """Postal formats per country: NL "1234 AB", LU "L-1234"; strips foreign "CH-" / "D-" prefixes; the
+    country name always closes the address."""
+    parts = [x.strip() for x in r["full_address"].split(",")]
+    if parts[-1] not in COUNTRY_SUFFIX.values():
+        parts.append(COUNTRY_SUFFIX[r["country"]])
+    seg = re.sub(r"^(?:[A-Z]{1,2}-)?(\d{4,5})", r"\1", parts[-2])
+    if r["country"] == "NL":
+        seg = re.sub(r"^(\d{4})\s?([A-Za-z]{2})\b", lambda m: f"{m[1]} {m[2].upper()}", seg)
+    if r["country"] == "LU":
+        seg = re.sub(r"^(\d{4})\b", r"L-\1", seg)
+    parts[-2] = seg
+    r["full_address"] = ", ".join(parts)
+
+
+def postcode_of(r):
+    rx = POSTCODE[r["country"]][0]
+    m = rx.match(r["full_address"].split(",")[-2].strip())
+    return m.group(1) if m else None
+
+
+def validate_postcodes(recs):
+    """Format and range per country, then geography: every postcode area must sit near its own median."""
+    errors, areas = [], {}
+    for r in recs:
+        pc = postcode_of(r)
+        _, lo, hi = POSTCODE[r["country"]]
+        if r.get("lat") is None or r.get("lng") is None:
+            errors.append(f"{r['name']}: missing coordinates")
+        if not pc:
+            errors.append(f"{r['name']}: postcode not in {r['country']} format: {r['full_address']}")
+        elif not lo <= int(pc) <= hi:
+            errors.append(f"{r['name']}: postcode {pc} outside the {r['country']} range")
+        else:
+            areas.setdefault((r["country"], pc[:2] if r["country"] in ("FR", "DE") else pc[0]), []).append(r)
+    for (cc, area), rows in areas.items():
+        mid = (sorted(x["lat"] for x in rows)[len(rows) // 2], sorted(x["lng"] for x in rows)[len(rows) // 2])
+        for x in rows:
+            if dist_m(mid, (x["lat"], x["lng"])) > POSTCODE_AREA_KM[cc] * 1000:
+                errors.append(f"{x['name']}: postcode area {cc}-{area} is {dist_m(mid, (x['lat'], x['lng'])) / 1000:.0f} km from its peers")
+    return errors
+
+
+def export_potential(r, peers):
+    """Export Potential Score (0-100): local purchasing power, proximity to a luxury hub and the density of
+    high-end doors nearby (a proxy for clientele that already buys luxury fragrance)."""
+    pp_eur = PP_NATIONAL[r["country"]] * PP_DISTRICT.get(r["district"] or "", PP_CITY.get(r["city"], 1.0))
+    pp = max(0.0, min(100.0, 100 * (pp_eur - PP_FLOOR) / (PP_CEIL - PP_FLOOR)))
+    hub, hub_km = min(((h, dist_m((r["lat"], r["lng"]), (la, lo)) / 1000) for h, la, lo in LUXURY_HUBS), key=lambda x: x[1])
+    hub_score = 100 * 0.5 ** (hub_km / HUB_HALF_KM)
+    n = sum(1 for p in peers if p is not r and p["tier_score"] >= HIGH_END_TIER
+            and dist_m((r["lat"], r["lng"]), (p["lat"], p["lng"])) <= CLIENTELE_KM * 1000)
+    density = min(100.0, 25 * math.log2(1 + n))
+    parts = {"purchasing_power": pp, "luxury_hub": hub_score, "clientele_density": density}
+    score = round(sum(EXPORT_WEIGHTS[k] * v for k, v in parts.items()))
+    return max(1, min(100, score)), {
+        "purchasing_power": round(pp), "purchasing_power_eur": round(pp_eur, -2),
+        "luxury_hub": round(hub_score), "nearest_hub": hub, "hub_km": round(hub_km, 1),
+        "clientele_density": round(density), "high_end_doors_5km": n,
+    }
+
+
 def validate(recs):
     errors, seen = [], set()
     for r in recs:
@@ -951,11 +1094,12 @@ def crm_key(r):
 
 
 def decision_maker(r):
-    # Chains and department stores buy centrally; independents are run by their founder
+    """Who signs the opening order. Chains and department stores buy centrally (Head Buyer); concept-store
+    chains delegate the door's assortment to its General Manager; independents are run by their founder."""
     chain = r["network"] not in (None, INDEPENDENT[0])
     if r["type"] == DS or (chain and r["type"] == NB):
         return "Head Buyer"
-    return "Store Manager" if chain else "Founder"
+    return "General Manager" if chain else "Founder"
 
 
 def load_crm():
@@ -963,6 +1107,8 @@ def load_crm():
     for v in crm.values():
         if v.get("pipeline_status") in LEGACY_STATUS:
             v["pipeline_status"] = LEGACY_STATUS[v["pipeline_status"]]
+        if v.get("decision_maker_role") in LEGACY_ROLE:
+            v["decision_maker_role"] = LEGACY_ROLE[v["decision_maker_role"]]
     errors = [f"crm.json {k}: bad pipeline_status {v['pipeline_status']}"
               for k, v in crm.items() if v.get("pipeline_status", PIPELINE[0]) not in PIPELINE]
     errors += [f"crm.json {k}: bad decision_maker_role {v['decision_maker_role']}"
@@ -1010,7 +1156,9 @@ def build():
     merged, dropped = merge()
     crm, crm_errors = load_crm()
     ledger, demo, ledger_errors = load_ledger()
-    errors = validate(merged) + crm_errors + ledger_errors
+    for r in merged:
+        normalize_address(r)
+    errors = validate(merged) + validate_postcodes(merged) + crm_errors + ledger_errors
     records = []
     for r in merged:
         r["city"], r["commune"] = canonical_city(r["country"], r["city"])
@@ -1050,6 +1198,7 @@ def build():
             "google_maps_url": "https://www.google.com/maps/search/?api=1&query=" + quote_plus(f"{r['name']}, {r['full_address']}"),
             "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=" + quote_plus(f"{r['name']} {r['city']}"),
             "crm_key": crm_key(r),
+            "postcode": postcode_of(r),
             "launch_priority": r["launch_priority"],
             "decision_maker_role": decision_maker(r),
             "pipeline_status": PIPELINE[0],
@@ -1065,6 +1214,8 @@ def build():
         rec.update({k: v for k, v in crm.get(rec["crm_key"], {}).items() if k in CRM_FIELDS})
         if entry and rec["pipeline_status"] not in PARTNER_STATUS:
             errors.append(f"{rec['name']}: has a wholesale ledger but status {rec['pipeline_status']}")
+    for rec in records:
+        rec["export_potential_score"], rec["export_potential"] = export_potential(rec, records)
     keys = Counter(r["crm_key"] for r in records)
     errors += [f"duplicate crm_key: {k}" for k, n in keys.items() if n > 1]
     # Stores that left the harvest keep their CRM history in crm.json; only warn
@@ -1108,6 +1259,9 @@ def main():
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("country")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("type")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("segment")))
+    print("  " + ", ".join(f"{k}: {v}" for k, v in count("decision_maker_role")))
+    eps = sorted(r["export_potential_score"] for r in records)
+    print(f"  export potential: min {eps[0]} · median {eps[len(eps) // 2]} · max {eps[-1]}")
     print("  openness " + ", ".join(f"{k}: {v}" for k, v in count("single_sku_openness")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("pipeline_status")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("source") if k == "curated") +

@@ -22,6 +22,9 @@
     { id: "stagnation", label: "Pipeline Stagnation & Follow-up Audit" },
     { id: "exclusivity", label: "Exclusivity Zone Conflict Check" },
     { id: "export", label: "Swiss & Non-EU Export Strategy" },
+    { id: "restock", label: "Restock & Sell-Through Forecast" },
+    { id: "outreach", label: "Outreach Sequences Due Today" },
+    { id: "potential", label: "Export Potential Leaders" },
   ];
 
   const store = {
@@ -81,7 +84,9 @@
       currency: currencyContext(),
       partners: d.filter(isProtected).map(r => ({ name: r.name, city: r.city, status: r.pipeline_status,
         revenue: Math.round(r._ws?.revenue || 0), outstanding: Math.round(r._ws?.outstanding || 0), overdue: Math.round(r._ws?.overdue || 0),
-        last_invoice: r._ws?.last || null })),
+        last_invoice: r._ws?.last || null, stock: r._rs ? { status: r._rs.label, on_hand: Math.round(r._rs.onHand), cover_days: Math.round(r._rs.cover),
+          units_per_month: +r._rs.perMonth.toFixed(1), reorder_by: r._rs.reorderDate, suggested_units: r._rs.suggest } : null })),
+      alerts: (a => ({ restock: a.restock.map(r => `${r.name}: ${r._rs.label}`), sequence_steps_due: a.steps.map(x => `${x.r.name} step ${x.step + 1}`) }))(ctx.alerts()),
     };
   }
 
@@ -246,13 +251,52 @@
       ${ins.pitch ? `<p class="sl-sub"><b>Pitch.</b> ${esc(ins.pitch)}</p>` : ""}${ins.watch_out ? `<p class="sl-sub"><b>Watch out.</b> ${esc(ins.watch_out)}</p>` : ""}
       ${z ? `<p class="sl-sub sl-warn">Inside ${esc(z.p.name)}'s territory (${z.km.toFixed(1)} km).</p>` : ""}
       ${r._ws ? `<p class="sl-sub">Wholesale: ${r._ws.units} units · ${kEur(r._ws.revenue)} invoiced · ${kEur(r._ws.outstanding)} outstanding</p>` : `<p class="sl-sub">Close probability if sampled now ≈ ${Math.round(convP(r) * 100)} %.</p>`}
+      ${r._rs ? `<p class="sl-sub ${r._rs.alert ? "sl-warn" : ""}">Stock: ${esc(r._rs.label)} · ≈ ${Math.round(r._rs.onHand)} u. on hand · ${Math.round(r._rs.cover)} d cover · ${r._rs.perMonth.toFixed(1)} u./month${r._rs.alert ? ` · reorder ${r._rs.suggest} u. by ${esc(r._rs.reorderDate)}` : ""}</p>` : ""}
+      <p class="sl-sub">Export potential ${r.export_potential_score}/100 · ${esc(r.export_potential.nearest_hub)} ${r.export_potential.hub_km} km · ${r.export_potential.high_end_doors_5km} high-end doors ≤ 5 km</p>
       ${isExport(r) ? (l => `<p class="sl-sub">Export · ${esc(l.c)} list: wholesale ${ctx.local(l.wholesale, l.c, 2)}, shelf ${ctx.local(l.msrp, l.c)} at ${l.m.vat} % VAT, MOQ ${ctx.moqFor(r)} u.</p>`)(ctx.priceOf(r)) : ""}</div>`;
   }
 
-  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity, export: exportStrategy };
+  // Predictive restock: velocity from the delivery log, cover vs lead time, suggested case-pack reorder
+  function restockForecast() {
+    const P = ctx.data.filter(r => r._rs).sort((a, b) => a._rs.rank - b._rs.rank || a._rs.cover - b._rs.cover);
+    const alerts = P.filter(r => r._rs.alert), units = P.reduce((a, r) => a + r._rs.perMonth, 0);
+    const reorderValue = alerts.reduce((a, r) => a + r._rs.suggest * ctx.priceOf(r).eurPerUnit, 0);
+    const line = r => { const s = r._rs; return `<li>${storeLink(r)} <span class="sl-tag ${s.tone === "bad" ? "bad" : ""}">${esc(s.label)}</span>
+      <div class="sl-mute">≈ ${Math.round(s.onHand)} u. on hand · ${Math.round(s.cover)} d cover · ${s.perMonth.toFixed(1)} u./month${s.trend != null ? ` (${s.trend >= 0 ? "+" : ""}${Math.round(s.trend * 100)} %)` : ""} · cadence ${Math.round(s.cadence)} d</div>
+      ${s.alert ? `<div class="sl-mute">→ Reorder by ${esc(s.reorderDate)}: propose <b>${s.suggest} units</b>${s.skus.length > 1 ? `, lowest cover on ${esc(s.skus[0].sku)} (${Math.round(s.skus[0].cover)} d)` : ""}.</div>` : ""}</li>`; };
+    const html = `<p class="sl-lead">${P.length} partner doors sell through ≈ <b>${units.toFixed(0)} units / month</b>. ${alerts.length ? `<b>${alerts.length} need stock</b> — ${kEur(reorderValue)} of reorders to propose now.` : "Every door is covered beyond lead time."}</p>
+      <h4>Alerts <span class="sl-mute">${alerts.length}</span></h4>${alerts.length ? `<ul class="sl-list">${alerts.map(line).join("")}</ul>` : `<p class="sl-sub">None.</p>`}
+      <h4>Healthy <span class="sl-mute">${P.length - alerts.length}</span></h4>${P.length - alerts.length ? `<ul class="sl-list">${P.filter(r => !r._rs.alert).map(line).join("")}</ul>` : `<p class="sl-sub">–</p>`}
+      <p class="sl-sub">Model: each delivery is assumed to sell through before the next; velocity is an exponentially weighted mean (recent orders count most). Lead time 10 d, safety window 14 d.</p>`;
+    return { html, summary: P.map(r => ({ store: r.name, status: r._rs.label, on_hand: Math.round(r._rs.onHand), cover_days: Math.round(r._rs.cover), per_month: +r._rs.perMonth.toFixed(1), suggest: r._rs.suggest })) };
+  }
+  // Day 0 / 7 / 14 outreach steps whose date has come
+  function outreachDue() {
+    const due = ctx.dueSteps(), names = ["Initial email", "Value-add follow-up", "Sample delivery confirmation"];
+    const scheduled = ctx.data.filter(r => ctx.sequence(r.crm_key)).length;
+    const html = `<p class="sl-lead">${scheduled} sequence${scheduled === 1 ? "" : "s"} running · <b>${due.length} step${due.length === 1 ? "" : "s"} due</b>.</p>${due.length
+      ? `<ul class="sl-list">${due.map(x => `<li>${storeLink(x.r)} <span class="sl-tag ${x.late ? "bad" : ""}">Step ${x.step + 1} · ${x.late ? x.late + " d late" : "today"}</span><div class="sl-mute">${names[x.step]} (Day ${ctx.seqDays[x.step]}) · <button class="sl-store" data-seq="${x.r.id}">Open sequence</button></div></li>`).join("")}</ul>`
+      : `<p class="sl-sub">Nothing due. Start a sequence from any pitch: Day 0 intro, Day 7 value-add with local market stats, Day 14 sample delivery check.</p>`}`;
+    return { html, summary: due.map(x => `${x.r.name}: step ${x.step + 1} (${x.late} d late)`) };
+  }
+  // Doors where local wealth, luxury hubs and high-end clientele converge, still winnable
+  function potentialLeaders() {
+    const pros = ctx.data.filter(r => isOpen(r)).sort((a, b) => b.export_potential_score - a.export_potential_score || score(b) - score(a));
+    const blend = pros.map(r => ({ r, b: Math.round(.5 * r.export_potential_score + .5 * score(r)) })).sort((a, b) => b.b - a.b).slice(0, 10);
+    const html = `<p class="sl-lead">Export Potential Score = 40 % purchasing power · 30 % luxury-hub proximity · 30 % high-end clientele density. Below: winnable doors ranked by <b>potential × placement score</b> (50/50).</p>
+      <ol class="sl-list">${blend.map(({ r, b }) => { const e = r.export_potential, g = ctx.guard(r);
+        return `<li>${storeLink(r)} <span class="sl-score">${b}</span><div class="sl-mute">export ${r.export_potential_score} · fit ${r.brand_alignment_score} · ${esc(e.nearest_hub)} ${e.hub_km} km · ${e.high_end_doors_5km} high-end doors ≤ 5 km${g && g.risk !== "clear" ? ` · <span class="sl-warn">${esc(g.label)}</span>` : ""}</div></li>`; }).join("")}</ol>
+      <p class="sl-rec"><b>Highest raw potential:</b> ${pros.slice(0, 5).map(r => `${storeLink(r)} (${r.export_potential_score})`).join(", ")}.</p>`;
+    return { html, summary: blend.map(({ r, b }) => ({ store: r.name, city: r.city, blended: b, export_potential: r.export_potential_score, fit: r.brand_alignment_score })) };
+  }
+
+  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity, export: exportStrategy, restock: restockForecast, outreach: outreachDue, potential: potentialLeaders };
   function route(q) {
     const t = q.toLowerCase();
     if (/export|switzerland|suisse|swiss|schweiz|\bchf\b|\bgbp\b|\buk\b|britain|royaume|non-eu|hors.?ue|douane|customs|currency|devise|vat|tva/.test(t)) return "export";
+    if (/restock|reorder|réassort|stock|sell.?through|rupture|velocity|rotation/.test(t)) return "restock";
+    if (/sequence|séquence|cadence|outreach|prospection due|step/.test(t)) return "outreach";
+    if (/potential|potentiel|purchasing|pouvoir d'achat|wealth|luxury hub/.test(t)) return "potential";
     if (/growth|croissance|ville|cit(y|ies)|where.*(launch|open)/.test(t)) return "growth";
     if (/dispatch|discovery|sample|échantillon|coffret|envoi|send/.test(t)) return "dispatch";
     if (/stagna|follow|relance|stuck|audit|overdue|reorder|impay/.test(t)) return "stagnation";
@@ -274,7 +318,7 @@
     }
     const o = overview();
     return `<p class="sl-lead">${o.stores} doors in ${Object.keys(o.countries).length} markets (${o.shown} in the current view) · avg fit ${o.avg_fit} · ${o.openness.High || 0} high-openness · ${o.partners.length} partners.</p>
-      <p class="sl-sub">Built-in mode answers the five analyses above, a store name or a city. Add an API key in ⚙︎ for open-ended strategy questions.</p>`;
+      <p class="sl-sub">Built-in mode answers the ${CHIPS.length} analyses above, a store name or a city. Add an API key in ⚙︎ for open-ended strategy questions.</p>`;
   }
 
   // ———————————————————————————————— LLM (optional)
@@ -428,6 +472,21 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     transform: translateY(100%); }
   .sl-panel.open { transform: none; }
 }
+.sl-fab[data-alerts]:not([data-alerts=""])::after, .sl-nav[data-alerts]:not([data-alerts=""])::after { content: attr(data-alerts); position: absolute; top: -5px; right: -5px;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; display: grid; place-items: center; font: 700 10.5px/1 var(--text, system-ui);
+  color: #fff; background: #ff453a; box-shadow: 0 0 0 2px #000, 0 4px 12px rgba(255,69,58,.5); animation: sl-badge .5s cubic-bezier(.34,1.56,.64,1); }
+.sl-nav { position: relative; }
+@keyframes sl-badge { from { transform: scale(0); } }
+.sl-alerts { display: grid; gap: 6px; padding: 10px 14px 0; }
+.sl-alert { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 8px auto 1fr; align-items: center; gap: 4px 10px; padding: 10px 12px;
+  border-radius: 12px; font-size: 12.5px; background: rgba(242,166,94,.08); box-shadow: inset 0 0 0 1px rgba(242,166,94,.28); transition: transform .15s, background .2s; }
+.sl-alert.bad { background: rgba(255,107,107,.08); box-shadow: inset 0 0 0 1px rgba(255,107,107,.3); }
+.sl-alert:active { transform: scale(.98); }
+.sl-alert:focus-visible { outline: 2px solid #c5a059; }
+.sl-alert i { width: 8px; height: 8px; border-radius: 50%; background: #f2a65e; box-shadow: 0 0 8px #f2a65e; }
+.sl-alert.bad i { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
+.sl-alert b { font-weight: 600; color: #f5f5f7; white-space: nowrap; }
+.sl-alert span { color: #8e8e93; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 @media (prefers-reduced-motion: reduce) { .sl-panel, .sl-fab, .sl-msg { transition: none !important; animation: none !important; } }`;
 
   const SPARK = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 5.6L19.5 9.5 13.9 11.4 12 17l-1.9-5.6L4.5 9.5l5.6-1.9L12 2zm7 11l.95 2.55L22.5 16.5l-2.55.95L19 20l-.95-2.55L15.5 16.5l2.55-.95L19 13z"/></svg>`;
@@ -470,7 +529,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
         <div class="row"><label>Engine<select name="provider"><option value="builtin">Built-in analytics</option><option value="anthropic">Anthropic</option><option value="openai">OpenAI</option></select></label>
           <label>Model<input name="model" placeholder="default" autocomplete="off"></label></div>
         <label>API key<input name="key" type="password" placeholder="Stored in this browser only" autocomplete="off"></label>
-        <span>The key never leaves this browser except to the chosen provider. The five quick analyses always run locally.</span>
+        <span>The key never leaves this browser except to the chosen provider. The quick analyses always run locally.</span>
       </form>
       <div class="sl-log" aria-live="polite"></div>
       <footer class="sl-foot">
@@ -497,6 +556,20 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
       save();
       return el;
     }
+    // Proactive notifications: restock warnings and due outreach steps, counted on the launcher
+    const bell = document.createElement("div");
+    bell.className = "sl-alerts";
+    log.before(bell);
+    function refreshAlerts() {
+      const a = ctx.alerts(), n = a.restock.length + a.steps.length;
+      [fab, navBtn].forEach(b => { if (!b) return; b.dataset.alerts = n || ""; b.setAttribute("aria-label", `Open Sillage AI${n ? ` · ${n} alert${n > 1 ? "s" : ""}` : ""}`); });
+      const crit = a.restock.filter(r => r._rs.tone === "bad").length;
+      bell.innerHTML = n ? `${a.restock.length ? `<button class="sl-alert ${crit ? "bad" : "warn"}" data-alert="restock"><i></i><b>${a.restock.length} restock alert${a.restock.length > 1 ? "s" : ""}</b><span>${a.restock.slice(0, 3).map(r => esc(r.name)).join(" · ")}${a.restock.length > 3 ? "…" : ""}</span></button>` : ""}${
+        a.steps.length ? `<button class="sl-alert warn" data-alert="outreach"><i></i><b>${a.steps.length} outreach step${a.steps.length > 1 ? "s" : ""} due</b><span>${a.steps.slice(0, 3).map(x => esc(x.r.name)).join(" · ")}</span></button>` : ""}` : "";
+      bell.hidden = !n;
+    }
+    refreshAlerts();
+    document.addEventListener("sillage:alerts", refreshAlerts);
     function welcome() {
       const o = overview();
       return `<p><span class="serif" style="font-size:17px">Bonjour.</span></p><p class="sl-lead">I read ${o.stores} doors across ${Object.keys(o.countries).length} markets, ${o.partners.length} partner accounts and a ${o.exclusivity_radius_km.toFixed(1)} km exclusivity radius — live from this CRM, priced in ${esc(o.currency.display)}. Pick an analysis below or ask anything.</p>`;
@@ -558,6 +631,10 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     $(".sl-chips").addEventListener("click", e => { const c = e.target.closest("[data-chip]"); if (c) ask(CHIPS.find(x => x.id === c.dataset.chip).label, c.dataset.chip); });
 
     panel.addEventListener("click", e => {
+      const seq = e.target.closest("[data-seq]");
+      if (seq) { ctx.openPitch(+seq.dataset.seq, "seq"); return; }
+      const al = e.target.closest("[data-alert]");
+      if (al) { ask(CHIPS.find(x => x.id === al.dataset.alert).label, al.dataset.alert); return; }
       const s = e.target.closest(".sl-store");
       if (s) { ctx.focus(+s.dataset.id); if (matchMedia("(max-width: 700px)").matches) close(); return; }
       const act = e.target.closest("[data-act]")?.dataset.act;

@@ -1,293 +1,540 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Maison Atlas · Niche Launch CRM</title>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
-/* Luxury Dark / Studio */
+/* ———————————————————————————————————————————————————————————————
+   Maison Atlas — design system
+   OLED black canvas · charcoal surfaces · hairline frosted borders · champagne accents
+   ——————————————————————————————————————————————————————————————— */
 :root {
   color-scheme: dark;
-  --bg: #0f0f12; --bg2: #15151a; --glass: rgba(255,255,255,.035); --glass-hi: rgba(255,255,255,.06);
-  --ink: #f2eee6; --muted: #9a958c; --faint: #6b6760; --line: rgba(212,175,55,.16); --line-soft: rgba(255,255,255,.07);
-  --gold: #d4af37; --gold-hi: #ecd27a; --gold-lo: rgba(212,175,55,.14);
-  --niche: #c98bb0; --concept: #6fc2b8; --dept: #d9b46a;
-  --s-nc: #6b6b75; --s-disc: #8fb3ff; --s-follow: #f0a35e; --s-meet: #c39cff; --s-partner: #5fd08a; --s-key: #d4af37; --s-declined: #e06a6a;
-  --warn: #f0a35e; --ok: #5fd08a; --bad: #e06a6a;
-  --radius: 14px;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
+  --serif: "Playfair Display", "Bodoni 72", "Bodoni Moda", Didot, Georgia, serif;
+
+  --bg: #000000;
+  --card: #121214;
+  --card-2: #18181b;
+  --well: #0a0a0b;
+  --hair: rgba(255,255,255,.08);
+  --hair-2: rgba(255,255,255,.14);
+  --ink: #f5f5f7;
+  --ink-2: #d2d2d7;
+  --muted: #8e8e93;
+  --faint: #5a5a5f;
+  --gold: #c5a059;
+  --gold-hi: #e2c88f;
+  --gold-deep: #8c6f35;
+  --gold-lo: rgba(197,160,89,.12);
+  --gold-line: rgba(197,160,89,.38);
+
+  --niche: #d29ab8; --concept: #7cc8bd; --dept: #d6b679;
+  --s-nc: #636366; --s-disc: #8fb3ff; --s-follow: #f2a65e; --s-meet: #bf9cff; --s-partner: #5fd08a; --s-key: #c5a059; --s-declined: #ff6b6b;
+  --warn: #f2a65e; --ok: #5fd08a; --bad: #ff6b6b;
+
+  --r-sm: 10px; --r: 16px; --r-lg: 22px;
+  --ease: cubic-bezier(.32,.72,0,1);          /* iOS sheet curve */
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 24px 48px -28px rgba(0,0,0,.9);
+  --lift: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 60px -24px rgba(0,0,0,.95), 0 0 0 1px var(--hair-2);
+  --sheet-w: 440px;
 }
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 72px; }
 html, body { margin: 0; }
 body {
-  background: radial-gradient(1200px 600px at 85% -10%, rgba(212,175,55,.09), transparent 60%),
-              radial-gradient(900px 500px at -10% 30%, rgba(120,90,160,.07), transparent 60%), var(--bg);
-  background-attachment: fixed;
-  color: var(--ink); font: 14px/1.5 Inter, system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;
+  background: var(--bg); color: var(--ink);
+  font: 400 14px/1.5 var(--text); letter-spacing: -.005em;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility;
+  min-height: 100vh; overflow-x: hidden;
 }
-a { color: var(--gold); }
-.wrap { max-width: 1680px; margin: 0 auto; padding: 0 20px 28px; }
-.glass { background: var(--glass); border: 1px solid var(--line-soft); border-radius: var(--radius);
-  backdrop-filter: blur(14px) saturate(120%); -webkit-backdrop-filter: blur(14px) saturate(120%);
-  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -24px rgba(0,0,0,.8); }
-.eyebrow { font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.serif { font-family: "Cormorant Garamond", Georgia, serif; }
-
-/* Header */
-header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 18px 0 14px; }
-.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.mark { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--gold); display: grid; place-items: center;
-  color: var(--gold); font: 700 18px "Cormorant Garamond", serif; flex: none; box-shadow: 0 0 24px -6px rgba(212,175,55,.55); }
-h1 { font: 600 28px/1.05 "Cormorant Garamond", Georgia, serif; margin: 0; letter-spacing: .4px; }
-h1 em { color: var(--gold); font-style: normal; }
+a { color: var(--gold-hi); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+button { font-family: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+::selection { background: rgba(197,160,89,.35); }
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 max(24px, env(safe-area-inset-right)) 48px max(24px, env(safe-area-inset-left)); }
+.card { background: var(--card); border: 1px solid var(--hair); border-radius: var(--r); box-shadow: var(--shadow); }
+.eyebrow { font: 600 10.5px/1.2 var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.serif { font-family: var(--serif); }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--faint); }
 .sub { color: var(--muted); font-size: 12.5px; }
-.head-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
-.btn { font: 500 13px Inter, system-ui, sans-serif; border: 1px solid var(--line-soft); background: var(--glass-hi); color: var(--ink);
-  border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: border-color .15s, background .15s; white-space: nowrap; }
-.btn:hover { border-color: var(--gold); }
-.btn.gold { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: #19150a; border-color: transparent; font-weight: 600; }
-.btn.gold:hover { filter: brightness(1.06); }
+[hidden] { display: none !important; }
+
+/* ——— Navigation bar ——— */
+.nav { position: sticky; top: 0; z-index: 900; background: rgba(0,0,0,.72); border-bottom: 1px solid var(--hair);
+  backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); padding-top: env(safe-area-inset-top); }
+.nav-in { max-width: 1600px; margin: 0 auto; height: 60px; display: flex; align-items: center; gap: 16px;
+  padding: 0 max(24px, env(safe-area-inset-right)) 0 max(24px, env(safe-area-inset-left)); }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mark { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  border: 1px solid var(--gold-line); color: var(--gold-hi); font: italic 400 16px/1 var(--serif); }
+.brand h1 { margin: 0; font: 500 21px/1 var(--serif); letter-spacing: .01em; white-space: nowrap; }
+.brand h1 em { font-style: italic; color: var(--gold-hi); font-weight: 400; }
+.brand .sub { border-left: 1px solid var(--hair-2); padding-left: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-actions { margin-left: auto; display: flex; gap: 8px; flex: none; }
+
+/* ——— Buttons ——— */
+.btn { -webkit-appearance: none; appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font: 500 13px/1 var(--text); letter-spacing: -.005em; color: var(--ink); background: rgba(255,255,255,.06);
+  border: 1px solid var(--hair); border-radius: 999px; padding: 9px 16px; min-height: 34px; cursor: pointer; white-space: nowrap;
+  transition: background .2s, border-color .2s, transform .15s var(--ease-out), color .2s; text-decoration: none !important; }
+.btn:hover { background: rgba(255,255,255,.1); border-color: var(--hair-2); }
+.btn:active { transform: scale(.97); }
+.btn.gold { background: var(--gold); color: #0b0904; border-color: transparent; font-weight: 600; }
+.btn.gold:hover { background: var(--gold-hi); }
 .btn.ghost { background: transparent; color: var(--muted); }
-.btn.sm { padding: 4px 10px; font-size: 12px; }
+.btn.ghost:hover { color: var(--ink); }
+.btn.sm { padding: 7px 12px; min-height: 30px; font-size: 12px; }
+.btn.icon { width: 34px; padding: 0; }
 
-/* Executive metrics */
-.metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
-.tile { padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; position: relative; overflow: hidden; }
-.tile::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,.45), transparent); }
-.tile b { font: 600 30px/1.1 "Cormorant Garamond", Georgia, serif; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tile b small { font: 500 12px Inter, system-ui, sans-serif; color: var(--muted); }
-.tile.hero b { color: var(--gold-hi); }
-.tile .hint { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.funnel { display: flex; height: 5px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,.06); margin-top: 5px; gap: 1px; }
-.funnel i { display: block; }
+/* ——— Executive widgets ——— */
+.hero { padding: 40px 0 24px; display: flex; align-items: end; gap: 24px; flex-wrap: wrap; }
+.hero h2 { margin: 6px 0 0; font: 400 clamp(30px, 4vw, 46px)/1.04 var(--serif); letter-spacing: -.01em; }
+.hero h2 em { color: var(--gold-hi); }
+.hero p { margin: 10px 0 0; color: var(--muted); max-width: 520px; font-size: 14px; }
+.metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+.widget { --mx: 50%; --my: 0%; position: relative; isolation: isolate; overflow: hidden; min-width: 0; min-height: 124px;
+  padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 4px; cursor: default; user-select: none; -webkit-user-select: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); border: 1px solid var(--hair); border-radius: var(--r-lg);
+  backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: var(--shadow); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.widget::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .35s;
+  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(197,160,89,.16), transparent 70%); }
+.widget:hover, .widget.touch { transform: translateY(-3px); box-shadow: var(--lift); border-color: var(--hair-2); }
+.widget:hover::before, .widget.touch::before { opacity: 1; }
+.widget:active { transform: translateY(-1px) scale(.985); transition-duration: .15s; }
+.widget .val { font: 600 32px/1.05 var(--sans); letter-spacing: -.025em; font-variant-numeric: tabular-nums; margin-top: 10px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.widget .val small { font: 500 12px var(--text); color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+.widget.key .val { color: var(--gold-hi); }
+.widget.key { border-color: rgba(197,160,89,.22); }
+.widget .hint { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: auto; }
+.widget .eyebrow { display: flex; align-items: center; gap: 7px; }
+.widget .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); flex: none; }
+.funnel { display: flex; height: 3px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,.06); gap: 2px; margin-top: 8px; }
+.funnel i { display: block; border-radius: 2px; }
 
-/* Control panel */
-details.panel { margin-bottom: 14px; }
-details.panel > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 12px 16px; user-select: none; }
+/* ——— Control panel ——— */
+details.panel { margin-bottom: 20px; border-radius: var(--r-lg); }
+details.panel > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 16px 20px; user-select: none; min-height: 56px; }
 details.panel > summary::-webkit-details-marker { display: none; }
-details.panel > summary .chev { margin-left: auto; color: var(--gold); transition: transform .2s; font-size: 12px; }
-details.panel[open] > summary .chev { transform: rotate(180deg); }
-details.panel > summary h2 { margin: 0; font: 600 19px "Cormorant Garamond", serif; letter-spacing: .3px; }
-.pill { font-size: 11px; color: var(--gold); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
-.ctl-body { padding: 4px 16px 16px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 24px; border-top: 1px solid var(--line-soft); }
-.filters { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; padding-top: 12px; min-width: 0; }
-.f { display: flex; flex-direction: column; gap: 5px; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; min-width: 0; }
-.f > span.v { color: var(--gold); }
+details.panel > summary h2 { margin: 0; font: 600 15px var(--sans); letter-spacing: -.01em; }
+.chev { margin-left: auto; width: 9px; height: 9px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg) translateY(-3px); transition: transform .35s var(--ease); }
+details.panel[open] > summary .chev { transform: rotate(225deg) translateY(-1px); }
+.pill { font: 500 11.5px var(--text); color: var(--gold-hi); background: var(--gold-lo); border-radius: 999px; padding: 3px 10px; font-variant-numeric: tabular-nums; }
+.ctl-body { padding: 4px 20px 20px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px 28px; border-top: 1px solid var(--hair); }
+.filters { display: flex; flex-wrap: wrap; gap: 16px 20px; align-items: end; padding-top: 18px; min-width: 0; }
+.f { display: flex; flex-direction: column; gap: 7px; font: 600 10.5px var(--text); color: var(--muted); text-transform: uppercase; letter-spacing: .1em; min-width: 0; }
+.f > span.v { color: var(--gold-hi); }
+.f .v { font-variant-numeric: tabular-nums; }
 select, input[type=search], input[type=number], input[type=text], textarea {
-  font: 13px Inter, system-ui, sans-serif; color: var(--ink); background: rgba(0,0,0,.35); border: 1px solid var(--line-soft);
-  border-radius: 8px; padding: 7px 9px; min-width: 0; outline: none; transition: border-color .15s; }
-select:focus, input:focus, textarea:focus { border-color: var(--gold); }
-select { min-width: 130px; }
-select option { background: #1a1a20; }
-.f input[type=search] { width: 240px; max-width: 100%; }
-input[type=range] { width: 130px; accent-color: var(--gold); }
+  -webkit-appearance: none; appearance: none; font: 400 13.5px var(--text); letter-spacing: -.005em; color: var(--ink);
+  background: var(--well); border: 1px solid var(--hair); border-radius: var(--r-sm); padding: 9px 12px; min-width: 0; outline: none;
+  transition: border-color .2s, box-shadow .2s; }
+select { padding-right: 30px; min-width: 140px; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 52%, calc(100% - 11px) 52%; background-size: 4px 4px; background-repeat: no-repeat; }
+select:focus, input:focus, textarea:focus { border-color: var(--gold-line); box-shadow: 0 0 0 3px rgba(197,160,89,.14); }
+select option { background: #1c1c1e; color: var(--ink); }
+input::placeholder, textarea::placeholder { color: var(--faint); }
+.f input[type=search] { width: 260px; max-width: 100%; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 140px; height: 22px; background: transparent; cursor: pointer; padding: 0; border: 0; }
+input[type=range]::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: rgba(255,255,255,.12); }
+input[type=range]::-moz-range-track { height: 3px; border-radius: 2px; background: rgba(255,255,255,.12); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%; background: #f5f5f7; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.6), 0 0 0 .5px rgba(0,0,0,.2); }
+input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f5f5f7; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.6); }
+input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); border-radius: 2px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { white-space: nowrap; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 12.5px; color: var(--muted);
-  border: 1px solid var(--line-soft); background: rgba(255,255,255,.02); border-radius: 999px; padding: 4px 11px; cursor: pointer; user-select: none; transition: all .15s; }
-.chip input { display: none; }
-.chip:has(input:checked) { border-color: rgba(212,175,55,.55); color: var(--ink); background: var(--gold-lo); }
-.chip .n { color: var(--faint); }
-.side-ctl { padding-top: 12px; display: flex; flex-direction: column; gap: 12px; border-left: 1px solid var(--line-soft); padding-left: 20px; }
-.zone-box { border: 1px dashed rgba(212,175,55,.4); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.chip { white-space: nowrap; text-transform: none; letter-spacing: -.005em; font: 500 12.5px var(--text); color: var(--muted);
+  border: 1px solid var(--hair); background: transparent; border-radius: 999px; padding: 6px 12px; cursor: pointer; user-select: none;
+  transition: color .2s, background .2s, border-color .2s; -webkit-tap-highlight-color: transparent; }
+.chip:hover { color: var(--ink-2); border-color: var(--hair-2); }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:has(input:checked) { border-color: var(--gold-line); color: var(--ink); background: var(--gold-lo); }
+.chip:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 2px; }
+.chip .n { color: var(--faint); font-variant-numeric: tabular-nums; }
+.side-ctl { padding-top: 18px; display: flex; flex-direction: column; gap: 14px; border-left: 1px solid var(--hair); padding-left: 24px; }
+.zone-box { border: 1px solid var(--hair); background: var(--well); border-radius: var(--r); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
 .zone-box .row { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
-.zone-box .hint { font-size: 11.5px; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.zone-box .hint { font-size: 11.5px; color: var(--muted); }
 .actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
-/* Split view */
-.split { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 14px; height: min(68vh, 720px); min-height: 460px; margin-bottom: 14px; }
-.map-card { position: relative; overflow: hidden; padding: 0; }
-#map { position: absolute; inset: 0; background: #1b1b20; }
-.side { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
-.tabs { display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid var(--line-soft); }
-.tabs button { flex: 1; font: 600 12px Inter, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); background: transparent;
-  border: 1px solid transparent; border-radius: 9px; padding: 8px; cursor: pointer; }
-.tabs button[aria-selected=true] { color: var(--gold-hi); border-color: var(--line); background: var(--gold-lo); }
-.pane { flex: 1; overflow: auto; padding: 14px 16px 18px; min-height: 0; }
-.pane[hidden] { display: none; }
-.empty { color: var(--muted); text-align: center; padding: 40px 10px; }
-.empty .serif { font-size: 22px; color: var(--ink); display: block; margin-bottom: 6px; }
+/* ——— Map ——— */
+.map-card { position: relative; overflow: hidden; height: clamp(440px, 64vh, 780px); border-radius: var(--r-lg); margin-bottom: 20px; background: #0b0b0c; contain: strict; }
+#map { position: absolute; inset: 0; background: #0b0b0c; }
+.map-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 800;
+  box-shadow: inset 0 0 0 1px var(--hair), inset 0 0 60px rgba(0,0,0,.45); }
+.leaflet-container { font-family: var(--text); background: #0b0b0c; -webkit-tap-highlight-color: transparent; }
+.leaflet-bar { border: 0 !important; box-shadow: 0 10px 30px -10px rgba(0,0,0,.8) !important; border-radius: 12px !important; overflow: hidden; }
+.leaflet-bar a, .leaflet-control-layers { background: rgba(18,18,20,.78) !important; color: var(--ink) !important; border-color: var(--hair) !important;
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); }
+.leaflet-bar a { width: 34px !important; height: 34px !important; line-height: 34px !important; font-weight: 400; }
+.leaflet-bar a:hover { background: rgba(40,40,44,.9) !important; }
+.leaflet-control-layers { border-radius: 12px !important; font-size: 12.5px; border: 1px solid var(--hair) !important; box-shadow: 0 10px 30px -10px rgba(0,0,0,.8) !important; }
+.leaflet-control-layers-expanded { padding: 10px 14px 10px 10px; }
+.leaflet-control-layers-toggle { width: 34px !important; height: 34px !important; filter: invert(1) brightness(1.3); background-size: 18px 18px; }
+.leaflet-control-layers label { margin: 3px 0; }
+.leaflet-control-layers input { accent-color: var(--gold); }
+.leaflet-control-attribution { background: rgba(0,0,0,.55) !important; color: var(--faint) !important; font-size: 10px; border-radius: 8px 0 0 0;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.leaflet-control-attribution a { color: var(--muted) !important; }
+.leaflet-control-scale-line { background: rgba(0,0,0,.5); color: var(--ink-2); border-color: var(--muted); font-size: 10px; }
+.legend { background: rgba(18,18,20,.78); color: var(--ink-2); padding: 12px 14px; border-radius: 14px; border: 1px solid var(--hair); font-size: 11.5px; line-height: 1.9;
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8); }
+.legend .lg { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 0; box-shadow: 0 0 8px currentColor; }
+.legend .zl { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px dashed var(--gold); margin-right: 7px; vertical-align: -1px; background: rgba(197,160,89,.12); }
+.legend .ql { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--gold-hi); box-shadow: 0 0 0 3px rgba(197,160,89,.25), 0 0 10px var(--gold); }
+.legend .lm { color: var(--faint); }
 
-/* Dossier */
-.dos h3 { margin: 2px 0 2px; font: 600 26px/1.1 "Cormorant Garamond", serif; }
-.dos .meta { color: var(--muted); font-size: 12.5px; }
-.dos .addr { font-size: 12.5px; margin: 6px 0 10px; }
-.kv { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; }
-.kv div { background: rgba(0,0,0,.25); border: 1px solid var(--line-soft); border-radius: 9px; padding: 6px 8px; }
-.kv span { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-.kv b { font-size: 15px; }
-.dos .ctrl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-.dos .ctrl select { width: 100%; }
-.dos dl { display: grid; grid-template-columns: 82px 1fr; gap: 5px 10px; margin: 10px 0; font-size: 12.5px; }
-.dos dt { color: var(--muted); }
-.dos dd { margin: 0; }
-.dos .warn { color: var(--warn); }
-.callout { border-left: 2px solid var(--gold); background: var(--gold-lo); padding: 8px 10px; border-radius: 0 8px 8px 0; font-size: 12.5px; margin: 10px 0; }
-.callout.alert { border-color: var(--warn); background: rgba(240,163,94,.1); }
-.callout.safe { border-color: var(--ok); background: rgba(95,208,138,.08); }
-.dos .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+/* Custom DOM markers: glowing dots, status halo, pulse on Tier 1 quick wins */
+.pin { background: none; border: 0; display: grid; place-items: center; }
+.pin b { display: block; width: var(--s); height: var(--s); border-radius: 50%; background: var(--c);
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,.85), 0 0 0 var(--rw, 0) var(--ring, transparent), 0 0 calc(var(--s) * .9) color-mix(in srgb, var(--c) 70%, transparent);
+  transition: transform .3s var(--ease-out), box-shadow .3s; will-change: transform; }
+.pin:hover b, .pin.on b { transform: scale(1.45); }
+.pin.on b { box-shadow: 0 0 0 2px #fff, 0 0 0 5px var(--gold), 0 0 22px var(--gold); }
+.pin.qw::before { content: ""; position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  border-radius: 50%; border: 1.5px solid var(--gold-hi); animation: pulse 2.4s var(--ease-out) infinite; pointer-events: none; }
+.pin.qw b { background: radial-gradient(circle at 35% 35%, #fff4d6, var(--gold-hi) 45%, var(--gold) 100%); }
+@keyframes pulse { 0% { transform: scale(1); opacity: .9; } 80%, 100% { transform: scale(3.4); opacity: 0; } }
 
-/* Badges */
-.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; letter-spacing: .3px; border-radius: 999px; padding: 2px 9px;
-  border: 1px solid color-mix(in srgb, var(--c, var(--muted)) 55%, transparent); color: var(--c, var(--muted));
-  background: color-mix(in srgb, var(--c, var(--muted)) 12%, transparent); white-space: nowrap; }
+.leaflet-tooltip { background: rgba(18,18,20,.92); color: var(--ink); border: 1px solid var(--hair-2); border-radius: 8px; box-shadow: 0 8px 24px -8px rgba(0,0,0,.9);
+  font: 500 12px var(--text); padding: 5px 9px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.leaflet-tooltip-top::before { border-top-color: rgba(18,18,20,.92); }
+
+/* Popups: floating product cards */
+.leaflet-popup { margin-bottom: 18px; }
+.leaflet-popup-content-wrapper { background: rgba(18,18,20,.94); color: var(--ink); border-radius: 20px; padding: 0; border: 1px solid var(--hair-2);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.95), 0 0 0 .5px rgba(0,0,0,.6); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); }
+.leaflet-popup-tip { background: rgba(18,18,20,.94); border: 1px solid var(--hair-2); box-shadow: none; }
+.leaflet-popup-content { margin: 0; font: 13px/1.5 var(--text); width: min(300px, calc(100vw - 72px)) !important; }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); width: 30px; height: 30px; font: 300 20px/30px var(--text); top: 8px; right: 8px; border-radius: 50%; }
+.leaflet-container a.leaflet-popup-close-button:hover { color: var(--ink); background: rgba(255,255,255,.08); text-decoration: none; }
+.pop { padding: 18px 18px 16px; }
+.pop .eyebrow { display: block; margin-right: 28px; }
+.pop h3 { margin: 8px 28px 4px 0; font: 500 21px/1.15 var(--serif); letter-spacing: -.005em; }
+.pop .meta { color: var(--muted); font-size: 12.5px; }
+.pop .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin: 14px 0 12px; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.pop .stats div { padding: 9px 0; text-align: center; }
+.pop .stats div + div { border-left: 1px solid var(--hair); }
+.pop .stats span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.pop .stats b { font: 600 16px/1.3 var(--sans); font-variant-numeric: tabular-nums; }
+.pop .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.pop .btns .btn { min-height: 38px; }
+
+/* ——— Badges ——— */
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--text); letter-spacing: 0; border-radius: 999px; padding: 5px 10px;
+  color: var(--c, var(--muted)); background: color-mix(in srgb, var(--c, var(--muted)) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--muted)) 32%, transparent); white-space: nowrap; transition: color .25s, background .25s, box-shadow .25s; }
 .badge.dotted::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
-.badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
-.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
-.tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line-soft); border-radius: 6px; padding: 1px 7px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; vertical-align: 0; }
+.tag { font-size: 11.5px; color: var(--ink-2); background: rgba(255,255,255,.05); border-radius: 6px; padding: 3px 8px; }
+.pri { display: inline-block; font: 600 10.5px/1 var(--text); letter-spacing: .06em; border-radius: 6px; padding: 4px 7px; color: var(--muted); background: rgba(255,255,255,.05); }
+.pri.t1 { color: #0b0904; background: var(--gold); }
+.pri.t2 { color: var(--concept); background: color-mix(in srgb, var(--concept) 13%, transparent); }
 
-/* Simulator */
-.sim .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.sim label { display: flex; flex-direction: column; gap: 4px; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.sim label.wide { grid-column: 1 / -1; }
-.sim input { width: 100%; }
-.sim h4 { margin: 16px 0 8px; font: 600 17px "Cormorant Garamond", serif; color: var(--gold-hi); letter-spacing: .3px; }
-.ledger { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.ledger td { padding: 6px 0; border-bottom: 1px solid var(--line-soft); }
-.ledger td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-.ledger tr.total td { color: var(--gold-hi); border-bottom: 0; font-size: 14px; }
-.meter { height: 8px; border-radius: 4px; overflow: hidden; display: flex; background: rgba(255,255,255,.05); margin: 6px 0 2px; }
-.meter i { display: block; }
-.legend-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--muted); }
-.proj { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.proj div { background: rgba(0,0,0,.25); border: 1px solid var(--line-soft); border-radius: 10px; padding: 8px 10px; }
-.proj span { display: block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-.proj b { font: 600 21px "Cormorant Garamond", serif; }
-.proj .hero b { color: var(--gold-hi); }
-.note { font-size: 11.5px; color: var(--muted); margin: 8px 0 0; }
-.health { font-size: 12px; margin-top: 8px; }
+/* ——— Pipeline section ——— */
+.pipe-head { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--hair); flex-wrap: wrap; }
+.pipe-head h2 { margin: 0; font: 500 24px/1.1 var(--serif); }
+.pipe-head .tools { margin-left: auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.seg-ctl { display: inline-flex; position: relative; background: rgba(118,118,128,.18); border-radius: 10px; padding: 2px; gap: 0; }
+.seg-ctl button { position: relative; z-index: 1; font: 500 12.5px/1 var(--text); color: var(--ink-2); background: transparent; border: 0; border-radius: 8px;
+  padding: 8px 14px; min-height: 30px; cursor: pointer; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; }
+.seg-ctl button[aria-pressed=true] { color: var(--ink); background: #636366; box-shadow: 0 3px 8px rgba(0,0,0,.35), 0 0 0 .5px rgba(0,0,0,.04); }
+.seg-ctl svg { width: 14px; height: 14px; }
+.pipeline { overflow: hidden; border-radius: var(--r-lg); }
+.table-wrap { contain: layout; }
 
-/* Pipeline table */
-.table-card { overflow: hidden; }
-.table-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); flex-wrap: wrap; }
-.table-head h2 { margin: 0; font: 600 20px "Cormorant Garamond", serif; }
-.tabulator { background: transparent; border: 0; font-size: 12.5px; color: var(--ink); }
-.tabulator .tabulator-header { background: rgba(0,0,0,.3); color: var(--muted); border-bottom: 1px solid var(--line); font-size: 10.5px; letter-spacing: .9px; text-transform: uppercase; }
-.tabulator .tabulator-header .tabulator-col { background: transparent; border-right: 0; }
-.tabulator .tabulator-header .tabulator-col:hover { background: rgba(255,255,255,.03); }
+/* List / grid cards */
+.cards { padding: 16px; display: grid; gap: 12px; min-height: 240px; align-content: start; }
+.cards.grid { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.cards.list { grid-template-columns: 1fr; gap: 0; padding: 4px 8px; }
+.sc { position: relative; background: var(--card-2); border: 1px solid var(--hair); border-radius: var(--r); padding: 16px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 10px; min-width: 0; content-visibility: auto; contain-intrinsic-size: auto 228px;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .25s, background .25s; -webkit-tap-highlight-color: transparent; }
+.sc:hover { transform: translateY(-4px); box-shadow: var(--lift); border-color: var(--hair-2); }
+.sc:active { transform: translateY(-1px) scale(.99); transition-duration: .12s; }
+.sc.on { border-color: var(--gold-line); box-shadow: 0 0 0 1px var(--gold-line), var(--lift); }
+.sc .top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.sc .top .eyebrow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sc h3 { margin: 0; font: 500 19px/1.2 var(--serif); letter-spacing: -.005em; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.sc .addr { color: var(--muted); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--hair); padding-top: 10px; }
+.sc .stats span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.sc .stats b { font: 600 15px/1.35 var(--sans); font-variant-numeric: tabular-nums; }
+.sc .foot { display: flex; gap: 8px; align-items: center; margin-top: auto; }
+.sc .foot .btn { margin-left: auto; }
+.status-sel { --c: var(--s-nc); font: 500 12px/1 var(--text); color: var(--c); min-width: 0; max-width: 100%; border: 0; border-radius: 999px;
+  padding: 8px 28px 8px 12px; min-height: 30px; background-color: color-mix(in srgb, var(--c) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 32%, transparent);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) 54%, calc(100% - 10px) 54%; transition: color .25s, background-color .25s, box-shadow .25s; }
+.status-sel:focus { box-shadow: inset 0 0 0 1px var(--c), 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent); }
+.cards.list .sc { flex-direction: row; align-items: center; gap: 18px; border-radius: 12px; border-color: transparent; background: transparent; padding: 12px;
+  contain-intrinsic-size: auto 72px; border-bottom: 1px solid var(--hair); border-radius: 0; }
+.cards.list .sc:hover { transform: none; background: rgba(255,255,255,.03); box-shadow: none; border-radius: 12px; }
+.cards.list .sc.on { background: var(--gold-lo); box-shadow: inset 2px 0 0 var(--gold); border-radius: 12px; }
+.sc .id { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cards.list .sc .id { flex: 1.6; }
+.cards.list .sc h3 { font-size: 17px; display: block; white-space: nowrap; }
+.cards.list .sc .top { display: none; }
+.cards.list .sc .stats { flex: 1.2; border: 0; padding: 0; }
+.cards.list .sc .foot { flex: none; margin: 0; width: 290px; }
+.empty { color: var(--muted); text-align: center; padding: 56px 16px; grid-column: 1 / -1; }
+.empty .serif { font-size: 24px; color: var(--ink); display: block; margin-bottom: 8px; font-style: italic; }
+
+/* ——— Tabulator skin ——— */
+.tabulator { background: transparent; border: 0; font: 13px var(--text); color: var(--ink); }
+.tabulator .tabulator-header { background: var(--card); color: var(--muted); border-bottom: 1px solid var(--hair); font: 600 10px var(--text); letter-spacing: .12em; text-transform: uppercase; }
+.tabulator .tabulator-header .tabulator-col { background: var(--card); border-right: 0; }
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content { padding: 12px 10px; }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover { background: #17171a; }
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=ascending] .tabulator-col-sorter .tabulator-arrow { border-bottom-color: var(--gold); }
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=descending] .tabulator-col-sorter .tabulator-arrow { border-top-color: var(--gold); }
 .tabulator .tabulator-tableholder { background: transparent; }
 .tabulator .tabulator-tableholder .tabulator-table { background: transparent; color: var(--ink); }
-.tabulator-row { background: transparent; border-bottom: 1px solid var(--line-soft); min-height: 38px; }
-.tabulator-row .tabulator-cell { padding: 9px 8px; border-right: 0; }
-.tabulator-row.tabulator-row-even { background: rgba(255,255,255,.015); }
-.tabulator-row.tabulator-selectable:hover { background: rgba(212,175,55,.06); cursor: pointer; }
-.tabulator-row.active { background: rgba(212,175,55,.14) !important; box-shadow: inset 2px 0 0 var(--gold); }
-.tabulator .tabulator-footer { background: transparent; color: var(--muted); border-top: 1px solid var(--line-soft); }
+.tabulator .tabulator-tableholder::-webkit-scrollbar { width: 10px; height: 10px; }
+.tabulator .tabulator-tableholder::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 10px; border: 3px solid var(--card); }
+.tabulator-row { background: transparent; border-bottom: 1px solid var(--hair); min-height: 46px; transition: background .2s; }
+.tabulator-row .tabulator-cell { padding: 13px 10px; border-right: 0; }
+.tabulator-row.tabulator-row-even { background: transparent; }
+.tabulator-row .tabulator-cell.tabulator-frozen { background: var(--card); }
+.tabulator-row.tabulator-selectable:hover, .tabulator-row.tabulator-selectable:hover .tabulator-cell.tabulator-frozen { background: #19191c; cursor: pointer; }
+.tabulator-row.active, .tabulator-row.active .tabulator-cell.tabulator-frozen { background: #1d1a13 !important; }
+.tabulator-row.active { box-shadow: inset 2px 0 0 var(--gold); }
+.tabulator .tabulator-footer { background: transparent; color: var(--muted); border-top: 1px solid var(--hair); }
 .tabulator-cell.editable { cursor: text; }
-.tabulator-cell.editable:hover { box-shadow: inset 0 0 0 1px rgba(212,175,55,.5); border-radius: 4px; }
-.tabulator-cell.tabulator-editing { border: 1px solid var(--gold) !important; background: #1a1a20 !important; }
-.tabulator-cell.tabulator-editing input, .tabulator-cell.tabulator-editing textarea { color: var(--ink); background: #1a1a20; }
-.tabulator-edit-list { background: #1a1a20 !important; border: 1px solid var(--line) !important; color: var(--ink); font-size: 12.5px; }
-.tabulator-edit-list .tabulator-edit-list-item { color: var(--ink) !important; }
-.tabulator-edit-list .tabulator-edit-list-item:hover, .tabulator-edit-list .tabulator-edit-list-item.focused { background: var(--gold-lo) !important; color: var(--gold-hi) !important; }
-.tabulator-edit-list .tabulator-edit-list-item.active { background: var(--gold) !important; color: #19150a !important; }
-.bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,.08); position: relative; overflow: hidden; }
-.bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, #8a6f22, var(--gold-hi)); }
-.typ { font-size: 12px; white-space: nowrap; }
-.pri { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 7px; border: 1px solid var(--line-soft); color: var(--muted); }
-.pri.t1 { color: var(--gold-hi); border-color: rgba(212,175,55,.6); background: var(--gold-lo); }
-.pri.t2 { color: var(--concept); border-color: color-mix(in srgb, var(--concept) 45%, transparent); }
-.muted { color: var(--faint); }
-.num { font-variant-numeric: tabular-nums; }
+.tabulator-cell.editable:hover { box-shadow: inset 0 0 0 1px var(--gold-line); border-radius: 6px; }
+.tabulator-cell.tabulator-editing { border: 1px solid var(--gold) !important; background: #1c1c1e !important; border-radius: 6px; }
+.tabulator-cell.tabulator-editing input, .tabulator-cell.tabulator-editing textarea { color: var(--ink); background: #1c1c1e; }
+.tabulator-edit-list { background: rgba(28,28,30,.96) !important; border: 1px solid var(--hair-2) !important; border-radius: 12px; color: var(--ink); font-size: 13px;
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 4px; }
+.tabulator-edit-list .tabulator-edit-list-item { color: var(--ink) !important; border-radius: 8px; padding: 8px 10px; }
+.tabulator-edit-list .tabulator-edit-list-item:hover, .tabulator-edit-list .tabulator-edit-list-item.focused { background: rgba(255,255,255,.08) !important; color: var(--ink) !important; }
+.tabulator-edit-list .tabulator-edit-list-item.active { background: var(--gold) !important; color: #0b0904 !important; }
+.bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,.08); position: relative; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; border-radius: 2px; background: linear-gradient(90deg, var(--gold-deep), var(--gold-hi)); }
+.typ { font-size: 12.5px; white-space: nowrap; }
+.tabulator .tname { font: 500 15px var(--serif); }
 
-/* Map chrome */
-.leaflet-container { font-family: Inter, system-ui, sans-serif; }
-.leaflet-bar a, .leaflet-control-layers { background: rgba(20,20,24,.92) !important; color: var(--ink) !important; border-color: var(--line-soft) !important; }
-.leaflet-control-layers { border-radius: 10px !important; font-size: 12px; }
-.leaflet-control-attribution { background: rgba(15,15,18,.75) !important; color: var(--muted) !important; }
-.leaflet-control-attribution a { color: var(--gold) !important; }
-.leaflet-control-scale-line { background: rgba(15,15,18,.7); color: var(--ink); border-color: var(--muted); }
-.legend { background: rgba(15,15,18,.88); color: var(--ink); padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line-soft); font-size: 11.5px; line-height: 1.75; backdrop-filter: blur(8px); }
-.legend .zl { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed var(--gold); margin-right: 6px; vertical-align: -2px; background: rgba(212,175,55,.12); }
-.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: rgba(20,20,24,.96); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 20px 40px -12px rgba(0,0,0,.8); }
-.leaflet-popup-content-wrapper { border-radius: 14px; }
-.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
-.leaflet-popup-content { margin: 13px 15px; font: 12.5px/1.5 Inter, system-ui, sans-serif; }
-.leaflet-tooltip { background: rgba(20,20,24,.95); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
-.leaflet-tooltip-top::before { border-top-color: rgba(20,20,24,.95); }
-.pop h3 { margin: 0 0 2px; font: 600 20px/1.15 "Cormorant Garamond", Georgia, serif; }
-.pop .meta { color: var(--muted); font-size: 12px; }
-.pop .btns { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+/* ——— Slide-over sheet (dossier & simulator) ——— */
+.scrim { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .45s var(--ease);
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.sheet { position: fixed; z-index: 1001; top: 12px; right: 12px; bottom: 12px; width: min(var(--sheet-w), calc(100vw - 24px));
+  display: flex; flex-direction: column; background: rgba(18,18,20,.86); border: 1px solid var(--hair-2); border-radius: 24px;
+  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,1), 0 0 0 .5px rgba(0,0,0,.8);
+  transform: translateX(calc(100% + 24px)); visibility: hidden; transition: transform .55s var(--ease), visibility 0s linear .55s; will-change: transform; }
+.sheet.open { transform: none; visibility: visible; transition: transform .55s var(--ease), visibility 0s; }
+.sheet.dragging { transition: none; }
+.grabber { display: none; }
+.sheet-head { display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px 16px; border-bottom: 1px solid var(--hair); flex: none; }
+.sheet-head .seg-ctl { flex: 1; }
+.sheet-head .seg-ctl button { flex: 1; justify-content: center; }
+.close { width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(118,118,128,.24); color: var(--ink-2); cursor: pointer; display: grid; place-items: center; flex: none;
+  transition: background .2s, transform .15s; }
+.close:hover { background: rgba(118,118,128,.36); }
+.close:active { transform: scale(.92); }
+.close svg { width: 12px; height: 12px; }
+.sheet-body { flex: 1; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; min-height: 0; }
+.pane { padding: 20px 20px 28px; }
 
-/* Modal */
-dialog { border: 1px solid var(--line); background: rgba(18,18,22,.97); color: var(--ink); border-radius: 18px; padding: 0; width: min(760px, calc(100vw - 32px));
-  max-height: calc(100vh - 32px); box-shadow: 0 40px 80px -20px rgba(0,0,0,.9); }
-dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
-.modal { display: flex; flex-direction: column; max-height: calc(100vh - 34px); }
-.modal-head { display: flex; gap: 12px; align-items: start; padding: 18px 20px 12px; border-bottom: 1px solid var(--line-soft); }
-.modal-head h3 { margin: 2px 0 0; font: 600 24px/1.1 "Cormorant Garamond", serif; }
-.modal-head .x { margin-left: auto; }
-.modal-body { padding: 14px 20px; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+/* Dossier */
+.dos h3 { margin: 10px 0 6px; font: 500 30px/1.08 var(--serif); letter-spacing: -.01em; }
+.dos .meta { color: var(--muted); font-size: 13px; }
+.dos .addr { font-size: 13px; color: var(--ink-2); margin: 4px 0 0; }
+.kv { display: grid; grid-template-columns: repeat(4, 1fr); margin: 18px 0; background: var(--well); border: 1px solid var(--hair); border-radius: var(--r); overflow: hidden; }
+.kv div { padding: 12px 12px 10px; min-width: 0; }
+.kv div + div { border-left: 1px solid var(--hair); }
+.kv span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.kv b { font: 600 18px/1.35 var(--sans); letter-spacing: -.01em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.kv.gold b { color: var(--gold-hi); }
+.dos .ctrl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0; }
+.dos .ctrl select { width: 100%; }
+.dos h4, .sim h4 { margin: 26px 0 10px; font: 600 10.5px var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.dos dl { display: grid; grid-template-columns: 92px 1fr; gap: 10px 14px; margin: 0; font-size: 13px; }
+.dos dt { color: var(--muted); }
+.dos dd { margin: 0; color: var(--ink-2); }
+.dos .warn { color: var(--warn); }
+.dos textarea { width: 100%; resize: vertical; min-height: 84px; line-height: 1.5; }
+.callout { border-radius: 12px; background: var(--gold-lo); box-shadow: inset 0 0 0 1px rgba(197,160,89,.2); padding: 12px 14px; font-size: 13px; margin: 14px 0; color: var(--ink-2); }
+.callout b { color: var(--ink); font-weight: 600; }
+.callout.alert { background: rgba(242,166,94,.09); box-shadow: inset 0 0 0 1px rgba(242,166,94,.25); }
+.callout.safe { background: rgba(95,208,138,.07); box-shadow: inset 0 0 0 1px rgba(95,208,138,.22); }
+.dos .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.dos .btns .btn.gold { flex: 1 1 100%; min-height: 44px; font-size: 14px; }
+
+/* Simulator */
+.sim .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+.sim label { display: flex; flex-direction: column; gap: 7px; font: 600 10px var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sim label.wide { grid-column: 1 / -1; }
+.sim input { width: 100%; }
+.ledger { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ledger td { padding: 10px 0; border-bottom: 1px solid var(--hair); color: var(--ink-2); }
+.ledger td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.ledger tr.total td { color: var(--gold-hi); border-bottom: 0; font-size: 14px; }
+.meter { height: 6px; border-radius: 3px; overflow: hidden; display: flex; gap: 2px; background: rgba(255,255,255,.05); margin: 10px 0 8px; }
+.meter i { display: block; border-radius: 2px; }
+.legend-row { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--muted); }
+.proj { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.proj div { background: var(--well); border: 1px solid var(--hair); border-radius: 14px; padding: 12px 14px; }
+.proj span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.proj b { font: 600 21px/1.3 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.proj .hero b { color: var(--gold-hi); }
+.proj .hero { border-color: rgba(197,160,89,.25); }
+.note { font-size: 11.5px; color: var(--muted); margin: 12px 0 0; line-height: 1.55; }
+.health { font-size: 12.5px; margin-top: 10px; }
+
+/* ——— Pitch generator: a slide-over dialog ——— */
+dialog.sheet-dlg { position: fixed; inset: 12px 12px 12px auto; margin: 0; padding: 0; width: min(640px, calc(100vw - 24px)); height: auto; max-height: none; max-width: none;
+  border: 1px solid var(--hair-2); border-radius: 24px; background: rgba(18,18,20,.9); color: var(--ink); overflow: hidden;
+  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); box-shadow: 0 40px 100px -20px #000; }
+dialog.sheet-dlg[open] { display: flex; flex-direction: column; animation: sheet-in-x .55s var(--ease); }
+dialog.sheet-dlg.closing { animation: sheet-out-x .35s var(--ease) forwards; }
+dialog.sheet-dlg::backdrop { background: rgba(0,0,0,.55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); animation: fade .45s var(--ease); }
+dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse forwards; }
+@keyframes sheet-in-x { from { transform: translateX(calc(100% + 24px)); } }
+@keyframes sheet-out-x { to { transform: translateX(calc(100% + 24px)); } }
+@keyframes sheet-in-y { from { transform: translateY(100%); } }
+@keyframes sheet-out-y { to { transform: translateY(100%); } }
+@keyframes fade { from { opacity: 0; } }
+.modal-head { display: flex; gap: 12px; align-items: start; padding: 20px 20px 16px 22px; border-bottom: 1px solid var(--hair); flex: none; }
+.modal-head h3 { margin: 6px 0 4px; font: 500 26px/1.1 var(--serif); }
+.modal-head .close { margin-left: auto; }
+.modal-body { padding: 18px 22px; overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 14px; flex: 1; min-height: 0; }
 .modal-body input, .modal-body textarea { width: 100%; }
-.modal-body textarea { min-height: 330px; resize: vertical; line-height: 1.55; font-size: 13px; }
-.modal-foot { display: flex; gap: 8px; padding: 12px 20px 18px; border-top: 1px solid var(--line-soft); flex-wrap: wrap; align-items: center; }
-.seg-ctl { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; }
-.seg-ctl button { font: 600 12px Inter, sans-serif; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 5px 14px; cursor: pointer; }
-.seg-ctl button[aria-pressed=true] { background: var(--gold); color: #19150a; }
-.ctx { display: flex; flex-wrap: wrap; gap: 5px; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; background: var(--gold); color: #19150a; font-weight: 600;
-  padding: 9px 16px; border-radius: 999px; transition: all .2s; pointer-events: none; z-index: 9999; }
-.toast.show { opacity: 1; transform: translateX(-50%); }
+.modal-body textarea { flex: 1; min-height: 300px; resize: vertical; line-height: 1.6; font-size: 13.5px; }
+.modal-foot { display: flex; gap: 8px; padding: 14px 22px calc(18px + env(safe-area-inset-bottom)); border-top: 1px solid var(--hair); flex-wrap: wrap; align-items: center; flex: none; }
+.modal-foot .sub { margin-left: auto; font-size: 11.5px; }
+.ctx { display: flex; flex-wrap: wrap; gap: 6px; }
 
-/* Cormorant defaults to old-style figures (1 → I, 0 → O); metrics need lining numerals */
-.tile b, .proj b, .kv b, h1, h2, h3, .tile b small { font-variant-numeric: lining-nums; }
+.toast { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom)); z-index: 9999; transform: translate(-50%, 16px) scale(.96); opacity: 0;
+  background: rgba(28,28,30,.92); color: var(--ink); font: 500 13px var(--text); padding: 11px 18px; border-radius: 999px; border: 1px solid var(--hair-2);
+  box-shadow: 0 20px 40px -12px #000; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: transform .45s var(--ease), opacity .3s; pointer-events: none; }
+.toast::before { content: "✓"; color: var(--gold-hi); margin-right: 8px; }
+.toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+/* ——— Responsive ——— */
 @media (max-width: 1280px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 1080px) {
   .ctl-body { grid-template-columns: 1fr; }
-  .side-ctl { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-soft); }
-  .split { grid-template-columns: 1fr; height: auto; }
-  .map-card { height: 420px; }
-  .side { max-height: none; }
-  .pane { overflow: visible; }
+  .side-ctl { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); }
+  .cards.list .sc .foot { width: auto; }
+  .cards.list .sc .stats { display: none; }
 }
 @media (max-width: 700px) {
-  .wrap { padding: 0 16px 20px; }
-  h1 { font-size: 23px; }
-  .head-actions { margin-left: 0; width: 100%; }
-  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .tile b { font-size: 24px; }
-  .map-card { height: 340px; }
+  html { scroll-padding-top: 64px; }
+  .wrap, .nav-in { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+  .nav-in { height: 52px; }
+  .brand .sub { display: none; }
+  .brand h1 { font-size: 19px; }
+  .nav-actions .btn:not(.gold) { display: none; }
+  .hero { padding: 24px 0 16px; }
+  .hero p { display: none; }
+  /* Widgets become a snap carousel: no wrap, no reflow */
+  .metrics { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin: 0 -16px 16px; padding: 4px 16px 12px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .metrics::-webkit-scrollbar { display: none; }
+  .widget { flex: 0 0 64%; scroll-snap-align: start; min-height: 116px; }
+  .widget .val { font-size: 28px; }
+  .map-card { height: 58vh; height: 58svh; min-height: 340px; border-radius: 18px; }
   .f, .f input[type=search], .f select { width: 100%; }
+  select, input[type=search], input[type=number], input[type=text], textarea { font-size: 16px; }   /* no iOS focus zoom */
+  .pipe-head { padding: 16px; }
+  .pipe-head .tools { margin-left: 0; width: 100%; }
+  .pipe-head .tools select { flex: 1; }
+  .cards { padding: 12px; }
+  .cards.grid { grid-template-columns: 1fr; }
+  .cards.list .sc { gap: 12px; padding: 12px 8px; }
+  .cards.list .sc .foot .btn { display: none; }
+  .cards.list .sc .foot { flex: 0 1 auto; max-width: 46%; }
+  .cards.list .sc .status-sel { width: 100%; font-size: 13px; }   /* select opens the native picker: no focus zoom */
   .kv { grid-template-columns: repeat(2, 1fr); }
-  .modal-body textarea { min-height: 260px; }
+  .kv div:nth-child(3) { border-left: 0; }
+  .kv div:nth-child(n+3) { border-top: 1px solid var(--hair); }
+  .kv.three { grid-template-columns: repeat(3, 1fr); }
+  .kv.three div:nth-child(3) { border-left: 1px solid var(--hair); border-top: 0; }
+  .pop .stats b { font-size: 15px; }
+  .legend { display: none; }   /* popups own the small screen */
+  /* Sheets rise from the bottom like iOS */
+  .sheet { top: auto; left: 0; right: 0; bottom: 0; width: 100%; height: 90vh; height: 90dvh; border-radius: 22px 22px 0 0; border-bottom: 0;
+    transform: translateY(100%); padding-bottom: env(safe-area-inset-bottom); }
+  .sheet.open { transform: translateY(var(--drag, 0px)); }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .grabber { display: block; width: 36px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.28); margin: 8px auto 0; flex: none; }
+  .sheet-head { cursor: grab; touch-action: none; }
+  .grabber { touch-action: none; }
+  dialog.sheet-dlg { inset: auto 0 0 0; width: 100%; height: 92vh; height: 92dvh; border-radius: 22px 22px 0 0; border-bottom: 0; }
+  dialog.sheet-dlg[open] { animation-name: sheet-in-y; }
+  dialog.sheet-dlg.closing { animation-name: sheet-out-y; }
+  .modal-body textarea { min-height: 220px; }
+  .modal-foot .btn { flex: 1; }
+  .modal-foot .sub { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
+  .pin.qw::before { display: none; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <div class="brand">
-    <div class="mark">M</div>
-    <div>
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">M</div>
       <h1>Maison <em>Atlas</em></h1>
-      <div class="sub">Niche fragrance launch CRM · BE · NL · DE · FR · LU · CH</div>
+      <span class="sub">Niche fragrance launch · BE · NL · DE · FR · LU · CH</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn" id="go-sim">Margin simulator</button>
+      <button class="btn gold" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
     </div>
   </div>
-  <div class="head-actions">
-    <button class="btn" id="go-sim">Margin simulator</button>
-    <button class="btn gold" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
-  </div>
-</header>
+</nav>
 
-<section class="metrics" aria-label="Executive metrics">
-  <div class="tile glass"><span class="eyebrow">Target stores</span><b id="m-total">0</b><span class="hint" id="m-total-h"></span></div>
-  <div class="tile glass"><span class="eyebrow">Tier 1 quick wins</span><b id="m-high">0</b><span class="hint" id="m-high-h"></span></div>
-  <div class="tile glass"><span class="eyebrow">Active pipeline</span><b id="m-pipe">0</b><span class="hint" id="m-pipe-h"></span><div class="funnel" id="m-funnel"></div></div>
-  <div class="tile glass"><span class="eyebrow">Sampling workflow</span><b id="m-samp">0</b><span class="hint" id="m-samp-h"></span></div>
-  <div class="tile glass hero"><span class="eyebrow">Weighted pipeline · yr 1</span><b id="m-rev">–</b><span class="hint" id="m-rev-h"></span></div>
-  <div class="tile glass"><span class="eyebrow">Protected territories</span><b id="m-zone">0</b><span class="hint" id="m-zone-h"></span></div>
+<div class="wrap">
+<section class="hero">
+  <div>
+    <span class="eyebrow">Single-SKU launch · B2B pipeline</span>
+    <h2>The quiet <em>art</em> of placement.</h2>
+    <p>Four hundred doors across six markets, scored for fit and openness. Choose where your fragrance belongs, then reach out with intent.</p>
+  </div>
 </section>
 
-<details class="panel glass" id="ctl" open>
-  <summary><h2>Control Panel</h2><span class="pill" id="f-count">All stores</span><span class="chev">▼</span></summary>
+<section class="metrics" aria-label="Executive metrics">
+  <div class="widget"><span class="eyebrow">Target stores</span><span class="val" id="m-total">0</span><span class="hint" id="m-total-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow"><i></i>Tier 1 quick wins</span><span class="val" id="m-high">0</span><span class="hint" id="m-high-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow">Active pipeline</span><span class="val" id="m-pipe">0</span><span class="hint" id="m-pipe-h">&nbsp;</span><div class="funnel" id="m-funnel"></div></div>
+  <div class="widget"><span class="eyebrow">Sampling</span><span class="val" id="m-samp">0</span><span class="hint" id="m-samp-h">&nbsp;</span></div>
+  <div class="widget key"><span class="eyebrow">Weighted · year 1</span><span class="val" id="m-rev">–</span><span class="hint" id="m-rev-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow">Territories</span><span class="val" id="m-zone">0</span><span class="hint" id="m-zone-h">&nbsp;</span></div>
+</section>
+
+<details class="panel card" id="ctl">
+  <summary><h2>Refine</h2><span class="pill" id="f-count">All stores</span><span class="chev" aria-hidden="true"></span></summary>
   <div class="ctl-body">
     <div class="filters">
-      <label class="f">Search<input id="q" type="search" placeholder="Name, city, street, network…"></label>
+      <label class="f">Search<input id="q" type="search" placeholder="Name, city, street, network…" autocomplete="off"></label>
       <div class="f">Country<div class="chips" id="countries"></div></div>
       <label class="f">City<select id="city"><option value="">All</option></select></label>
       <label class="f">Type<select id="type"><option value="">All</option></select></label>
@@ -318,7 +565,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     </div>
     <div class="side-ctl">
       <div class="zone-box">
-        <div class="row"><span class="f" style="gap:2px">Territorial exclusivity</span>
+        <div class="row"><span class="f">Territorial exclusivity</span>
           <label class="chip"><input id="zones" type="checkbox">Show zones</label></div>
         <label class="f">Exclusion radius <span class="v" id="radius-v">2.0 km</span><input id="radius" type="range" min="0.5" max="10" step="0.5" value="2" style="width:100%"></label>
         <span class="hint" id="zone-hint">Zones turn on automatically when filtering partners or key accounts.</span>
@@ -332,32 +579,61 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   </div>
 </details>
 
-<section class="split">
-  <div class="map-card glass"><div id="map"></div></div>
-  <aside class="side glass">
-    <div class="tabs" role="tablist">
-      <button role="tab" id="tab-dos" aria-selected="true" aria-controls="pane-dos">Store dossier</button>
-      <button role="tab" id="tab-sim" aria-selected="false" aria-controls="pane-sim">Margin simulator</button>
+<section class="map-card"><div id="map" aria-label="Store map"></div></section>
+
+<section class="pipeline card">
+  <div class="pipe-head">
+    <h2>Pipeline</h2><span class="pill" id="t-count"></span>
+    <div class="tools">
+      <select id="sort" aria-label="Sort by">
+        <option value="tier_score:desc">Tier score</option>
+        <option value="brand_alignment_score:desc">Brand fit</option>
+        <option value="_val:desc">Year-1 value</option>
+        <option value="pipeline_status:desc">Pipeline stage</option>
+        <option value="name:asc">Name A–Z</option>
+      </select>
+      <div class="seg-ctl" role="group" aria-label="View">
+        <button data-view="table" aria-pressed="true" title="Table"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4h12M2 8h12M2 12h12"/></svg>Table</button>
+        <button data-view="list" aria-pressed="false" title="List"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="3" cy="4" r="1"/><circle cx="3" cy="8" r="1"/><circle cx="3" cy="12" r="1"/><path d="M6 4h8M6 8h8M6 12h8"/></svg>List</button>
+        <button data-view="grid" aria-pressed="false" title="Grid"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg>Grid</button>
+      </div>
     </div>
+  </div>
+  <div class="table-wrap" id="table-wrap"><div id="table"></div></div>
+  <div class="cards grid" id="cards" hidden></div>
+</section>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" aria-label="Store details" aria-hidden="true">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head" id="sheet-head">
+    <div class="seg-ctl" role="tablist">
+      <button role="tab" id="tab-dos" aria-pressed="true" aria-controls="pane-dos">Dossier</button>
+      <button role="tab" id="tab-sim" aria-pressed="false" aria-controls="pane-sim">Simulator</button>
+    </div>
+    <button class="close" id="sheet-close" aria-label="Close"><svg viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 2l8 8M10 2l-8 8"/></svg></button>
+  </div>
+  <div class="sheet-body">
     <div class="pane" id="pane-dos" role="tabpanel">
-      <div class="empty"><span class="serif">Select a boutique</span>Click a marker or a pipeline row to open its dossier, update its status and generate a tailored pitch.</div>
+      <div class="empty"><span class="serif">Select a boutique</span>Tap a marker or a pipeline entry to open its dossier.</div>
     </div>
     <div class="pane sim" id="pane-sim" role="tabpanel" hidden>
       <div class="grid">
         <label>Maison / brand<input id="s-brand" type="text" placeholder="Your house"></label>
         <label>Fragrance<input id="s-scent" type="text" placeholder="Hero SKU name"></label>
-        <label>MSRP · PVP TTC (€)<input id="s-msrp" type="number" min="1" step="1" value="185"></label>
-        <label>COGS · coût de fab. (€)<input id="s-cogs" type="number" min="0" step="0.5" value="24"></label>
-        <label>VAT · TVA (%)<input id="s-vat" type="number" min="0" max="30" step="0.5" value="20"></label>
-        <label title="Retail price excl. VAT ÷ wholesale price">Retailer coefficient<input id="s-coef" type="number" min="1.2" max="4" step="0.05" value="2"></label>
-        <label title="Minimum value of an opening order">Opening order target (€)<input id="s-open" type="number" min="0" step="50" value="900"></label>
-        <label>Case pack (units)<input id="s-pack" type="number" min="1" step="1" value="6"></label>
+        <label>MSRP · PVP TTC (€)<input id="s-msrp" type="number" inputmode="decimal" min="1" step="1" value="185"></label>
+        <label>COGS · coût de fab. (€)<input id="s-cogs" type="number" inputmode="decimal" min="0" step="0.5" value="24"></label>
+        <label>VAT · TVA (%)<input id="s-vat" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="20"></label>
+        <label title="Retail price excl. VAT ÷ wholesale price">Retailer coefficient<input id="s-coef" type="number" inputmode="decimal" min="1.2" max="4" step="0.05" value="2"></label>
+        <label title="Minimum value of an opening order">Opening order (€)<input id="s-open" type="number" inputmode="numeric" min="0" step="50" value="900"></label>
+        <label>Case pack (units)<input id="s-pack" type="number" inputmode="numeric" min="1" step="1" value="6"></label>
         <label class="wide" title="Replenishment orders per store over the first 12 months">Reorders in year 1 <input id="s-re" type="range" min="0" max="8" step="1" value="3" style="width:100%"></label>
       </div>
       <h4>Unit economics</h4>
       <table class="ledger" id="s-ledger"></table>
       <div class="meter" id="s-meter"></div>
-      <div class="legend-row"><span><span class="dot" style="background:#6b6b75"></span>COGS</span><span><span class="dot" style="background:var(--gold)"></span>Brand margin</span><span><span class="dot" style="background:var(--concept)"></span>Retailer margin</span><span><span class="dot" style="background:#3a3a44"></span>VAT</span></div>
+      <div class="legend-row"><span><span class="dot" style="background:#636366"></span>COGS</span><span><span class="dot" style="background:var(--gold)"></span>Brand margin</span><span><span class="dot" style="background:var(--concept)"></span>Retailer margin</span><span><span class="dot" style="background:#2c2c2e"></span>VAT</span></div>
       <div class="health" id="s-health"></div>
       <h4>Recommended MOQ</h4>
       <table class="ledger" id="s-moq"></table>
@@ -365,39 +641,31 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
       <div class="proj" id="s-proj"></div>
       <p class="note">Weighted = Σ store value × close probability by status (Not contacted 5 %, Discovery set 15 %, Follow-up 25 %, Meeting 45 %, Partner / Key account 100 %). Store value = MOQ × (1 + reorders) × wholesale price. Follows the filters.</p>
     </div>
-  </aside>
-</section>
+  </div>
+</aside>
 
-<section class="table-card glass">
-  <div class="table-head"><h2>B2B Pipeline</h2><span class="pill" id="t-count"></span><span class="sub">Status, decision maker and notes are editable inline · edits stay in this browser until exported</span></div>
-  <div id="table"></div>
-</section>
-</div>
-
-<dialog id="pitch">
-  <div class="modal">
-    <div class="modal-head">
-      <div><span class="eyebrow">Smart pitch generator</span><h3 id="p-title"></h3><div class="sub" id="p-sub"></div></div>
-      <button class="btn sm ghost x" id="p-close" aria-label="Close">✕</button>
+<dialog id="pitch" class="sheet-dlg" aria-labelledby="p-title">
+  <div class="modal-head">
+    <div><span class="eyebrow">Pitch generator</span><h3 id="p-title"></h3><div class="sub" id="p-sub"></div></div>
+    <button class="close" id="p-close" aria-label="Close"><svg viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 2l8 8M10 2l-8 8"/></svg></button>
+  </div>
+  <div class="modal-body">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div class="seg-ctl" role="group" aria-label="Language"><button data-lang="fr" aria-pressed="true">Français</button><button data-lang="en" aria-pressed="false">English</button></div>
+      <div class="ctx" id="p-ctx"></div>
     </div>
-    <div class="modal-body">
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <div class="seg-ctl" role="group" aria-label="Language"><button data-lang="fr" aria-pressed="true">Français</button><button data-lang="en" aria-pressed="false">English</button></div>
-        <div class="ctx" id="p-ctx"></div>
-      </div>
-      <div id="p-alert"></div>
-      <label class="f">Subject<input id="p-subject" type="text"></label>
-      <label class="f">Email<textarea id="p-body" spellcheck="true"></textarea></label>
-    </div>
-    <div class="modal-foot">
-      <button class="btn gold" id="p-copy">Copy email</button>
-      <button class="btn" id="p-mail">Open in mail app</button>
-      <button class="btn" id="p-sent" title="Set status to Discovery Set Sent">Mark discovery set sent</button>
-      <span class="sub" style="margin-left:auto">Edit freely before sending · placeholders in [brackets]</span>
-    </div>
+    <div id="p-alert"></div>
+    <label class="f">Subject<input id="p-subject" type="text"></label>
+    <label class="f" style="flex:1">Email<textarea id="p-body" spellcheck="true"></textarea></label>
+  </div>
+  <div class="modal-foot">
+    <button class="btn gold" id="p-copy">Copy email</button>
+    <button class="btn" id="p-mail">Open in Mail</button>
+    <button class="btn" id="p-sent" title="Set status to Discovery Set Sent">Mark set sent</button>
+    <span class="sub">Edit freely · placeholders in [brackets]</span>
   </div>
 </dialog>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
@@ -411,11 +679,11 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     try { data = await (await fetch("perfumeries.json")).json(); } catch (e) { data = []; }
   }
   const $ = id => document.getElementById(id);
-  if (matchMedia("(max-width: 700px)").matches) $("ctl").open = false;   // phones: map first
+  const phone = matchMedia("(max-width: 700px)");
   const css = getComputedStyle(document.documentElement);
   const cssVar = v => css.getPropertyValue(v).trim();
   const color = t => cssVar(t === "Niche Boutique" ? "--niche" : t === "Independent Concept Store" ? "--concept" : "--dept");
-  const radius = tier => 4 + Math.max(0, tier - 50) / 4;   // 4px @ ≤50 → 16.5px @ 100
+  const dotSize = tier => Math.round(7 + Math.max(0, tier - 50) / 6);   // 7px @ ≤50 → 15px @ 100
   const stars = v => v == null ? "–" : v.toFixed(1) + "★";
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -458,6 +726,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     if (!STATUSES.includes(r.pipeline_status)) r.pipeline_status = LEGACY_STATUS[r.pipeline_status] || STATUSES[0];
   });
   const byId = new Map(data.map(r => [r.id, r]));
+  let activeId = null;
 
   // ---- Simulator state
   const SIM_FIELDS = { brand: "s-brand", scent: "s-scent", msrp: "s-msrp", cogs: "s-cogs", vat: "s-vat", coef: "s-coef", open: "s-open", pack: "s-pack", re: "s-re" };
@@ -499,7 +768,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   // ---- Map. CARTO basemaps now watermark tiles requested without an API key, so the default is
   // OpenFreeMap (no key, no quota): vector tiles drawn by MapLibre GL, Voyager-like "Liberty" palette.
   // CARTO Voyager stays in the switcher for accounts that have CARTO access; OSM raster without WebGL.
-  const map = L.map("map", { zoomControl: true, preferCanvas: true, maxZoom: 20, zoomSnap: .5 }).setView([49.5, 5.5], 5);
+  const map = L.map("map", { zoomControl: true, preferCanvas: true, maxZoom: 20, zoomSnap: .5, tapTolerance: 20 }).setView([49.5, 5.5], 5);
   const OFM_ATTR = '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const CARTO_ATTR = '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const webgl = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch (e) { return false; } })();
@@ -507,7 +776,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   const carto = style => L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, { subdomains: "abcd", maxZoom: 20, attribution: CARTO_ATTR });
   const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
   const BASEMAPS = webgl && L.maplibreGL
-    ? { "Voyager (OpenFreeMap)": vector("liberty"), "Studio Dark": vector("dark"), "Positron": vector("positron"), "CARTO Voyager (key)": carto("rastertiles/voyager") }
+    ? { "Noir (OpenFreeMap)": vector("dark"), "Liberty (OpenFreeMap)": vector("liberty"), "Positron (OpenFreeMap)": vector("positron"), "CARTO Voyager (key)": carto("rastertiles/voyager") }
     : { "OpenStreetMap": osm, "CARTO Voyager (key)": carto("rastertiles/voyager") };
   Object.values(BASEMAPS)[0].addTo(map);
   L.control.layers(BASEMAPS, null, { position: "topright" }).addTo(map);
@@ -517,34 +786,50 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   legend.onAdd = () => {
     const d = L.DomUtil.create("div", "legend");
     d.innerHTML = ["Niche Boutique", "Independent Concept Store", "Department Store"]
-      .map(t => `<div><span class="dot" style="background:${color(t)}"></span>${t}</div>`).join("") +
-      `<div><span class="zl"></span>Exclusivity zone</div><div style="color:var(--muted)">Size = tier · ring = status</div>`;
+      .map(t => `<div><span class="lg" style="background:${color(t)};color:${color(t)}"></span>${t}</div>`).join("") +
+      `<div><span class="ql"></span>Tier 1 quick win</div><div><span class="zl"></span>Exclusivity zone</div><div class="lm">Size = tier · halo = status</div>`;
     return d;
   };
   legend.addTo(map);
 
+  const segBadge = r => { const i = SEGMENTS.indexOf(r.segment); return `<span class="badge" style="--c:${SEG_COLOR[i]}">${esc(SEG_SHORT[i])}</span>`; };
   const popup = r => `<div class="pop">
+    <span class="eyebrow">${esc(r.type)}</span>
     <h3>${esc(r.name)}</h3>
-    <div class="meta">${esc(r.type)} · ${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
-    <div class="badges">${badge(r.pipeline_status)}<span class="badge" style="--c:${SEG_COLOR[SEGMENTS.indexOf(r.segment)]}">${esc(SEG_SHORT[SEGMENTS.indexOf(r.segment)])}</span>${
-      r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km from partner</span>` : ""}</div>
-    <div class="meta">Tier ${r.tier_score} · Fit ${r.brand_alignment_score} · SKU ${r.single_sku_openness} · pitch ${esc(r.decision_maker_role)}</div>
+    <div class="meta">${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
+    <div class="badges">${badge(r.pipeline_status)}${segBadge(r)}${
+      r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : ""}</div>
+    <div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>CX</span><b>${stars(r.customer_experience_rating)}</b></div></div>
+    <div class="meta">Pitch the ${esc(r.decision_maker_role.toLowerCase())}</div>
     <div class="btns"><button class="btn gold sm" data-pitch="${r.id}">Generate pitch</button><button class="btn sm" data-dossier="${r.id}">Dossier</button></div>
   </div>`;
 
   const markers = new Map();
   const layer = L.layerGroup().addTo(map);
   const zoneLayer = L.layerGroup().addTo(map);
-  // Ring colour = pipeline status once a store has been contacted
-  const ring = r => r.pipeline_status === "Not Contacted" ? { color: "rgba(15,15,18,.9)", weight: 1.2 } : { color: statusColor(r.pipeline_status), weight: 3 };
-  // Draw small markers last so big ones don't hide them
-  [...data].sort((a, b) => b.tier_score - a.tier_score).forEach(r => {
-    const m = L.circleMarker([r.lat, r.lng], {
-      radius: radius(r.tier_score), ...ring(r), fillColor: color(r.type), fillOpacity: .9
-    }).bindPopup(() => popup(r), { maxWidth: 320, autoPanPadding: [20, 20] }).bindTooltip(r.name, { direction: "top", offset: [0, -4] });
-    m.on("click", () => { focusRow(r.id); showDossier(r.id); });
+  // DOM markers: glowing dot sized by tier, halo = pipeline status once contacted, pulse = Tier 1 quick win.
+  // A fixed 26 px hit box keeps small dots tappable on phones.
+  const pinIcon = r => {
+    const s = dotSize(r.tier_score), contacted = r.pipeline_status !== "Not Contacted";
+    return L.divIcon({
+      className: "pin" + (isQuickWin(r) ? " qw" : "") + (r.id === activeId ? " on" : ""), iconSize: [26, 26],
+      html: `<b style="--s:${s}px;--c:${color(r.type)}${contacted ? `;--rw:3.5px;--ring:${statusColor(r.pipeline_status)}` : ""}"></b>`,
+    });
+  };
+  // Small dots stack above big ones; quick wins above everything
+  const pinZ = r => (100 - r.tier_score) * 10 + (isQuickWin(r) ? 2000 : 0);
+  data.forEach(r => {
+    const m = L.marker([r.lat, r.lng], { icon: pinIcon(r), zIndexOffset: pinZ(r), riseOnHover: true, keyboard: false })
+      .bindPopup(() => popup(r), { maxWidth: 320, minWidth: 240, autoPanPaddingTopLeft: [20, 70], offset: [0, -6] })
+      .bindTooltip(r.name, { direction: "top", offset: [0, -10] });
+    // Keep the popup clear of the slide-over sheet on wide screens
+    Object.defineProperty(m.getPopup().options, "autoPanPaddingBottomRight",
+      { get: () => [sheetOpen() && !phone.matches ? $("sheet").offsetWidth + 40 : 20, 20] });
+    m.on("click", () => { focusRow(r.id); if (!phone.matches) showDossier(r.id); });
+    m.on("popupopen", () => m.getTooltip() && m.closeTooltip());
     markers.set(r.id, m);
   });
+  const refreshPin = r => { const m = markers.get(r.id); m.setIcon(pinIcon(r)); m.setZIndexOffset(pinZ(r)); };
 
   // ---- Table
   const bar = v => `<div class="bar"><i style="width:${v}%"></i></div>`;
@@ -552,17 +837,17 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   const zoneCell = r => PROTECTED.has(r.pipeline_status) ? `<span class="badge" style="--c:var(--gold)">◎ Protected</span>`
     : r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s ${zoneKm} km zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : `<span class="muted">Open</span>`;
   const table = new Tabulator("#table", {
-    data, index: "id", layout: "fitColumns", height: matchMedia("(max-width: 700px)").matches ? 480 : 560, selectableRows: false,
+    data, index: "id", layout: "fitColumns", height: phone.matches ? 520 : 620, selectableRows: false, renderVerticalBuffer: 400,
     initialSort: [{ column: "tier_score", dir: "desc" }],
     columns: [
-      { title: "Name", field: "name", minWidth: 190, widthGrow: 2, frozen: true, formatter: c => `<b>${esc(c.getValue())}</b>` },
+      { title: "Name", field: "name", minWidth: 200, widthGrow: 2, frozen: true, formatter: c => `<span class="tname">${esc(c.getValue())}</span>` },
       { title: "Priority", field: "launch_priority", width: 80, formatter: c =>
           `<span class="pri t${c.getValue()[5]}" title="${esc(c.getValue())}">${priShort(c.getValue())}</span>` },
       { title: "Status", field: "pipeline_status", width: 170, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
         sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop, formatter: c => badge(c.getValue()) },
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
       { title: "Pitch", field: "id", width: 84, headerSort: false, hozAlign: "center", cellClick: (e, c) => { e.stopPropagation(); openPitch(c.getValue()); },
-        formatter: () => `<button class="btn sm" type="button">✉ Pitch</button>` },
+        formatter: () => `<button class="btn sm" type="button">Pitch</button>` },
       { title: "Territory", field: "_zoneKm", width: 120, sorter: "number", formatter: c => zoneCell(byId.get(c.getRow().getData().id)) },
       { title: "Yr-1 value", field: "_val", width: 105, hozAlign: "right", sorter: "number", formatter: c => `<span class="num" title="Weighted: ${eur.format(byId.get(c.getRow().getData().id)._wval || 0)}">${short(c.getValue() || 0)}</span>` },
       { title: "Prospection notes", field: "notes_prospections", minWidth: 190, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
@@ -596,12 +881,12 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     edits[r.crm_key] = Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]));
     store.set(STORE_KEY, edits);
     const m = markers.get(r.id);
-    m.setStyle(ring(r));
+    refreshPin(r);
     if (m.isPopupOpen()) m.setPopupContent(popup(r));
     if ("pipeline_status" in patch) partners = computeZones();
     refreshDerived();
     apply();
-    if (dossierId === id) showDossier(id);
+    if (dossierId === id) showDossier(id, false);
   }
   table.on("cellEdited", cell => {
     const field = cell.getField();
@@ -621,21 +906,25 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   refreshDerived();
 
   let openPending = null;
-  table.on("rowClick", (e, row) => {
-    const r = row.getData(), m = markers.get(r.id);
+  // Row / card → fly to the store; the popup opens once the map settles (wide screens only: on phones the sheet covers the map)
+  function focusStore(id) {
+    const r = byId.get(id), m = markers.get(id);
     map.off("moveend", openPending);
-    openPending = () => m.openPopup();
-    map.once("moveend", openPending);
+    if (!phone.matches) { openPending = () => layer.hasLayer(m) && m.openPopup(); map.once("moveend", openPending); }
     map.flyTo([r.lat, r.lng], Math.max(map.getZoom(), 14), { duration: .6 });
-    highlight(r.id);
-    showDossier(r.id);
-  });
+    highlight(id);
+    showDossier(id);
+  }
+  table.on("rowClick", (e, row) => focusStore(row.getData().id));
 
-  let activeId = null;
   function highlight(id) {
-    if (activeId != null) table.getRow(activeId)?.getElement().classList.remove("active");
+    const prev = activeId;
     activeId = id;
+    if (prev != null && prev !== id) { table.getRow(prev)?.getElement().classList.remove("active"); refreshPin(byId.get(prev)); }
     table.getRow(id)?.getElement().classList.add("active");
+    refreshPin(byId.get(id));
+    $("cards").querySelector(".sc.on")?.classList.remove("on");
+    $("cards").querySelector(`.sc[data-id="${id}"]`)?.classList.add("on");
   }
   function focusRow(id) {
     table.scrollToRow(id, "center", false).catch(() => {});
@@ -643,18 +932,119 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
   }
   table.on("renderComplete", () => activeId != null && table.getRow(activeId)?.getElement().classList.add("active"));
 
-  // ---- Side panel tabs
+  // ---- List / Grid views: same rows, filters and sort as the table, rendered as cards
+  const VIEW_KEY = "perfumery-view-v1";
+  let view = store.get(VIEW_KEY, phone.matches ? "list" : "table");
+  const statusSelect = r => `<select class="status-sel" data-status="${r.id}" aria-label="Pipeline status of ${esc(r.name)}" style="--c:${statusColor(r.pipeline_status)}">${
+    STATUSES.map(s => `<option${s === r.pipeline_status ? " selected" : ""}>${s}</option>`).join("")}</select>`;
+  const cardHTML = r => `<article class="sc${r.id === activeId ? " on" : ""}" data-id="${r.id}" tabindex="0">
+      <div class="top"><span class="eyebrow">${esc(r.type)} · ${esc(r.district || r.city)}</span><span class="pri t${r.launch_priority[5]}" title="${esc(r.launch_priority)}">${priShort(r.launch_priority)}</span></div>
+      <div class="id"><h3>${esc(r.name)}</h3><div class="addr">${esc(r.full_address)}</div></div>
+      <div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>Yr-1</span><b>${short(r._val || 0)}</b></div></div>
+      <div class="foot">${statusSelect(r)}<button class="btn sm" type="button" data-pitch="${r.id}">Pitch</button></div>
+    </article>`;
+  let cardsFrame = 0;
+  function scheduleCards() {
+    if (view === "table" || cardsFrame) return;
+    cardsFrame = requestAnimationFrame(() => {
+      cardsFrame = 0;
+      const rows = table.getData("active").map(r => byId.get(r.id));
+      $("cards").innerHTML = rows.length ? rows.map(cardHTML).join("")
+        : `<div class="empty"><span class="serif">Nothing matches</span>Loosen a filter to bring stores back.</div>`;
+    });
+  }
+  function setView(v) {
+    view = v;
+    store.set(VIEW_KEY, v);
+    document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === v));
+    $("table-wrap").hidden = v !== "table";
+    $("cards").hidden = v === "table";
+    $("cards").className = "cards " + v;
+    if (v === "table") { if (tableReady) table.redraw(true); } else scheduleCards();
+  }
+  document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+  $("sort").addEventListener("change", () => { const [f, d] = $("sort").value.split(":"); table.setSort(f, d); });
+  table.on("dataSorted", scheduleCards);
+  $("cards").addEventListener("change", e => {
+    const sel = e.target.closest("[data-status]");
+    if (!sel) return;
+    sel.style.setProperty("--c", statusColor(sel.value));   // instant, before the re-render
+    setCrm(+sel.dataset.status, { pipeline_status: sel.value });
+    toast(`${byId.get(+sel.dataset.status).name} → ${sel.value}`);
+  });
+  $("cards").addEventListener("click", e => {
+    const c = e.target.closest(".sc");
+    if (c && !e.target.closest("select, button, a")) focusStore(+c.dataset.id);
+  });
+  $("cards").addEventListener("keydown", e => {
+    if (e.key === "Enter" && e.target.classList.contains("sc")) focusStore(+e.target.dataset.id);
+  });
+
+  // ---- Widgets: a champagne sheen follows the pointer; touch gets the same lift
+  document.querySelectorAll(".widget").forEach(w => {
+    w.addEventListener("pointermove", e => {
+      const b = w.getBoundingClientRect();
+      w.style.setProperty("--mx", (e.clientX - b.left) + "px");
+      w.style.setProperty("--my", (e.clientY - b.top) + "px");
+    }, { passive: true });
+    w.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") w.classList.add("touch"); }, { passive: true });
+    ["pointerup", "pointercancel", "pointerleave"].forEach(t => w.addEventListener(t, () => w.classList.remove("touch"), { passive: true }));
+  });
+
+  // ---- Slide-over sheet: from the right on wide screens, a draggable bottom sheet on phones
+  const sheet = $("sheet"), scrim = $("scrim");
+  function sheetOpen() { return sheet.classList.contains("open"); }
   function showTab(name) {
-    ["dos", "sim"].forEach(t => { $("tab-" + t).setAttribute("aria-selected", t === name); $("pane-" + t).hidden = t !== name; });
+    ["dos", "sim"].forEach(t => { $("tab-" + t).setAttribute("aria-pressed", t === name); $("pane-" + t).hidden = t !== name; });
+    sheet.querySelector(".sheet-body").scrollTop = 0;
+    openSheet();
+  }
+  function openSheet() {
+    sheet.style.removeProperty("--drag");
+    sheet.classList.add("open"); sheet.setAttribute("aria-hidden", "false");
+    scrim.classList.add("on");
+    if (phone.matches) document.documentElement.style.overflow = "hidden";
+  }
+  function closeSheet() {
+    sheet.classList.remove("open", "dragging"); sheet.setAttribute("aria-hidden", "true");
+    sheet.style.removeProperty("--drag");
+    scrim.classList.remove("on");
+    document.documentElement.style.overflow = "";
   }
   $("tab-dos").addEventListener("click", () => showTab("dos"));
   $("tab-sim").addEventListener("click", () => showTab("sim"));
-  $("go-sim").addEventListener("click", () => { showTab("sim"); $("pane-sim").closest(".split").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("go-sim").addEventListener("click", () => showTab("sim"));
+  $("sheet-close").addEventListener("click", closeSheet);
+  scrim.addEventListener("click", closeSheet);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && sheetOpen() && !$("pitch").open) closeSheet(); });
+  phone.addEventListener("change", () => { if (!phone.matches) document.documentElement.style.overflow = ""; else if (sheetOpen()) openSheet(); });
+  // Swipe down on the grabber / header to dismiss (phones)
+  let drag = null;
+  [sheet.querySelector(".grabber"), $("sheet-head")].forEach(h => h.addEventListener("pointerdown", e => {
+    if (!phone.matches || e.target.closest("button")) return;
+    drag = { y: e.clientY, t: e.timeStamp, dy: 0 };
+    sheet.classList.add("dragging");
+    h.setPointerCapture(e.pointerId);
+  }));
+  sheet.addEventListener("pointermove", e => {
+    if (!drag) return;
+    drag.dy = Math.max(0, e.clientY - drag.y);
+    sheet.style.setProperty("--drag", drag.dy + "px");
+  });
+  const endDrag = e => {
+    if (!drag) return;
+    const v = drag.dy / Math.max(1, e.timeStamp - drag.t);   // px/ms
+    sheet.classList.remove("dragging");
+    if (drag.dy > sheet.offsetHeight * .3 || v > .6) closeSheet(); else sheet.style.removeProperty("--drag");
+    drag = null;
+  };
+  sheet.addEventListener("pointerup", endDrag);
+  sheet.addEventListener("pointercancel", endDrag);
 
   // ---- Dossier
   let dossierId = null;
   const INSIGHT_ROWS = [["staff", "Staff"], ["footfall", "Footfall"], ["sampling", "Sampling"], ["atmosphere", "Atmosphere"], ["watch_out", "Watch out"]];
-  function showDossier(id) {
+  function showDossier(id, open = true) {
     const r = byId.get(id);
     if (!r) return;
     dossierId = id;
@@ -663,7 +1053,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
       ? `<div class="callout safe"><b>Protected account.</b> No other door is pitched within ${zoneKm} km while exclusivity holds.</div>`
       : r._zone ? `<div class="callout alert"><b>Inside an exclusivity zone:</b> ${esc(r._zone.name)} is ${r._zone.km.toFixed(1)} km away. Clear the territory before pitching.</div>` : "";
     $("pane-dos").innerHTML = `<div class="dos">
-      <span class="eyebrow">${esc(r.type)} · ${esc(r.launch_priority)}</span>
+      <span class="eyebrow">${esc(r.type)} · ${esc(r.launch_priority.replace(" - ", " · "))}</span>
       <h3>${esc(r.name)}</h3>
       <div class="meta">${esc(r.district || r.city)}, ${esc(r.country_name)}${r.network ? ` · ${esc(r.network)}` : ""}</div>
       <div class="addr">${esc(r.full_address)}</div>
@@ -674,14 +1064,16 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
         <label class="f">Pipeline status<select id="d-status">${STATUSES.map(s => `<option${s === r.pipeline_status ? " selected" : ""}>${s}</option>`).join("")}</select></label>
         <label class="f">Decision maker<select id="d-role">${ROLES.map(s => `<option${s === r.decision_maker_role ? " selected" : ""}>${s}</option>`).join("")}</select></label>
       </div>
-      <div class="kv" style="grid-template-columns:1fr 1fr 1fr"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>
-      <div class="callout"><b>Pitch prep:</b> ${esc(cx.pitch)}</div>
+      <div class="kv three gold" style="grid-template-columns:repeat(3,1fr)"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>
+      <div class="callout"><b>Pitch prep.</b> ${esc(cx.pitch)}</div>
+      <h4>Store intelligence</h4>
       <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
       <div class="badges">${r.cx_traits.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-      <div class="meta" style="margin-top:6px">${esc(r.sentiment_summary)} <i>(${esc(cx.basis)})</i></div>
-      <label class="f" style="margin-top:12px">Prospection notes<textarea id="d-notes" rows="3" placeholder="Add a note…">${esc(r.notes_prospections)}</textarea></label>
+      <div class="meta" style="margin-top:10px">${esc(r.sentiment_summary)} <i>(${esc(cx.basis)})</i></div>
+      <h4>CRM notes</h4>
+      <textarea id="d-notes" rows="3" placeholder="Add a note…" aria-label="Prospection notes">${esc(r.notes_prospections)}</textarea>
       <div class="btns">
-        <button class="btn gold" data-pitch="${r.id}">✉ Generate pitch</button>
+        <button class="btn gold" data-pitch="${r.id}">Generate pitch</button>
         <a class="btn" href="${esc(r.google_maps_url)}" target="_blank" rel="noopener">Google Maps</a>
         <a class="btn" href="${esc(r.instagram_search_url)}" target="_blank" rel="noopener">Instagram</a>${
         r.source.startsWith("osm:") ? `<a class="btn" href="https://www.openstreetmap.org/${esc(r.source.slice(4))}" target="_blank" rel="noopener">OSM</a>` : ""}
@@ -689,13 +1081,13 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     $("d-status").addEventListener("change", e => setCrm(id, { pipeline_status: e.target.value }));
     $("d-role").addEventListener("change", e => setCrm(id, { decision_maker_role: e.target.value }));
     $("d-notes").addEventListener("change", e => setCrm(id, { notes_prospections: e.target.value }));
-    showTab("dos");
+    if (open) showTab("dos");
   }
   // Buttons inside popups / dossier
   document.addEventListener("click", e => {
     const p = e.target.closest("[data-pitch]"), d = e.target.closest("[data-dossier]");
     if (p) openPitch(+p.dataset.pitch);
-    else if (d) { showDossier(+d.dataset.dossier); focusRow(+d.dataset.dossier); }
+    else if (d) { showDossier(+d.dataset.dossier); focusRow(+d.dataset.dossier); if (phone.matches) map.closePopup(); }
   });
 
   // ---- Smart pitch generator (FR / EN)
@@ -792,12 +1184,23 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     if (!byId.has(id)) return;
     pitchId = id;
     renderPitch();
+    $("pitch").classList.remove("closing");
     if (!$("pitch").open) $("pitch").showModal();
   }
+  // Animate out, then close; Esc goes through the same path
+  function closePitch() {
+    const d = $("pitch");
+    if (!d.open || d.classList.contains("closing")) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { d.close(); return; }
+    d.classList.add("closing");
+    d.addEventListener("animationend", () => { d.classList.remove("closing"); d.close(); }, { once: true });
+  }
+  $("pitch").addEventListener("cancel", e => { e.preventDefault(); closePitch(); });
   document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { pitchLang = b.dataset.lang; renderPitch(); }));
-  $("p-close").addEventListener("click", () => $("pitch").close());
-  $("pitch").addEventListener("click", e => { if (e.target === $("pitch")) $("pitch").close(); });
-  function toast(msg) { $("toast").textContent = msg; $("toast").classList.add("show"); setTimeout(() => $("toast").classList.remove("show"), 1600); }
+  $("p-close").addEventListener("click", closePitch);
+  $("pitch").addEventListener("click", e => { if (e.target === $("pitch")) closePitch(); });
+  let toastTimer;
+  function toast(msg) { $("toast").textContent = msg; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1800); }
   $("p-copy").addEventListener("click", async () => {
     const text = `${$("p-subject").value}\n\n${$("p-body").value}`;
     try { await navigator.clipboard.writeText(text); toast("Email copied"); }
@@ -839,7 +1242,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     const on = zonesOn(), shown = base.filter(r => PROTECTED.has(r.pipeline_status));
     if (on) shown.forEach(r => {
       L.circle([r.lat, r.lng], { radius: zoneKm * 1000, color: cssVar("--gold"), weight: 1.5, dashArray: "6 6", fillColor: cssVar("--gold"), fillOpacity: .1, interactive: false }).addTo(zoneLayer);
-      L.circleMarker([r.lat, r.lng], { radius: radius(r.tier_score) + 5, color: cssVar("--gold"), weight: 1, fill: false, interactive: false }).addTo(zoneLayer);
+      L.circleMarker([r.lat, r.lng], { radius: dotSize(r.tier_score) / 2 + 7, color: cssVar("--gold"), weight: 1, fill: false, interactive: false }).addTo(zoneLayer);
     });
     $("zone-hint").textContent = !partners.length
       ? "No protected accounts yet — set a store to Partner Active or Key Account."
@@ -873,6 +1276,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     drawZones(base);
     dashboard(keep);
     simulate(keep);
+    scheduleCards();
     return keep;
   }
 
@@ -911,8 +1315,8 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
       row("Brand gross margin per unit", `${eur2.format(s.brandM)} · ${pct(s.brandM / s.wholesale)}`, "total"),
     ].join("");
     const seg = (v, c, t) => v > 0 ? `<i title="${t}" style="flex:${v};background:${c}"></i>` : "";
-    $("s-meter").innerHTML = seg(Math.min(s.cogs, s.wholesale), "#6b6b75", "COGS") + seg(Math.max(0, s.brandM), cssVar("--gold"), "Brand margin") +
-      seg(s.retail, cssVar("--concept"), "Retailer margin") + seg(vatEur, "#3a3a44", "VAT");
+    $("s-meter").innerHTML = seg(Math.min(s.cogs, s.wholesale), "#636366", "COGS") + seg(Math.max(0, s.brandM), cssVar("--gold"), "Brand margin") +
+      seg(s.retail, cssVar("--concept"), "Retailer margin") + seg(vatEur, "#2c2c2e", "VAT");
     const gm = s.brandM / s.wholesale, mk = s.wholesale / Math.max(s.cogs, .01);
     $("s-health").innerHTML = s.brandM <= 0 ? `<span style="color:var(--bad)">● Wholesale below COGS — every unit loses money.</span>`
       : gm < .6 ? `<span style="color:var(--warn)">● Brand margin ${pct(gm)} (${mk.toFixed(1)}× COGS): below the 65–80 % niche benchmark; raise MSRP or cut COGS.</span>`
@@ -947,7 +1351,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
       store.set(SIM_KEY, Object.fromEntries(Object.entries(SIM_FIELDS).map(([k, i]) => [k, $(i).value])));
       refreshDerived();
       apply();
-      if (dossierId != null && !$("pane-dos").hidden) showDossier(dossierId);
+      if (dossierId != null) showDossier(dossierId, false);
       if ($("pitch").open) renderPitch();
     }, 120);
   }));
@@ -1022,7 +1426,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     partners = computeZones();
     refreshDerived();
     apply();
-    if (dossierId != null && !$("pane-dos").hidden) showDossier(dossierId);
+    if (dossierId != null) showDossier(dossierId, false);
   });
   map.on("moveend", () => $("inview").checked && apply());
   $("reset").addEventListener("click", () => {
@@ -1038,7 +1442,7 @@ dialog::backdrop { background: rgba(5,5,8,.7); backdrop-filter: blur(6px); }
     applyAndFit();
   });
 
-  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); applyAndFit(); });
+  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); applyAndFit(); });
 })();
 </script>
 </body>

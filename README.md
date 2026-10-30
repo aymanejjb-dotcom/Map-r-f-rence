@@ -105,12 +105,18 @@ The build fails if a curated store has no insight entry.
   Galeries Lafayette Berlin (2024).
 
 ## Map
-- Luxury dark "Studio" UI: executive metrics bar, collapsible control panel, map split view
-  (map + store dossier / margin simulator), B2B pipeline table. Responsive down to phone width.
-- Basemap: OpenFreeMap vector tiles (no API key) via MapLibre GL — Voyager-like "Liberty" by default,
-  Studio Dark and Positron in the switcher. CARTO Voyager is listed too, but CARTO now watermarks
+- Design: OLED black canvas, charcoal cards (#121214), hairline frosted borders, champagne accent (#C5A059).
+  Apple system type stack (SF Pro) with Playfair Display for store names and headings.
+- Floating glass metric widgets (pointer sheen, touch lift; snap carousel on phones), collapsible "Refine" panel.
+- Store dossier and margin simulator live in an iOS-style slide-over sheet (right on desktop,
+  swipe-to-dismiss bottom sheet on phones); the pitch generator opens as its own sheet.
+- Pipeline in three views: Table (inline editing), List and Grid (status picker on each card, instant update).
+  Views share filters and sort; the choice is remembered in this browser.
+- Basemap: OpenFreeMap vector tiles (no API key) via MapLibre GL — "Noir" (dark) by default,
+  Liberty and Positron in the switcher. CARTO Voyager is listed too, but CARTO now watermarks
   tiles requested without an API key. OSM raster fallback without WebGL.
-- Marker colour = store type, radius = tier score, ring = pipeline status.
+- Custom DOM markers: glowing dot, colour = store type, size = tier score, halo = pipeline status;
+  Tier 1 quick wins pulse in champagne. Popups are floating product cards.
 - Filters: country, city, type, segment, tier, alignment, openness, source, status, priority, search,
   focus toggles (quick wins, partners & key accounts, sampling in flight, only in view).
 

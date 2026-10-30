@@ -107,7 +107,7 @@ The build fails if a curated store has no insight entry.
 ## Map
 - Basemap: OpenFreeMap vector tiles (no API key) rendered by MapLibre GL — city, district and
   street labels are vector text that stays sharp and re-lays out at every zoom (Streets /
-  Positron / Dark switcher, dark by default in dark mode). Raster Esri streets without WebGL.
+  Voyager / Positron / Dark switcher, dark by default in dark mode). CARTO Voyager raster (retina, no key) as extra layer and no-WebGL fallback.
 - Marker colour = store type, radius = tier score; canvas renderer keeps 300+ markers smooth.
 - Filters: country toggles, city (follows selected countries), type, min tier, min alignment, single-SKU openness, source (curated/OSM), debounced
   text search (name, city, street, network), "only in view" (table follows map viewport).

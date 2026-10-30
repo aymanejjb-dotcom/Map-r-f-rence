@@ -210,13 +210,19 @@ main { flex: 1; display: grid; grid-template-rows: minmax(260px, 52%) 1fr; min-h
   const ATTR = '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const webgl = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch (e) { return false; } })();
   const vector = style => L.maplibreGL({ style: `https://tiles.openfreemap.org/styles/${style}`, attribution: ATTR });
+  // CARTO Voyager raster (retina @2x, no key): Google-like palette, also the no-WebGL fallback
+  const CARTO_ATTR = '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  const carto = style => L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, {
+    subdomains: "abcd", maxZoom: 20, detectRetina: false, attribution: CARTO_ATTR });
   const BASEMAPS = webgl && L.maplibreGL ? {
     "Streets": vector("liberty"),
+    "Voyager": carto("rastertiles/voyager"),
     "Positron": vector("positron"),
     "Dark": vector("dark"),
   } : {
-    "Streets": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom: 19, attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors" }),
+    "Streets": carto("rastertiles/voyager"),
+    "Positron": carto("light_all"),
+    "Dark": carto("dark_all"),
   };
   const theme = document.documentElement.dataset.theme;
   const dark = theme ? theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;

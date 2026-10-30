@@ -2,6 +2,8 @@
    Maison Atlas — predictive engines (pure functions, no DOM state)
    · Restock & sell-through velocity per partner, from the wholesale delivery log
    · Territory cannibalization guard: exclusivity-zone intersections around a prospect
+   · Market pulse: regional purchasing shifts × retail / resort seasonality
+   · 6-month cash-flow & revenue forecast from reorder velocity, seasonality and the weighted pipeline
    · Print-grade PDF dossier renderer (A4, vector text through the browser's PDF engine)
    index.html wires them into the map, cards, dossier, pitch sequencer and Sillage AI.
    ——————————————————————————————————————————————————————————————— */
@@ -116,6 +118,134 @@ window.SillageIntel = (function () {
     </svg>`;
   }
 
+  // ———————————————————————————————— Market pulse: regional purchasing shifts × retail seasonality
+  // Editorial indices (2026 outlook), not measured data: they tilt priorities and forecasts, they do not size markets.
+  // Monthly sell-in index for niche-fragrance wholesale (retailer orders), mean 1.0: Valentine's, Mother's / Father's Day,
+  // a dead August, then the Q4 gifting build from the rentrée.
+  const SEASON = [.78, .85, .92, .95, 1.05, 1, .82, .74, 1.02, 1.18, 1.38, 1.31];
+  const RESORTS = [
+    { label: "Ski-resort season", peak: [11, 0, 1, 2], up: 1.35, down: .72, downIn: [3, 4, 5, 6, 7, 8, 9, 10],
+      cities: ["Courchevel", "Garmisch-Partenkirchen", "Interlaken", "Rottach-Egern", "Gmund", "Zermatt", "Gstaad", "St. Moritz", "Verbier", "Megève", "Davos"] },
+    { label: "Coastal & lake summer season", peak: [5, 6, 7], up: 1.3, down: .85, downIn: [10, 11, 0, 1],
+      cities: ["Biarritz", "Saint-Jean-de-Luz", "Cannes", "Nice", "Saint-Laurent-du-Var", "Toulon", "La Rochelle", "Oostende", "Den Helder",
+        "Ascona", "Locarno", "Lugano", "Montreux", "Knokke", "Knokke-Heist", "Sylt", "Kampen", "Deauville", "Saint-Tropez"] },
+  ];
+  const REGION = {
+    CH: [5, "Strong franc and tourist spend keep Swiss luxury retail ahead"],
+    LU: [4, "Highest purchasing power in the EU, cross-border clientele"],
+    NL: [3, "Niche fragrance is the fastest-growing prestige category in the Netherlands"],
+    FR: [1, "Tourism lifts Paris and the Riviera; regional France flat"],
+    BE: [0, "Stable demand, led by Antwerp and Brussels"],
+    DE: [-3, "Soft consumer sentiment and department-store restructuring"],
+  };
+  const SEGMENT_SHIFT = {
+    "True Indie Niche Boutique": [3, "Indie niche doors outgrow prestige perfumery"],
+    "Specialist Niche House": [2, "Specialist niche houses gain share"],
+    "Selective Concept Store": [1, "Concept stores keep widening their beauty edit"],
+    "Traditional Prestige Perfumery": [-1, "Traditional prestige loses share to niche"],
+    "Department Store": [-3, "Footfall shifts from department stores to independents"],
+  };
+  const resortOf = r => RESORTS.find(z => z.cities.includes(r.city)) || null;
+  const monthOf = d => +d.slice(5, 7) - 1;
+  // Local seasonality of one door for a calendar month (0–11)
+  function seasonality(r, mi) {
+    const z = resortOf(r);
+    return SEASON[mi] * (!z ? 1 : z.peak.includes(mi) ? z.up : z.downIn.includes(mi) ? z.down : 1);
+  }
+  // Regional demand shift in points (country + Paris tourist flows), independent of the calendar
+  function regional(r) {
+    const [d, note] = REGION[r.country] || [0, ""];
+    const paris = r.city === "Paris" ? 3 : 0;
+    return { pts: d + paris, note: paris ? note + "; Paris tourist flows +3" : note };
+  }
+  // Pulse adjustment to a prioritisation score, ±12 points. Retailers buy 1–3 months ahead of sell-out,
+  // so the window ahead (not the current month) drives timing urgency.
+  function pulse(r, today) {
+    const mi = monthOf(today), z = resortOf(r);
+    const ahead = [1, 2, 3].map(k => seasonality(r, (mi + k) % 12));
+    const win = ahead.reduce((a, x) => a + x, 0) / 3;
+    const reg = regional(r), seg = SEGMENT_SHIFT[r.segment] || [0, ""];
+    const hub = r.export_potential && r.export_potential.hub_km <= 3 && [5, 6, 7, 11].includes(mi) ? 2 : 0;
+    const drivers = [
+      { label: reg.note, pts: reg.pts },
+      { label: seg[1], pts: seg[0] },
+      { label: `${z ? z.label : "Retail calendar"}: buying window ${win >= 1 ? "opening" : "closing"} (next-90-day index ${win.toFixed(2)})`, pts: Math.round((win - 1) * 25) },
+      { label: "Luxury-hub tourist peak", pts: hub },
+    ].filter(x => x.pts && x.label).sort((a, b) => Math.abs(b.pts) - Math.abs(a.pts));
+    const delta = Math.max(-12, Math.min(12, drivers.reduce((a, x) => a + x.pts, 0)));
+    return { delta, drivers, window: win, season: seasonality(r, mi), regional: reg.pts, resort: z ? z.label : null };
+  }
+
+  // ———————————————————————————————— Cash-flow & revenue forecast
+  // Partners: deseasonalised monthly run-rate from the last 12 months of invoices × local seasonality × damped
+  // 90-day velocity trend × regional shift. Pipeline: probability-weighted opening order landing by stage, then
+  // reorders. Cash: projected turnover shifted by the account's payment terms, plus receivables already invoiced.
+  const ym = d => d.slice(0, 7);
+  const addMonths = (m, n) => { let [y, mo] = m.split("-").map(Number); mo += n - 1; y += Math.floor(mo / 12); mo = ((mo % 12) + 12) % 12; return `${y}-${String(mo + 1).padStart(2, "0")}`; };
+  const LAND = { "Meeting Booked": 1, "Follow-up Required": 2, "Discovery Set Sent": 3 };
+  function forecast(accounts, prospects, opt) {
+    const today = opt.today, H = opt.months || 6, now = ym(today);
+    const months = Array.from({ length: H }, (_, k) => addMonths(now, k + 1));
+    const blank = () => months.map(m => ({ ym: m, partners: 0, pipeline: 0, cash: 0, mk: {} }));
+    const out = blank(), rows = [];
+    const dom = +today.slice(8, 10), dim = new Date(+today.slice(0, 4), +today.slice(5, 7), 0).getDate();
+    const put = (k, field, v, mk) => { if (k < 0 || k >= H || !v) return; out[k][field] += v; if (field !== "cash") out[k].mk[mk] = (out[k].mk[mk] || 0) + v; };
+    accounts.forEach(({ r, ws, mk }) => {
+      if (!ws || !ws.invoices.length) return;
+      const from = addDays(today, -365), start = ws.since && ws.since > from ? ws.since : from;
+      const inv = ws.invoices.filter(i => i.date >= start && i.date <= today);
+      if (!inv.length) return;
+      // Seasonal exposure of the observation window: full months weigh 1, the current one by days elapsed
+      let expo = 0;
+      for (let m = ym(start); m <= now; m = addMonths(m, 1)) {
+        const w = m === now ? dom / dim : m === ym(start) ? 1 - (+start.slice(8, 10) - 1) / 30 : 1;
+        expo += Math.max(.1, w) * seasonality(r, monthOf(m + "-01"));
+      }
+      const base = inv.reduce((a, i) => a + i.amount, 0) / Math.max(1, expo);
+      const sum = (a, b) => inv.filter(i => i.date > addDays(today, -a) && i.date <= addDays(today, -b)).reduce((s, i) => s + i.amount, 0);
+      const recent = sum(90, 0), prior = sum(180, 90);
+      const trend = recent && prior && days(start, today) > 150 ? Math.min(1.3, Math.max(.75, recent / prior)) : 1;
+      const g = 1 + (Math.cbrt(trend) - 1) * .5;            // damped monthly growth
+      const regionF = 1 + regional(r).pts / 100;
+      const terms = inv.map(i => i.due ? days(i.date, i.due) : 30).sort((a, b) => a - b)[Math.floor(inv.length / 2)] || 30;
+      // Fractional lag: net 45 lands half a month later than net 30, split across the two months
+      const lag = Math.floor(terms / 30), w = terms / 30 - lag;
+      let six = 0;
+      months.forEach((m, k) => {
+        const v = base * seasonality(r, monthOf(m + "-01")) * g ** (k + 1) * regionF;
+        six += v;
+        put(k, "partners", v, mk);
+        put(k + lag, "cash", v * (1 - w), mk);
+        put(k + lag + 1, "cash", v * w, mk);
+      });
+      // Receivables already invoiced: pending collected in their due month, overdue next month at 85 %
+      ws.invoices.filter(i => i.status !== "Paid").forEach(i => {
+        const k = i.state === "Overdue" || !i.due || ym(i.due) <= now ? 0 : months.indexOf(ym(i.due));
+        put(k, "cash", i.state === "Overdue" ? i.amount * .85 : i.amount, mk);
+      });
+      rows.push({ r, mk, base, trend, six, terms });
+    });
+    prospects.forEach(({ r, p, open, reorder, re, mk }) => {
+      const land = LAND[r.pipeline_status];
+      if (!land || !p) return;
+      months.forEach((m, k) => {
+        const s = seasonality(r, monthOf(m + "-01"));
+        const v = k + 1 === land ? p * open * s : k + 1 > land ? p * reorder * re / 12 * s : 0;
+        put(k, "pipeline", v, mk);
+        put(k + 1, "cash", v, mk);
+      });
+    });
+    out.forEach((o, k) => {
+      o.total = o.partners + o.pipeline;
+      const a = .08 + .03 * k;
+      o.lo = o.partners * (1 - a) + o.pipeline * .4;
+      o.hi = o.partners * (1 + a) + o.pipeline * 1.6;
+    });
+    const tot = f => out.reduce((a, o) => a + o[f], 0);
+    return { months: out, accounts: rows.sort((a, b) => b.six - a.six), total: tot("total"), partners: tot("partners"),
+      pipeline: tot("pipeline"), cash: tot("cash"), lo: tot("lo"), hi: tot("hi") };
+  }
+
   // ———————————————————————————————— Print-grade PDF dossier
   // Rendered in an off-screen iframe and handed to the browser's PDF engine ("Save as PDF"):
   // vector text, real fonts, no canvas rasterisation.
@@ -192,5 +322,6 @@ svg { display: block; }
     });
   }
 
-  return { restock, guard, guardSVG, overlapShare, km, printDocument, addDays, days, LEAD_DAYS, LEVELS };
+  return { restock, guard, guardSVG, overlapShare, km, printDocument, addDays, days, LEAD_DAYS, LEVELS,
+    pulse, seasonality, regional, forecast, addMonths, SEASON, REGION };
 })();

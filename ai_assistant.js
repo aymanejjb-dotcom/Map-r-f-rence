@@ -25,6 +25,7 @@
     { id: "restock", label: "Restock & Sell-Through Forecast" },
     { id: "outreach", label: "Outreach Sequences Due Today" },
     { id: "potential", label: "Export Potential Leaders" },
+    { id: "pulse", label: "Dynamic Market Pulse" },
   ];
 
   const store = {
@@ -54,12 +55,23 @@
   const isProtected = r => ctx.protectedStatuses.includes(r.pipeline_status);
   const isOpen = r => r.pipeline_status !== "Declined" && !isProtected(r);
   // Single-SKU placement score, 0–100: fit carries most weight, then openness, tier, CX, ease of entry
-  function score(r) {
+  function baseScore(r) {
     const cx = r.customer_experience_rating == null ? 0 : (r.customer_experience_rating - 4.2) * 12;
     const s = .45 * r.brand_alignment_score + .22 * r.tier_score + 22 * OPEN_W[r.single_sku_openness] + cx
       + (r.launch_priority.startsWith("Tier 1") ? 8 : 0) + (r.openness_verified ? 3 : 0) - (BARRIER[r.entry_barrier] || 0);
     return Math.max(0, Math.min(100, Math.round(s)));
   }
+  // Market pulse (intelligence.js): regional purchasing shifts + the seasonal buying window ahead, ±12 points.
+  // Recomputed per calendar day, so priorities move with the retail calendar without a rebuild.
+  const pulseMemo = new Map();
+  let pulseDay = null;
+  function pulseOf(r) {
+    const day = new Date().toISOString().slice(0, 10);
+    if (day !== pulseDay) { pulseMemo.clear(); pulseDay = day; }
+    if (!pulseMemo.has(r.id)) pulseMemo.set(r.id, window.SillageIntel.pulse(r, day));
+    return pulseMemo.get(r.id);
+  }
+  const score = r => Math.max(0, Math.min(100, baseScore(r) + pulseOf(r).delta));
   // Rough close probability for a discovery set sent today
   const convP = r => Math.min(.6, .06 + .3 * OPEN_W[r.single_sku_openness] * r.brand_alignment_score / 100 + (r.launch_priority.startsWith("Tier 1") ? .08 : 0));
   const zoneOf = r => {
@@ -253,6 +265,7 @@
       ${r._ws ? `<p class="sl-sub">Wholesale: ${r._ws.units} units · ${kEur(r._ws.revenue)} invoiced · ${kEur(r._ws.outstanding)} outstanding</p>` : `<p class="sl-sub">Close probability if sampled now ≈ ${Math.round(convP(r) * 100)} %.</p>`}
       ${r._rs ? `<p class="sl-sub ${r._rs.alert ? "sl-warn" : ""}">Stock: ${esc(r._rs.label)} · ≈ ${Math.round(r._rs.onHand)} u. on hand · ${Math.round(r._rs.cover)} d cover · ${r._rs.perMonth.toFixed(1)} u./month${r._rs.alert ? ` · reorder ${r._rs.suggest} u. by ${esc(r._rs.reorderDate)}` : ""}</p>` : ""}
       <p class="sl-sub">Export potential ${r.export_potential_score}/100 · ${esc(r.export_potential.nearest_hub)} ${r.export_potential.hub_km} km · ${r.export_potential.high_end_doors_5km} high-end doors ≤ 5 km</p>
+      ${(p => `<p class="sl-sub">Market pulse ${signed(p.delta)} (base ${baseScore(r)}): ${p.drivers.map(d => `${esc(d.label)} ${signed(d.pts)}`).join(" · ") || "neutral"}</p>`)(pulseOf(r))}
       ${isExport(r) ? (l => `<p class="sl-sub">Export · ${esc(l.c)} list: wholesale ${ctx.local(l.wholesale, l.c, 2)}, shelf ${ctx.local(l.msrp, l.c)} at ${l.m.vat} % VAT, MOQ ${ctx.moqFor(r)} u.</p>`)(ctx.priceOf(r)) : ""}</div>`;
   }
 
@@ -290,9 +303,38 @@
     return { html, summary: blend.map(({ r, b }) => ({ store: r.name, city: r.city, blended: b, export_potential: r.export_potential_score, fit: r.brand_alignment_score })) };
   }
 
-  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity, export: exportStrategy, restock: restockForecast, outreach: outreachDue, potential: potentialLeaders };
+  // Dynamic market pulse: which regions and doors the calendar and purchasing shifts favour right now
+  const signed = v => (v > 0 ? "+" : v < 0 ? "−" : "±") + Math.abs(v);
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function marketPulse() {
+    const I = window.SillageIntel, mi = new Date().getMonth();
+    const pros = ctx.data.filter(r => isOpen(r) && !zoneOf(r)).map(r => ({ r, b: baseScore(r), p: pulseOf(r), s: score(r) }));
+    const regions = Object.entries(I.REGION).map(([cc, [pts, note]]) => {
+      const rows = pros.filter(x => x.r.country === cc);
+      return { cc, pts, note, n: rows.length, avg: rows.length ? avg(rows, x => x.p.delta) : 0 };
+    }).filter(x => x.n).sort((a, b) => b.avg - a.avg);
+    const risers = [...pros].sort((a, b) => b.p.delta - a.p.delta || b.s - a.s).slice(0, 6);
+    const fallers = [...pros].filter(x => x.p.delta < 0).sort((a, b) => a.p.delta - b.p.delta || b.b - a.b).slice(0, 4);
+    const top = [...pros].sort((a, b) => b.s - a.s).slice(0, 8);
+    const win = [1, 2, 3].map(k => MONTHS[(mi + k) % 12]).join(" · ");
+    const curve = I.SEASON.map((v, i) => `<i style="height:${Math.round(v / 1.4 * 100)}%"${i === mi ? ' class="on"' : [1, 2, 3].includes((i - mi + 12) % 12) ? ' class="win"' : ""} title="${MONTHS[i]} ${v.toFixed(2)}"></i>`).join("");
+    const html = `<p class="sl-lead">Prioritisation scores now carry a <b>market pulse</b> of ±12 points: regional purchasing shifts, segment momentum and the seasonal buying window ahead (<b>${win}</b>). Retailers order 1–3 months before sell-out, so the window, not today, sets urgency.</p>
+      <div class="sl-season" aria-label="Retail sell-in seasonality">${curve}</div>
+      <div class="sl-card"><div class="sl-card-h"><b>Regional momentum</b><span class="sl-mute">avg pulse on winnable doors</span></div>
+        <ol class="sl-list">${regions.map(g => `<li><b>${esc(g.cc)}</b> <span class="sl-score">${signed(Math.round(g.avg))}</span><div class="sl-mute">${esc(g.note)} · ${g.n} doors</div></li>`).join("")}</ol></div>
+      <div class="sl-card"><div class="sl-card-h"><b>Rising now</b></div><ol class="sl-list">${risers.map(x => `<li>${storeLink(x.r)} <span class="sl-score">${x.b} → ${x.s}</span><div class="sl-mute">${esc(x.r.city)} · ${x.p.drivers.slice(0, 2).map(d => `${esc(d.label)} ${signed(d.pts)}`).join(" · ")}</div></li>`).join("")}</ol></div>
+      ${fallers.length ? `<div class="sl-card"><div class="sl-card-h"><b>Cooling</b></div><ol class="sl-list">${fallers.map(x => `<li>${storeLink(x.r)} <span class="sl-score">${x.b} → ${x.s}</span><div class="sl-mute">${esc(x.r.city)} · ${x.p.drivers.filter(d => d.pts < 0).map(d => `${esc(d.label)} ${signed(d.pts)}`).join(" · ")}</div></li>`).join("")}</ol></div>` : ""}
+      <p class="sl-rec"><b>Pulse-adjusted top 8:</b> ${top.map(x => `${storeLink(x.r)} (${x.s})`).join(", ")}.</p>
+      <p class="sl-sub">Indices are editorial 2026 estimates (see intelligence.js · REGION, SEASON, RESORTS); they reorder doors, they do not size markets.</p>`;
+    return { html, summary: { buying_window: win, regions: regions.map(g => ({ country: g.cc, shift_pts: g.pts, avg_pulse: +g.avg.toFixed(1), note: g.note })),
+      rising: risers.map(x => ({ store: x.r.name, city: x.r.city, base: x.b, pulse: x.p.delta, score: x.s, drivers: x.p.drivers })),
+      cooling: fallers.map(x => ({ store: x.r.name, city: x.r.city, base: x.b, pulse: x.p.delta })) } };
+  }
+
+  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity, export: exportStrategy, restock: restockForecast, outreach: outreachDue, potential: potentialLeaders, pulse: marketPulse };
   function route(q) {
     const t = q.toLowerCase();
+    if (/pulse|season|saison|trend|tendance|regional|régional|shift|momentum|calendar|calendrier/.test(t)) return "pulse";
     if (/export|switzerland|suisse|swiss|schweiz|\bchf\b|\bgbp\b|\buk\b|britain|royaume|non-eu|hors.?ue|douane|customs|currency|devise|vat|tva/.test(t)) return "export";
     if (/restock|reorder|réassort|stock|sell.?through|rupture|velocity|rotation/.test(t)) return "restock";
     if (/sequence|séquence|cadence|outreach|prospection due|step/.test(t)) return "outreach";
@@ -328,13 +370,15 @@
 Ground every claim in the JSON context you are given (store counts, clusters, tiers, openness, sentiment, pipeline, wholesale ledger, exclusivity radius, unit economics, currency). Never invent stores or figures; say when the data cannot answer.
 All raw amounts in the context are EUR. The user is viewing figures in overview.currency.display: quote money in that currency (convert with fx_per_eur) and, for Swiss or other non-EU doors, also in the store's own price-list currency.
 When you assess growth outside the EU (Switzerland today, the UK next), reason as an export strategist: the market's price list and corridor premium over spot FX, local VAT (CH 8.1 % vs FR 20 %) and the resulting shelf-price gap with neighbouring EU cities (cross-border shopping risk), MOQ against that market's minimum order and free-shipping threshold, customs clearance per shipment and how consolidating orders amortises it, duty and import-VAT rules, Incoterms (DAP vs DDP) and the need for an importer of record / UK Responsible Person, plus FX exposure on CHF or GBP invoicing.
+Prospect scores already include a market pulse (base_score + market_pulse): regional purchasing shifts by country, segment momentum and the seasonal buying window 1–3 months ahead (Q4 gifting build, ski-resort winters, coastal summers). Name those drivers when they change a recommendation.
 Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight bullets with numbers and named doors, then one concrete next action. Use **bold** sparingly. Reply in the user's language.`;
 
   function llmContext(q) {
     const id = route(q);
     const prospects = ctx.data.filter(isOpen).map(r => ({ r, s: score(r) })).sort((a, b) => b.s - a.s).slice(0, 40)
       .map(({ r, s }) => ({ name: r.name, city: r.city, cc: r.country, type: r.type, segment: r.segment, status: r.pipeline_status, score: s,
-        fit: r.brand_alignment_score, tier: r.tier_score, sku: r.single_sku_openness, cx: r.customer_experience_rating, sentiment: r.sentiment_summary, pitch: r.cx_insights?.pitch }));
+        fit: r.brand_alignment_score, tier: r.tier_score, sku: r.single_sku_openness, cx: r.customer_experience_rating, sentiment: r.sentiment_summary, pitch: r.cx_insights?.pitch,
+        base_score: baseScore(r), market_pulse: pulseOf(r).delta, pulse_drivers: pulseOf(r).drivers.map(d => `${d.label} (${d.pts > 0 ? "+" : ""}${d.pts})`) }));
     return { overview: overview(), top_prospects: prospects, analysis: id ? { [id]: ANALYSES[id]().summary } : undefined };
   }
 
@@ -437,6 +481,10 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
 .sl-store { all: unset; cursor: pointer; color: var(--gold-hi, #e2c88f); font-weight: 500; }
 .sl-store:hover { text-decoration: underline; text-underline-offset: 3px; }
 .sl-store:focus-visible { outline: 2px solid var(--gold, #c5a059); border-radius: 4px; }
+.sl-season { display: grid; grid-template-columns: repeat(12, 1fr); align-items: end; gap: 3px; height: 54px; margin: 2px 0 12px; padding: 8px; border-radius: 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); }
+.sl-season i { display: block; border-radius: 3px 3px 1px 1px; background: rgba(255,255,255,.12); }
+.sl-season i.win { background: linear-gradient(180deg, var(--gold-hi, #e2c88f), var(--gold, #c5a059)); }
+.sl-season i.on { background: var(--ink, #f5f5f7); }
 .sl-score { font-size: 11px; color: var(--gold, #c5a059); font-variant-numeric: tabular-nums; margin-left: 4px; }
 .sl-tag { font-size: 11px; color: var(--ink-2, #d2d2d7); background: rgba(255,255,255,.06); border-radius: 999px; padding: 2px 8px; margin-left: 4px; white-space: nowrap; }
 .sl-tag.bad { color: var(--bad, #ff6b6b); background: rgba(255,107,107,.1); }
@@ -620,6 +668,8 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     const toggle = () => panel.classList.contains("open") ? close() : open();
     fab.addEventListener("click", open);
     navBtn?.addEventListener("click", toggle);
+    // Other modules (suite bar) can open the assistant on a given analysis
+    document.addEventListener("sillage:ask", e => { const c = CHIPS.find(x => x.id === e.detail?.chip); open(); if (c) ask(c.label, c.id); });
     document.addEventListener("keydown", e => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); toggle(); }
       else if (e.key === "Escape" && panel.classList.contains("open")) close();

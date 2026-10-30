@@ -15,7 +15,10 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 | `perfumeries.json` | Canonical dataset |
 | `perfumeries.js` | Same data as `window.PERFUMERIES` (lets `index.html` open from `file://`) |
 | `index.html` | Leaflet (canvas renderer) on OpenFreeMap vector basemaps (MapLibre GL) + Tabulator app |
-| `intelligence.js` | Predictive engines: restock & sell-through velocity, territory cannibalization guard, print-grade PDF renderer |
+| `intelligence.js` | Predictive engines: restock & sell-through velocity, territory cannibalization guard, market pulse, 6-month cash-flow forecast, print-grade PDF renderer |
+| `modules.js` | Platform modules: revenue forecast panel, legal agreement / NDA generator, webhook & integration center, PWA install + offline kit |
+| `ai_assistant.js` | Sillage AI: built-in analytics (pulse-adjusted scores) + optional Anthropic / OpenAI engine |
+| `sw.js`, `manifest.webmanifest`, `icons/` | Installable PWA: service worker (app shell, libraries, map tiles), manifest, iOS / Android icons |
 
 ## Usage
 ```bash
@@ -246,3 +249,31 @@ selected city) render an A4 document (Playfair Display + SF Pro, champagne rules
 print dialog: choose **Save as PDF** for vector text. The store dossier covers market intelligence, unit economics,
 territory, sell-through forecast, ledger and store insights; the city overview carries a to-scale territory map with
 exclusivity zones, segment and pipeline mix, restock alerts and the doors ranked by export potential.
+
+## Platform modules
+Reached from the suite bar under the hero (and **Forecast** in the nav).
+
+- **Revenue forecast** (`Intel.forecast`): next 6 calendar months. Partners: deseasonalised run-rate from the last 12 months
+  of invoices × local seasonality × damped 90-day velocity trend × regional shift. Pipeline: stage probability × opening
+  order landing 1–3 months out (meeting / follow-up / discovery set), then reorders. Cash-in: turnover shifted by each
+  account's median payment terms (fractional months) plus receivables already invoiced (overdue at 85 %). Split by market
+  currency (EUR / CHF / GBP) with ±5 % FX sensitivity; CSV and board PDF.
+- **Agreements**: `Contract` / `Agreement` buttons on partner cards, popups and dossiers. Exclusive territorial
+  distribution, selective distribution or mutual NDA, pre-filled with store identity, decision maker, local price list,
+  MOQ, exclusivity radius (existing partners inside it are carved out) and governing law per country. Territorial clauses
+  follow Regulation (EU) 2022/720 and the Swiss Cartel Act (passive / online sales never restricted, RRP non-binding).
+  A template for counsel review, not legal advice.
+- **Integration center**: Shopify B2B (`orders/create`, `orders/paid`, `orders/fulfilled`, `companies/create`) and Stripe
+  (`checkout.session.completed`, `invoice.finalized`, `invoice.paid`, `invoice.payment_failed`) endpoints, live sample
+  payloads, Shopify `companyCreate` inputs and a Stripe multi-currency price catalog. `atlas-sync-worker.js` (download) is a
+  Cloudflare Worker that verifies Shopify HMAC / Stripe signatures, maps events onto the ledger in KV and serves
+  `GET /ledger`; the mapping code is the same function the app uses for **Replay** and **Pull ledger** (idempotent by
+  order / invoice number). Link records with `crm_key` (Shopify company `externalId`, order note attribute or `crm:` tag;
+  Stripe `metadata.crm_key`).
+- **PWA**: install from the browser (Android / desktop) or Safari *Share → Add to Home Screen* (iOS). The service worker
+  precaches the app and all store data, caches libraries / fonts / map tiles, and never caches FX, LLM or sync calls.
+  *Prepare offline kit* warms the tiles of the area on screen (3 zoom levels deeper, ≤ 1 200 tiles) for trade shows.
+  Bump `VERSION` in `sw.js` when a precached file changes. Needs `http(s)` (`python3 -m http.server` works locally).
+- **Market pulse** (`Intel.pulse`): ±12 points added to Sillage AI's placement score from regional purchasing shifts
+  (`REGION`), segment momentum, Paris tourist flows, luxury-hub peaks and the seasonal buying window 1–3 months ahead
+  (`SEASON`, ski-resort and coastal `RESORTS`). Editorial 2026 indices; recomputed daily. See the *Dynamic Market Pulse* chip.

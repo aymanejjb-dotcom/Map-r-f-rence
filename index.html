@@ -796,6 +796,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 <script src="perfumeries.js"></script>
+<script src="ai_assistant.js" defer></script>
 <script>
 (async function () {
   let data = window.PERFUMERIES;
@@ -839,18 +840,20 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     "Traditional Prestige Perfumery", "Selective Concept Store", "Department Store"];
   const SEG_SHORT = ["True indie", "Indie (verify)", "Specialist", "Traditional", "Selective concept", "Department"];
   const SEG_COLOR = ["#5fd08a", "#a6c96a", "#6fc2b8", "#d9b46a", "#c39cff", "#9a958c"];
-  const STORE_KEY = "perfumery-crm-v1", SIM_KEY = "perfumery-sim-v1";
+  const STORE_KEY = "perfumery-crm-v1", SIM_KEY = "perfumery-sim-v1", TOUCH_KEY = "perfumery-touch-v1";
   const priShort = p => p.slice(0, 6).replace("Tier ", "T");   // "Tier 1 - Quick…" -> "T1"
   const isQuickWin = r => r.launch_priority.startsWith("Tier 1") && r.single_sku_openness === "High" &&
     r.brand_alignment_score >= 70 && !PROTECTED.has(r.pipeline_status) && r.pipeline_status !== "Declined";
   let edits = store.get(STORE_KEY, {});
+  // Date of the last status change per crm_key (feeds the Sillage AI stagnation audit)
+  const touched = store.get(TOUCH_KEY, {});
   Object.values(edits).forEach(e => { if (LEGACY_STATUS[e.pipeline_status]) e.pipeline_status = LEGACY_STATUS[e.pipeline_status]; });
   data.forEach(r => {
     Object.assign(r, edits[r.crm_key] || {});
     if (!STATUSES.includes(r.pipeline_status)) r.pipeline_status = LEGACY_STATUS[r.pipeline_status] || STATUSES[0];
   });
   const byId = new Map(data.map(r => [r.id, r]));
-  let activeId = null;
+  let activeId = null, shown = data;
 
   // ---- Wholesale ledger: deliveries (stock engagement) and invoices per partner. Baked from
   // sources/wholesale.json; drawer edits live in this browser until exported, like the CRM.
@@ -1082,6 +1085,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   // Single entry point for a CRM change, from the table, the dossier or the pitch modal
   function setCrm(id, patch) {
     const r = byId.get(id);
+    if ("pipeline_status" in patch && patch.pipeline_status !== r.pipeline_status) { touched[r.crm_key] = TODAY; store.set(TOUCH_KEY, touched); }
     Object.assign(r, patch);
     if (r.notes_prospections != null) r.notes_prospections = String(r.notes_prospections).trim();
     edits[r.crm_key] = Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]));
@@ -1585,7 +1589,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     dashboard(keep);
     simulate(keep);
     scheduleCards();
-    return keep;
+    return (shown = keep);
   }
 
   // Top 3 by revenue among the partners shown get the gold halo
@@ -1853,6 +1857,17 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   });
 
   table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); setMode(mode); });
+
+  // ---- Sillage AI bridge: ai_assistant.js reads the live dataset and pipeline state through this
+  window.SillageContext = {
+    data, statuses: STATUSES, protectedStatuses: [...PROTECTED], prob: PROB, today: TODAY,
+    get zoneKm() { return zoneKm; }, get sim() { return sim; }, get shown() { return shown; }, get mode() { return mode; },
+    touched: key => touched[key] || null,
+    focus: id => { focusStore(id); $("map").scrollIntoView({ behavior: "smooth", block: "center" }); },
+    setStatus: (ids, status) => ids.forEach(id => setCrm(id, { pipeline_status: status })),
+    toast,
+  };
+  document.dispatchEvent(new Event("sillage:ready"));
 })();
 </script>
 </body>

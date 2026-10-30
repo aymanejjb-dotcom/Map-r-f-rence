@@ -173,3 +173,11 @@ statuses and that every ledger account is still a partner.
 - **Export CSV**: rows currently shown, in table order, for outreach campaigns (UTF-8, Excel-ready).
 - **Export CRM JSON**: save as `sources/crm.json` and run `python3 build_perfumeries.py` to bake
   the pipeline into `perfumeries.json` and share it through git.
+
+## Sillage AI (`ai_assistant.js`)
+Floating champagne-glass assistant (bottom-right, or ⌘/Ctrl+K) reading the live dataset and
+pipeline through `window.SillageContext`. Four built-in analyses run offline: growth cities for
+single-SKU, 50-door discovery-set dispatch (CSV + one-click status update), pipeline stagnation &
+collections audit, exclusivity-zone conflicts. Store names and cities get a brief. Optional
+Anthropic / OpenAI key (⚙︎, kept in this browser only) answers open questions grounded on the
+same CRM context. Status changes are dated in `perfumery-touch-v1` to drive the stagnation SLA.

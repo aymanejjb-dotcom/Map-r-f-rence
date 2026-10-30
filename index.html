@@ -146,7 +146,7 @@ details.panel[open] > summary .chev { transform: rotate(225deg) translateY(-1px)
 .f { display: flex; flex-direction: column; gap: 7px; font: 600 10.5px var(--text); color: var(--muted); text-transform: uppercase; letter-spacing: .1em; min-width: 0; }
 .f > span.v { color: var(--gold-hi); }
 .f .v { font-variant-numeric: tabular-nums; }
-select, input[type=search], input[type=number], input[type=text], textarea {
+select, input[type=search], input[type=number], input[type=text], input[type=date], textarea {
   -webkit-appearance: none; appearance: none; font: 400 13.5px var(--text); letter-spacing: -.005em; color: var(--ink);
   background: var(--well); border: 1px solid var(--hair); border-radius: var(--r-sm); padding: 9px 12px; min-width: 0; outline: none;
   transition: border-color .2s, box-shadow .2s; }
@@ -434,8 +434,94 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 .toast::before { content: "✓"; color: var(--gold-hi); margin-right: 8px; }
 .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
+/* ——— Dual map: Global Target Directory ↔ Ma Carte Partner ——— */
+.mode { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; margin: 0 auto; padding: 3px; border-radius: 999px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--hair); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); isolation: isolate; }
+.mode::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 999px;
+  background: linear-gradient(180deg, rgba(226,200,143,.22), rgba(197,160,89,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(197,160,89,.55);
+  transition: transform .5s var(--ease); }
+body[data-mode=partner] .mode::before { transform: translateX(100%); }
+.mode button { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 8px 18px; min-height: 34px; border-radius: 999px;
+  display: flex; flex-direction: column; align-items: center; gap: 1px; transition: color .3s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.mode button b { font: 500 13px/1.1 var(--text); letter-spacing: -.005em; }
+.mode button small { font: italic 400 11px/1.1 var(--serif); color: var(--faint); transition: color .3s; }
+.mode button[aria-pressed=true] { color: var(--ink); }
+.mode button[aria-pressed=true] small { color: var(--gold-hi); }
+.hero .demo { margin-left: 10px; vertical-align: 3px; }
+.rule { height: 1px; border: 0; margin: 0 0 22px; background: linear-gradient(90deg, transparent, var(--gold-line) 20%, var(--gold-line) 80%, transparent); opacity: .7; }
+body[data-mode=partner] .map-card { box-shadow: 0 0 0 1px rgba(197,160,89,.18), 0 40px 80px -40px rgba(197,160,89,.25); }
+
+/* Partner pins: gold halo around the top performers */
+body:not([data-mode=partner]) .map-ctl { display: none; }
+.pin .halo { position: absolute; left: 50%; top: 50%; width: calc(var(--s) + 16px); height: calc(var(--s) + 16px);
+  margin: calc((var(--s) + 16px) / -2) 0 0 calc((var(--s) + 16px) / -2); border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 0deg, transparent 0 15%, var(--gold-hi) 30%, transparent 45% 65%, var(--gold) 80%, transparent 95%);
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 2.5px), #000 calc(50% - 2px));
+  mask: radial-gradient(circle, transparent calc(50% - 2.5px), #000 calc(50% - 2px));
+  filter: drop-shadow(0 0 6px var(--gold)); animation: halo 3.2s linear infinite; }
+.pin.star b { box-shadow: 0 0 0 1.5px rgba(0,0,0,.85), 0 0 0 3px rgba(226,200,143,.55), 0 0 calc(var(--s) * 1.6) var(--gold); }
+.pin .rk { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 600 9.5px/1 var(--text); color: #0b0904; pointer-events: none; }
+@keyframes halo { to { transform: rotate(1turn); } }
+.leaflet-heatmap-layer { mix-blend-mode: screen; opacity: .9; }
+.map-ctl { display: flex; gap: 6px; }
+.map-ctl .chip { background: rgba(18,18,20,.78); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8); }
+
+/* "Où ça cartonne" — city leaderboard */
+.board { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; margin-bottom: 20px; border-radius: var(--r-lg); overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.board > div { padding: 20px 22px; min-width: 0; }
+.board > div + div { border-left: 1px solid var(--hair); }
+.board h2 { margin: 4px 0 14px; font: 400 26px/1.1 var(--serif); }
+.board h2 em { color: var(--gold-hi); }
+.rank { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; padding: 9px 0; border-bottom: 1px solid var(--hair);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.rank:last-child { border-bottom: 0; }
+.rank:hover .nm { color: var(--gold-hi); }
+.rank .no { font: italic 400 15px var(--serif); color: var(--faint); }
+.rank:nth-child(-n+3) .no { color: var(--gold-hi); }
+.rank .nm { font: 500 14px var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .2s; }
+.rank .nm small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.rank .amt { font: 600 14px var(--sans); font-variant-numeric: tabular-nums; text-align: right; }
+.rank .bar { grid-column: 2 / -1; }
+.rank .amt small { display: block; font: 400 11px var(--text); color: var(--muted); }
+
+/* Wholesale Stock & Invoicing drawer (dossier, partners only) */
+.drawer { margin: 20px -4px 0; border-radius: 18px; border: 1px solid rgba(197,160,89,.24); overflow: hidden;
+  background: linear-gradient(180deg, rgba(197,160,89,.08), rgba(197,160,89,.015) 140px), var(--well);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 24px 50px -30px rgba(197,160,89,.4); }
+.drawer > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 14px 16px; user-select: none; }
+.drawer > summary::-webkit-details-marker { display: none; }
+.drawer > summary b { font: 500 18px/1.1 var(--serif); }
+.drawer[open] > summary .chev { transform: rotate(225deg) translateY(-1px); }
+.drawer-body { padding: 0 16px 16px; border-top: 1px solid rgba(197,160,89,.16); animation: drawer-in .5s var(--ease); }
+@keyframes drawer-in { from { opacity: 0; transform: translateY(-6px); } }
+.drawer .kv { margin: 14px 0 10px; background: rgba(0,0,0,.35); }
+.spark { display: block; width: 100%; height: 72px; margin: 4px 0 2px; overflow: visible; }
+.spark-cap { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--faint); letter-spacing: .04em; }
+.drawer .seg-ctl { margin: 14px 0 6px; display: flex; }
+.drawer .seg-ctl button { flex: 1; justify-content: center; }
+.lines { display: flex; flex-direction: column; }
+.ln { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 10px 2px; border-bottom: 1px solid var(--hair); font-size: 13px; }
+.ln:last-child { border-bottom: 0; }
+.ln .w { min-width: 0; }
+.ln .w b { display: block; font: 500 13px var(--text); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ln .w span { font-size: 11.5px; color: var(--muted); }
+.ln .amt { text-align: right; font: 600 14px var(--sans); font-variant-numeric: tabular-nums; }
+.ln .amt small { display: block; font: 400 10.5px var(--text); color: var(--faint); }
+.ln button.badge { border: 0; cursor: pointer; font-family: inherit; }
+.ln .x { border: 0; background: none; color: var(--faint); cursor: pointer; padding: 4px 6px; border-radius: 6px; font-size: 14px; line-height: 1; }
+.ln .x:hover { color: var(--bad); background: rgba(255,107,107,.08); }
+.ln.stock { grid-template-columns: minmax(0, 1fr) auto auto; }
+.addline { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--hair-2); }
+.addline input, .addline select { width: 100%; min-width: 0; }
+.addline .btn { grid-column: 1 / -1; }
+.addline label { display: flex; flex-direction: column; gap: 5px; font: 600 9.5px var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.drawer .empty { padding: 22px 8px 6px; }
+
 /* ——— Responsive ——— */
 @media (max-width: 1280px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1080px) { .nav-in .mode button small { display: none; } }
+@media (max-width: 860px) { .board { grid-template-columns: 1fr; } .board > div + div { border-left: 0; border-top: 1px solid var(--hair); } }
 @media (max-width: 1080px) {
   .ctl-body { grid-template-columns: 1fr; }
   .side-ctl { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); }
@@ -443,9 +529,12 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   .cards.list .sc .stats { display: none; }
 }
 @media (max-width: 700px) {
-  html { scroll-padding-top: 64px; }
+  html { scroll-padding-top: 120px; }
   .wrap, .nav-in { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
-  .nav-in { height: 52px; }
+  .nav-in { height: auto; min-height: 52px; flex-wrap: wrap; row-gap: 0; padding-top: 8px; padding-bottom: 8px; }
+  .nav-in .mode { order: 3; width: 100%; margin-top: 8px; }
+  .nav-in .mode button { padding: 7px 8px; }
+  .board > div { padding: 18px 16px; }
   .brand .sub { display: none; }
   .brand h1 { font-size: 19px; }
   .nav-actions .btn:not(.gold) { display: none; }
@@ -459,7 +548,7 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   .widget .val { font-size: 28px; }
   .map-card { height: 58vh; height: 58svh; min-height: 340px; border-radius: 18px; }
   .f, .f input[type=search], .f select { width: 100%; }
-  select, input[type=search], input[type=number], input[type=text], textarea { font-size: 16px; }   /* no iOS focus zoom */
+  select, input[type=search], input[type=number], input[type=text], input[type=date], textarea { font-size: 16px; }   /* no iOS focus zoom */
   .pipe-head { padding: 16px; }
   .pipe-head .tools { margin-left: 0; width: 100%; }
   .pipe-head .tools select { flex: 1; }
@@ -505,6 +594,10 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
       <h1>Maison <em>Atlas</em></h1>
       <span class="sub">Niche fragrance launch · BE · NL · DE · FR · LU · CH</span>
     </div>
+    <div class="mode" role="group" aria-label="Map mode">
+      <button data-mode="global" aria-pressed="true"><b>Global Target Directory</b><small>every door, for prospecting</small></button>
+      <button data-mode="partner" aria-pressed="false"><b>Ma Carte Partner</b><small>active accounts &amp; wholesale</small></button>
+    </div>
     <div class="nav-actions">
       <button class="btn" id="go-sim">Margin simulator</button>
       <button class="btn gold" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
@@ -514,20 +607,34 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 
 <div class="wrap">
 <section class="hero">
-  <div>
-    <span class="eyebrow">Single-SKU launch · B2B pipeline</span>
+  <div data-only="global">
+    <span class="eyebrow">Global Target Directory · B2B pipeline</span>
     <h2>The quiet <em>art</em> of placement.</h2>
     <p>Four hundred doors across six markets, scored for fit and openness. Choose where your fragrance belongs, then reach out with intent.</p>
   </div>
+  <div data-only="partner" hidden>
+    <span class="eyebrow">Ma Carte Partner · Wholesale<span class="pill demo" id="demo-pill" hidden title="sources/wholesale.json ships illustrative figures: replace them with your own ledger">Demo ledger</span></span>
+    <h2>Where it <em>sells.</em></h2>
+    <p>Only the doors that carry your fragrance: stock engaged, invoices issued, cash collected — and the cities where it moves.</p>
+  </div>
 </section>
+<hr class="rule">
 
-<section class="metrics" aria-label="Executive metrics">
+<section class="metrics" aria-label="Executive metrics" data-only="global">
   <div class="widget"><span class="eyebrow">Target stores</span><span class="val" id="m-total">0</span><span class="hint" id="m-total-h">&nbsp;</span></div>
   <div class="widget"><span class="eyebrow"><i></i>Tier 1 quick wins</span><span class="val" id="m-high">0</span><span class="hint" id="m-high-h">&nbsp;</span></div>
   <div class="widget"><span class="eyebrow">Active pipeline</span><span class="val" id="m-pipe">0</span><span class="hint" id="m-pipe-h">&nbsp;</span><div class="funnel" id="m-funnel"></div></div>
   <div class="widget"><span class="eyebrow">Sampling</span><span class="val" id="m-samp">0</span><span class="hint" id="m-samp-h">&nbsp;</span></div>
   <div class="widget key"><span class="eyebrow">Weighted · year 1</span><span class="val" id="m-rev">–</span><span class="hint" id="m-rev-h">&nbsp;</span></div>
   <div class="widget"><span class="eyebrow">Territories</span><span class="val" id="m-zone">0</span><span class="hint" id="m-zone-h">&nbsp;</span></div>
+</section>
+<section class="metrics" aria-label="Partner network metrics" data-only="partner" hidden>
+  <div class="widget"><span class="eyebrow">Partner doors</span><span class="val" id="w-doors">0</span><span class="hint" id="w-doors-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow">Stock engaged</span><span class="val" id="w-units">0</span><span class="hint" id="w-units-h">&nbsp;</span></div>
+  <div class="widget key"><span class="eyebrow"><i></i>Revenue invoiced</span><span class="val" id="w-rev">–</span><span class="hint" id="w-rev-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow">Collected</span><span class="val" id="w-paid">–</span><span class="hint" id="w-paid-h">&nbsp;</span><div class="funnel" id="w-paid-bar"></div></div>
+  <div class="widget"><span class="eyebrow">Outstanding</span><span class="val" id="w-out">–</span><span class="hint" id="w-out-h">&nbsp;</span></div>
+  <div class="widget"><span class="eyebrow">Où ça cartonne</span><span class="val serif" id="w-top" style="font-weight:400">–</span><span class="hint" id="w-top-h">&nbsp;</span></div>
 </section>
 
 <details class="panel card" id="ctl">
@@ -572,7 +679,8 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
       </div>
       <div class="actions">
         <button class="btn sm" id="crm" title="Save as sources/crm.json, then run build_perfumeries.py to bake edits into the dataset">Export CRM JSON</button>
-        <button class="btn sm ghost" id="discard" title="Forget pipeline edits stored in this browser">Discard edits</button>
+        <button class="btn sm" id="ledger-export" title="Save as sources/wholesale.json, then run build_perfumeries.py">Export ledger JSON</button>
+        <button class="btn sm ghost" id="discard" title="Forget pipeline and ledger edits stored in this browser">Discard edits</button>
         <button class="btn sm ghost" id="reset">Reset filters</button>
       </div>
     </div>
@@ -580,6 +688,19 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 </details>
 
 <section class="map-card"><div id="map" aria-label="Store map"></div></section>
+
+<section class="board" data-only="partner" hidden aria-label="Top-performing cities and stores">
+  <div>
+    <span class="eyebrow">Heatmap · revenue by city</span>
+    <h2>Où ça <em>cartonne</em></h2>
+    <div id="b-cities"></div>
+  </div>
+  <div>
+    <span class="eyebrow">Top-performing doors</span>
+    <h2>The <em>gold</em> circle</h2>
+    <div id="b-stores"></div>
+  </div>
+</section>
 
 <section class="pipeline card">
   <div class="pipe-head">
@@ -589,6 +710,8 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
         <option value="tier_score:desc">Tier score</option>
         <option value="brand_alignment_score:desc">Brand fit</option>
         <option value="_val:desc">Year-1 value</option>
+        <option value="_rev:desc">Revenue invoiced</option>
+        <option value="_units:desc">Units delivered</option>
         <option value="pipeline_status:desc">Pipeline stage</option>
         <option value="name:asc">Name A–Z</option>
       </select>
@@ -670,6 +793,7 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 <script src="perfumeries.js"></script>
 <script>
@@ -728,6 +852,44 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   const byId = new Map(data.map(r => [r.id, r]));
   let activeId = null;
 
+  // ---- Wholesale ledger: deliveries (stock engagement) and invoices per partner. Baked from
+  // sources/wholesale.json; drawer edits live in this browser until exported, like the CRM.
+  const LEDGER_KEY = "perfumery-ledger-v1", MODE_KEY = "perfumery-mode-v1";
+  const TODAY = new Date().toISOString().slice(0, 10);
+  let ledgerEdits = store.get(LEDGER_KEY, {});
+  const ledgerOf = r => ledgerEdits[r.crm_key] || (r.wholesale
+    ? { since: r.wholesale.since, deliveries: r.wholesale.deliveries, invoices: r.wholesale.invoices.map(({ cumulative, ...i }) => i) } : null);
+  const isDemo = r => !ledgerEdits[r.crm_key] && !!r.wholesale?.demo;
+  // Overdue is derived: a pending invoice past its due date
+  function summarize(r) {
+    const l = ledgerOf(r);
+    if (!l) return null;
+    const deliveries = [...l.deliveries].sort((a, b) => a.date.localeCompare(b.date));
+    let run = 0;
+    const invoices = [...l.invoices].sort((a, b) => a.date.localeCompare(b.date)).map(i => ({ ...i, cumulative: run += i.amount,
+      state: i.status === "Paid" ? "Paid" : i.due < TODAY ? "Overdue" : "Pending" }));
+    const paid = invoices.filter(i => i.status === "Paid").reduce((a, i) => a + i.amount, 0);
+    const overdue = invoices.filter(i => i.state === "Overdue");
+    return { since: l.since || deliveries[0]?.date || null, deliveries, invoices, units: deliveries.reduce((a, d) => a + d.units, 0),
+      revenue: run, paid, outstanding: run - paid, overdue: overdue.reduce((a, i) => a + i.amount, 0), overdueN: overdue.length,
+      last: invoices.length ? invoices[invoices.length - 1].date : null };
+  }
+  data.forEach(r => { r._ws = summarize(r); });
+  const INVOICE_STATE = { Paid: "--ok", Pending: "--s-disc", Overdue: "--bad" };
+  const fmtDate = d => d ? new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "2-digit" }) : "–";
+
+  // ---- Dual map: "global" prospecting directory or "partner" network (Ma Carte Partner)
+  let mode = location.hash === "#partners" ? "partner" : location.hash === "#global" ? "global" : store.get(MODE_KEY, "global");
+  const partnerMode = () => mode === "partner";
+  function modeDOM() {
+    document.body.dataset.mode = mode;
+    document.querySelectorAll(".mode [data-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === mode));
+    document.querySelectorAll("[data-only]").forEach(el => { el.hidden = el.dataset.only !== mode; });
+    $("demo-pill").hidden = !data.some(r => PROTECTED.has(r.pipeline_status) && isDemo(r));
+  }
+  modeDOM();
+  let topRank = new Map(), maxRev = 1;   // top performers (gold halo) and the revenue scale for pin size
+
   // ---- Simulator state
   const SIM_FIELDS = { brand: "s-brand", scent: "s-scent", msrp: "s-msrp", cogs: "s-cogs", vat: "s-vat", coef: "s-coef", open: "s-open", pack: "s-pack", re: "s-re" };
   const savedSim = store.get(SIM_KEY, {});
@@ -783,14 +945,37 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
 
   const legend = L.control({ position: "bottomright" });
-  legend.onAdd = () => {
-    const d = L.DomUtil.create("div", "legend");
-    d.innerHTML = ["Niche Boutique", "Independent Concept Store", "Department Store"]
+  const legendHTML = () => partnerMode()
+    ? ["Key Account", "Partner Active"].map(s => `<div><span class="lg" style="background:${statusColor(s)};color:${statusColor(s)}"></span>${s}</div>`).join("") +
+      `<div><span class="ql"></span>Top performer (gold halo)</div><div class="lm">Size = revenue · glow = heatmap</div>`
+    : ["Niche Boutique", "Independent Concept Store", "Department Store"]
       .map(t => `<div><span class="lg" style="background:${color(t)};color:${color(t)}"></span>${t}</div>`).join("") +
       `<div><span class="ql"></span>Tier 1 quick win</div><div><span class="zl"></span>Exclusivity zone</div><div class="lm">Size = tier · halo = status</div>`;
+  legend.onAdd = () => { const d = L.DomUtil.create("div", "legend"); d.innerHTML = legendHTML(); return d; };
+  legend.addTo(map);
+
+  // Revenue heatmap (partner mode): champagne glow where the fragrance sells.
+  // simpleheat reads its canvas back on every redraw: give it a readback-friendly 2D context.
+  if (L.HeatLayer) {
+    const init = L.HeatLayer.prototype._initCanvas;
+    L.HeatLayer.prototype._initCanvas = function () {
+      const create = L.DomUtil.create;
+      L.DomUtil.create = (...a) => { const el = create(...a); if (a[0] === "canvas") el.getContext("2d", { willReadFrequently: true }); return el; };
+      try { init.call(this); } finally { L.DomUtil.create = create; }
+    };
+  }
+  const heat = L.heatLayer
+    ? L.heatLayer([], { radius: 42, blur: 34, maxZoom: 10, minOpacity: .28,
+        gradient: { .15: "#2a1e0a", .4: "#6f5526", .65: "#c5a059", .85: "#e2c88f", 1: "#fff4d6" } })
+    : L.layerGroup();
+  const heatCtl = L.control({ position: "topleft" });
+  heatCtl.onAdd = () => {
+    const d = L.DomUtil.create("div", "map-ctl");
+    d.innerHTML = `<label class="chip" title="Revenue heatmap"><input id="heat" type="checkbox" checked>Heatmap</label>`;
+    L.DomEvent.disableClickPropagation(d);
     return d;
   };
-  legend.addTo(map);
+  heatCtl.addTo(map);
 
   const segBadge = r => { const i = SEGMENTS.indexOf(r.segment); return `<span class="badge" style="--c:${SEG_COLOR[i]}">${esc(SEG_SHORT[i])}</span>`; };
   const popup = r => `<div class="pop">
@@ -799,9 +984,13 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     <div class="meta">${esc(r.district || r.city)}, ${esc(r.country_name)}</div>
     <div class="badges">${badge(r.pipeline_status)}${segBadge(r)}${
       r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : ""}</div>
-    <div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>CX</span><b>${stars(r.customer_experience_rating)}</b></div></div>
+    ${r._ws && PROTECTED.has(r.pipeline_status)
+      ? `<div class="stats"><div><span>Units</span><b>${r._ws.units}</b></div><div><span>Revenue</span><b>${short(r._ws.revenue)}</b></div><div><span>Due</span><b>${short(r._ws.outstanding)}</b></div><div><span>Inv.</span><b>${r._ws.invoices.length}</b></div></div>
+    <div class="meta">Partner since ${fmtDate(r._ws.since)} · last invoice ${fmtDate(r._ws.last)}</div>
+    <div class="btns"><button class="btn gold sm" data-dossier="${r.id}">Stock &amp; invoices</button><button class="btn sm" data-pitch="${r.id}">Pitch</button></div>`
+      : `<div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>CX</span><b>${stars(r.customer_experience_rating)}</b></div></div>
     <div class="meta">Pitch the ${esc(r.decision_maker_role.toLowerCase())}</div>
-    <div class="btns"><button class="btn gold sm" data-pitch="${r.id}">Generate pitch</button><button class="btn sm" data-dossier="${r.id}">Dossier</button></div>
+    <div class="btns"><button class="btn gold sm" data-pitch="${r.id}">Generate pitch</button><button class="btn sm" data-dossier="${r.id}">Dossier</button></div>`}
   </div>`;
 
   const markers = new Map();
@@ -810,6 +999,14 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   // DOM markers: glowing dot sized by tier, halo = pipeline status once contacted, pulse = Tier 1 quick win.
   // A fixed 26 px hit box keeps small dots tappable on phones.
   const pinIcon = r => {
+    if (partnerMode() && PROTECTED.has(r.pipeline_status)) {
+      // Partner map: colour = account level, size = revenue, rotating gold halo on the top 3
+      const s = Math.round(10 + 14 * Math.sqrt((r._ws?.revenue || 0) / maxRev)), rk = topRank.get(r.id);
+      return L.divIcon({
+        className: "pin" + (rk ? " star" : "") + (r.id === activeId ? " on" : ""), iconSize: [34, 34],
+        html: `${rk ? `<i class="halo" style="--s:${s}px"></i>` : ""}<b style="--s:${s}px;--c:${statusColor(r.pipeline_status)}"></b>${rk && s >= 14 ? `<span class="rk">${rk}</span>` : ""}`,
+      });
+    }
     const s = dotSize(r.tier_score), contacted = r.pipeline_status !== "Not Contacted";
     return L.divIcon({
       className: "pin" + (isQuickWin(r) ? " qw" : "") + (r.id === activeId ? " on" : ""), iconSize: [26, 26],
@@ -817,7 +1014,9 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     });
   };
   // Small dots stack above big ones; quick wins above everything
-  const pinZ = r => (100 - r.tier_score) * 10 + (isQuickWin(r) ? 2000 : 0);
+  const pinZ = r => partnerMode() && PROTECTED.has(r.pipeline_status)
+    ? 3000 + (topRank.has(r.id) ? 1000 - topRank.get(r.id) : 0)
+    : (100 - r.tier_score) * 10 + (isQuickWin(r) ? 2000 : 0);
   data.forEach(r => {
     const m = L.marker([r.lat, r.lng], { icon: pinIcon(r), zIndexOffset: pinZ(r), riseOnHover: true, keyboard: false })
       .bindPopup(() => popup(r), { maxWidth: 320, minWidth: 240, autoPanPaddingTopLeft: [20, 70], offset: [0, -6] })
@@ -845,6 +1044,13 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
           `<span class="pri t${c.getValue()[5]}" title="${esc(c.getValue())}">${priShort(c.getValue())}</span>` },
       { title: "Status", field: "pipeline_status", width: 170, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
         sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop, formatter: c => badge(c.getValue()) },
+      { title: "Units", field: "_units", width: 80, hozAlign: "right", sorter: "number", visible: false, formatter: c => c.getValue() ? `<span class="num">${c.getValue()}</span>` : `<span class="muted">–</span>` },
+      { title: "Revenue", field: "_rev", width: 110, hozAlign: "right", sorter: "number", visible: false, formatter: c => `<span class="num" style="color:var(--gold-hi)">${c.getValue() ? eur.format(c.getValue()) : "–"}</span>` },
+      { title: "Outstanding", field: "_out", width: 115, hozAlign: "right", sorter: "number", visible: false, formatter: c => {
+          const w = byId.get(c.getRow().getData().id)._ws;
+          return !w ? `<span class="muted">–</span>` : w.overdueN ? `<span class="num" style="color:var(--bad)" title="${w.overdueN} overdue">${eur.format(w.outstanding)}</span>`
+            : `<span class="num">${eur.format(w.outstanding)}</span>`; } },
+      { title: "Last invoice", field: "_last", width: 110, visible: false, formatter: c => fmtDate(c.getValue()) },
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
       { title: "Pitch", field: "id", width: 84, headerSort: false, hozAlign: "center", cellClick: (e, c) => { e.stopPropagation(); openPitch(c.getValue()); },
         formatter: () => `<button class="btn sm" type="button">Pitch</button>` },
@@ -899,8 +1105,11 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
       r._val = r.pipeline_status === "Declined" ? 0 : storeValue(r);
       r._wval = r._val * PROB[r.pipeline_status];
       r._zoneKm = PROTECTED.has(r.pipeline_status) ? -1 : r._zone ? r._zone.km : 99;
+      r._units = r._ws?.units || 0; r._rev = r._ws?.revenue || 0; r._out = r._ws?.outstanding || 0; r._last = r._ws?.last || null;
     });
+    maxRev = Math.max(1, ...data.filter(r => PROTECTED.has(r.pipeline_status)).map(r => r._rev));
     if (tableReady) table.updateData(data.map(r => ({ id: r.id, _val: r._val, _zoneKm: r._zoneKm, pipeline_status: r.pipeline_status,
+      _units: r._units, _rev: r._rev, _out: r._out, _last: r._last,
       decision_maker_role: r.decision_maker_role, notes_prospections: r.notes_prospections }))).catch(() => {});
   }
   refreshDerived();
@@ -909,7 +1118,7 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   // Row / card → fly to the store; the popup opens once the map settles (wide screens only: on phones the sheet covers the map)
   function focusStore(id) {
     const r = byId.get(id), m = markers.get(id);
-    map.off("moveend", openPending);
+    if (openPending) map.off("moveend", openPending);
     if (!phone.matches) { openPending = () => layer.hasLayer(m) && m.openPopup(); map.once("moveend", openPending); }
     map.flyTo([r.lat, r.lng], Math.max(map.getZoom(), 14), { duration: .6 });
     highlight(id);
@@ -940,7 +1149,9 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
   const cardHTML = r => `<article class="sc${r.id === activeId ? " on" : ""}" data-id="${r.id}" tabindex="0">
       <div class="top"><span class="eyebrow">${esc(r.type)} · ${esc(r.district || r.city)}</span><span class="pri t${r.launch_priority[5]}" title="${esc(r.launch_priority)}">${priShort(r.launch_priority)}</span></div>
       <div class="id"><h3>${esc(r.name)}</h3><div class="addr">${esc(r.full_address)}</div></div>
-      <div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>Yr-1</span><b>${short(r._val || 0)}</b></div></div>
+      ${partnerMode() && r._ws
+        ? `<div class="stats"><div><span>Units</span><b>${r._ws.units}</b></div><div><span>Revenue</span><b>${short(r._ws.revenue)}</b></div><div><span>Due</span><b${r._ws.overdueN ? ' style="color:var(--bad)"' : ""}>${short(r._ws.outstanding)}</b></div><div><span>Inv.</span><b>${r._ws.invoices.length}</b></div></div>`
+        : `<div class="stats"><div><span>Tier</span><b>${r.tier_score}</b></div><div><span>Fit</span><b>${r.brand_alignment_score}</b></div><div><span>SKU</span><b>${r.single_sku_openness}</b></div><div><span>Yr-1</span><b>${short(r._val || 0)}</b></div></div>`}
       <div class="foot">${statusSelect(r)}<button class="btn sm" type="button" data-pitch="${r.id}">Pitch</button></div>
     </article>`;
   let cardsFrame = 0;
@@ -1064,7 +1275,7 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
         <label class="f">Pipeline status<select id="d-status">${STATUSES.map(s => `<option${s === r.pipeline_status ? " selected" : ""}>${s}</option>`).join("")}</select></label>
         <label class="f">Decision maker<select id="d-role">${ROLES.map(s => `<option${s === r.decision_maker_role ? " selected" : ""}>${s}</option>`).join("")}</select></label>
       </div>
-      <div class="kv three gold" style="grid-template-columns:repeat(3,1fr)"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>
+      ${PROTECTED.has(r.pipeline_status) ? drawerHTML(r) : `<div class="kv three gold" style="grid-template-columns:repeat(3,1fr)"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>`}
       <div class="callout"><b>Pitch prep.</b> ${esc(cx.pitch)}</div>
       <h4>Store intelligence</h4>
       <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
@@ -1083,6 +1294,99 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     $("d-notes").addEventListener("change", e => setCrm(id, { notes_prospections: e.target.value }));
     if (open) showTab("dos");
   }
+  // ---- Wholesale Stock & Invoicing drawer
+  let drawerTab = "inv", drawerOpen = true;
+  function sparkline(w) {
+    if (!w.invoices.length) return "";
+    const t0 = Date.parse(w.since || w.invoices[0].date), last = Date.parse(w.invoices[w.invoices.length - 1].date);
+    const t1 = Math.max(Date.parse(TODAY), last), top = w.revenue || 1;
+    const X = t => (4 + 292 * (t - t0) / Math.max(1, t1 - t0)).toFixed(1), Y = v => (62 - 56 * v / top).toFixed(1);
+    let line = `M${X(t0)},${Y(0)}`, prev = 0;
+    w.invoices.forEach(i => { const t = Date.parse(i.date); line += ` L${X(t)},${Y(prev)} L${X(t)},${Y(i.cumulative)}`; prev = i.cumulative; });
+    line += ` L${X(t1)},${Y(prev)}`;
+    return `<svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c5a059" stop-opacity=".38"/><stop offset="1" stop-color="#c5a059" stop-opacity="0"/></linearGradient></defs>
+      <path d="${line} L${X(t1)},62 L${X(t0)},62 Z" fill="url(#sg)"/>
+      <path d="${line}" fill="none" stroke="#e2c88f" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
+      <div class="spark-cap"><span>${fmtDate(w.since)}</span><span>Cumulative revenue</span><span>${fmtDate(TODAY)}</span></div>`;
+  }
+  function drawerHTML(r) {
+    const w = r._ws, inv = drawerTab === "inv";
+    const skus = [...new Set((w?.deliveries || []).map(d => d.sku))];
+    const lines = !w ? "" : inv
+      ? [...w.invoices].reverse().map(i => `<div class="ln"><div class="w"><b>${esc(i.no)}</b><span>${fmtDate(i.date)} · due ${fmtDate(i.due)}</span></div>
+          <button class="badge dotted" style="--c:${cssVar(INVOICE_STATE[i.state])}" data-paid="${esc(i.no)}" title="Mark ${i.status === "Paid" ? "unpaid" : "paid"}">${i.state}</button>
+          <div class="amt">${eur2.format(i.amount)}<small>Σ ${eur.format(i.cumulative)}</small></div></div>`).join("")
+      : [...w.deliveries].reverse().map((d, k) => `<div class="ln stock"><div class="w"><b>${esc(d.sku)}</b><span>${fmtDate(d.date)} · ${esc(d.ref || "")}</span></div>
+          <div class="amt">${d.units}<small>units</small></div><button class="x" data-del-dl="${w.deliveries.length - 1 - k}" aria-label="Remove delivery">×</button></div>`).join("");
+    const empty = `<div class="empty"><span class="serif">Nothing logged yet</span>Record the opening order and its invoice below.</div>`;
+    const form = inv
+      ? `<form class="addline" data-add="inv"><label>Invoice date<input name="date" type="date" value="${TODAY}" required></label>
+          <label>Amount HT (€)<input name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" required placeholder="${eur2.format(moqFor(r) * sim.wholesale)}"></label>
+          <label>Due date<input name="due" type="date"></label><label>Status<select name="status"><option>Pending</option><option>Paid</option></select></label>
+          <button class="btn sm gold" type="submit">Add invoice</button></form>`
+      : `<form class="addline" data-add="dl"><label>Delivery date<input name="date" type="date" value="${TODAY}" required></label>
+          <label>Units<input name="units" type="number" inputmode="numeric" min="1" step="1" required value="${moqFor(r)}"></label>
+          <label style="grid-column:1/-1">Reference / SKU<input name="sku" type="text" list="sku-list" required value="${esc(skus[0] || sim.scent || "")}" placeholder="Hero SKU"><datalist id="sku-list">${skus.map(k => `<option value="${esc(k)}">`).join("")}</datalist></label>
+          <button class="btn sm gold" type="submit">Log delivery</button></form>`;
+    return `<details class="drawer" id="drawer"${drawerOpen ? " open" : ""}>
+      <summary><span class="eyebrow">Wholesale</span><b>Stock &amp; Invoicing</b>${isDemo(r) ? `<span class="pill" title="Illustrative figures from sources/wholesale.json">Demo</span>` : ""}<span class="chev" aria-hidden="true"></span></summary>
+      <div class="drawer-body">
+        ${w ? `<div class="kv gold"><div><span>Units</span><b>${w.units}</b></div><div><span>Revenue</span><b>${short(w.revenue)}</b></div><div><span>Collected</span><b>${short(w.paid)}</b></div><div><span>Due</span><b${w.overdueN ? ' style="color:var(--bad)"' : ""}>${short(w.outstanding)}</b></div></div>${sparkline(w)}` : ""}
+        <div class="seg-ctl" role="tablist"><button data-dtab="inv" aria-pressed="${inv}">Invoices · ${w?.invoices.length || 0}</button><button data-dtab="dl" aria-pressed="${!inv}">Stock · ${w?.deliveries.length || 0}</button></div>
+        <div class="lines">${lines || empty}</div>
+        ${w?.overdueN && inv ? `<div class="callout alert"><b>${w.overdueN} overdue</b> · ${eur2.format(w.overdue)} past due date. Tap a status to mark it paid.</div>` : ""}
+        ${form}
+      </div></details>`;
+  }
+  // Every ledger change goes through here: copy, mutate, persist, refresh map / table / dossier
+  function editLedger(r, fn) {
+    const l = ledgerOf(r) || { since: TODAY, deliveries: [], invoices: [] };
+    const copy = { since: l.since || TODAY, deliveries: l.deliveries.map(d => ({ ...d })), invoices: l.invoices.map(({ cumulative, state, ...i }) => ({ ...i })) };
+    fn(copy);
+    ledgerEdits[r.crm_key] = copy;
+    store.set(LEDGER_KEY, ledgerEdits);
+    r._ws = summarize(r);
+    refreshDerived();
+    apply();
+    data.filter(x => PROTECTED.has(x.pipeline_status)).forEach(refreshPin);
+    const m = markers.get(r.id);
+    if (m.isPopupOpen()) m.setPopupContent(popup(r));
+    modeDOM();
+    showDossier(r.id, false);
+  }
+  $("pane-dos").addEventListener("toggle", e => { if (e.target.id === "drawer") drawerOpen = e.target.open; }, true);
+  $("pane-dos").addEventListener("click", e => {
+    const r = byId.get(dossierId), t = e.target;
+    if (!r) return;
+    const tab = t.closest("[data-dtab]"), paid = t.closest("[data-paid]"), del = t.closest("[data-del-dl]");
+    if (tab) { drawerTab = tab.dataset.dtab; showDossier(r.id, false); }
+    else if (paid) {
+      editLedger(r, l => { const i = l.invoices.find(i => i.no === paid.dataset.paid); i.status = i.status === "Paid" ? "Pending" : "Paid"; });
+      toast(`${paid.dataset.paid} → ${r._ws.invoices.find(i => i.no === paid.dataset.paid).state}`);
+    } else if (del && confirm("Remove this delivery from the ledger?")) {
+      const d = r._ws.deliveries[+del.dataset.delDl];
+      editLedger(r, l => { const k = l.deliveries.findIndex(x => x.date === d.date && x.sku === d.sku && x.units === d.units && x.ref === d.ref); l.deliveries.splice(k, 1); });
+    }
+  });
+  $("pane-dos").addEventListener("submit", e => {
+    e.preventDefault();
+    const r = byId.get(dossierId), f = new FormData(e.target), date = f.get("date");
+    if (!r || !date) return;
+    if (e.target.dataset.add === "inv") {
+      const amount = Math.round(parseFloat(f.get("amount")) * 100) / 100;
+      if (!(amount > 0)) return;
+      const due = f.get("due") || new Date(Date.parse(date) + 45 * 864e5).toISOString().slice(0, 10);
+      editLedger(r, l => l.invoices.push({ no: `F-${date.slice(0, 4)}-${r.id}-${String(l.invoices.length + 1).padStart(2, "0")}`, date, due, amount, status: f.get("status") }));
+      toast(`Invoice ${eur2.format(amount)} logged`);
+    } else {
+      const units = parseInt(f.get("units"), 10), sku = String(f.get("sku")).trim();
+      if (!(units > 0) || !sku) return;
+      editLedger(r, l => l.deliveries.push({ date, ref: `BL-${date.slice(2, 4)}${date.slice(5, 7)}-${String(l.deliveries.length + 1).padStart(3, "0")}`, sku, units }));
+      toast(`${units} units delivered`);
+    }
+  });
+
   // Buttons inside popups / dossier
   document.addEventListener("click", e => {
     const p = e.target.closest("[data-pitch]"), d = e.target.closest("[data-dossier]");
@@ -1268,16 +1572,74 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
       srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
       (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
       (!acc || PROTECTED.has(r.pipeline_status)) && (!samp || SAMPLING.has(r.pipeline_status)) &&
+      (!partnerMode() || PROTECTED.has(r.pipeline_status)) &&
       (!q || r._q.includes(q)));
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
+    if (partnerMode()) rankPerformers(base);
     table.setFilter(r => ids.has(r.id));
     markers.forEach((m, id) => baseIds.has(id) ? layer.addLayer(m) : layer.removeLayer(m));
     drawZones(base);
+    drawHeat(base);
+    if (partnerMode()) { partnerDash(keep); board(keep); }
     dashboard(keep);
     simulate(keep);
     scheduleCards();
     return keep;
+  }
+
+  // Top 3 by revenue among the partners shown get the gold halo
+  function rankPerformers(rows) {
+    const next = new Map(rows.filter(r => r._ws?.revenue).sort((a, b) => b._ws.revenue - a._ws.revenue).slice(0, 3).map((r, i) => [r.id, i + 1]));
+    const changed = new Set([...topRank.keys(), ...next.keys()].filter(id => topRank.get(id) !== next.get(id)));
+    topRank = next;
+    changed.forEach(id => refreshPin(byId.get(id)));
+  }
+  function drawHeat(rows) {
+    const on = partnerMode() && $("heat").checked;
+    if (!on) { map.removeLayer(heat); return; }
+    const pts = rows.filter(r => r._ws?.revenue).map(r => [r.lat, r.lng, Math.max(.15, r._ws.revenue / maxRev)]);
+    if (heat.setLatLngs) heat.setLatLngs(pts);
+    else { heat.clearLayers(); pts.forEach(([la, lo, w]) => L.circle([la, lo], { radius: 1500 + 6000 * w, stroke: false, fillColor: cssVar("--gold"), fillOpacity: .12 + .2 * w, interactive: false }).addTo(heat)); }
+    if (!map.hasLayer(heat)) heat.addTo(map);
+  }
+  function partnerDash(rows) {
+    const P = rows.filter(r => PROTECTED.has(r.pipeline_status)), W = P.map(r => r._ws).filter(Boolean);
+    const sum = f => W.reduce((a, w) => a + f(w), 0);
+    const rev = sum(w => w.revenue), paid = sum(w => w.paid), out = sum(w => w.outstanding), od = sum(w => w.overdue), odN = sum(w => w.overdueN);
+    const units = sum(w => w.units), nInv = sum(w => w.invoices.length), nDl = sum(w => w.deliveries.length);
+    $("w-doors").innerHTML = `${P.length}<small> doors</small>`;
+    $("w-doors-h").textContent = `${P.filter(r => r.pipeline_status === "Key Account").length} key accounts · ${new Set(P.map(r => r.city)).size} cities`;
+    $("w-units").innerHTML = `${units.toLocaleString("fr-FR")}<small> units</small>`;
+    $("w-units-h").textContent = W.length ? `${nDl} deliveries · ${Math.round(units / W.length)} per door` : "No deliveries logged yet";
+    $("w-rev").textContent = short(rev);
+    $("w-rev-h").textContent = nInv ? `${nInv} invoices · avg ${eur.format(rev / nInv)}` : "No invoices yet";
+    $("w-paid").textContent = short(paid);
+    $("w-paid-h").textContent = rev ? `${pct(paid / rev)} of invoiced revenue` : "–";
+    $("w-paid-bar").innerHTML = rev ? `<i style="flex:${paid};background:var(--ok)"></i><i style="flex:${out - od};background:var(--s-disc)"></i><i style="flex:${od};background:var(--bad)"></i>` : "";
+    $("w-out").textContent = short(out);
+    $("w-out-h").innerHTML = odN ? `<span style="color:var(--bad)">${odN} overdue · ${eur.format(od)}</span>` : "Nothing overdue";
+    const cities = cityTotals(P);
+    $("w-top").textContent = cities[0]?.city || "–";
+    $("w-top-h").textContent = cities[0] ? `${short(cities[0].rev)} · ${cities[0].units} units · ${cities[0].n} door${cities[0].n > 1 ? "s" : ""}` : "No revenue yet";
+  }
+  function cityTotals(rows) {
+    const by = {};
+    rows.filter(r => r._ws).forEach(r => {
+      const c = by[r.city] ||= { city: r.city, rev: 0, units: 0, n: 0 };
+      c.rev += r._ws.revenue; c.units += r._ws.units; c.n++;
+    });
+    return Object.values(by).sort((a, b) => b.rev - a.rev);
+  }
+  function board(rows) {
+    const cities = cityTotals(rows), top = rows.filter(r => r._ws?.revenue).sort((a, b) => b._ws.revenue - a._ws.revenue);
+    const none = `<div class="empty" style="padding:24px 0"><span class="serif">No partner revenue yet</span>Set a store to Partner Active and log its first invoice.</div>`;
+    $("b-cities").innerHTML = cities.length ? cities.slice(0, 7).map((c, i) => `<div class="rank" data-city="${esc(c.city)}" tabindex="0">
+        <span class="no">${i + 1}</span><span class="nm">${esc(c.city)}<small>${c.n} door${c.n > 1 ? "s" : ""} · ${c.units} u.</small></span>
+        <span class="amt">${short(c.rev)}</span>${bar(100 * c.rev / cities[0].rev)}</div>`).join("") : none;
+    $("b-stores").innerHTML = top.length ? top.slice(0, 5).map((r, i) => `<div class="rank" data-id="${r.id}" tabindex="0">
+        <span class="no">${i + 1}</span><span class="nm">${esc(r.name)}<small>${esc(r.district || r.city)}</small></span>
+        <span class="amt">${short(r._ws.revenue)}<small>${r._ws.units} u.${r._ws.overdueN ? ` · <span style="color:var(--bad)">${r._ws.overdueN} overdue</span>` : ""}</small></span></div>`).join("") : none;
   }
 
   function dashboard(rows) {
@@ -1372,6 +1734,8 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     ["Segment", "segment"], ["Entry barrier", "entry_barrier"], ["Openness verified", "openness_verified"],
     ["Sampling policy", r => SAMPLING_LABEL[samplingPolicy(r)]], ["Recommended MOQ", r => moqFor(r)],
     ["Year-1 value EUR", r => Math.round(r._val)], ["Weighted value EUR", r => Math.round(r._wval)],
+    ["Units delivered", r => r._ws ? r._ws.units : ""], ["Revenue invoiced EUR", r => r._ws ? r._ws.revenue.toFixed(2) : ""],
+    ["Outstanding EUR", r => r._ws ? r._ws.outstanding.toFixed(2) : ""], ["Last invoice", r => r._ws?.last || ""],
     ["Territory", r => PROTECTED.has(r.pipeline_status) ? "Protected" : r._zone ? `In zone of ${r._zone.name} (${r._zone.km.toFixed(1)} km)` : "Open"],
     ["Staff", r => r.cx_insights.staff], ["Footfall", r => r.cx_insights.footfall], ["Sampling", r => r.cx_insights.sampling],
     ["Atmosphere", r => r.cx_insights.atmosphere], ["Watch out", r => r.cx_insights.watch_out], ["Pitch prep", r => r.cx_insights.pitch],
@@ -1393,11 +1757,57 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     const crm = Object.fromEntries(data.map(r => [r.crm_key, Object.fromEntries(CRM_FIELDS.map(k => [k, r[k]]))]));
     download("crm.json", JSON.stringify(crm, null, 1) + "\n", "application/json");
   });
+  $("ledger-export").addEventListener("click", () => {
+    const accounts = {};
+    let demo = false;
+    data.filter(r => PROTECTED.has(r.pipeline_status)).forEach(r => {
+      const l = ledgerOf(r);
+      if (!l || !(l.invoices.length || l.deliveries.length)) return;
+      demo ||= isDemo(r);
+      accounts[r.crm_key] = { store: r.name, pipeline_status: r.pipeline_status, since: l.since, deliveries: l.deliveries,
+        invoices: l.invoices.map(({ cumulative, state, ...i }) => i) };
+    });
+    download("wholesale.json", JSON.stringify({ demo, currency: "EUR", accounts }, null, 1) + "\n", "application/json");
+  });
   $("discard").addEventListener("click", () => {
-    const n = Object.keys(edits).length;
-    if (!n || !confirm(`Discard ${n} pipeline edit(s) stored in this browser? Export CRM JSON first to keep them.`)) return;
+    const n = Object.keys(edits).length, m = Object.keys(ledgerEdits).length;
+    if (!(n + m) || !confirm(`Discard ${n} pipeline and ${m} ledger edit(s) stored in this browser? Export CRM / ledger JSON first to keep them.`)) return;
     edits = {}; store.set(STORE_KEY, edits);
+    ledgerEdits = {}; store.set(LEDGER_KEY, ledgerEdits);
     location.reload();
+  });
+
+  // ---- Mode switch: same data, two maps
+  const PARTNER_COLS = ["_units", "_rev", "_out", "_last"];
+  const PROSPECT_COLS = ["launch_priority", "id", "_zoneKm", "_val", "segment", "entry_barrier", "tier_score", "brand_alignment_score", "single_sku_openness", "customer_experience_rating"];
+  function setMode(m) {
+    mode = m;
+    store.set(MODE_KEY, m);
+    history.replaceState(null, "", m === "partner" ? "#partners" : location.pathname + location.search);
+    modeDOM();
+    const P = partnerMode();
+    PARTNER_COLS.forEach(f => P ? table.showColumn(f) : table.hideColumn(f));
+    PROSPECT_COLS.forEach(f => P ? table.hideColumn(f) : table.showColumn(f));
+    $("sort").value = P ? "_rev:desc" : "tier_score:desc";
+    const [f, d] = $("sort").value.split(":");
+    table.setSort(f, d);
+    legend.getContainer().innerHTML = legendHTML();
+    topRank = new Map();
+    data.forEach(refreshPin);
+    map.closePopup();
+    applyAndFit();
+  }
+  document.querySelectorAll(".mode [data-mode]").forEach(b => b.addEventListener("click", () => b.dataset.mode !== mode && setMode(b.dataset.mode)));
+  $("heat").addEventListener("change", apply);
+  [$("b-cities"), $("b-stores")].forEach(el => {
+    const go = e => {
+      const row = e.target.closest(".rank");
+      if (!row) return;
+      if (row.dataset.id) { focusStore(+row.dataset.id); $("map").scrollIntoView({ behavior: "smooth", block: "center" }); }
+      else { $("city").value = row.dataset.city; applyAndFit(); $("map").scrollIntoView({ behavior: "smooth", block: "center" }); }
+    };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", e => e.key === "Enter" && go(e));
   });
 
   let firstFit = true;
@@ -1437,12 +1847,12 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
     ["inview", "quick", "accounts", "sampling", "zones"].forEach(id => ($(id).checked = false));
     $("status").value = ""; $("priority").value = "";
     document.querySelectorAll("input[name=open], input[name=src], input[name=seg]").forEach(i => (i.checked = true));
-    map.off("moveend", openPending);
+    if (openPending) map.off("moveend", openPending);
     map.closePopup();
     applyAndFit();
   });
 
-  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); applyAndFit(); });
+  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); setMode(mode); });
 })();
 </script>
 </body>

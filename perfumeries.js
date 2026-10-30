@@ -42,7 +42,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 2,
@@ -88,7 +90,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 3,
@@ -135,7 +139,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 4,
@@ -180,7 +186,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 5,
@@ -222,7 +230,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 6,
@@ -264,7 +274,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 7,
@@ -306,7 +318,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 8,
@@ -351,7 +365,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 9,
@@ -393,7 +409,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 10,
@@ -440,8 +458,127 @@ window.PERFUMERIES = [
   "crm_key": "senteurs-d-ailleurs@50.834,4.359",
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-01-26",
+   "units_delivered": 90,
+   "revenue": 4754.0,
+   "paid": 3790.0,
+   "outstanding": 964.0,
+   "deliveries": [
+    {
+     "date": "2026-01-26",
+     "ref": "BL-2601-001",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-01-26",
+     "ref": "BL-2601-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-01-26",
+     "ref": "BL-2601-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-04-03",
+     "ref": "BL-2604-004",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-04-03",
+     "ref": "BL-2604-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-04-03",
+     "ref": "BL-2604-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-05-23",
+     "ref": "BL-2605-007",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-05-23",
+     "ref": "BL-2605-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-07-30",
+     "ref": "BL-2607-009",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-09-21",
+     "ref": "BL-2609-010",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-09-21",
+     "ref": "BL-2609-011",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0073",
+     "date": "2026-01-26",
+     "due": "2026-03-12",
+     "amount": 942.0,
+     "status": "Paid",
+     "cumulative": 942.0
+    },
+    {
+     "no": "F-2026-0074",
+     "date": "2026-04-03",
+     "due": "2026-05-18",
+     "amount": 1009.0,
+     "status": "Paid",
+     "cumulative": 1951.0
+    },
+    {
+     "no": "F-2026-0075",
+     "date": "2026-05-23",
+     "due": "2026-07-07",
+     "amount": 1095.0,
+     "status": "Paid",
+     "cumulative": 3046.0
+    },
+    {
+     "no": "F-2026-0076",
+     "date": "2026-07-30",
+     "due": "2026-09-13",
+     "amount": 744.0,
+     "status": "Paid",
+     "cumulative": 3790.0
+    },
+    {
+     "no": "F-2026-0077",
+     "date": "2026-09-21",
+     "due": "2026-11-05",
+     "amount": 964.0,
+     "status": "Pending",
+     "cumulative": 4754.0
+    }
+   ]
+  }
  },
  {
   "id": 11,
@@ -486,7 +623,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 12,
@@ -530,7 +669,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 13,
@@ -575,7 +716,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 14,
@@ -620,7 +763,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 15,
@@ -665,7 +810,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 16,
@@ -711,7 +858,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 17,
@@ -753,7 +902,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 18,
@@ -795,7 +946,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 19,
@@ -837,7 +990,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 20,
@@ -882,7 +1037,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 21,
@@ -924,7 +1081,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 22,
@@ -971,7 +1130,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 23,
@@ -1017,7 +1178,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 24,
@@ -1062,7 +1225,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 25,
@@ -1104,7 +1269,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 26,
@@ -1146,7 +1313,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 27,
@@ -1191,7 +1360,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 28,
@@ -1233,7 +1404,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 29,
@@ -1278,7 +1451,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 30,
@@ -1324,8 +1499,41 @@ window.PERFUMERIES = [
   "crm_key": "liquides-confidentiels@50.466,4.865",
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-07-01",
+   "units_delivered": 6,
+   "revenue": 358.0,
+   "paid": 358.0,
+   "outstanding": 0.0,
+   "deliveries": [
+    {
+     "date": "2026-07-01",
+     "ref": "BL-2607-001",
+     "sku": "Extrait 50 ml",
+     "units": 2
+    },
+    {
+     "date": "2026-07-01",
+     "ref": "BL-2607-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0080",
+     "date": "2026-07-01",
+     "due": "2026-08-15",
+     "amount": 358.0,
+     "status": "Paid",
+     "cumulative": 358.0
+    }
+   ]
+  }
  },
  {
   "id": 31,
@@ -1370,7 +1578,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 32,
@@ -1415,7 +1625,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 33,
@@ -1460,7 +1672,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 34,
@@ -1507,7 +1721,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 35,
@@ -1555,7 +1771,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 36,
@@ -1600,7 +1818,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 37,
@@ -1645,7 +1865,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 38,
@@ -1690,7 +1912,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 39,
@@ -1735,7 +1959,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 40,
@@ -1780,7 +2006,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 41,
@@ -1825,7 +2053,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 42,
@@ -1870,7 +2100,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 43,
@@ -1915,7 +2147,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 44,
@@ -1960,7 +2194,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 45,
@@ -2005,7 +2241,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 46,
@@ -2050,7 +2288,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 47,
@@ -2095,7 +2335,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 48,
@@ -2137,7 +2379,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 49,
@@ -2182,7 +2426,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 50,
@@ -2227,7 +2473,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 51,
@@ -2272,7 +2520,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 52,
@@ -2317,7 +2567,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 53,
@@ -2362,7 +2614,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 54,
@@ -2407,7 +2661,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 55,
@@ -2452,7 +2708,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 56,
@@ -2497,7 +2755,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 57,
@@ -2544,7 +2804,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 58,
@@ -2590,7 +2852,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 59,
@@ -2635,7 +2899,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 60,
@@ -2677,7 +2943,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 61,
@@ -2719,7 +2987,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 62,
@@ -2764,7 +3034,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 63,
@@ -2809,7 +3081,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 64,
@@ -2854,7 +3128,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 65,
@@ -2899,7 +3175,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 66,
@@ -2944,7 +3222,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 67,
@@ -2989,7 +3269,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 68,
@@ -3034,7 +3316,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 69,
@@ -3079,7 +3363,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 70,
@@ -3124,7 +3410,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 71,
@@ -3169,7 +3457,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 72,
@@ -3211,7 +3501,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 73,
@@ -3256,7 +3548,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 74,
@@ -3301,7 +3595,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 75,
@@ -3346,7 +3642,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 76,
@@ -3391,7 +3689,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 77,
@@ -3433,7 +3733,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 78,
@@ -3478,7 +3780,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 79,
@@ -3523,7 +3827,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 80,
@@ -3568,7 +3874,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 81,
@@ -3613,7 +3921,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 82,
@@ -3658,7 +3968,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 83,
@@ -3703,7 +4015,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 84,
@@ -3748,7 +4062,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 85,
@@ -3793,7 +4109,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 86,
@@ -3838,7 +4156,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 87,
@@ -3883,7 +4203,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 88,
@@ -3928,7 +4250,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 89,
@@ -3973,7 +4297,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 90,
@@ -4018,7 +4344,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 91,
@@ -4063,7 +4391,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 92,
@@ -4108,7 +4438,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 93,
@@ -4150,7 +4482,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 94,
@@ -4192,7 +4526,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 95,
@@ -4234,7 +4570,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 96,
@@ -4279,7 +4617,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 97,
@@ -4324,7 +4664,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 98,
@@ -4369,7 +4711,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 99,
@@ -4414,7 +4758,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 100,
@@ -4459,7 +4805,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 101,
@@ -4504,7 +4852,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 102,
@@ -4549,7 +4899,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 103,
@@ -4594,7 +4946,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 104,
@@ -4639,7 +4993,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 105,
@@ -4684,7 +5040,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 106,
@@ -4729,7 +5087,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 107,
@@ -4775,7 +5135,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 108,
@@ -4820,7 +5182,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 109,
@@ -4866,7 +5230,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 110,
@@ -4911,7 +5277,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 111,
@@ -4953,7 +5321,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 112,
@@ -4995,7 +5365,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 113,
@@ -5037,7 +5409,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 114,
@@ -5079,7 +5453,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 115,
@@ -5121,7 +5497,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 116,
@@ -5163,7 +5541,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 117,
@@ -5210,7 +5590,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 118,
@@ -5255,7 +5637,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 119,
@@ -5300,7 +5684,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 120,
@@ -5344,7 +5730,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 121,
@@ -5391,7 +5779,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 122,
@@ -5433,7 +5823,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 123,
@@ -5475,7 +5867,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 124,
@@ -5517,7 +5911,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 125,
@@ -5559,7 +5955,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 126,
@@ -5601,7 +5999,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 127,
@@ -5643,7 +6043,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 128,
@@ -5685,7 +6087,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 129,
@@ -5727,7 +6131,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 130,
@@ -5769,7 +6175,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 131,
@@ -5811,7 +6219,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 132,
@@ -5853,7 +6263,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 133,
@@ -5895,7 +6307,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 134,
@@ -5937,7 +6351,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 135,
@@ -5979,7 +6395,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 136,
@@ -6021,7 +6439,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 137,
@@ -6063,7 +6483,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 138,
@@ -6105,7 +6527,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 139,
@@ -6147,7 +6571,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 140,
@@ -6189,7 +6615,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 141,
@@ -6231,7 +6659,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 142,
@@ -6273,7 +6703,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 143,
@@ -6318,7 +6750,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 144,
@@ -6360,7 +6794,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 145,
@@ -6402,7 +6838,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 146,
@@ -6444,7 +6882,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 147,
@@ -6486,7 +6926,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 148,
@@ -6528,7 +6970,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 149,
@@ -6570,7 +7014,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 150,
@@ -6612,7 +7058,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 151,
@@ -6654,7 +7102,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 152,
@@ -6696,7 +7146,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 153,
@@ -6741,7 +7193,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 154,
@@ -6786,7 +7240,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 155,
@@ -6832,7 +7288,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 156,
@@ -6874,7 +7332,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 157,
@@ -6916,7 +7376,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 158,
@@ -6958,7 +7420,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 159,
@@ -7003,7 +7467,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 160,
@@ -7045,7 +7511,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 161,
@@ -7087,7 +7555,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 162,
@@ -7129,7 +7599,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 163,
@@ -7171,7 +7643,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 164,
@@ -7213,7 +7687,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 165,
@@ -7255,7 +7731,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 166,
@@ -7297,7 +7775,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 167,
@@ -7342,7 +7822,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 168,
@@ -7384,7 +7866,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 169,
@@ -7426,7 +7910,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 170,
@@ -7471,7 +7957,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 171,
@@ -7517,7 +8005,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 172,
@@ -7564,7 +8054,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 173,
@@ -7609,7 +8101,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 174,
@@ -7654,7 +8148,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 175,
@@ -7696,7 +8192,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 176,
@@ -7738,7 +8236,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 177,
@@ -7780,7 +8280,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 178,
@@ -7822,7 +8324,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 179,
@@ -7864,7 +8368,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 180,
@@ -7906,7 +8412,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 181,
@@ -7948,7 +8456,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 182,
@@ -7990,7 +8500,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 183,
@@ -8032,7 +8544,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 184,
@@ -8077,7 +8591,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 185,
@@ -8119,7 +8635,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 186,
@@ -8161,7 +8679,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 187,
@@ -8203,7 +8723,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 188,
@@ -8245,7 +8767,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 189,
@@ -8290,7 +8814,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 190,
@@ -8335,7 +8861,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 191,
@@ -8377,7 +8905,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 192,
@@ -8419,7 +8949,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 193,
@@ -8464,7 +8996,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 194,
@@ -8506,7 +9040,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 195,
@@ -8548,7 +9084,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 196,
@@ -8590,7 +9128,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 197,
@@ -8632,7 +9172,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 198,
@@ -8674,7 +9216,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 199,
@@ -8716,7 +9260,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 200,
@@ -8763,7 +9309,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 201,
@@ -8805,7 +9353,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 202,
@@ -8851,7 +9401,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 203,
@@ -8897,7 +9449,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 204,
@@ -8942,7 +9496,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 205,
@@ -8984,7 +9540,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 206,
@@ -9026,7 +9584,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 207,
@@ -9068,7 +9628,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 208,
@@ -9110,7 +9672,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 209,
@@ -9152,7 +9716,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 210,
@@ -9194,7 +9760,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 211,
@@ -9236,7 +9804,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 212,
@@ -9278,7 +9848,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 213,
@@ -9320,7 +9892,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 214,
@@ -9365,7 +9939,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 215,
@@ -9407,7 +9983,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 216,
@@ -9449,7 +10027,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 217,
@@ -9491,7 +10071,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 218,
@@ -9533,7 +10115,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 219,
@@ -9575,7 +10159,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 220,
@@ -9620,7 +10206,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 221,
@@ -9662,7 +10250,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 222,
@@ -9704,7 +10294,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 223,
@@ -9746,7 +10338,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 224,
@@ -9788,7 +10382,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 225,
@@ -9830,7 +10426,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 226,
@@ -9872,7 +10470,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 227,
@@ -9917,7 +10517,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 228,
@@ -9959,7 +10561,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 229,
@@ -10001,7 +10605,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 230,
@@ -10047,7 +10653,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 231,
@@ -10089,7 +10697,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 232,
@@ -10131,7 +10741,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 233,
@@ -10176,7 +10788,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 234,
@@ -10218,7 +10832,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 235,
@@ -10260,7 +10876,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 236,
@@ -10302,7 +10920,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 237,
@@ -10344,7 +10964,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 238,
@@ -10386,7 +11008,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 239,
@@ -10428,7 +11052,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 240,
@@ -10470,7 +11096,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 241,
@@ -10512,7 +11140,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 242,
@@ -10554,7 +11184,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 243,
@@ -10596,7 +11228,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 244,
@@ -10638,7 +11272,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 245,
@@ -10680,7 +11316,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 246,
@@ -10722,7 +11360,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 247,
@@ -10767,7 +11407,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 248,
@@ -10809,7 +11451,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 249,
@@ -10854,7 +11498,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 250,
@@ -10899,7 +11545,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 251,
@@ -10944,7 +11592,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 252,
@@ -10986,7 +11636,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 253,
@@ -11028,7 +11680,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 254,
@@ -11073,7 +11727,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 255,
@@ -11115,7 +11771,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 256,
@@ -11157,7 +11815,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 257,
@@ -11202,7 +11862,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 258,
@@ -11247,7 +11909,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 259,
@@ -11289,7 +11953,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 260,
@@ -11334,7 +12000,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 261,
@@ -11376,7 +12044,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 262,
@@ -11418,7 +12088,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 263,
@@ -11460,7 +12132,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 264,
@@ -11502,7 +12176,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 265,
@@ -11547,7 +12223,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 266,
@@ -11592,7 +12270,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 267,
@@ -11637,7 +12317,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 268,
@@ -11679,7 +12361,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 269,
@@ -11724,7 +12408,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 270,
@@ -11769,7 +12455,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 271,
@@ -11814,7 +12502,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 272,
@@ -11856,7 +12546,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 273,
@@ -11901,7 +12593,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 274,
@@ -11943,7 +12637,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 275,
@@ -11988,7 +12684,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 276,
@@ -12030,7 +12728,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 277,
@@ -12072,7 +12772,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 278,
@@ -12113,8 +12815,93 @@ window.PERFUMERIES = [
   "crm_key": "parfumerie-lehembre@50.651,3.072",
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-03-16",
+   "units_delivered": 42,
+   "revenue": 1946.0,
+   "paid": 1946.0,
+   "outstanding": 0.0,
+   "deliveries": [
+    {
+     "date": "2026-03-16",
+     "ref": "BL-2603-001",
+     "sku": "Extrait 50 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-03-16",
+     "ref": "BL-2603-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 2
+    },
+    {
+     "date": "2026-03-16",
+     "ref": "BL-2603-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-05-30",
+     "ref": "BL-2605-004",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-30",
+     "ref": "BL-2605-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-05-30",
+     "ref": "BL-2605-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-07-26",
+     "ref": "BL-2607-007",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-26",
+     "ref": "BL-2607-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 2
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0066",
+     "date": "2026-03-16",
+     "due": "2026-04-30",
+     "amount": 546.0,
+     "status": "Paid",
+     "cumulative": 546.0
+    },
+    {
+     "no": "F-2026-0067",
+     "date": "2026-05-30",
+     "due": "2026-07-14",
+     "amount": 787.0,
+     "status": "Paid",
+     "cumulative": 1333.0
+    },
+    {
+     "no": "F-2026-0068",
+     "date": "2026-07-26",
+     "due": "2026-09-09",
+     "amount": 613.0,
+     "status": "Paid",
+     "cumulative": 1946.0
+    }
+   ]
+  }
  },
  {
   "id": 279,
@@ -12159,7 +12946,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 280,
@@ -12204,7 +12993,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 281,
@@ -12249,7 +13040,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 282,
@@ -12294,7 +13087,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 283,
@@ -12339,7 +13134,9 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 284,
@@ -12384,10 +13181,295 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
   "id": 285,
+  "name": "Parfumerie du Soleil d'Or",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Lille",
+  "district": null,
+  "full_address": "4 Rue Esquermoise, 59800 Lille, France",
+  "lat": 50.637463,
+  "lng": 3.062829,
+  "tier_score": 84,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Expert staff",
+   "Curated indie brands",
+   "Luxury service"
+  ],
+  "sentiment_summary": "Historic independent niche perfumery on the Grand-Place corner of Vieux-Lille; deep niche catalogue.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Local, repeat clientele; footfall depends on the town centre.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 100,
+  "address_source": "curated",
+  "source": "osm:node/5509181269",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Parfumerie+du+Soleil+d%27Or%2C+4+Rue+Esquermoise%2C+59800+Lille%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Parfumerie+du+Soleil+d%27Or+Lille",
+  "crm_key": "parfumerie-du-soleil-d-or@50.637,3.063",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Key Account",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2025-12-04",
+   "units_delivered": 364,
+   "revenue": 17374.0,
+   "paid": 15074.0,
+   "outstanding": 2300.0,
+   "deliveries": [
+    {
+     "date": "2025-12-04",
+     "ref": "BL-2512-001",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2025-12-04",
+     "ref": "BL-2512-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2025-12-04",
+     "ref": "BL-2512-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-01-12",
+     "ref": "BL-2601-004",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-01-12",
+     "ref": "BL-2601-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-01-12",
+     "ref": "BL-2601-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 22
+    },
+    {
+     "date": "2026-02-12",
+     "ref": "BL-2602-007",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-02-12",
+     "ref": "BL-2602-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-02-12",
+     "ref": "BL-2602-009",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-03-22",
+     "ref": "BL-2603-010",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-04-30",
+     "ref": "BL-2604-011",
+     "sku": "Extrait 50 ml",
+     "units": 24
+    },
+    {
+     "date": "2026-04-30",
+     "ref": "BL-2604-012",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-04-30",
+     "ref": "BL-2604-013",
+     "sku": "Discovery 5×2 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-05-27",
+     "ref": "BL-2605-014",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-05-27",
+     "ref": "BL-2605-015",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-07-01",
+     "ref": "BL-2607-016",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-07-01",
+     "ref": "BL-2607-017",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-018",
+     "sku": "Extrait 50 ml",
+     "units": 26
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-019",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-020",
+     "sku": "Discovery 5×2 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-08-29",
+     "ref": "BL-2608-021",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-08-29",
+     "ref": "BL-2608-022",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-09-27",
+     "ref": "BL-2609-023",
+     "sku": "Extrait 50 ml",
+     "units": 22
+    },
+    {
+     "date": "2026-09-27",
+     "ref": "BL-2609-024",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 16
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2025-0038",
+     "date": "2025-12-04",
+     "due": "2026-01-18",
+     "amount": 1774.0,
+     "status": "Paid",
+     "cumulative": 1774.0
+    },
+    {
+     "no": "F-2026-0039",
+     "date": "2026-01-12",
+     "due": "2026-02-26",
+     "amount": 1910.0,
+     "status": "Paid",
+     "cumulative": 3684.0
+    },
+    {
+     "no": "F-2026-0040",
+     "date": "2026-02-12",
+     "due": "2026-03-29",
+     "amount": 1724.0,
+     "status": "Paid",
+     "cumulative": 5408.0
+    },
+    {
+     "no": "F-2026-0041",
+     "date": "2026-03-22",
+     "due": "2026-05-06",
+     "amount": 1116.0,
+     "status": "Paid",
+     "cumulative": 6524.0
+    },
+    {
+     "no": "F-2026-0042",
+     "date": "2026-04-30",
+     "due": "2026-06-14",
+     "amount": 2108.0,
+     "status": "Paid",
+     "cumulative": 8632.0
+    },
+    {
+     "no": "F-2026-0043",
+     "date": "2026-05-27",
+     "due": "2026-07-11",
+     "amount": 963.0,
+     "status": "Paid",
+     "cumulative": 9595.0
+    },
+    {
+     "no": "F-2026-0044",
+     "date": "2026-07-01",
+     "due": "2026-08-15",
+     "amount": 1701.0,
+     "status": "Paid",
+     "cumulative": 11296.0
+    },
+    {
+     "no": "F-2026-0045",
+     "date": "2026-07-31",
+     "due": "2026-09-14",
+     "amount": 2194.0,
+     "status": "Paid",
+     "cumulative": 13490.0
+    },
+    {
+     "no": "F-2026-0046",
+     "date": "2026-08-29",
+     "due": "2026-10-13",
+     "amount": 1584.0,
+     "status": "Paid",
+     "cumulative": 15074.0
+    },
+    {
+     "no": "F-2026-0047",
+     "date": "2026-09-27",
+     "due": "2026-11-11",
+     "amount": 2300.0,
+     "status": "Pending",
+     "cumulative": 17374.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 286,
   "name": "Printemps Lille",
   "type": "Department Store",
   "country": "FR",
@@ -12429,10 +13511,439 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 286,
+  "id": 287,
+  "name": "Odorem",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Lyon",
+  "district": "Lyon 2e",
+  "full_address": "11 Rue Auguste Comte, 69002 Lyon, France",
+  "lat": 45.755606,
+  "lng": 4.831668,
+  "tier_score": 80,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Expert staff",
+   "Curated indie brands",
+   "Discovery bar / blotters"
+  ],
+  "sentiment_summary": "Independent haute-parfumerie boutique in Ainay; runs olfactive workshops introducing French niche houses.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Tourist-exposed city: expect walk-in visitors on weekends.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 100,
+  "address_source": "curated",
+  "source": "osm:node/11244216429",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Odorem%2C+11+Rue+Auguste+Comte%2C+69002+Lyon%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Odorem+Lyon",
+  "crm_key": "odorem@45.756,4.832",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Key Account",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2025-11-18",
+   "units_delivered": 286,
+   "revenue": 12769.0,
+   "paid": 12273.0,
+   "outstanding": 496.0,
+   "deliveries": [
+    {
+     "date": "2025-11-18",
+     "ref": "BL-2511-001",
+     "sku": "Extrait 50 ml",
+     "units": 22
+    },
+    {
+     "date": "2025-11-18",
+     "ref": "BL-2511-002",
+     "sku": "Discovery 5×2 ml",
+     "units": 16
+    },
+    {
+     "date": "2025-12-18",
+     "ref": "BL-2512-003",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-02-02",
+     "ref": "BL-2602-004",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-02-02",
+     "ref": "BL-2602-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-02-02",
+     "ref": "BL-2602-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-03-09",
+     "ref": "BL-2603-007",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-03-09",
+     "ref": "BL-2603-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-03-09",
+     "ref": "BL-2603-009",
+     "sku": "Discovery 5×2 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-04-25",
+     "ref": "BL-2604-010",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-04-25",
+     "ref": "BL-2604-011",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-24",
+     "ref": "BL-2605-012",
+     "sku": "Extrait 50 ml",
+     "units": 22
+    },
+    {
+     "date": "2026-05-24",
+     "ref": "BL-2605-013",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-24",
+     "ref": "BL-2605-014",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-07-03",
+     "ref": "BL-2607-015",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-07-03",
+     "ref": "BL-2607-016",
+     "sku": "Discovery 5×2 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-07-29",
+     "ref": "BL-2607-017",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-07-29",
+     "ref": "BL-2607-018",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-29",
+     "ref": "BL-2607-019",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-08-25",
+     "ref": "BL-2608-020",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-08-25",
+     "ref": "BL-2608-021",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-09-23",
+     "ref": "BL-2609-022",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2025-0028",
+     "date": "2025-11-18",
+     "due": "2026-01-02",
+     "amount": 1516.0,
+     "status": "Paid",
+     "cumulative": 1516.0
+    },
+    {
+     "no": "F-2025-0029",
+     "date": "2025-12-18",
+     "due": "2026-02-01",
+     "amount": 1116.0,
+     "status": "Paid",
+     "cumulative": 2632.0
+    },
+    {
+     "no": "F-2026-0030",
+     "date": "2026-02-02",
+     "due": "2026-03-19",
+     "amount": 968.0,
+     "status": "Paid",
+     "cumulative": 3600.0
+    },
+    {
+     "no": "F-2026-0031",
+     "date": "2026-03-09",
+     "due": "2026-04-23",
+     "amount": 1567.0,
+     "status": "Paid",
+     "cumulative": 5167.0
+    },
+    {
+     "no": "F-2026-0032",
+     "date": "2026-04-25",
+     "due": "2026-06-09",
+     "amount": 1460.0,
+     "status": "Paid",
+     "cumulative": 6627.0
+    },
+    {
+     "no": "F-2026-0033",
+     "date": "2026-05-24",
+     "due": "2026-07-08",
+     "amount": 1965.0,
+     "status": "Paid",
+     "cumulative": 8592.0
+    },
+    {
+     "no": "F-2026-0034",
+     "date": "2026-07-03",
+     "due": "2026-08-17",
+     "amount": 1163.0,
+     "status": "Paid",
+     "cumulative": 9755.0
+    },
+    {
+     "no": "F-2026-0035",
+     "date": "2026-07-29",
+     "due": "2026-09-12",
+     "amount": 1183.0,
+     "status": "Paid",
+     "cumulative": 10938.0
+    },
+    {
+     "no": "F-2026-0036",
+     "date": "2026-08-25",
+     "due": "2026-10-09",
+     "amount": 1335.0,
+     "status": "Paid",
+     "cumulative": 12273.0
+    },
+    {
+     "no": "F-2026-0037",
+     "date": "2026-09-23",
+     "due": "2026-11-07",
+     "amount": 496.0,
+     "status": "Pending",
+     "cumulative": 12769.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 288,
+  "name": "Le Paravent",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Lyon",
+  "district": "Lyon 2e",
+  "full_address": "35 Rue Auguste Comte, 69002 Lyon, France",
+  "lat": 45.753148,
+  "lng": 4.830341,
+  "tier_score": 78,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Expert staff",
+   "Curated indie brands"
+  ],
+  "sentiment_summary": "Owner-run Ainay perfumery that makes a point of carrying niche houses alongside its prestige shelf.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Tourist-exposed city: expect walk-in visitors on weekends.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 100,
+  "address_source": "curated",
+  "source": "osm:node/7002820454",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Le+Paravent%2C+35+Rue+Auguste+Comte%2C+69002+Lyon%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Le+Paravent+Lyon",
+  "crm_key": "le-paravent@45.753,4.830",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-02-20",
+   "units_delivered": 76,
+   "revenue": 3389.0,
+   "paid": 2583.0,
+   "outstanding": 806.0,
+   "deliveries": [
+    {
+     "date": "2026-02-20",
+     "ref": "BL-2602-001",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-02-20",
+     "ref": "BL-2602-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-02-20",
+     "ref": "BL-2602-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-19",
+     "ref": "BL-2605-004",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-19",
+     "ref": "BL-2605-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-05-19",
+     "ref": "BL-2605-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-18",
+     "ref": "BL-2607-007",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-18",
+     "ref": "BL-2607-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-09-21",
+     "ref": "BL-2609-009",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-09-21",
+     "ref": "BL-2609-010",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-09-21",
+     "ref": "BL-2609-011",
+     "sku": "Discovery 5×2 ml",
+     "units": 8
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0059",
+     "date": "2026-02-20",
+     "due": "2026-04-06",
+     "amount": 930.0,
+     "status": "Paid",
+     "cumulative": 930.0
+    },
+    {
+     "no": "F-2026-0060",
+     "date": "2026-05-19",
+     "due": "2026-07-03",
+     "amount": 923.0,
+     "status": "Paid",
+     "cumulative": 1853.0
+    },
+    {
+     "no": "F-2026-0061",
+     "date": "2026-07-18",
+     "due": "2026-09-01",
+     "amount": 730.0,
+     "status": "Paid",
+     "cumulative": 2583.0
+    },
+    {
+     "no": "F-2026-0062",
+     "date": "2026-09-21",
+     "due": "2026-11-05",
+     "amount": 806.0,
+     "status": "Pending",
+     "cumulative": 3389.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 289,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -12474,10 +13985,175 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 287,
+  "id": 290,
+  "name": "La Mûre Favorite",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Lyon",
+  "district": "Lyon 6e",
+  "full_address": "19 Cours Franklin Roosevelt, 69006 Lyon, France",
+  "lat": 45.769077,
+  "lng": 4.845681,
+  "tier_score": 72,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Curated indie brands"
+  ],
+  "sentiment_summary": "Independent perfumery in Les Brotteaux (Lyon 6e); niche depth to confirm on a first visit.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Tourist-exposed city: expect walk-in visitors on weekends.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 75,
+  "address_source": "osm_reverse",
+  "source": "osm:node/8035315312",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=La+M%C3%BBre+Favorite%2C+19+Cours+Franklin+Roosevelt%2C+69006+Lyon%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=La+M%C3%BBre+Favorite+Lyon",
+  "crm_key": "la-mure-favorite@45.769,4.846",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-04-09",
+   "units_delivered": 28,
+   "revenue": 1197.0,
+   "paid": 677.0,
+   "outstanding": 520.0,
+   "deliveries": [
+    {
+     "date": "2026-04-09",
+     "ref": "BL-2604-001",
+     "sku": "Extrait 50 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-06-25",
+     "ref": "BL-2606-002",
+     "sku": "Extrait 50 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-06-25",
+     "ref": "BL-2606-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-09-26",
+     "ref": "BL-2609-004",
+     "sku": "Extrait 50 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-09-26",
+     "ref": "BL-2609-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-09-26",
+     "ref": "BL-2609-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 4
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0063",
+     "date": "2026-04-09",
+     "due": "2026-05-24",
+     "amount": 372.0,
+     "status": "Paid",
+     "cumulative": 372.0
+    },
+    {
+     "no": "F-2026-0064",
+     "date": "2026-06-25",
+     "due": "2026-08-09",
+     "amount": 305.0,
+     "status": "Paid",
+     "cumulative": 677.0
+    },
+    {
+     "no": "F-2026-0065",
+     "date": "2026-09-26",
+     "due": "2026-11-10",
+     "amount": 520.0,
+     "status": "Pending",
+     "cumulative": 1197.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 291,
+  "name": "Ecocentric",
+  "type": "Independent Concept Store",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Lyon",
+  "district": "Lyon 2e",
+  "full_address": "9 Rue Marcel Gabriel Rivière, 69002 Lyon, France",
+  "lat": 45.75946,
+  "lng": 4.836063,
+  "tier_score": 70,
+  "brand_alignment_score": 55,
+  "single_sku_openness": "Low",
+  "openness_verified": false,
+  "segment": "Selective Concept Store",
+  "entry_barrier": "High",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Curated indie brands"
+  ],
+  "sentiment_summary": "Natural-beauty and perfumery concept store near the Grand Hôtel-Dieu; clean-formula positioning.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Tourist-exposed city: expect walk-in visitors on weekends.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Pitch the central buyer as a design object / limited drop; expect exclusivity and visuals requests.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 75,
+  "address_source": "osm_reverse",
+  "source": "osm:node/10758807918",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Ecocentric%2C+9+Rue+Marcel+Gabriel+Rivi%C3%A8re%2C+69002+Lyon%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Ecocentric+Lyon",
+  "crm_key": "ecocentric@45.759,4.836",
+  "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Not Contacted",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": null
+ },
+ {
+  "id": 292,
   "name": "Galeries Lafayette Lyon Part-Dieu",
   "type": "Department Store",
   "country": "FR",
@@ -12519,10 +14195,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 288,
+  "id": 293,
   "name": "Parfumerie Florentine",
   "type": "Niche Boutique",
   "country": "FR",
@@ -12561,10 +14239,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 289,
+  "id": 294,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -12606,10 +14286,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 290,
+  "id": 295,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -12651,10 +14333,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 291,
+  "id": 296,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -12696,10 +14380,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 292,
+  "id": 297,
   "name": "Galeries Lafayette Marseille Saint-Ferréol",
   "type": "Department Store",
   "country": "FR",
@@ -12741,10 +14427,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 293,
+  "id": 298,
   "name": "Le Parfum Mythique",
   "type": "Niche Boutique",
   "country": "FR",
@@ -12783,10 +14471,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 294,
+  "id": 299,
   "name": "Parfum & Cosmétique",
   "type": "Niche Boutique",
   "country": "FR",
@@ -12825,10 +14515,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 295,
+  "id": 300,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -12870,10 +14562,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 296,
+  "id": 301,
   "name": "Athena (Parfumerie - Institut de Beauté)",
   "type": "Niche Boutique",
   "country": "FR",
@@ -12912,10 +14606,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 297,
+  "id": 302,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -12957,10 +14653,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 298,
+  "id": 303,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -13002,10 +14700,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 299,
+  "id": 304,
   "name": "Galeries Lafayette Nice Masséna",
   "type": "Department Store",
   "country": "FR",
@@ -13047,10 +14747,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 300,
+  "id": 305,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -13092,10 +14794,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 301,
+  "id": 306,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -13137,10 +14841,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 302,
+  "id": 307,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -13182,10 +14888,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 303,
+  "id": 308,
   "name": "Le Bon Marché Rive Gauche",
   "type": "Department Store",
   "country": "FR",
@@ -13230,10 +14938,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 304,
+  "id": 309,
   "name": "Jovoy Paris",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13278,10 +14988,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 305,
+  "id": 310,
   "name": "Galeries Lafayette Haussmann",
   "type": "Department Store",
   "country": "FR",
@@ -13325,10 +15037,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 306,
+  "id": 311,
   "name": "La Samaritaine (DFS)",
   "type": "Department Store",
   "country": "FR",
@@ -13371,10 +15085,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 307,
+  "id": 312,
   "name": "Printemps Haussmann",
   "type": "Department Store",
   "country": "FR",
@@ -13418,10 +15134,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 308,
+  "id": 313,
   "name": "Dover Street Parfums Market",
   "type": "Independent Concept Store",
   "country": "FR",
@@ -13466,10 +15184,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 309,
+  "id": 314,
   "name": "Galeries Lafayette Champs-Élysées",
   "type": "Department Store",
   "country": "FR",
@@ -13513,10 +15233,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 310,
+  "id": 315,
   "name": "Nose",
   "type": "Independent Concept Store",
   "country": "FR",
@@ -13560,11 +15282,150 @@ window.PERFUMERIES = [
   "crm_key": "nose@48.866,2.345",
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-02-03",
+   "units_delivered": 136,
+   "revenue": 6794.0,
+   "paid": 4467.0,
+   "outstanding": 2327.0,
+   "deliveries": [
+    {
+     "date": "2026-02-03",
+     "ref": "BL-2602-001",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-02-03",
+     "ref": "BL-2602-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-02-03",
+     "ref": "BL-2602-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-03-19",
+     "ref": "BL-2603-004",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-03-19",
+     "ref": "BL-2603-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-03-19",
+     "ref": "BL-2603-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-05-07",
+     "ref": "BL-2605-007",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-04",
+     "ref": "BL-2607-008",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-07-04",
+     "ref": "BL-2607-009",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-07-04",
+     "ref": "BL-2607-010",
+     "sku": "Discovery 5×2 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-08-28",
+     "ref": "BL-2608-011",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-08-28",
+     "ref": "BL-2608-012",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-10-08",
+     "ref": "BL-2610-013",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0053",
+     "date": "2026-02-03",
+     "due": "2026-03-20",
+     "amount": 1400.0,
+     "status": "Paid",
+     "cumulative": 1400.0
+    },
+    {
+     "no": "F-2026-0054",
+     "date": "2026-03-19",
+     "due": "2026-05-03",
+     "amount": 1431.0,
+     "status": "Paid",
+     "cumulative": 2831.0
+    },
+    {
+     "no": "F-2026-0055",
+     "date": "2026-05-07",
+     "due": "2026-06-21",
+     "amount": 496.0,
+     "status": "Paid",
+     "cumulative": 3327.0
+    },
+    {
+     "no": "F-2026-0056",
+     "date": "2026-07-04",
+     "due": "2026-08-18",
+     "amount": 1140.0,
+     "status": "Paid",
+     "cumulative": 4467.0
+    },
+    {
+     "no": "F-2026-0057",
+     "date": "2026-08-28",
+     "due": "2026-10-12",
+     "amount": 1335.0,
+     "status": "Pending",
+     "cumulative": 5802.0
+    },
+    {
+     "no": "F-2026-0058",
+     "date": "2026-10-08",
+     "due": "2026-11-22",
+     "amount": 992.0,
+     "status": "Pending",
+     "cumulative": 6794.0
+    }
+   ]
+  }
  },
  {
-  "id": 311,
+  "id": 316,
   "name": "Liquides Bar à Parfums",
   "type": "Independent Concept Store",
   "country": "FR",
@@ -13608,11 +15469,294 @@ window.PERFUMERIES = [
   "crm_key": "liquides-bar-a-parfums@48.863,2.364",
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Key Account",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2025-10-02",
+   "units_delivered": 384,
+   "revenue": 18243.0,
+   "paid": 15314.0,
+   "outstanding": 2929.0,
+   "deliveries": [
+    {
+     "date": "2025-10-02",
+     "ref": "BL-2510-001",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2025-10-02",
+     "ref": "BL-2510-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2025-10-02",
+     "ref": "BL-2510-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 18
+    },
+    {
+     "date": "2025-11-07",
+     "ref": "BL-2511-004",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2025-11-07",
+     "ref": "BL-2511-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2025-12-02",
+     "ref": "BL-2512-006",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-01-03",
+     "ref": "BL-2601-007",
+     "sku": "Extrait 50 ml",
+     "units": 22
+    },
+    {
+     "date": "2026-01-03",
+     "ref": "BL-2601-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-01-03",
+     "ref": "BL-2601-009",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-02-08",
+     "ref": "BL-2602-010",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-02-08",
+     "ref": "BL-2602-011",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-03-22",
+     "ref": "BL-2603-012",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-03-22",
+     "ref": "BL-2603-013",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-03-22",
+     "ref": "BL-2603-014",
+     "sku": "Discovery 5×2 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-04-17",
+     "ref": "BL-2604-015",
+     "sku": "Extrait 50 ml",
+     "units": 22
+    },
+    {
+     "date": "2026-04-17",
+     "ref": "BL-2604-016",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-04-17",
+     "ref": "BL-2604-017",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-05-28",
+     "ref": "BL-2605-018",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-05-28",
+     "ref": "BL-2605-019",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-05-28",
+     "ref": "BL-2605-020",
+     "sku": "Discovery 5×2 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-07-10",
+     "ref": "BL-2607-021",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-07-10",
+     "ref": "BL-2607-022",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-08-10",
+     "ref": "BL-2608-023",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-08-10",
+     "ref": "BL-2608-024",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-09-16",
+     "ref": "BL-2609-025",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-09-16",
+     "ref": "BL-2609-026",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-09-16",
+     "ref": "BL-2609-027",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-10-11",
+     "ref": "BL-2610-028",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-10-11",
+     "ref": "BL-2610-029",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2025-0016",
+     "date": "2025-10-02",
+     "due": "2025-11-16",
+     "amount": 1872.0,
+     "status": "Paid",
+     "cumulative": 1872.0
+    },
+    {
+     "no": "F-2025-0017",
+     "date": "2025-11-07",
+     "due": "2025-12-22",
+     "amount": 1694.0,
+     "status": "Paid",
+     "cumulative": 3566.0
+    },
+    {
+     "no": "F-2025-0018",
+     "date": "2025-12-02",
+     "due": "2026-01-16",
+     "amount": 496.0,
+     "status": "Paid",
+     "cumulative": 4062.0
+    },
+    {
+     "no": "F-2026-0019",
+     "date": "2026-01-03",
+     "due": "2026-02-17",
+     "amount": 2082.0,
+     "status": "Paid",
+     "cumulative": 6144.0
+    },
+    {
+     "no": "F-2026-0020",
+     "date": "2026-02-08",
+     "due": "2026-03-25",
+     "amount": 1474.0,
+     "status": "Paid",
+     "cumulative": 7618.0
+    },
+    {
+     "no": "F-2026-0021",
+     "date": "2026-03-22",
+     "due": "2026-05-06",
+     "amount": 1507.0,
+     "status": "Paid",
+     "cumulative": 9125.0
+    },
+    {
+     "no": "F-2026-0022",
+     "date": "2026-04-17",
+     "due": "2026-06-01",
+     "amount": 1965.0,
+     "status": "Paid",
+     "cumulative": 11090.0
+    },
+    {
+     "no": "F-2026-0023",
+     "date": "2026-05-28",
+     "due": "2026-07-12",
+     "amount": 1319.0,
+     "status": "Paid",
+     "cumulative": 12409.0
+    },
+    {
+     "no": "F-2026-0024",
+     "date": "2026-07-10",
+     "due": "2026-08-24",
+     "amount": 1694.0,
+     "status": "Paid",
+     "cumulative": 14103.0
+    },
+    {
+     "no": "F-2026-0025",
+     "date": "2026-08-10",
+     "due": "2026-09-24",
+     "amount": 1211.0,
+     "status": "Paid",
+     "cumulative": 15314.0
+    },
+    {
+     "no": "F-2026-0026",
+     "date": "2026-09-16",
+     "due": "2026-10-31",
+     "amount": 1593.0,
+     "status": "Pending",
+     "cumulative": 16907.0
+    },
+    {
+     "no": "F-2026-0027",
+     "date": "2026-10-11",
+     "due": "2026-11-25",
+     "amount": 1336.0,
+     "status": "Pending",
+     "cumulative": 18243.0
+    }
+   ]
+  }
  },
  {
-  "id": 312,
+  "id": 317,
   "name": "Sens Unique",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13655,11 +15799,336 @@ window.PERFUMERIES = [
   "crm_key": "sens-unique@48.856,2.359",
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Key Account",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2025-09-15",
+   "units_delivered": 488,
+   "revenue": 22276.0,
+   "paid": 22162.0,
+   "outstanding": 114.0,
+   "deliveries": [
+    {
+     "date": "2025-09-15",
+     "ref": "BL-2509-001",
+     "sku": "Extrait 50 ml",
+     "units": 24
+    },
+    {
+     "date": "2025-09-15",
+     "ref": "BL-2509-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2025-09-15",
+     "ref": "BL-2509-003",
+     "sku": "Discovery 5×2 ml",
+     "units": 16
+    },
+    {
+     "date": "2025-10-10",
+     "ref": "BL-2510-004",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2025-10-10",
+     "ref": "BL-2510-005",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2025-10-10",
+     "ref": "BL-2510-006",
+     "sku": "Discovery 5×2 ml",
+     "units": 22
+    },
+    {
+     "date": "2025-11-02",
+     "ref": "BL-2511-007",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2025-11-02",
+     "ref": "BL-2511-008",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2025-11-02",
+     "ref": "BL-2511-009",
+     "sku": "Discovery 5×2 ml",
+     "units": 18
+    },
+    {
+     "date": "2025-11-28",
+     "ref": "BL-2511-010",
+     "sku": "Extrait 50 ml",
+     "units": 18
+    },
+    {
+     "date": "2025-11-28",
+     "ref": "BL-2511-011",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2025-11-28",
+     "ref": "BL-2511-012",
+     "sku": "Discovery 5×2 ml",
+     "units": 22
+    },
+    {
+     "date": "2025-12-29",
+     "ref": "BL-2512-013",
+     "sku": "Extrait 50 ml",
+     "units": 26
+    },
+    {
+     "date": "2025-12-29",
+     "ref": "BL-2512-014",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-01-31",
+     "ref": "BL-2601-015",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-01-31",
+     "ref": "BL-2601-016",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-01-31",
+     "ref": "BL-2601-017",
+     "sku": "Discovery 5×2 ml",
+     "units": 18
+    },
+    {
+     "date": "2026-02-22",
+     "ref": "BL-2602-018",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-02-22",
+     "ref": "BL-2602-019",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-03-17",
+     "ref": "BL-2603-020",
+     "sku": "Extrait 50 ml",
+     "units": 24
+    },
+    {
+     "date": "2026-03-17",
+     "ref": "BL-2603-021",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-04-08",
+     "ref": "BL-2604-022",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-05-11",
+     "ref": "BL-2605-023",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-06-13",
+     "ref": "BL-2606-024",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-06-13",
+     "ref": "BL-2606-025",
+     "sku": "Discovery 5×2 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-07-09",
+     "ref": "BL-2607-026",
+     "sku": "Extrait 50 ml",
+     "units": 16
+    },
+    {
+     "date": "2026-07-09",
+     "ref": "BL-2607-027",
+     "sku": "Discovery 5×2 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-08-08",
+     "ref": "BL-2608-028",
+     "sku": "Extrait 50 ml",
+     "units": 20
+    },
+    {
+     "date": "2026-08-08",
+     "ref": "BL-2608-029",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-08-30",
+     "ref": "BL-2608-030",
+     "sku": "Extrait 50 ml",
+     "units": 14
+    },
+    {
+     "date": "2026-08-30",
+     "ref": "BL-2608-031",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-10-03",
+     "ref": "BL-2610-032",
+     "sku": "Discovery 5×2 ml",
+     "units": 12
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2025-0001",
+     "date": "2025-09-15",
+     "due": "2025-10-30",
+     "amount": 2342.0,
+     "status": "Paid",
+     "cumulative": 2342.0
+    },
+    {
+     "no": "F-2025-0002",
+     "date": "2025-10-10",
+     "due": "2025-11-24",
+     "amount": 2034.0,
+     "status": "Paid",
+     "cumulative": 4376.0
+    },
+    {
+     "no": "F-2025-0003",
+     "date": "2025-11-02",
+     "due": "2025-12-17",
+     "amount": 1266.0,
+     "status": "Paid",
+     "cumulative": 5642.0
+    },
+    {
+     "no": "F-2025-0004",
+     "date": "2025-11-28",
+     "due": "2026-01-12",
+     "amount": 1793.0,
+     "status": "Paid",
+     "cumulative": 7435.0
+    },
+    {
+     "no": "F-2025-0005",
+     "date": "2025-12-29",
+     "due": "2026-02-12",
+     "amount": 2314.0,
+     "status": "Paid",
+     "cumulative": 9749.0
+    },
+    {
+     "no": "F-2026-0006",
+     "date": "2026-01-31",
+     "due": "2026-03-17",
+     "amount": 1865.0,
+     "status": "Paid",
+     "cumulative": 11614.0
+    },
+    {
+     "no": "F-2026-0007",
+     "date": "2026-02-22",
+     "due": "2026-04-08",
+     "amount": 1212.0,
+     "status": "Paid",
+     "cumulative": 12826.0
+    },
+    {
+     "no": "F-2026-0008",
+     "date": "2026-03-17",
+     "due": "2026-05-01",
+     "amount": 1621.0,
+     "status": "Paid",
+     "cumulative": 14447.0
+    },
+    {
+     "no": "F-2026-0009",
+     "date": "2026-04-08",
+     "due": "2026-05-23",
+     "amount": 1240.0,
+     "status": "Paid",
+     "cumulative": 15687.0
+    },
+    {
+     "no": "F-2026-0010",
+     "date": "2026-05-11",
+     "due": "2026-06-25",
+     "amount": 868.0,
+     "status": "Paid",
+     "cumulative": 16555.0
+    },
+    {
+     "no": "F-2026-0011",
+     "date": "2026-06-13",
+     "due": "2026-07-28",
+     "amount": 1087.0,
+     "status": "Paid",
+     "cumulative": 17642.0
+    },
+    {
+     "no": "F-2026-0012",
+     "date": "2026-07-09",
+     "due": "2026-08-23",
+     "amount": 1125.0,
+     "status": "Paid",
+     "cumulative": 18767.0
+    },
+    {
+     "no": "F-2026-0013",
+     "date": "2026-08-08",
+     "due": "2026-09-22",
+     "amount": 1825.0,
+     "status": "Paid",
+     "cumulative": 20592.0
+    },
+    {
+     "no": "F-2026-0014",
+     "date": "2026-08-30",
+     "due": "2026-10-14",
+     "amount": 1570.0,
+     "status": "Paid",
+     "cumulative": 22162.0
+    },
+    {
+     "no": "F-2026-0015",
+     "date": "2026-10-03",
+     "due": "2026-11-17",
+     "amount": 114.0,
+     "status": "Pending",
+     "cumulative": 22276.0
+    }
+   ]
+  }
  },
  {
-  "id": 313,
+  "id": 318,
   "name": "Marie Antoinette",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13702,11 +16171,177 @@ window.PERFUMERIES = [
   "crm_key": "marie-antoinette@48.855,2.363",
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-01-12",
+   "units_delivered": 84,
+   "revenue": 4298.0,
+   "paid": 3320.0,
+   "outstanding": 978.0,
+   "deliveries": [
+    {
+     "date": "2026-01-12",
+     "ref": "BL-2601-001",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-01-12",
+     "ref": "BL-2601-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-03-25",
+     "ref": "BL-2603-003",
+     "sku": "Extrait 50 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-03-25",
+     "ref": "BL-2603-004",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-05-16",
+     "ref": "BL-2605-005",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-05-16",
+     "ref": "BL-2605-006",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-05-16",
+     "ref": "BL-2605-007",
+     "sku": "Discovery 5×2 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-26",
+     "ref": "BL-2607-008",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-07-26",
+     "ref": "BL-2607-009",
+     "sku": "Discovery 5×2 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-10-12",
+     "ref": "BL-2610-010",
+     "sku": "Extrait 50 ml",
+     "units": 12
+    },
+    {
+     "date": "2026-10-12",
+     "ref": "BL-2610-011",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0048",
+     "date": "2026-01-12",
+     "due": "2026-02-26",
+     "amount": 978.0,
+     "status": "Paid",
+     "cumulative": 978.0
+    },
+    {
+     "no": "F-2026-0049",
+     "date": "2026-03-25",
+     "due": "2026-05-09",
+     "amount": 723.0,
+     "status": "Paid",
+     "cumulative": 1701.0
+    },
+    {
+     "no": "F-2026-0050",
+     "date": "2026-05-16",
+     "due": "2026-06-30",
+     "amount": 923.0,
+     "status": "Paid",
+     "cumulative": 2624.0
+    },
+    {
+     "no": "F-2026-0051",
+     "date": "2026-07-26",
+     "due": "2026-09-09",
+     "amount": 696.0,
+     "status": "Paid",
+     "cumulative": 3320.0
+    },
+    {
+     "no": "F-2026-0052",
+     "date": "2026-10-12",
+     "due": "2026-11-26",
+     "amount": 978.0,
+     "status": "Pending",
+     "cumulative": 4298.0
+    }
+   ]
+  }
  },
  {
-  "id": 314,
+  "id": 319,
+  "name": "KAMS Paris",
+  "type": "Independent Concept Store",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Paris",
+  "district": "Paris 1er",
+  "full_address": "6 Avenue de l'Opéra, 75001 Paris, France",
+  "lat": 48.864367,
+  "lng": 2.335258,
+  "tier_score": 76,
+  "brand_alignment_score": 48,
+  "single_sku_openness": "Low",
+  "openness_verified": false,
+  "segment": "Selective Concept Store",
+  "entry_barrier": "High",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Luxury service",
+   "Tourist crowds"
+  ],
+  "sentiment_summary": "Luxury multi-brand perfume concept by the Louvre, family-run since 1960; international and duty-free clientele.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Tourist-exposed city: expect walk-in visitors on weekends.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Pitch the central buyer as a design object / limited drop; expect exclusivity and visuals requests.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 100,
+  "address_source": "curated",
+  "source": "osm:node/14061309252",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=KAMS+Paris%2C+6+Avenue+de+l%27Op%C3%A9ra%2C+75001+Paris%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=KAMS+Paris+Paris",
+  "crm_key": "kams-paris@48.864,2.335",
+  "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Not Contacted",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": null
+ },
+ {
+  "id": 320,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -13748,10 +16383,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 315,
+  "id": 321,
   "name": "Galeries Lafayettes Beaugrenelle",
   "type": "Department Store",
   "country": "FR",
@@ -13793,10 +16430,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 316,
+  "id": 322,
   "name": "BHV Marais",
   "type": "Department Store",
   "country": "FR",
@@ -13838,10 +16477,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 317,
+  "id": 323,
   "name": "Beleza Parfums",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13880,10 +16521,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 318,
+  "id": 324,
   "name": "Bureau du parfum",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13922,10 +16565,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 319,
+  "id": 325,
   "name": "Parfum Crush",
   "type": "Niche Boutique",
   "country": "FR",
@@ -13964,10 +16609,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 320,
+  "id": 326,
   "name": "Parfumerie",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14006,10 +16653,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 321,
+  "id": 327,
   "name": "Parfumerie Burdin",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14048,10 +16697,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 322,
+  "id": 328,
   "name": "Parfumerie Burdin",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14090,10 +16741,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 323,
+  "id": 329,
   "name": "Parfumerie de Reuilly",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14132,10 +16785,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 324,
+  "id": 330,
   "name": "Paris Look",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14174,10 +16829,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 325,
+  "id": 331,
   "name": "Parle Moi de Parfum",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14216,10 +16873,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 326,
+  "id": 332,
   "name": "Parle moi de Parfum",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14258,10 +16917,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 327,
+  "id": 333,
   "name": "RP PARIS",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14300,10 +16961,115 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 328,
+  "id": 334,
+  "name": "Smell Fragrance",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Pau",
+  "district": null,
+  "full_address": "26 Rue des Cordeliers, 64000 Pau, France",
+  "lat": 43.297214,
+  "lng": -0.37172,
+  "tier_score": 72,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Curated indie brands"
+  ],
+  "sentiment_summary": "Independent niche perfumery in Pau's old town (Hédas); the reference niche door between Bordeaux and Biarritz.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Local, repeat clientele; footfall depends on the town centre.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 75,
+  "address_source": "osm_reverse",
+  "source": "osm:node/11425400152",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Smell+Fragrance%2C+26+Rue+des+Cordeliers%2C+64000+Pau%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Smell+Fragrance+Pau",
+  "crm_key": "smell-fragrance@43.297,-0.372",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-04-28",
+   "units_delivered": 28,
+   "revenue": 1400.0,
+   "paid": 1400.0,
+   "outstanding": 0.0,
+   "deliveries": [
+    {
+     "date": "2026-04-28",
+     "ref": "BL-2604-001",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-04-28",
+     "ref": "BL-2604-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-003",
+     "sku": "Extrait 50 ml",
+     "units": 8
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-004",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 2
+    },
+    {
+     "date": "2026-07-31",
+     "ref": "BL-2607-005",
+     "sku": "Discovery 5×2 ml",
+     "units": 6
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0071",
+     "date": "2026-04-28",
+     "due": "2026-06-12",
+     "amount": 730.0,
+     "status": "Paid",
+     "cumulative": 730.0
+    },
+    {
+     "no": "F-2026-0072",
+     "date": "2026-07-31",
+     "due": "2026-09-14",
+     "amount": 670.0,
+     "status": "Paid",
+     "cumulative": 1400.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 335,
   "name": "BHV Reims",
   "type": "Department Store",
   "country": "FR",
@@ -14345,10 +17111,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 329,
+  "id": 336,
   "name": "Parfumerie Elisabeth",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14387,10 +17155,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 330,
+  "id": 337,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14432,10 +17202,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 331,
+  "id": 338,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14477,10 +17249,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 332,
+  "id": 339,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14522,10 +17296,103 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 333,
+  "id": 340,
+  "name": "Muchachos",
+  "type": "Niche Boutique",
+  "country": "FR",
+  "country_name": "France",
+  "city": "Roubaix",
+  "district": null,
+  "full_address": "17 Avenue d'Alsace, 59100 Roubaix, France",
+  "lat": 50.698644,
+  "lng": 3.162805,
+  "tier_score": 70,
+  "brand_alignment_score": 68,
+  "single_sku_openness": "Med",
+  "openness_verified": false,
+  "segment": "Indie Niche (to verify)",
+  "entry_barrier": "Med",
+  "customer_experience_rating": null,
+  "cx_traits": [
+   "Curated indie brands"
+  ],
+  "sentiment_summary": "Independent perfumery in Roubaix (Nations Unies); niche depth to confirm on a first visit.",
+  "cx_insights": {
+   "staff": "Owner-run: expertise depends on the founder, verify on a first visit.",
+   "footfall": "Local, repeat clientele; footfall depends on the town centre.",
+   "sampling": "Unknown sampling policy: ask whether they decant or keep a discovery shelf.",
+   "atmosphere": "Independent perfumery with a niche-sounding identity.",
+   "watch_out": "Unverified fit: check Instagram for current brands before sending samples.",
+   "pitch": "Visit first; if the shelf is niche, offer a consignment trial of the single SKU.",
+   "basis": "Derived from store profile & location — verify on visit"
+  },
+  "network": null,
+  "address_confidence": "confirmed",
+  "address_confidence_score": 75,
+  "address_source": "osm_reverse",
+  "source": "osm:node/12504447931",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Muchachos%2C+17+Avenue+d%27Alsace%2C+59100+Roubaix%2C+France",
+  "instagram_search_url": "https://www.instagram.com/explore/search/keyword/?q=Muchachos+Roubaix",
+  "crm_key": "muchachos@50.699,3.163",
+  "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
+  "decision_maker_role": "Founder",
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": true,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-05-21",
+   "units_delivered": 10,
+   "revenue": 606.0,
+   "paid": 606.0,
+   "outstanding": 0.0,
+   "deliveries": [
+    {
+     "date": "2026-05-21",
+     "ref": "BL-2605-001",
+     "sku": "Extrait 50 ml",
+     "units": 6
+    },
+    {
+     "date": "2026-05-21",
+     "ref": "BL-2605-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 2
+    },
+    {
+     "date": "2026-09-09",
+     "ref": "BL-2609-003",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 2
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0069",
+     "date": "2026-05-21",
+     "due": "2026-07-05",
+     "amount": 489.0,
+     "status": "Paid",
+     "cumulative": 489.0
+    },
+    {
+     "no": "F-2026-0070",
+     "date": "2026-09-09",
+     "due": "2026-10-24",
+     "amount": 117.0,
+     "status": "Paid",
+     "cumulative": 606.0
+    }
+   ]
+  }
+ },
+ {
+  "id": 341,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -14567,10 +17434,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 334,
+  "id": 342,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14612,10 +17481,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 335,
+  "id": 343,
   "name": "Parfumerie Damiette",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14654,10 +17525,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 336,
+  "id": 344,
   "name": "La Parfumerie Autrement",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14696,10 +17569,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 337,
+  "id": 345,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14741,10 +17616,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 338,
+  "id": 346,
   "name": "RP Parfums",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14783,10 +17660,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 339,
+  "id": 347,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14828,10 +17707,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 340,
+  "id": 348,
   "name": "Galeries Lafayette Strasbourg",
   "type": "Department Store",
   "country": "FR",
@@ -14873,10 +17754,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 341,
+  "id": 349,
   "name": "Le 7 Parfumerie d'auteurs",
   "type": "Niche Boutique",
   "country": "FR",
@@ -14915,10 +17798,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 342,
+  "id": 350,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -14960,10 +17845,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 343,
+  "id": 351,
   "name": "Paris Parfums",
   "type": "Niche Boutique",
   "country": "FR",
@@ -15002,10 +17889,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 344,
+  "id": 352,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -15047,10 +17936,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 345,
+  "id": 353,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -15092,10 +17983,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 346,
+  "id": 354,
   "name": "Galeries Lafayette",
   "type": "Department Store",
   "country": "FR",
@@ -15137,10 +18030,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 347,
+  "id": 355,
   "name": "Printemps",
   "type": "Department Store",
   "country": "FR",
@@ -15182,10 +18077,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 348,
+  "id": 356,
   "name": "Paris 8",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15229,10 +18126,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 349,
+  "id": 357,
   "name": "Paris 8",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15276,10 +18175,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 350,
+  "id": 358,
   "name": "Paris 8",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15323,10 +18224,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 351,
+  "id": 359,
   "name": "Paris 8",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15370,10 +18273,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 352,
+  "id": 360,
   "name": "Paris 8",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15417,10 +18322,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 353,
+  "id": 361,
   "name": "Paris 8 Haute Parfumerie – Grand-Rue",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15464,10 +18371,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 354,
+  "id": 362,
   "name": "Parfumerie Celeste",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15510,10 +18419,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 355,
+  "id": 363,
   "name": "Sephora – Grand-Rue (Place d'Armes)",
   "type": "Independent Concept Store",
   "country": "LU",
@@ -15556,10 +18467,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 356,
+  "id": 364,
   "name": "Parfumerie Milady",
   "type": "Niche Boutique",
   "country": "LU",
@@ -15598,10 +18511,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 357,
+  "id": 365,
   "name": "Skins",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -15645,10 +18560,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 358,
+  "id": 366,
   "name": "ParfumBar",
   "type": "Niche Boutique",
   "country": "NL",
@@ -15687,10 +18604,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 359,
+  "id": 367,
   "name": "Skins",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -15734,10 +18653,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 360,
+  "id": 368,
   "name": "De Bijenkorf",
   "type": "Department Store",
   "country": "NL",
@@ -15779,10 +18700,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 361,
+  "id": 369,
   "name": "Skins Cosmetics Amsterdam",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -15827,10 +18750,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 362,
+  "id": 370,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -15874,10 +18799,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 363,
+  "id": 371,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -15921,10 +18848,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 364,
+  "id": 372,
   "name": "De Bijenkorf Amsterdam",
   "type": "Department Store",
   "country": "NL",
@@ -15968,10 +18897,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 365,
+  "id": 373,
   "name": "Babassu Amsterdam",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16014,10 +18945,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 366,
+  "id": 374,
   "name": "Perfume Lounge",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16060,11 +18993,58 @@ window.PERFUMERIES = [
   "crm_key": "perfume-lounge@52.355,4.871",
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
-  "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "pipeline_status": "Partner Active",
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": {
+   "demo": true,
+   "since": "2026-06-10",
+   "units_delivered": 20,
+   "revenue": 1226.0,
+   "paid": 1226.0,
+   "outstanding": 0.0,
+   "deliveries": [
+    {
+     "date": "2026-06-10",
+     "ref": "BL-2606-001",
+     "sku": "Extrait 50 ml",
+     "units": 10
+    },
+    {
+     "date": "2026-06-10",
+     "ref": "BL-2606-002",
+     "sku": "Eau de Parfum 100 ml",
+     "units": 4
+    },
+    {
+     "date": "2026-08-24",
+     "ref": "BL-2608-003",
+     "sku": "Extrait 50 ml",
+     "units": 6
+    }
+   ],
+   "invoices": [
+    {
+     "no": "F-2026-0078",
+     "date": "2026-06-10",
+     "due": "2026-07-25",
+     "amount": 854.0,
+     "status": "Paid",
+     "cumulative": 854.0
+    },
+    {
+     "no": "F-2026-0079",
+     "date": "2026-08-24",
+     "due": "2026-10-08",
+     "amount": 372.0,
+     "status": "Paid",
+     "cumulative": 1226.0
+    }
+   ]
+  }
  },
  {
-  "id": 367,
+  "id": 375,
   "name": "X BANK",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16105,10 +19085,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 368,
+  "id": 376,
   "name": "Parfumerie Louise",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16147,10 +19129,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 369,
+  "id": 377,
   "name": "Parfumerie Linnewiel",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16189,10 +19173,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 370,
+  "id": 378,
   "name": "Pour Vous Bosma Bloemendaal",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16231,10 +19217,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 371,
+  "id": 379,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16278,10 +19266,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 372,
+  "id": 380,
   "name": "Skins Cosmetics Breda",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16325,10 +19315,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 373,
+  "id": 381,
   "name": "Skinsz",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16372,10 +19364,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 374,
+  "id": 382,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16419,10 +19413,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 375,
+  "id": 383,
   "name": "De Bijenkorf Eindhoven",
   "type": "Department Store",
   "country": "NL",
@@ -16464,10 +19460,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 376,
+  "id": 384,
   "name": "De Parfumeur",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16506,10 +19504,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 377,
+  "id": 385,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16553,10 +19553,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 378,
+  "id": 386,
   "name": "Perfumes of the past",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16595,10 +19597,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 379,
+  "id": 387,
   "name": "Kappé Perfumes & Colours",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16637,10 +19641,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 380,
+  "id": 388,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16684,10 +19690,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 381,
+  "id": 389,
   "name": "Skins",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16731,10 +19739,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 382,
+  "id": 390,
   "name": "Babassu",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16777,10 +19787,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 383,
+  "id": 391,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -16824,10 +19836,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 384,
+  "id": 392,
   "name": "De Bijenkorf Maastricht",
   "type": "Department Store",
   "country": "NL",
@@ -16869,10 +19883,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 385,
+  "id": 393,
   "name": "La Maison du Parfum",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16911,10 +19927,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 1 - Quick Win (Indie Niche)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 386,
+  "id": 394,
   "name": "De Parfumeur",
   "type": "Niche Boutique",
   "country": "NL",
@@ -16953,10 +19971,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 387,
+  "id": 395,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -17000,10 +20020,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 388,
+  "id": 396,
   "name": "Skins Cosmetics",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -17047,10 +20069,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Store Manager",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 389,
+  "id": 397,
   "name": "De Bijenkorf Rotterdam",
   "type": "Department Store",
   "country": "NL",
@@ -17092,10 +20116,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 390,
+  "id": 398,
   "name": "De Parfumeur",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17134,10 +20160,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 391,
+  "id": 399,
   "name": "Parfumerie Poeder & Dons",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17176,10 +20204,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 392,
+  "id": 400,
   "name": "Parfumerie & Schoonheidssalon Beauty-K",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17218,10 +20248,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 393,
+  "id": 401,
   "name": "Skins Cosmetics Den Haag",
   "type": "Independent Concept Store",
   "country": "NL",
@@ -17265,10 +20297,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 394,
+  "id": 402,
   "name": "De Bijenkorf Den Haag",
   "type": "Department Store",
   "country": "NL",
@@ -17310,10 +20344,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 395,
+  "id": 403,
   "name": "Babassu Den Haag",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17356,10 +20392,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 396,
+  "id": 404,
   "name": "Lianne Tio Luxury Parfums",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17402,10 +20440,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 397,
+  "id": 405,
   "name": "Celeste Parfums",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17444,10 +20484,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 398,
+  "id": 406,
   "name": "So Perfume",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17486,10 +20528,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 399,
+  "id": 407,
   "name": "De Bijenkorf Utrecht",
   "type": "Department Store",
   "country": "NL",
@@ -17531,10 +20575,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 3 - Long-term Dept Store",
   "decision_maker_role": "Head Buyer",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 400,
+  "id": 408,
   "name": "Scentique Parfumerie",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17573,10 +20619,12 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  },
  {
-  "id": 401,
+  "id": 409,
   "name": "Casa Babassu Wassenaar",
   "type": "Niche Boutique",
   "country": "NL",
@@ -17619,6 +20667,8 @@ window.PERFUMERIES = [
   "launch_priority": "Tier 2 - Selective (Specialist / Concept)",
   "decision_maker_role": "Founder",
   "pipeline_status": "Not Contacted",
-  "notes_prospections": ""
+  "notes_prospections": "",
+  "priority_target": false,
+  "wholesale": null
  }
 ];

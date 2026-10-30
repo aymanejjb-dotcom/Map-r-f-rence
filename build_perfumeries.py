@@ -215,6 +215,82 @@ RAW = [
      "Central Lucerne store; frequent tourist traffic."),
 ]
 
+# ------------------------------------------------------- priority target boutiques
+# Shops from the priority target list that the OSM harvest missed. Each one was located
+# on its own OSM object (source) and the house number checked: "curated" when a public
+# directory (Visit Lyon, Mappy, acceslibre) gives the same number, "osm_reverse" when it
+# comes from the numbered OSM address the shop sits in. No CX rating until reviewed.
+# (name, type, country, city, address, lat, lng, tier, align, openness, traits, sentiment,
+#  osm object, address source)
+TARGET_ROWS = [
+    ("KAMS Paris", CS, "FR", "Paris", "6 Avenue de l'Opéra, 75001 Paris, France", 48.864367, 2.335258, 76, 48, "Med", "LX TC",
+     "Luxury multi-brand perfume concept by the Louvre, family-run since 1960; international and duty-free clientele.",
+     "node/14061309252", "curated"),
+    ("Odorem", NB, "FR", "Lyon", "11 Rue Auguste Comte, 69002 Lyon, France", 45.755606, 4.831668, 80, 84, "High", "ES IB DB",
+     "Independent haute-parfumerie boutique in Ainay; runs olfactive workshops introducing French niche houses.",
+     "node/11244216429", "curated"),
+    ("Le Paravent", NB, "FR", "Lyon", "35 Rue Auguste Comte, 69002 Lyon, France", 45.753148, 4.830341, 78, 80, "High", "ES IB",
+     "Owner-run Ainay perfumery that makes a point of carrying niche houses alongside its prestige shelf.",
+     "node/7002820454", "curated"),
+    ("La Mûre Favorite", NB, "FR", "Lyon", "19 Cours Franklin Roosevelt, 69006 Lyon, France", 45.769077, 4.845681, 72, 78, "High", "IB",
+     "Independent perfumery in Les Brotteaux (Lyon 6e); niche depth to confirm on a first visit.",
+     "node/8035315312", "osm_reverse"),
+    ("Ecocentric", CS, "FR", "Lyon", "9 Rue Marcel Gabriel Rivière, 69002 Lyon, France", 45.75946, 4.836063, 70, 74, "Med", "IB",
+     "Natural-beauty and perfumery concept store near the Grand Hôtel-Dieu; clean-formula positioning.",
+     "node/10758807918", "osm_reverse"),
+    ("Smell Fragrance", NB, "FR", "Pau", "26 Rue des Cordeliers, 64000 Pau, France", 43.297214, -0.37172, 72, 80, "High", "IB",
+     "Independent niche perfumery in Pau's old town (Hédas); the reference niche door between Bordeaux and Biarritz.",
+     "node/11425400152", "osm_reverse"),
+    ("Parfumerie du Soleil d'Or", NB, "FR", "Lille", "4 Rue Esquermoise, 59800 Lille, France", 50.637463, 3.062829, 84, 80, "High", "ES IB LX",
+     "Historic independent niche perfumery on the Grand-Place corner of Vieux-Lille; deep niche catalogue.",
+     "node/5509181269", "curated"),
+    ("Muchachos", NB, "FR", "Roubaix", "17 Avenue d'Alsace, 59100 Roubaix, France", 50.698644, 3.162805, 70, 78, "High", "IB",
+     "Independent perfumery in Roubaix (Nations Unies); niche depth to confirm on a first visit.",
+     "node/12504447931", "osm_reverse"),
+]
+
+# Priority target list as briefed (label, zone, store name in the dataset or None, audit note).
+# None = no shop of that name could be located (OSM, Photon, public directories): kept here
+# so the build log keeps asking for an exact address instead of inventing one.
+PRIORITY_TARGETS = [
+    ("Univere Parfumerie", "Paris 2e", None, "no listing found — need street address"),
+    ("Sens Unique", "Paris 3e", "Sens Unique", "listed at 13 Rue du Roi de Sicile (4e)"),
+    ("Marie Antoinette", "Paris 4e", "Marie Antoinette", ""),
+    ("Concept Parfum", "Paris 7e", None, "no listing found — need street address"),
+    ("Confrérie Parfumée", "Paris 11e", None, "no listing found — need street address"),
+    ("DSB Parfums", "Champigny-sur-Marne", None, "no listing found — need street address"),
+    ("Le Chimiste", "Saint-Denis", None, "no listing found (93 or 974?) — need street address"),
+    ("Kams Paris", "Lyon", "KAMS Paris", "only door found is Paris 1er, mapped there"),
+    ("Odorare", "Lyon", None, "no listing found — likely Odorem (11 Rue Auguste Comte)?"),
+    ("Sayhar", "Lyon", None, "no listing found — need street address"),
+    ("Liquides", "Lyon", "Liquides Bar à Parfums", "no Lyon door found; network present via Paris bar"),
+    ("Mayora Parfumerie", "Lyon", None, "no listing found — need street address"),
+    ("Vanora", "Lyon", None, "no listing found — need street address"),
+    ("Rivora Parfumerie", "Lyon", None, "no listing found — need street address"),
+    ("Paravent", "Lyon", "Le Paravent", ""),
+    ("La Mûre Favorite", "Lyon", "La Mûre Favorite", ""),
+    ("Odorem", "Lyon", "Odorem", ""),
+    ("Ecocentric", "Lyon", "Ecocentric", ""),
+    ("Smell Fragrance", "Pau", "Smell Fragrance", ""),
+    ("Parfum Exclusif", "Le Pontet", None, "no listing found — need street address"),
+    ("Soleil d'Or", "Lille", "Parfumerie du Soleil d'Or", ""),
+    ("Parfumerie Lehembre", "Lille", "Parfumerie Lehembre", "door is in La Madeleine (Lille metro)"),
+    ("Maison Muchachos", "Roubaix", "Muchachos", ""),
+    ("Les Passionnez", "Aix-en-Provence", None, "no listing found — need street address"),
+    ("Fessin Parfumerie", "Toulouse", None, "no listing found — need street address"),
+    ("Olfactions Parfumerie", "Toulouse", None, "no listing found — need street address"),
+]
+TARGET_NAMES = {t[2] for t in PRIORITY_TARGETS if t[2]}
+
+# ------------------------------------------------------------ wholesale ledger
+# sources/wholesale.json, keyed by crm_key: deliveries (stock engagement) and invoices per
+# active partner. An entry may carry the account's pipeline_status (Partner Active / Key
+# Account); crm.json still wins. The shipped ledger is illustrative ("demo": true) until
+# replaced by an export from the map's Wholesale drawer.
+LEDGER_FILE = Path(__file__).parent / "sources" / "wholesale.json"
+INVOICE_STATUS = {"Paid", "Pending"}
+PARTNER_STATUS = {"Partner Active", "Key Account"}
+
 TYPE_CODES = {NB, CS, DS}
 OPENNESS = {"High", "Med", "Low"}
 # Loose bounding boxes per country (lat_min, lat_max, lng_min, lng_max)
@@ -774,6 +850,13 @@ def curated_records():
             "single_sku_openness": openness, "customer_experience_rating": cx, "traits": traits,
             "sentiment_summary": sentiment, "network": None, "source": "curated", "address_source": "curated",
         })
+    for (name, typ, cc, city, addr, lat, lng, tier, align, openness, traits, sentiment, osm, addr_src) in TARGET_ROWS:
+        out.append({
+            "name": name, "type": typ, "country": cc, "city": city, "full_address": addr,
+            "lat": lat, "lng": lng, "tier_score": tier, "brand_alignment_score": align,
+            "single_sku_openness": openness, "customer_experience_rating": None, "traits": traits,
+            "sentiment_summary": sentiment, "network": None, "source": f"osm:{osm}", "address_source": addr_src,
+        })
     return out
 
 
@@ -887,10 +970,47 @@ def load_crm():
     return crm, errors
 
 
+def load_ledger():
+    """sources/wholesale.json -> ({crm_key: entry}, demo flag, errors)."""
+    if not LEDGER_FILE.exists():
+        return {}, False, []
+    raw = json.loads(LEDGER_FILE.read_text(encoding="utf-8"))
+    ledger, errors = raw.get("accounts", {}), []
+    date = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    for k, e in ledger.items():
+        if e.get("pipeline_status", "Partner Active") not in PARTNER_STATUS:
+            errors.append(f"wholesale.json {k}: pipeline_status must be Partner Active or Key Account")
+        for d in e.get("deliveries", []):
+            if not (date.match(d.get("date", "")) and isinstance(d.get("units"), int) and d["units"] > 0):
+                errors.append(f"wholesale.json {k}: bad delivery {d}")
+        for i in e.get("invoices", []):
+            if not (date.match(i.get("date", "")) and date.match(i.get("due", "")) and i.get("status") in INVOICE_STATUS
+                    and isinstance(i.get("amount"), (int, float)) and i["amount"] > 0):
+                errors.append(f"wholesale.json {k}: bad invoice {i}")
+    return ledger, bool(raw.get("demo")), errors
+
+
+def wholesale(entry, demo):
+    """Ledger entry -> record field: raw lines (chronological) plus totals the map and CSV reuse."""
+    deliveries = sorted(entry.get("deliveries", []), key=lambda d: d["date"])
+    invoices, running = [], 0.0
+    for i in sorted(entry.get("invoices", []), key=lambda i: i["date"]):
+        running += i["amount"]
+        invoices.append({**i, "cumulative": round(running, 2)})
+    paid = sum(i["amount"] for i in invoices if i["status"] == "Paid")
+    return {
+        "demo": demo, "since": entry.get("since") or (deliveries[0]["date"] if deliveries else None),
+        "units_delivered": sum(d["units"] for d in deliveries),
+        "revenue": round(running, 2), "paid": round(paid, 2), "outstanding": round(running - paid, 2),
+        "deliveries": deliveries, "invoices": invoices,
+    }
+
+
 def build():
     merged, dropped = merge()
     crm, crm_errors = load_crm()
-    errors = validate(merged) + crm_errors
+    ledger, demo, ledger_errors = load_ledger()
+    errors = validate(merged) + crm_errors + ledger_errors
     records = []
     for r in merged:
         r["city"], r["commune"] = canonical_city(r["country"], r["city"])
@@ -934,15 +1054,44 @@ def build():
             "decision_maker_role": decision_maker(r),
             "pipeline_status": PIPELINE[0],
             "notes_prospections": "",
+            "priority_target": r["name"] in TARGET_NAMES,
+            "wholesale": None,
         })
-        records[-1].update({k: v for k, v in crm.get(records[-1]["crm_key"], {}).items() if k in CRM_FIELDS})
+        rec = records[-1]
+        entry = ledger.get(rec["crm_key"])
+        if entry:
+            rec["pipeline_status"] = entry.get("pipeline_status", "Partner Active")
+            rec["wholesale"] = wholesale(entry, demo)
+        rec.update({k: v for k, v in crm.get(rec["crm_key"], {}).items() if k in CRM_FIELDS})
+        if entry and rec["pipeline_status"] not in PARTNER_STATUS:
+            errors.append(f"{rec['name']}: has a wholesale ledger but status {rec['pipeline_status']}")
     keys = Counter(r["crm_key"] for r in records)
     errors += [f"duplicate crm_key: {k}" for k, n in keys.items() if n > 1]
     # Stores that left the harvest keep their CRM history in crm.json; only warn
     orphans = [k for k in crm if k not in keys]
     if orphans:
         print(f"warning: {len(orphans)} crm.json entries match no store: {', '.join(orphans[:5])}", file=sys.stderr)
+    errors += [f"wholesale.json {k}: matches no store" for k in ledger if k not in keys]
+    names = {r["name"] for r in records}
+    errors += [f"PRIORITY_TARGETS: {n} is not in the dataset" for n in TARGET_NAMES if n not in names]
     return records, errors, dropped
+
+
+def audit(records):
+    """Terminal summary of the priority target list: present, newly added, still unresolved."""
+    by_name = {r["name"]: r for r in records}
+    added = {t[0] for t in TARGET_ROWS}
+    rows = {"present": [], "added": [], "pending": []}
+    for label, zone, name, note in PRIORITY_TARGETS:
+        r = by_name.get(name)
+        kind = "pending" if not r else "added" if name in added else "present"
+        where = f"{r['name']} · {r['full_address']} [{r['address_source']}]" if r else ""
+        rows[kind].append(f"{label} ({zone})" + (f" -> {where}" if where else "") + (f"  ({note})" if note else ""))
+    print(f"\nPriority target audit ({len(PRIORITY_TARGETS)} boutiques)")
+    for kind, title in (("present", "already present"), ("added", "newly added / verified"), ("pending", "unresolved, not mapped")):
+        print(f"  {title}: {len(rows[kind])}")
+        for line in rows[kind]:
+            print(f"    {'✓' if kind == 'present' else '+' if kind == 'added' else '?'} {line}")
 
 
 def main():
@@ -963,6 +1112,12 @@ def main():
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("pipeline_status")))
     print("  " + ", ".join(f"{k}: {v}" for k, v in count("source") if k == "curated") +
           f", osm: {sum(r['source'].startswith('osm') for r in records)}")
+    ledgers = [r["wholesale"] for r in records if r["wholesale"]]
+    if ledgers:
+        print(f"  wholesale ledger{' (demo)' if ledgers[0]['demo'] else ''}: {len(ledgers)} partners, "
+              f"{sum(w['units_delivered'] for w in ledgers)} units delivered, "
+              f"{sum(w['revenue'] for w in ledgers):,.0f} EUR invoiced, {sum(w['outstanding'] for w in ledgers):,.0f} EUR outstanding")
+    audit(records)
 
 
 if __name__ == "__main__":

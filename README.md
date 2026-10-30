@@ -9,6 +9,7 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 | `harvest_osm.py` | Network step: harvests stockists from OpenStreetMap into `sources/osm_raw.json` |
 | `sources/cities.json` | Cached bounding boxes of the target cities |
 | `sources/crm.json` | Optional: pipeline status / decision maker / notes per `crm_key`, exported from the map |
+| `sources/wholesale.json` | Wholesale ledger per partner `crm_key`: deliveries + invoices (ships as an illustrative `"demo": true` ledger) |
 | `sources/osm_raw.json` | Raw OSM harvest (everything looked at, before filtering) |
 | `build_perfumeries.py` | Offline: curated rows + filtered OSM rows → validation → `perfumeries.json` / `.js` |
 | `perfumeries.json` | Canonical dataset |
@@ -53,7 +54,19 @@ brand_alignment_score (0-100), single_sku_openness (High/Med/Low),
 openness_verified, segment, entry_barrier, customer_experience_rating (1-5 or null), cx_traits[],
 sentiment_summary, cx_insights{staff, footfall, sampling, atmosphere, watch_out, pitch, basis}, network,
 address_confidence, address_confidence_score, address_source, source, google_maps_url, instagram_search_url,
-crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospections`
+crm_key, launch_priority, decision_maker_role, pipeline_status, notes_prospections, priority_target, wholesale`
+
+`wholesale` is `null` except for accounts in `sources/wholesale.json`:
+`{demo, since, units_delivered, revenue, paid, outstanding, deliveries[{date, ref, sku, units}],
+invoices[{no, date, due, amount, status (Paid/Pending), cumulative}]}`.
+
+### Priority target boutiques
+`PRIORITY_TARGETS` in `build_perfumeries.py` is the briefed list of high-priority doors; every build
+prints an audit: **already present**, **newly added / verified** and **unresolved**. Shops the OSM
+harvest missed are added from `TARGET_ROWS`, each pinned on its own OSM object; the house number is
+`curated` when a public directory confirms it, `osm_reverse` when taken from the numbered OSM address
+the shop sits in. Names that no source could locate stay unresolved (never invented coordinates):
+send a street address and add a row to `TARGET_ROWS`.
 
 ### B2B sales fields (single-SKU launch)
 | Field | Values |
@@ -119,6 +132,23 @@ The build fails if a curated store has no insight entry.
   Tier 1 quick wins pulse in champagne. Popups are floating product cards.
 - Filters: country, city, type, segment, tier, alignment, openness, source, status, priority, search,
   focus toggles (quick wins, partners & key accounts, sampling in flight, only in view).
+
+## Dual map: Global Target Directory ↔ Ma Carte Partner
+A top switch (remembered; `#partners` deep-links) flips the whole app between two maps:
+- **Global Target Directory**: all 400+ doors, prospecting dashboard, pitch generator, simulator.
+- **Ma Carte Partner**: only `Partner Active` / `Key Account` doors. Pins are sized by invoiced revenue,
+  coloured by account level; the top 3 performers carry a rotating gold halo. A champagne **revenue
+  heatmap** (leaflet.heat, toggle on the map) shows where it sells, and **Où ça cartonne** ranks cities
+  and doors (click to zoom). Widgets: partner doors, stock engaged (units delivered), revenue invoiced,
+  collected (paid share), outstanding (overdue = pending past due date), top city. The table swaps
+  prospecting columns for Units / Revenue / Outstanding / Last invoice.
+
+### Wholesale Stock & Invoicing drawer
+In a partner's dossier: totals, a cumulative-revenue sparkline, itemised invoices (date, due date,
+status, amount, running total; tap a status to mark it paid) and the delivery log (stock engagement).
+Log new deliveries and invoices in place; edits stay in this browser until **Export ledger JSON**
+(save as `sources/wholesale.json`, set `"demo": false`, rebuild). The build validates dates, amounts,
+statuses and that every ledger account is still a partner.
 
 ## Sales pipeline (CRM)
 - Dashboard: total target stores, high-priority (Tier 1) targets and quick wins, active pipeline

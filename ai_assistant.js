@@ -21,6 +21,7 @@
     { id: "dispatch", label: "Optimize 50 Discovery Set Dispatch List" },
     { id: "stagnation", label: "Pipeline Stagnation & Follow-up Audit" },
     { id: "exclusivity", label: "Exclusivity Zone Conflict Check" },
+    { id: "export", label: "Swiss & Non-EU Export Strategy" },
   ];
 
   const store = {
@@ -28,8 +29,9 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
   };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
-  const kEur = v => v >= 1e4 ? Math.round(v / 1e3) + " k€" : eur.format(Math.round(v));
+  // Figures are EUR internally; the CRM formats them in the currency picked in the header (€ / CHF / £)
+  const kEur = v => ctx.short(v);
+  const isExport = r => ctx.marketOf(r) !== "EUR";
   const avg = (a, f) => a.length ? a.reduce((s, r) => s + f(r), 0) / a.length : 0;
   const daysSince = d => d ? Math.floor((Date.now() - new Date(d + "T12:00:00")) / 864e5) : null;
   const km = (a, b) => {
@@ -75,11 +77,21 @@
       pipeline: counts("pipeline_status"), openness: counts("single_sku_openness"), priority: counts("launch_priority"),
       avg_fit: Math.round(avg(d, r => r.brand_alignment_score)), avg_tier: Math.round(avg(d, r => r.tier_score)),
       exclusivity_radius_km: ctx.zoneKm,
-      unit_economics: { msrp: sim.msrp, wholesale: +sim.wholesale.toFixed(2), brand_margin_per_unit: +sim.brandM.toFixed(2), moq_units: sim.moq, reorders_y1: sim.re },
+      unit_economics: { msrp: sim.msrp, wholesale: +sim.wholesale.toFixed(2), brand_margin_per_unit: +sim.brandM.toFixed(2), moq_units: sim.moq, reorders_y1: sim.re, base_currency: "EUR" },
+      currency: currencyContext(),
       partners: d.filter(isProtected).map(r => ({ name: r.name, city: r.city, status: r.pipeline_status,
         revenue: Math.round(r._ws?.revenue || 0), outstanding: Math.round(r._ws?.outstanding || 0), overdue: Math.round(r._ws?.overdue || 0),
         last_invoice: r._ws?.last || null })),
     };
+  }
+
+  // Market price lists, VAT, thresholds and FX the CRM is using right now
+  function currencyContext() {
+    const L = ctx.lists, r2 = v => Math.round(v * 100) / 100;
+    return { display: ctx.currency, fx_per_eur: { CHF: ctx.fx.CHF, GBP: ctx.fx.GBP, source: ctx.fx.src, as_of: ctx.fx.asof }, vat_pct: ctx.vat,
+      markets: Object.fromEntries(Object.entries(L).map(([c, l]) => [c, { name: l.m.name, vat_pct: l.m.vat, corridor: l.m.corridor, msrp: r2(l.msrp), wholesale: r2(l.wholesale),
+        brand_margin_unit: r2(l.brandM), moq_units: l.moq, opening_order: Math.round(l.order), min_order: Math.round(l.open), free_shipping: l.m.freeShip,
+        freight: l.m.freight, customs_per_shipment: l.m.customs, rules: l.m.duty }])) };
   }
 
   function growthCities() {
@@ -92,26 +104,58 @@
     const rows = [...groups.values()].map(g => {
       const pros = g.all.filter(r => isOpen(r) && !zoneOf(r));
       const partners = g.all.filter(isProtected).length;
-      const potential = pros.reduce((s, r) => s + score(r) / 100 * OPEN_W[r.single_sku_openness], 0);
+      // Cross-border doors: clearance fees eat into each shipment, so discount by the landed share of the opening order
+      const friction = g.all[0] && isExport(g.all[0]) ? 1 - ctx.priceOf(g.all[0]).m.customs / Math.max(1, ctx.priceOf(g.all[0]).order) : 1;
+      const potential = pros.reduce((s, r) => s + score(r) / 100 * OPEN_W[r.single_sku_openness], 0) * friction;
       const value = pros.reduce((s, r) => s + (r._val || 0) * convP(r), 0);
-      return { ...g, pros, partners, potential: potential * (partners ? .85 : 1), value,
+      return { ...g, pros, partners, potential: potential * (partners ? .85 : 1), value, export: friction < 1,
         high: pros.filter(r => r.single_sku_openness === "High").length,
         quick: pros.filter(r => r.launch_priority.startsWith("Tier 1")).length,
         fit: Math.round(avg(pros, r => r.brand_alignment_score)),
         traits: mode(pros.flatMap(r => r.cx_traits)).slice(0, 2) };
     }).filter(g => g.pros.length).sort((a, b) => b.potential - a.potential).slice(0, 5);
     const top = rows[0]?.potential || 1;
-    const html = `<p class="sl-lead">Ranked by <b>single-SKU potential</b>: Σ placement score × openness over doors still winnable (not partner, not declined, outside exclusivity zones). Cities already holding a partner are discounted 15 %.</p>` +
+    const html = `<p class="sl-lead">Ranked by <b>single-SKU potential</b>: Σ placement score × openness over doors still winnable (not partner, not declined, outside exclusivity zones). Cities already holding a partner are discounted 15 %; Swiss cities by their customs friction. Values in ${esc(ctx.currency)}.</p>` +
       rows.map((g, i) => {
         const lead = [...g.pros].sort((a, b) => score(b) - score(a)).slice(0, 3);
         return `<div class="sl-card"><div class="sl-card-h"><span class="sl-rank">${i + 1}</span><b>${esc(g.city)}</b><span class="sl-mute">${esc(g.country)}</span><span class="sl-idx">${Math.round(g.potential / top * 100)}</span></div>
           <div class="sl-bar"><i style="width:${Math.round(g.potential / top * 100)}%"></i></div>
           <div class="sl-kv"><span>${g.pros.length} winnable doors</span><span>${g.high} high-openness</span><span>${g.quick} Tier 1</span><span>avg fit ${g.fit}</span><span>≈ ${kEur(g.value)} expected y1</span>${g.partners ? `<span class="sl-warn">${g.partners} partner in place</span>` : ""}</div>
           <div class="sl-sub">Lead doors: ${lead.map(storeLink).join(", ")}</div>
+          ${g.export ? (l => `<div class="sl-sub sl-warn">Export · ${esc(l.c)} list: wholesale ${ctx.local(l.wholesale, l.c, 2)}, shelf ${ctx.local(l.msrp, l.c)} (VAT ${l.m.vat} %), opening ${ctx.local(l.order, l.c)} · ${ctx.local(l.m.customs, l.c)} clearance per shipment.</div>`)(ctx.priceOf(g.all[0])) : ""}
           ${g.traits.length ? `<div class="sl-sub">Store culture: ${g.traits.map(esc).join(" · ")}</div>` : ""}</div>`;
       }).join("") +
       `<p class="sl-rec"><b>Recommendation.</b> Open ${esc(rows[0]?.city || "–")} first with its top two doors as an exclusive pair, then roll into ${rows.slice(1, 3).map(g => esc(g.city)).join(" and ")} once the first reorder lands — this keeps samples concentrated where word-of-mouth compounds.</p>`;
-    return { html, summary: rows.map(g => ({ city: g.city, country: g.country, winnable: g.pros.length, high_openness: g.high, tier1: g.quick, avg_fit: g.fit, expected_y1_eur: Math.round(g.value), partners: g.partners })) };
+    return { html, summary: rows.map(g => ({ city: g.city, country: g.country, winnable: g.pros.length, high_openness: g.high, tier1: g.quick, avg_fit: g.fit, expected_y1_eur: Math.round(g.value), partners: g.partners, export_market: g.export })) };
+  }
+
+  // Currency-aware export plan: Switzerland today (CHF list, 8.1 % VAT, customs), UK as the next non-EU option
+  function exportStrategy() {
+    const ch = ctx.data.filter(r => ctx.marketOf(r) === "CHF"), L = ctx.lists, chf = L.CHF, eu = L.EUR, gbp = L.GBP;
+    const pros = ch.filter(r => isOpen(r) && !zoneOf(r)).map(r => ({ r, s: score(r) })).sort((a, b) => b.s - a.s);
+    const partners = ch.filter(isProtected);
+    const value = pros.reduce((s, p) => s + (p.r._val || 0) * convP(p.r), 0);
+    const cities = mode(pros.map(p => p.r.city)).slice(0, 4).map(c => ({ c, n: pros.filter(p => p.r.city === c).length }));
+    const FR_CH = /Geneva|Genève|Lausanne|Montreux|Morges|Nyon|Sion|Delémont|Chaux-de-Fonds|Yverdon|Vésenaz|Payerne|Fribourg|Neuchâtel/, IT_CH = /Lugano|Locarno|Bellinzona|Ascona|Biasca|Vezia/;
+    const langOf = c => FR_CH.test(c) ? "French" : IT_CH.test(c) ? "Italian" : "German";
+    const f = (v, c, d = 0) => ctx.local(v, c, d);
+    const shipments = 1 + ctx.sim.re, clearance = chf.m.customs * shipments;
+    const lift = pct => Math.round(pct * 100);
+    const unitEu = eu.brandM, unitCh = chf.brandM / ctx.fx.CHF;   // both in EUR
+    const html = `<p class="sl-lead">Switzerland: <b>${ch.length} doors</b>, ${pros.length} winnable, ${partners.length} partner${partners.length === 1 ? "" : "s"} · ≈ ${kEur(value)} expected year 1 (shown in ${esc(ctx.currency)}).</p>
+      <div class="sl-stats"><div><span>CHF wholesale</span><b>${f(chf.wholesale, "CHF", 2)}</b></div><div><span>Shelf CH</span><b>${f(chf.msrp, "CHF")}</b></div><div><span>Opening</span><b>${f(chf.order, "CHF")}</b></div></div>
+      <h4>Price corridor</h4>
+      <p class="sl-sub">EUR list ${f(eu.wholesale, "EUR", 2)} → CHF ${f(chf.wholesale, "CHF", 2)} at ${ctx.fx.CHF.toFixed(4)} × ${chf.m.corridor} corridor. Brand margin per unit ${f(unitCh, "EUR", 2)} vs ${f(unitEu, "EUR", 2)} in the EU (${unitCh >= unitEu ? "+" : ""}${lift(unitCh / unitEu - 1)} %) after clearance. Swiss shelf ${f(chf.msrp, "CHF")} at 8.1 % VAT vs ${f(ctx.sim.msrp, "EUR")} in France at 20 % — keep the gap under ~15 % in EUR terms or Geneva clients buy in Annemasse.</p>
+      <h4>MOQ &amp; shipping</h4>
+      <p class="sl-sub">Swiss minimum ${f(chf.open, "CHF")} → ${chf.moq} units per boutique (EU: ${eu.moq}). ${chf.order < chf.m.freeShip ? `<span class="sl-warn">Opening order ${f(chf.order, "CHF")} is under the ${f(chf.m.freeShip, "CHF")} free-shipping line: push one more case or bill ${f(chf.m.freight, "CHF")} freight.</span>` : "Opening order clears free shipping."} ${shipments} shipments / door / year ≈ ${f(clearance, "CHF")} clearance: consolidate reorders per city.</p>
+      <h4>Duty &amp; VAT</h4><p class="sl-sub">${esc(chf.m.duty)}</p>
+      ${cities.length ? `<h4>Where to open</h4><ul class="sl-list">${cities.map(({ c, n }) => `<li><b>${esc(c)}</b> <span class="sl-tag">${n} winnable</span> — ${pros.filter(p => p.r.city === c).slice(0, 2).map(p => storeLink(p.r)).join(", ")}</li>`).join("")}</ul>` : ""}
+      <h4>Next non-EU market · UK</h4>
+      <p class="sl-sub">No UK doors in the directory yet. GBP list would be wholesale ${f(gbp.wholesale, "GBP", 2)}, shelf ${f(gbp.msrp, "GBP")} (20 % VAT), ${gbp.moq}-unit opening ≈ ${f(gbp.order, "GBP")}. ${esc(gbp.m.duty)}</p>
+      <p class="sl-rec"><b>Recommendation.</b> Sign one Swiss importer of record (DAP, CHF invoicing) and open ${esc(cities[0]?.c || "Zürich")} first; pitch in ${langOf(cities[0]?.c || "Zürich")}. Ship each city's opening orders together so one clearance fee covers several doors, and re-check the CHF corridor whenever EUR/CHF moves more than 3 %.</p>`;
+    return { html, summary: { ch_doors: ch.length, winnable: pros.length, partners: partners.length, expected_y1_eur: Math.round(value), top_cities: cities,
+      chf_list: { wholesale: chf.wholesale, msrp: chf.msrp, moq: chf.moq, opening: Math.round(chf.order), free_shipping: chf.m.freeShip, clearance_per_year_per_door: clearance },
+      margin_unit_eur: { eu: +unitEu.toFixed(2), ch: +unitCh.toFixed(2) }, top_doors: pros.slice(0, 8).map(p => `${p.r.name} (${p.r.city})`) } };
   }
 
   let lastDispatch = [];
@@ -201,12 +245,14 @@
       <div class="sl-kv"><span>${esc(r.pipeline_status)}</span><span>fit ${r.brand_alignment_score}</span><span>tier ${r.tier_score}</span><span>SKU ${esc(r.single_sku_openness)}</span><span>CX ${r.customer_experience_rating ?? "–"}</span><span>entry ${esc(r.entry_barrier)}</span></div>
       ${ins.pitch ? `<p class="sl-sub"><b>Pitch.</b> ${esc(ins.pitch)}</p>` : ""}${ins.watch_out ? `<p class="sl-sub"><b>Watch out.</b> ${esc(ins.watch_out)}</p>` : ""}
       ${z ? `<p class="sl-sub sl-warn">Inside ${esc(z.p.name)}'s territory (${z.km.toFixed(1)} km).</p>` : ""}
-      ${r._ws ? `<p class="sl-sub">Wholesale: ${r._ws.units} units · ${kEur(r._ws.revenue)} invoiced · ${kEur(r._ws.outstanding)} outstanding</p>` : `<p class="sl-sub">Close probability if sampled now ≈ ${Math.round(convP(r) * 100)} %.</p>`}</div>`;
+      ${r._ws ? `<p class="sl-sub">Wholesale: ${r._ws.units} units · ${kEur(r._ws.revenue)} invoiced · ${kEur(r._ws.outstanding)} outstanding</p>` : `<p class="sl-sub">Close probability if sampled now ≈ ${Math.round(convP(r) * 100)} %.</p>`}
+      ${isExport(r) ? (l => `<p class="sl-sub">Export · ${esc(l.c)} list: wholesale ${ctx.local(l.wholesale, l.c, 2)}, shelf ${ctx.local(l.msrp, l.c)} at ${l.m.vat} % VAT, MOQ ${ctx.moqFor(r)} u.</p>`)(ctx.priceOf(r)) : ""}</div>`;
   }
 
-  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity };
+  const ANALYSES = { growth: growthCities, dispatch, stagnation, exclusivity, export: exportStrategy };
   function route(q) {
     const t = q.toLowerCase();
+    if (/export|switzerland|suisse|swiss|schweiz|\bchf\b|\bgbp\b|\buk\b|britain|royaume|non-eu|hors.?ue|douane|customs|currency|devise|vat|tva/.test(t)) return "export";
     if (/growth|croissance|ville|cit(y|ies)|where.*(launch|open)/.test(t)) return "growth";
     if (/dispatch|discovery|sample|échantillon|coffret|envoi|send/.test(t)) return "dispatch";
     if (/stagna|follow|relance|stuck|audit|overdue|reorder|impay/.test(t)) return "stagnation";
@@ -228,14 +274,16 @@
     }
     const o = overview();
     return `<p class="sl-lead">${o.stores} doors in ${Object.keys(o.countries).length} markets (${o.shown} in the current view) · avg fit ${o.avg_fit} · ${o.openness.High || 0} high-openness · ${o.partners.length} partners.</p>
-      <p class="sl-sub">Built-in mode answers the four analyses above, a store name or a city. Add an API key in ⚙︎ for open-ended strategy questions.</p>`;
+      <p class="sl-sub">Built-in mode answers the five analyses above, a store name or a city. Add an API key in ⚙︎ for open-ended strategy questions.</p>`;
   }
 
   // ———————————————————————————————— LLM (optional)
   let cfg = store.get(CFG_KEY, { provider: "builtin", key: "", model: "" });
   const DEFAULT_MODEL = { anthropic: "claude-opus-5-5", openai: "gpt-4.1" };
   const SYSTEM = `You are Sillage AI, the retail-intelligence assistant inside Maison Atlas, a private CRM used by a niche fragrance house to place a single SKU in independent perfumeries, concept stores and department stores across BE, NL, DE, FR, LU, CH.
-Ground every claim in the JSON context you are given (store counts, clusters, tiers, openness, sentiment, pipeline, wholesale ledger, exclusivity radius, unit economics). Never invent stores or figures; say when the data cannot answer.
+Ground every claim in the JSON context you are given (store counts, clusters, tiers, openness, sentiment, pipeline, wholesale ledger, exclusivity radius, unit economics, currency). Never invent stores or figures; say when the data cannot answer.
+All raw amounts in the context are EUR. The user is viewing figures in overview.currency.display: quote money in that currency (convert with fx_per_eur) and, for Swiss or other non-EU doors, also in the store's own price-list currency.
+When you assess growth outside the EU (Switzerland today, the UK next), reason as an export strategist: the market's price list and corridor premium over spot FX, local VAT (CH 8.1 % vs FR 20 %) and the resulting shelf-price gap with neighbouring EU cities (cross-border shopping risk), MOQ against that market's minimum order and free-shipping threshold, customs clearance per shipment and how consolidating orders amortises it, duty and import-VAT rules, Incoterms (DAP vs DDP) and the need for an importer of record / UK Responsible Person, plus FX exposure on CHF or GBP invoicing.
 Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight bullets with numbers and named doors, then one concrete next action. Use **bold** sparingly. Reply in the user's language.`;
 
   function llmContext(q) {
@@ -422,7 +470,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
         <div class="row"><label>Engine<select name="provider"><option value="builtin">Built-in analytics</option><option value="anthropic">Anthropic</option><option value="openai">OpenAI</option></select></label>
           <label>Model<input name="model" placeholder="default" autocomplete="off"></label></div>
         <label>API key<input name="key" type="password" placeholder="Stored in this browser only" autocomplete="off"></label>
-        <span>The key never leaves this browser except to the chosen provider. The four quick analyses always run locally.</span>
+        <span>The key never leaves this browser except to the chosen provider. The five quick analyses always run locally.</span>
       </form>
       <div class="sl-log" aria-live="polite"></div>
       <footer class="sl-foot">
@@ -451,7 +499,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     }
     function welcome() {
       const o = overview();
-      return `<p><span class="serif" style="font-size:17px">Bonjour.</span></p><p class="sl-lead">I read ${o.stores} doors across ${Object.keys(o.countries).length} markets, ${o.partners.length} partner accounts and a ${o.exclusivity_radius_km.toFixed(1)} km exclusivity radius — live from this CRM. Pick an analysis below or ask anything.</p>`;
+      return `<p><span class="serif" style="font-size:17px">Bonjour.</span></p><p class="sl-lead">I read ${o.stores} doors across ${Object.keys(o.countries).length} markets, ${o.partners.length} partner accounts and a ${o.exclusivity_radius_km.toFixed(1)} km exclusivity radius — live from this CRM, priced in ${esc(o.currency.display)}. Pick an analysis below or ask anything.</p>`;
     }
     function render() {
       log.innerHTML = "";

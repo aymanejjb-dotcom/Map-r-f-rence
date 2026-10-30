@@ -66,6 +66,7 @@ body {
 a { color: var(--gold-hi); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 button { font-family: inherit; }
+a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
 ::selection { background: rgba(197,160,89,.35); }
 .wrap { max-width: 1600px; margin: 0 auto; padding: 0 max(24px, env(safe-area-inset-right)) 48px max(24px, env(safe-area-inset-left)); }
@@ -78,8 +79,13 @@ button { font-family: inherit; }
 [hidden] { display: none !important; }
 
 /* ——— Navigation bar ——— */
-.nav { position: sticky; top: 0; z-index: 900; background: rgba(0,0,0,.72); border-bottom: 1px solid var(--hair);
-  backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); padding-top: env(safe-area-inset-top); }
+.nav { position: sticky; top: 0; z-index: 900; background: linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.62)); border-bottom: 1px solid var(--hair);
+  backdrop-filter: saturate(180%) blur(28px); -webkit-backdrop-filter: saturate(180%) blur(28px); padding-top: env(safe-area-inset-top);
+  box-shadow: 0 1px 0 rgba(255,255,255,.03), 0 12px 32px -24px rgba(0,0,0,.9); transform: translateZ(0); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav { background: rgba(0,0,0,.96); }
+  .sheet, dialog.sheet-dlg, .leaflet-popup-content-wrapper { background: #121214 !important; }
+}
 .nav-in { max-width: 1600px; margin: 0 auto; height: 60px; display: flex; align-items: center; gap: 16px;
   padding: 0 max(24px, env(safe-area-inset-right)) 0 max(24px, env(safe-area-inset-left)); }
 .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
@@ -88,15 +94,32 @@ button { font-family: inherit; }
 .brand h1 { margin: 0; font: 500 21px/1 var(--serif); letter-spacing: .01em; white-space: nowrap; }
 .brand h1 em { font-style: italic; color: var(--gold-hi); font-weight: 400; }
 .brand .sub { border-left: 1px solid var(--hair-2); padding-left: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nav-actions { margin-left: auto; display: flex; gap: 8px; flex: none; }
+.nav-actions { margin-left: auto; display: flex; gap: 8px; flex: none; align-items: center; }
+
+/* ——— Currency toggle: EUR / CHF / GBP, sliding champagne pill ——— */
+.cur { --i: 0; position: relative; display: inline-grid; grid-template-columns: repeat(3, 1fr); padding: 3px; border-radius: 999px; flex: none;
+  background: rgba(255,255,255,.04); border: 1px solid var(--hair); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); isolation: isolate; }
+.cur::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3); border-radius: 999px;
+  background: linear-gradient(180deg, rgba(226,200,143,.26), rgba(197,160,89,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(197,160,89,.55);
+  transform: translate3d(calc(var(--i) * 100%), 0, 0); transition: transform .45s var(--ease); will-change: transform; }
+.cur button { border: 0; background: none; color: var(--muted); cursor: pointer; min-width: 44px; min-height: 30px; padding: 0 10px; border-radius: 999px;
+  font: 600 12px/1 var(--text); letter-spacing: .02em; font-variant-numeric: tabular-nums; transition: color .3s; }
+.cur button[aria-pressed=true] { color: var(--gold-hi); }
+@media (hover: hover) { .cur button:hover { color: var(--ink); } }
+/* Values re-price with a short fade when the currency changes */
+.fx-tick .val, .fx-tick .proj b, .fx-tick .kv b, .fx-tick .rank .amt, .fx-tick .sc .stats b, .fx-tick .ledger td:last-child { animation: fx-in .42s var(--ease-out); }
+@keyframes fx-in { from { opacity: 0; transform: translate3d(0, 4px, 0); } }
+.fxline { font-size: 12px; color: var(--muted); margin: -4px 0 14px; line-height: 1.6; }
+.fxline b { color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mkt { display: inline-flex; align-items: center; gap: 4px; font: 600 9.5px/1 var(--text); letter-spacing: .08em; color: var(--gold-hi); border: 1px solid var(--gold-line); border-radius: 5px; padding: 3px 5px; vertical-align: 1px; }
 
 /* ——— Buttons ——— */
 .btn { -webkit-appearance: none; appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   font: 500 13px/1 var(--text); letter-spacing: -.005em; color: var(--ink); background: rgba(255,255,255,.06);
   border: 1px solid var(--hair); border-radius: 999px; padding: 9px 16px; min-height: 34px; cursor: pointer; white-space: nowrap;
   transition: background .2s, border-color .2s, transform .15s var(--ease-out), color .2s; text-decoration: none !important; }
-.btn:hover { background: rgba(255,255,255,.1); border-color: var(--hair-2); }
-.btn:active { transform: scale(.97); }
+@media (hover: hover) { .btn:hover { background: rgba(255,255,255,.1); border-color: var(--hair-2); } }
+.btn:active { transform: scale(.97); transition-duration: .08s; }
 .btn.gold { background: var(--gold); color: #0b0904; border-color: transparent; font-weight: 600; }
 .btn.gold:hover { background: var(--gold-hi); }
 .btn.ghost { background: transparent; color: var(--muted); }
@@ -113,13 +136,16 @@ button { font-family: inherit; }
 .widget { --mx: 50%; --my: 0%; position: relative; isolation: isolate; overflow: hidden; min-width: 0; min-height: 124px;
   padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 4px; cursor: default; user-select: none; -webkit-user-select: none;
   background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); border: 1px solid var(--hair); border-radius: var(--r-lg);
-  backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: var(--shadow); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s;
+  box-shadow: var(--shadow); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s; transform: translateZ(0);
   -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .widget::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .35s;
   background: radial-gradient(240px circle at var(--mx) var(--my), rgba(197,160,89,.16), transparent 70%); }
-.widget:hover, .widget.touch { transform: translateY(-3px); box-shadow: var(--lift); border-color: var(--hair-2); }
-.widget:hover::before, .widget.touch::before { opacity: 1; }
+@media (hover: hover) {
+  .widget:hover { transform: translate3d(0,-3px,0); box-shadow: var(--lift); border-color: var(--hair-2); }
+  .widget:hover::before { opacity: 1; }
+}
+.widget.touch { transform: translate3d(0,-3px,0); box-shadow: var(--lift); border-color: var(--hair-2); }
+.widget.touch::before { opacity: 1; }
 .widget:active { transform: translateY(-1px) scale(.985); transition-duration: .15s; }
 .widget .val { font: 600 32px/1.05 var(--sans); letter-spacing: -.025em; font-variant-numeric: tabular-nums; margin-top: 10px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -209,8 +235,11 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .pin { background: none; border: 0; display: grid; place-items: center; }
 .pin b { display: block; width: var(--s); height: var(--s); border-radius: 50%; background: var(--c);
   box-shadow: 0 0 0 1.5px rgba(0,0,0,.85), 0 0 0 var(--rw, 0) var(--ring, transparent), 0 0 calc(var(--s) * .9) color-mix(in srgb, var(--c) 70%, transparent);
-  transition: transform .3s var(--ease-out), box-shadow .3s; will-change: transform; }
-.pin:hover b, .pin.on b { transform: scale(1.45); }
+  transition: transform .3s var(--ease-out), box-shadow .3s; }
+.pin.on b { transform: scale(1.45); }
+@media (hover: hover) { .pin:hover b { transform: scale(1.45); } }
+/* Pause decorative loops while the map pans / zooms: keeps iOS Safari at 60 fps */
+.map-moving .pin.qw::before, .map-moving .pin .halo { animation-play-state: paused; }
 .pin.on b { box-shadow: 0 0 0 2px #fff, 0 0 0 5px var(--gold), 0 0 22px var(--gold); }
 .pin.qw::before { content: ""; position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
   border-radius: 50%; border: 1.5px solid var(--gold-hi); animation: pulse 2.4s var(--ease-out) infinite; pointer-events: none; }
@@ -272,7 +301,7 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .sc { position: relative; background: var(--card-2); border: 1px solid var(--hair); border-radius: var(--r); padding: 16px; cursor: pointer;
   display: flex; flex-direction: column; gap: 10px; min-width: 0; content-visibility: auto; contain-intrinsic-size: auto 228px;
   transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .25s, background .25s; -webkit-tap-highlight-color: transparent; }
-.sc:hover { transform: translateY(-4px); box-shadow: var(--lift); border-color: var(--hair-2); }
+@media (hover: hover) { .sc:hover { transform: translate3d(0,-4px,0); box-shadow: var(--lift); border-color: var(--hair-2); } }
 .sc:active { transform: translateY(-1px) scale(.99); transition-duration: .12s; }
 .sc.on { border-color: var(--gold-line); box-shadow: 0 0 0 1px var(--gold-line), var(--lift); }
 .sc .top { display: flex; align-items: center; gap: 8px; min-width: 0; }
@@ -292,7 +321,7 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .status-sel:focus { box-shadow: inset 0 0 0 1px var(--c), 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent); }
 .cards.list .sc { flex-direction: row; align-items: center; gap: 18px; border-radius: 12px; border-color: transparent; background: transparent; padding: 12px;
   contain-intrinsic-size: auto 72px; border-bottom: 1px solid var(--hair); border-radius: 0; }
-.cards.list .sc:hover { transform: none; background: rgba(255,255,255,.03); box-shadow: none; border-radius: 12px; }
+.cards.list .sc:hover, .cards.list .sc:active { transform: none; background: rgba(255,255,255,.03); box-shadow: none; border-radius: 12px; }
 .cards.list .sc.on { background: var(--gold-lo); box-shadow: inset 2px 0 0 var(--gold); border-radius: 12px; }
 .sc .id { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .cards.list .sc .id { flex: 1.6; }
@@ -342,10 +371,11 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
   backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
 .sheet { position: fixed; z-index: 1001; top: 12px; right: 12px; bottom: 12px; width: min(var(--sheet-w), calc(100vw - 24px));
   display: flex; flex-direction: column; background: rgba(18,18,20,.86); border: 1px solid var(--hair-2); border-radius: 24px;
-  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
-  box-shadow: 0 40px 100px -20px rgba(0,0,0,1), 0 0 0 .5px rgba(0,0,0,.8);
-  transform: translateX(calc(100% + 24px)); visibility: hidden; transition: transform .55s var(--ease), visibility 0s linear .55s; will-change: transform; }
-.sheet.open { transform: none; visibility: visible; transition: transform .55s var(--ease), visibility 0s; }
+  backdrop-filter: blur(48px) saturate(190%); -webkit-backdrop-filter: blur(48px) saturate(190%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.07) inset, 0 40px 100px -20px rgba(0,0,0,1), 0 0 0 .5px rgba(0,0,0,.8);
+  transform: translate3d(calc(100% + 24px), 0, 0); visibility: hidden; transition: transform .55s var(--ease), visibility 0s linear .55s;
+  will-change: transform; backface-visibility: hidden; contain: layout paint; }
+.sheet.open { transform: translate3d(0, 0, 0); visibility: visible; transition: transform .55s var(--ease), visibility 0s; }
 .sheet.dragging { transition: none; }
 .grabber { display: none; }
 .sheet-head { display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px 16px; border-bottom: 1px solid var(--hair); flex: none; }
@@ -430,7 +460,8 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 
 .toast { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom)); z-index: 9999; transform: translate(-50%, 16px) scale(.96); opacity: 0;
   background: rgba(28,28,30,.92); color: var(--ink); font: 500 13px var(--text); padding: 11px 18px; border-radius: 999px; border: 1px solid var(--hair-2);
-  box-shadow: 0 20px 40px -12px #000; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: transform .45s var(--ease), opacity .3s; pointer-events: none; }
+  box-shadow: 0 20px 40px -12px #000; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: transform .45s var(--ease), opacity .3s; pointer-events: none;
+  white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis; }
 .toast::before { content: "✓"; color: var(--gold-hi); margin-right: 8px; }
 .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
@@ -468,7 +499,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 
 /* "Où ça cartonne" — city leaderboard */
 .board { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; margin-bottom: 20px; border-radius: var(--r-lg); overflow: hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); }
 .board > div { padding: 20px 22px; min-width: 0; }
 .board > div + div { border-left: 1px solid var(--hair); }
 .board h2 { margin: 4px 0 14px; font: 400 26px/1.1 var(--serif); }
@@ -535,9 +566,19 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   .nav-in .mode { order: 3; width: 100%; margin-top: 8px; }
   .nav-in .mode button { padding: 7px 8px; }
   .board > div { padding: 18px 16px; }
-  .brand .sub { display: none; }
+  .brand .sub, .brand .mark { display: none; }
   .brand h1 { font-size: 19px; }
   .nav-actions .btn:not(.gold) { display: none; }
+  .nav-actions .btn.gold .long { display: none; }
+  .cur button { min-width: 40px; min-height: 36px; padding: 0 8px; }
+  .btn { min-height: 44px; padding: 10px 16px; }
+  .btn.sm { min-height: 40px; }
+  .nav-actions .btn { min-height: 38px; }
+  .chip { padding: 10px 14px; font-size: 13px; }
+  .seg-ctl button { min-height: 38px; }
+  .close { width: 36px; height: 36px; }
+  .pop .btns .btn { min-height: 44px; }
+  details.panel > summary { min-height: 60px; }
   .hero { padding: 24px 0 16px; }
   .hero p { display: none; }
   /* Widgets become a snap carousel: no wrap, no reflow */
@@ -599,8 +640,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       <button data-mode="partner" aria-pressed="false"><b>Ma Carte Partner</b><small>active accounts &amp; wholesale</small></button>
     </div>
     <div class="nav-actions">
+      <div class="cur" id="cur" role="group" aria-label="Display currency">
+        <button data-cur="EUR" aria-pressed="true" title="Euro · EU single market">€</button>
+        <button data-cur="CHF" aria-pressed="false" title="Swiss franc · Switzerland export">CHF</button>
+        <button data-cur="GBP" aria-pressed="false" title="Pound sterling · UK export">£</button>
+      </div>
       <button class="btn" id="go-sim">Margin simulator</button>
-      <button class="btn gold" id="csv" title="Download the rows currently shown, in table order">Export CSV</button>
+      <button class="btn gold" id="csv" title="Download the rows currently shown, in table order"><span class="long">Export&nbsp;</span>CSV</button>
     </div>
   </div>
 </nav>
@@ -745,24 +791,28 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       <div class="grid">
         <label>Maison / brand<input id="s-brand" type="text" placeholder="Your house"></label>
         <label>Fragrance<input id="s-scent" type="text" placeholder="Hero SKU name"></label>
-        <label>MSRP · PVP TTC (€)<input id="s-msrp" type="number" inputmode="decimal" min="1" step="1" value="185"></label>
+        <label title="Base price list: French retail price incl. VAT. Other markets are derived by the export tax engine">Base MSRP · PVP TTC FR (€)<input id="s-msrp" type="number" inputmode="decimal" min="1" step="1" value="185"></label>
         <label>COGS · coût de fab. (€)<input id="s-cogs" type="number" inputmode="decimal" min="0" step="0.5" value="24"></label>
-        <label>VAT · TVA (%)<input id="s-vat" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="20"></label>
+        <label title="VAT included in the base MSRP">Base VAT · TVA FR (%)<input id="s-vat" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="20"></label>
         <label title="Retail price excl. VAT ÷ wholesale price">Retailer coefficient<input id="s-coef" type="number" inputmode="decimal" min="1.2" max="4" step="0.05" value="2"></label>
-        <label title="Minimum value of an opening order">Opening order (€)<input id="s-open" type="number" inputmode="numeric" min="0" step="50" value="900"></label>
+        <label title="Minimum value of an EU opening order. CH / UK minimums are set by the export engine">EU opening order (€)<input id="s-open" type="number" inputmode="numeric" min="0" step="50" value="900"></label>
         <label>Case pack (units)<input id="s-pack" type="number" inputmode="numeric" min="1" step="1" value="6"></label>
         <label class="wide" title="Replenishment orders per store over the first 12 months">Reorders in year 1 <input id="s-re" type="range" min="0" max="8" step="1" value="3" style="width:100%"></label>
       </div>
-      <h4>Unit economics</h4>
+      <h4>Unit economics <span class="pill" id="s-mkt"></span></h4>
       <table class="ledger" id="s-ledger"></table>
       <div class="meter" id="s-meter"></div>
       <div class="legend-row"><span><span class="dot" style="background:#636366"></span>COGS</span><span><span class="dot" style="background:var(--gold)"></span>Brand margin</span><span><span class="dot" style="background:var(--concept)"></span>Retailer margin</span><span><span class="dot" style="background:#2c2c2e"></span>VAT</span></div>
       <div class="health" id="s-health"></div>
-      <h4>Recommended MOQ</h4>
+      <h4>Recommended MOQ &amp; shipping</h4>
       <table class="ledger" id="s-moq"></table>
+      <div id="s-ship"></div>
+      <h4>Price corridor by market</h4>
+      <table class="ledger" id="s-markets"></table>
       <h4>Pipeline projection <span class="pill" id="s-scope"></span></h4>
       <div class="proj" id="s-proj"></div>
-      <p class="note">Weighted = Σ store value × close probability by status (Not contacted 5 %, Discovery set 15 %, Follow-up 25 %, Meeting 45 %, Partner / Key account 100 %). Store value = MOQ × (1 + reorders) × wholesale price. Follows the filters.</p>
+      <p class="note">Weighted = Σ store value × close probability by status (Not contacted 5 %, Discovery set 15 %, Follow-up 25 %, Meeting 45 %, Partner / Key account 100 %). Store value = MOQ × (1 + reorders) × wholesale price of the store's own market (CH doors buy on the CHF list). Follows the filters.</p>
+      <p class="note" id="s-fx"></p>
     </div>
   </div>
 </aside>
@@ -811,16 +861,44 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   const dotSize = tier => Math.round(7 + Math.max(0, tier - 50) / 6);   // 7px @ ≤50 → 15px @ 100
   const stars = v => v == null ? "–" : v.toFixed(1) + "★";
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const eur = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
-  const eur2 = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const short = v => v >= 1e6 ? (v / 1e6).toFixed(2).replace(".", ",") + " M€" : v >= 1e4 ? Math.round(v / 1e3) + " k€" : eur.format(v);
   const pct = v => isFinite(v) ? Math.round(v * 100) + " %" : "–";
   const store = {
     get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode: keep for this session */ } },
   };
+
+  // ---- Multi-currency & export tax engine. Every stored figure (ledger, simulator inputs) is EUR;
+  // `cur` only changes how it is shown. CH doors buy on a CHF price list (8.1 % VAT, customs), UK on GBP.
+  const CUR_KEY = "perfumery-cur-v1", FX_KEY = "perfumery-fx-v1";
+  const VAT = { FR: 20, BE: 21, NL: 21, DE: 19, LU: 17, CH: 8.1, GB: 20 };
+  // corridor: list-price premium over spot FX that absorbs export logistics and keeps grey-market arbitrage shut.
+  // open / freeShip / freight / customs are in the market's own currency.
+  const MARKETS = {
+    EUR: { name: "EU single market", sym: "€", locale: "fr-FR", vat: 20, corridor: 1, open: null, freeShip: 750, freight: 25, customs: 0,
+      duty: "No customs: intra-EU supply, reverse-charge VAT for B2B across borders." },
+    CHF: { name: "Switzerland · export", sym: "CHF", locale: "de-CH", vat: 8.1, corridor: 1.08, open: 1200, freeShip: 1500, freight: 45, customs: 65,
+      duty: "0 % duty (CH abolished industrial tariffs on 1 Jan 2024) · 8.1 % import VAT paid by the importer of record, recoverable · EUR.1 / origin statement on invoice." },
+    GBP: { name: "United Kingdom · export", sym: "£", locale: "en-GB", vat: 20, corridor: 1.05, open: 800, freeShip: 1000, freight: 35, customs: 40,
+      duty: "0 % duty under the EU–UK TCA with an origin statement · 20 % import VAT (postponed accounting) · UK Responsible Person required for cosmetics." },
+  };
+  const FX_REF = { EUR: 1, CHF: .92, GBP: .83, asof: null, src: "reference" };
+  let fx = { ...FX_REF, ...store.get(FX_KEY, {}) };
+  let cur = store.get(CUR_KEY, "EUR");
+  if (!MARKETS[cur]) cur = "EUR";
+  const nfCache = {};
+  const nf = (c, d) => nfCache[c + d] ||= new Intl.NumberFormat(MARKETS[c].locale, { style: "currency", currency: c, minimumFractionDigits: d, maximumFractionDigits: d });
+  const local = (v, c, d = 0) => nf(c, d).format(v);                 // v already in currency c
+  const money = (v, c = cur) => local(v * fx[c], c, 0);              // v in EUR
+  const money2 = (v, c = cur) => local(v * fx[c], c, 2);
+  const compact = (x, c) => {
+    const m = x >= 1e6, n = m ? (x / 1e6).toFixed(2) : Math.round(x / 1e3), u = m ? "M" : "k";
+    return c === "EUR" ? `${String(n).replace(".", ",")} ${u}€` : c === "GBP" ? `£${n}${u}` : `CHF ${n}${u}`;
+  };
+  const short = (v, c = cur) => { const x = v * fx[c]; return x >= 1e4 ? compact(x, c) : local(x, c); };
+  const pricePoint = v => Math.max(5, Math.round(v / 5) * 5);        // luxury shelf prices end in 0 or 5
+  const mkOf = r => r.country === "CH" ? "CHF" : r.country === "GB" ? "GBP" : "EUR";
   // Lower-cased search haystack built once, so typing never re-joins 400 records
-  data.forEach(r => { r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, r.segment, ...Object.values(r.cx_insights), ...r.cx_traits].join(" ").toLowerCase(); });
+  data.forEach(r => { r._src = r.source.startsWith("osm:") ? "osm" : "curated"; r._q = [r.name, r.city, r.district || "", r.country_name, r.full_address, r.type, r.network || "", r.sentiment_summary, r.segment, ...Object.values(r.cx_insights), ...r.cx_traits].join(" ").toLowerCase(); });
 
   // ---- CRM: pipeline edits live in this browser until exported to sources/crm.json
   const STATUSES = ["Not Contacted", "Discovery Set Sent", "Follow-up Required", "Meeting Booked", "Partner Active", "Key Account", "Declined"];
@@ -910,9 +988,33 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     return s;
   }
   let sim = readSim();
+  // Price list per market, in that market's currency
+  function priceList(c) {
+    const m = MARKETS[c], rate = fx[c] * m.corridor;
+    const wholesale = Math.round(sim.wholesale * rate * 100) / 100;
+    const msrp = c === "EUR" ? sim.msrp : pricePoint(sim.ht * rate * (1 + m.vat / 100));
+    const ht = c === "EUR" ? sim.ht : msrp / (1 + m.vat / 100);
+    const open = c === "EUR" ? sim.open : m.open;
+    const moq = Math.max(sim.pack, Math.ceil(open / wholesale / sim.pack) * sim.pack);
+    const landed = m.customs / moq;                                   // clearance fee spread over the opening order
+    const cogs = sim.cogs * fx[c];
+    return { c, m, rate, wholesale, msrp, ht, retail: ht - wholesale, cogs, landed, brandM: wholesale - cogs - landed, open, moq,
+      order: moq * wholesale, eurPerUnit: wholesale / fx[c] };
+  }
+  let lists = {};
+  const reprice = () => { lists = Object.fromEntries(Object.keys(MARKETS).map(c => [c, priceList(c)])); };
+  reprice();
+  const listOf = r => lists[mkOf(r)];
+  // Local shelf price: EU doors follow their own VAT rate, CH / UK their price list
+  const msrpFor = r => {
+    const L = listOf(r);
+    if (L.c !== "EUR") return { v: L.msrp, vat: L.m.vat, c: L.c };
+    const vat = VAT[r.country] ?? sim.vat;
+    return { v: vat === sim.vat ? sim.msrp : pricePoint(sim.ht * (1 + vat / 100)), vat, c: "EUR" };
+  };
   // Department stores open with a deeper first order (multiple doors / counters)
-  const moqFor = r => r.type === "Department Store" ? sim.moq * 2 : sim.moq;
-  const storeValue = r => moqFor(r) * (1 + sim.re) * sim.wholesale;
+  const moqFor = r => listOf(r).moq * (r.type === "Department Store" ? 2 : 1);
+  const storeValue = r => moqFor(r) * (1 + sim.re) * listOf(r).eurPerUnit;
 
   // ---- Territorial exclusivity: every store gets the nearest protected account within the radius
   let zoneKm = +$("radius").value;
@@ -943,6 +1045,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   const BASEMAPS = webgl && L.maplibreGL
     ? { "Noir (OpenFreeMap)": vector("dark"), "Liberty (OpenFreeMap)": vector("liberty"), "Positron (OpenFreeMap)": vector("positron"), "CARTO Voyager (key)": carto("rastertiles/voyager") }
     : { "OpenStreetMap": osm, "CARTO Voyager (key)": carto("rastertiles/voyager") };
+  // OpenFreeMap styles reference a few sprite icons they don't ship: stub them so the console stays clean
+  Object.values(BASEMAPS).forEach(l => l.getMaplibreMap && l.on("add", () => {
+    const gl = l.getMaplibreMap();
+    if (gl && !gl._stubbed) { gl._stubbed = true; gl.on("styleimagemissing", e => gl.hasImage(e.id) || gl.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) })); }
+  }));
   Object.values(BASEMAPS)[0].addTo(map);
   L.control.layers(BASEMAPS, null, { position: "topright" }).addTo(map);
   L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
@@ -1020,10 +1127,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   const pinZ = r => partnerMode() && PROTECTED.has(r.pipeline_status)
     ? 3000 + (topRank.has(r.id) ? 1000 - topRank.get(r.id) : 0)
     : (100 - r.tier_score) * 10 + (isQuickWin(r) ? 2000 : 0);
+  const hover = matchMedia("(hover: hover)").matches;   // touch screens never show tooltips: skip 400 bindings
   data.forEach(r => {
-    const m = L.marker([r.lat, r.lng], { icon: pinIcon(r), zIndexOffset: pinZ(r), riseOnHover: true, keyboard: false })
-      .bindPopup(() => popup(r), { maxWidth: 320, minWidth: 240, autoPanPaddingTopLeft: [20, 70], offset: [0, -6] })
-      .bindTooltip(r.name, { direction: "top", offset: [0, -10] });
+    const m = L.marker([r.lat, r.lng], { icon: pinIcon(r), zIndexOffset: pinZ(r), riseOnHover: hover, keyboard: false })
+      .bindPopup(() => popup(r), { maxWidth: 320, minWidth: 240, autoPanPaddingTopLeft: [20, 70], offset: [0, -6] });
+    if (hover) m.bindTooltip(r.name, { direction: "top", offset: [0, -10] });
     // Keep the popup clear of the slide-over sheet on wide screens
     Object.defineProperty(m.getPopup().options, "autoPanPaddingBottomRight",
       { get: () => [sheetOpen() && !phone.matches ? $("sheet").offsetWidth + 40 : 20, 20] });
@@ -1031,6 +1139,9 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     m.on("popupopen", () => m.getTooltip() && m.closeTooltip());
     markers.set(r.id, m);
   });
+  const mapEl = $("map");
+  map.on("movestart zoomstart", () => mapEl.classList.add("map-moving"));
+  map.on("moveend zoomend", () => mapEl.classList.remove("map-moving"));
   const refreshPin = r => { const m = markers.get(r.id); m.setIcon(pinIcon(r)); m.setZIndexOffset(pinZ(r)); };
 
   // ---- Table
@@ -1048,17 +1159,17 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       { title: "Status", field: "pipeline_status", width: 170, cssClass: "editable", editor: "list", editorParams: { values: STATUSES },
         sorter: (a, b) => STATUSES.indexOf(a) - STATUSES.indexOf(b), cellClick: stop, formatter: c => badge(c.getValue()) },
       { title: "Units", field: "_units", width: 80, hozAlign: "right", sorter: "number", visible: false, formatter: c => c.getValue() ? `<span class="num">${c.getValue()}</span>` : `<span class="muted">–</span>` },
-      { title: "Revenue", field: "_rev", width: 110, hozAlign: "right", sorter: "number", visible: false, formatter: c => `<span class="num" style="color:var(--gold-hi)">${c.getValue() ? eur.format(c.getValue()) : "–"}</span>` },
+      { title: "Revenue", field: "_rev", width: 110, hozAlign: "right", sorter: "number", visible: false, formatter: c => `<span class="num" style="color:var(--gold-hi)">${c.getValue() ? money(c.getValue()) : "–"}</span>` },
       { title: "Outstanding", field: "_out", width: 115, hozAlign: "right", sorter: "number", visible: false, formatter: c => {
           const w = byId.get(c.getRow().getData().id)._ws;
-          return !w ? `<span class="muted">–</span>` : w.overdueN ? `<span class="num" style="color:var(--bad)" title="${w.overdueN} overdue">${eur.format(w.outstanding)}</span>`
-            : `<span class="num">${eur.format(w.outstanding)}</span>`; } },
+          return !w ? `<span class="muted">–</span>` : w.overdueN ? `<span class="num" style="color:var(--bad)" title="${w.overdueN} overdue">${money(w.outstanding)}</span>`
+            : `<span class="num">${money(w.outstanding)}</span>`; } },
       { title: "Last invoice", field: "_last", width: 110, visible: false, formatter: c => fmtDate(c.getValue()) },
       { title: "Decision maker", field: "decision_maker_role", width: 125, cssClass: "editable", editor: "list", editorParams: { values: ROLES }, cellClick: stop },
       { title: "Pitch", field: "id", width: 84, headerSort: false, hozAlign: "center", cellClick: (e, c) => { e.stopPropagation(); openPitch(c.getValue()); },
         formatter: () => `<button class="btn sm" type="button">Pitch</button>` },
       { title: "Territory", field: "_zoneKm", width: 120, sorter: "number", formatter: c => zoneCell(byId.get(c.getRow().getData().id)) },
-      { title: "Yr-1 value", field: "_val", width: 105, hozAlign: "right", sorter: "number", formatter: c => `<span class="num" title="Weighted: ${eur.format(byId.get(c.getRow().getData().id)._wval || 0)}">${short(c.getValue() || 0)}</span>` },
+      { title: "Yr-1 value", field: "_val", width: 105, hozAlign: "right", sorter: "number", formatter: c => `<span class="num" title="Weighted: ${money(byId.get(c.getRow().getData().id)._wval || 0)}">${short(c.getValue() || 0)}</span>` },
       { title: "Prospection notes", field: "notes_prospections", minWidth: 190, widthGrow: 2, cssClass: "editable", editor: "textarea", headerSort: false, cellClick: stop,
         formatter: c => c.getValue() ? `<span title="${esc(c.getValue())}">${esc(c.getValue())}</span>` : `<span class="muted">Add note…</span>` },
       { title: "Segment", field: "segment", minWidth: 130, sorter: (a, b) => SEGMENTS.indexOf(a) - SEGMENTS.indexOf(b), formatter: c => {
@@ -1280,6 +1391,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
         <label class="f">Decision maker<select id="d-role">${ROLES.map(s => `<option${s === r.decision_maker_role ? " selected" : ""}>${s}</option>`).join("")}</select></label>
       </div>
       ${PROTECTED.has(r.pipeline_status) ? drawerHTML(r) : `<div class="kv three gold" style="grid-template-columns:repeat(3,1fr)"><div><span>MOQ</span><b>${moqFor(r)} u.</b></div><div><span>Yr-1 value</span><b>${short(r._val)}</b></div><div><span>Weighted</span><b>${short(r._wval)}</b></div></div>`}
+      ${marketLine(r)}
       <div class="callout"><b>Pitch prep.</b> ${esc(cx.pitch)}</div>
       <h4>Store intelligence</h4>
       <dl>${INSIGHT_ROWS.map(([k, l]) => `<dt>${l}</dt><dd${k === "watch_out" ? ' class="warn"' : ""}>${esc(cx[k])}</dd>`).join("")}</dl>
@@ -1297,6 +1409,15 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     $("d-role").addEventListener("change", e => setCrm(id, { decision_maker_role: e.target.value }));
     $("d-notes").addEventListener("change", e => setCrm(id, { notes_prospections: e.target.value }));
     if (open) showTab("dos");
+  }
+  // Store's own price list (its market currency), opening order vs the free-shipping threshold, customs
+  function marketLine(r) {
+    const L = listOf(r), p = msrpFor(r), moq = moqFor(r), order = moq * L.wholesale, gap = L.m.freeShip - order;
+    const conv = L.c !== cur ? ` <span class="muted">≈ ${money2(L.eurPerUnit)}</span>` : "";
+    return `<div class="fxline"><span class="mkt">${L.c === "EUR" ? "EU" : L.c}</span> ${esc(L.m.name)} · VAT ${p.vat} %<br>
+      Shelf <b>${local(p.v, p.c)}</b> TTC · wholesale <b>${local(L.wholesale, L.c, 2)}</b> HT${conv} · opening <b>${local(order, L.c)}</b>${
+      gap > 0 ? ` <span style="color:var(--warn)">· ${local(gap, L.c)} under free shipping (${local(L.m.freight, L.c)} freight)</span>` : ` <span style="color:var(--ok)">· free shipping</span>`}</div>${
+      L.c !== "EUR" ? `<div class="callout alert"><b>Cross-border export.</b> ${esc(L.m.duty)} Clearance ≈ ${local(L.m.customs, L.c)} per shipment: consolidate reorders.</div>` : ""}`;
   }
   // ---- Wholesale Stock & Invoicing drawer
   let drawerTab = "inv", drawerOpen = true;
@@ -1320,13 +1441,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const lines = !w ? "" : inv
       ? [...w.invoices].reverse().map(i => `<div class="ln"><div class="w"><b>${esc(i.no)}</b><span>${fmtDate(i.date)} · due ${fmtDate(i.due)}</span></div>
           <button class="badge dotted" style="--c:${cssVar(INVOICE_STATE[i.state])}" data-paid="${esc(i.no)}" title="Mark ${i.status === "Paid" ? "unpaid" : "paid"}">${i.state}</button>
-          <div class="amt">${eur2.format(i.amount)}<small>Σ ${eur.format(i.cumulative)}</small></div></div>`).join("")
+          <div class="amt">${money2(i.amount)}<small>Σ ${money(i.cumulative)}</small></div></div>`).join("")
       : [...w.deliveries].reverse().map((d, k) => `<div class="ln stock"><div class="w"><b>${esc(d.sku)}</b><span>${fmtDate(d.date)} · ${esc(d.ref || "")}</span></div>
           <div class="amt">${d.units}<small>units</small></div><button class="x" data-del-dl="${w.deliveries.length - 1 - k}" aria-label="Remove delivery">×</button></div>`).join("");
     const empty = `<div class="empty"><span class="serif">Nothing logged yet</span>Record the opening order and its invoice below.</div>`;
     const form = inv
       ? `<form class="addline" data-add="inv"><label>Invoice date<input name="date" type="date" value="${TODAY}" required></label>
-          <label>Amount HT (€)<input name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" required placeholder="${eur2.format(moqFor(r) * sim.wholesale)}"></label>
+          <label>Amount HT (${MARKETS[cur].sym})<input name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" required placeholder="${money2(moqFor(r) * listOf(r).eurPerUnit)}"></label>
           <label>Due date<input name="due" type="date"></label><label>Status<select name="status"><option>Pending</option><option>Paid</option></select></label>
           <button class="btn sm gold" type="submit">Add invoice</button></form>`
       : `<form class="addline" data-add="dl"><label>Delivery date<input name="date" type="date" value="${TODAY}" required></label>
@@ -1339,7 +1460,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
         ${w ? `<div class="kv gold"><div><span>Units</span><b>${w.units}</b></div><div><span>Revenue</span><b>${short(w.revenue)}</b></div><div><span>Collected</span><b>${short(w.paid)}</b></div><div><span>Due</span><b${w.overdueN ? ' style="color:var(--bad)"' : ""}>${short(w.outstanding)}</b></div></div>${sparkline(w)}` : ""}
         <div class="seg-ctl" role="tablist"><button data-dtab="inv" aria-pressed="${inv}">Invoices · ${w?.invoices.length || 0}</button><button data-dtab="dl" aria-pressed="${!inv}">Stock · ${w?.deliveries.length || 0}</button></div>
         <div class="lines">${lines || empty}</div>
-        ${w?.overdueN && inv ? `<div class="callout alert"><b>${w.overdueN} overdue</b> · ${eur2.format(w.overdue)} past due date. Tap a status to mark it paid.</div>` : ""}
+        ${w?.overdueN && inv ? `<div class="callout alert"><b>${w.overdueN} overdue</b> · ${money2(w.overdue)} past due date. Tap a status to mark it paid.</div>` : ""}
         ${form}
       </div></details>`;
   }
@@ -1378,11 +1499,11 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const r = byId.get(dossierId), f = new FormData(e.target), date = f.get("date");
     if (!r || !date) return;
     if (e.target.dataset.add === "inv") {
-      const amount = Math.round(parseFloat(f.get("amount")) * 100) / 100;
+      const amount = Math.round(parseFloat(f.get("amount")) / fx[cur] * 100) / 100;   // ledger stays in EUR
       if (!(amount > 0)) return;
       const due = f.get("due") || new Date(Date.parse(date) + 45 * 864e5).toISOString().slice(0, 10);
       editLedger(r, l => l.invoices.push({ no: `F-${date.slice(0, 4)}-${r.id}-${String(l.invoices.length + 1).padStart(2, "0")}`, date, due, amount, status: f.get("status") }));
-      toast(`Invoice ${eur2.format(amount)} logged`);
+      toast(`Invoice ${money2(amount)} logged`);
     } else {
       const units = parseInt(f.get("units"), 10), sku = String(f.get("sku")).trim();
       if (!(units > 0) || !sku) return;
@@ -1455,9 +1576,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
       unknown: T(`Dites-moi comment vous préférez échantillonner — décants, étagère découverte ou testeurs seuls — et nous adapterons le kit.`,
               `Let me know how you prefer to sample — decants, a discovery shelf or testers only — and we'll tailor the kit.`),
     }[pol];
-    const money = T(
-      `Prix public conseillé ${eur.format(sim.msrp)} TTC, prix de gros ${eur2.format(sim.wholesale)} HT, soit ${pct(sim.retail / sim.ht)} de marge détaillant (coefficient ${sim.coef.toFixed(2).replace(".", ",")}). Commande d'ouverture : ${moqFor(r)} unités.`,
-      `Suggested retail ${eur.format(sim.msrp)} incl. VAT, wholesale ${eur2.format(sim.wholesale)} excl. VAT — a ${pct(sim.retail / sim.ht)} retailer margin (${sim.coef.toFixed(2)}× coefficient). Opening order: ${moqFor(r)} units.`);
+    const L = listOf(r), p = msrpFor(r), ht = p.v / (1 + p.vat / 100), rm = pct((ht - L.wholesale) / ht);
+    const exp = L.c !== "EUR";
+    const terms = T(
+      `Prix public conseillé ${local(p.v, p.c)} TTC (TVA ${String(p.vat).replace(".", ",")} %), prix de gros ${local(L.wholesale, L.c, 2)} HT, soit ${rm} de marge détaillant. Commande d'ouverture : ${moqFor(r)} unités.`,
+      `Suggested retail ${local(p.v, p.c)} incl. ${p.vat} % VAT, wholesale ${local(L.wholesale, L.c, 2)} excl. VAT — a ${rm} retailer margin. Opening order: ${moqFor(r)} units.`) + (exp
+      ? " " + T(`Tarif ${L.c} dédié, livraison ${L.c === "CHF" ? "DAP Suisse" : "DAP Royaume-Uni"} avec déclaration d'origine : aucun droit de douane, seule la TVA à l'import (récupérable) s'applique.`,
+                `Dedicated ${L.c} price list, shipped ${L.c === "CHF" ? "DAP Switzerland" : "DAP United Kingdom"} with an origin statement: no customs duty, only recoverable import VAT.`) : "");
     const pilot = BARRIERS.indexOf(r.entry_barrier) >= 2 || r.single_sku_openness === "Low"
       ? " " + T(`Pour limiter le risque, nous proposons un pilote de 90 jours sur une seule façade, avec reprise des invendus.`,
                 `To de-risk it, we offer a 90-day pilot on a single facing, with buy-back of unsold stock.`) : "";
@@ -1474,7 +1599,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
           : T(`Si le parfum séduit votre équipe, accepteriez-vous de nous mettre en relation avec la direction ou l'acheteur ?`,
               `If the scent wins your team over, would you be open to introducing us to the owner or buyer?`);
     const sign = T(`Bien cordialement,\n[Votre nom]\nFondateur·rice, ${brand}\n[Téléphone] · [Site web]`, `Warm regards,\n[Your name]\nFounder, ${brand}\n[Phone] · [Website]`);
-    const body = [greet, "", opener + " " + hook, "", product, "", samp, "", money + pilot, network ? "\n" + network : "", "", cta, "", sign].join("\n").replace(/\n{3,}/g, "\n\n");
+    const body = [greet, "", opener + " " + hook, "", product, "", samp, "", terms + pilot, network ? "\n" + network : "", "", cta, "", sign].join("\n").replace(/\n{3,}/g, "\n\n");
     return { subject, body, pol };
   }
   let pitchId = null, pitchLang = "fr";
@@ -1558,7 +1683,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
         : "Zones turn on automatically when filtering partners or key accounts.";
   }
 
+  let lastSig = null;
+  const onMap = new Set();
+  // Coalesce high-frequency inputs (sliders, typing) into one pass per frame
+  let applyFrame = 0;
+  const scheduleApply = () => { if (!applyFrame) applyFrame = requestAnimationFrame(() => { applyFrame = 0; apply(); }); };
   function apply() {
+    if (applyFrame) { cancelAnimationFrame(applyFrame); applyFrame = 0; }
     const q = $("q").value.trim().toLowerCase();
     const ccs = new Set([...document.querySelectorAll("input[name=cc]:checked")].map(i => i.value)), ty = $("type").value, city = $("city").value;
     const minT = +$("tier").value, minA = +$("align").value;
@@ -1573,7 +1704,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const base = data.filter(r =>
       ccs.has(r.country) && (!ty || r.type === ty) && segs.has(r.segment) && (!city || r.city === city) &&
       r.tier_score >= minT && r.brand_alignment_score >= minA && open.has(r.single_sku_openness) &&
-      srcs.has(r.source.startsWith("osm:") ? "osm" : "curated") &&
+      srcs.has(r._src) &&
       (!st || r.pipeline_status === st) && (!pri || r.launch_priority === pri) && (!quick || isQuickWin(r)) &&
       (!acc || PROTECTED.has(r.pipeline_status)) && (!samp || SAMPLING.has(r.pipeline_status)) &&
       (!partnerMode() || PROTECTED.has(r.pipeline_status)) &&
@@ -1581,8 +1712,13 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     const keep = bounds ? base.filter(r => bounds.contains([r.lat, r.lng])) : base;
     const ids = new Set(keep.map(r => r.id)), baseIds = new Set(base.map(r => r.id));
     if (partnerMode()) rankPerformers(base);
-    table.setFilter(r => ids.has(r.id));
-    markers.forEach((m, id) => baseIds.has(id) ? layer.addLayer(m) : layer.removeLayer(m));
+    // Only touch Tabulator / Leaflet when the result set actually changed: slider drags stay at frame rate
+    const sig = keep.map(r => r.id).join(",");
+    if (sig !== lastSig) { lastSig = sig; table.setFilter(r => ids.has(r.id)); }
+    markers.forEach((m, id) => {
+      const on = baseIds.has(id);
+      if (on !== onMap.has(id)) { if (on) { onMap.add(id); layer.addLayer(m); } else { onMap.delete(id); layer.removeLayer(m); } }
+    });
     drawZones(base);
     drawHeat(base);
     if (partnerMode()) { partnerDash(keep); board(keep); }
@@ -1617,12 +1753,12 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     $("w-units").innerHTML = `${units.toLocaleString("fr-FR")}<small> units</small>`;
     $("w-units-h").textContent = W.length ? `${nDl} deliveries · ${Math.round(units / W.length)} per door` : "No deliveries logged yet";
     $("w-rev").textContent = short(rev);
-    $("w-rev-h").textContent = nInv ? `${nInv} invoices · avg ${eur.format(rev / nInv)}` : "No invoices yet";
+    $("w-rev-h").textContent = nInv ? `${nInv} invoices · avg ${money(rev / nInv)}` : "No invoices yet";
     $("w-paid").textContent = short(paid);
     $("w-paid-h").textContent = rev ? `${pct(paid / rev)} of invoiced revenue` : "–";
     $("w-paid-bar").innerHTML = rev ? `<i style="flex:${paid};background:var(--ok)"></i><i style="flex:${out - od};background:var(--s-disc)"></i><i style="flex:${od};background:var(--bad)"></i>` : "";
     $("w-out").textContent = short(out);
-    $("w-out-h").innerHTML = odN ? `<span style="color:var(--bad)">${odN} overdue · ${eur.format(od)}</span>` : "Nothing overdue";
+    $("w-out-h").innerHTML = odN ? `<span style="color:var(--bad)">${odN} overdue · ${money(od)}</span>` : "Nothing overdue";
     const cities = cityTotals(P);
     $("w-top").textContent = cities[0]?.city || "–";
     $("w-top-h").textContent = cities[0] ? `${short(cities[0].rev)} · ${cities[0].units} units · ${cities[0].n} door${cities[0].n > 1 ? "s" : ""}` : "No revenue yet";
@@ -1671,49 +1807,69 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 
   // ---- Margin & revenue simulator
   function simulate(rows) {
-    const s = sim, vatEur = s.msrp - s.ht;
+    const s = sim, L = lists[cur], c = cur, m = L.m, f2 = v => local(v, c, 2), f0 = v => local(v, c);
+    const vatAmt = L.msrp - L.ht;
     const row = (l, v, cls = "") => `<tr class="${cls}"><td>${l}</td><td>${v}</td></tr>`;
+    $("s-mkt").textContent = `${m.name} · VAT ${m.vat} %`;
     $("s-ledger").innerHTML = [
-      row("Retail price excl. VAT · PVP HT", eur2.format(s.ht)),
-      row(`Wholesale price · prix de gros HT (÷ ${s.coef.toFixed(2)})`, eur2.format(s.wholesale)),
-      row("Retailer margin", `${eur2.format(s.retail)} · ${pct(s.retail / s.ht)}`),
-      row("COGS", eur2.format(s.cogs)),
-      row("Brand gross margin per unit", `${eur2.format(s.brandM)} · ${pct(s.brandM / s.wholesale)}`, "total"),
+      row(`Shelf price · PVP TTC (VAT ${m.vat} %)`, f2(L.msrp)),
+      row("Retail price excl. VAT · PVP HT", f2(L.ht)),
+      row(`Wholesale price · prix de gros HT${c === "EUR" ? ` (÷ ${s.coef.toFixed(2)})` : ` (× ${L.rate.toFixed(4)})`}`, f2(L.wholesale)),
+      row("Retailer margin", `${f2(L.retail)} · ${pct(L.retail / L.ht)}`),
+      row("COGS", f2(L.cogs)),
+      ...(L.landed ? [row("Customs clearance per unit (opening order)", f2(L.landed))] : []),
+      row("Brand gross margin per unit", `${f2(L.brandM)} · ${pct(L.brandM / L.wholesale)}`, "total"),
     ].join("");
-    const seg = (v, c, t) => v > 0 ? `<i title="${t}" style="flex:${v};background:${c}"></i>` : "";
-    $("s-meter").innerHTML = seg(Math.min(s.cogs, s.wholesale), "#636366", "COGS") + seg(Math.max(0, s.brandM), cssVar("--gold"), "Brand margin") +
-      seg(s.retail, cssVar("--concept"), "Retailer margin") + seg(vatEur, "#2c2c2e", "VAT");
-    const gm = s.brandM / s.wholesale, mk = s.wholesale / Math.max(s.cogs, .01);
-    $("s-health").innerHTML = s.brandM <= 0 ? `<span style="color:var(--bad)">● Wholesale below COGS — every unit loses money.</span>`
+    const seg = (v, col, t) => v > 0 ? `<i title="${t}" style="flex:${v};background:${col}"></i>` : "";
+    $("s-meter").innerHTML = seg(Math.min(L.cogs + L.landed, L.wholesale), "#636366", "COGS + landed") + seg(Math.max(0, L.brandM), cssVar("--gold"), "Brand margin") +
+      seg(L.retail, cssVar("--concept"), "Retailer margin") + seg(vatAmt, "#2c2c2e", "VAT");
+    const gm = L.brandM / L.wholesale, mk = L.wholesale / Math.max(L.cogs, .01);
+    $("s-health").innerHTML = L.brandM <= 0 ? `<span style="color:var(--bad)">● Wholesale below landed cost — every unit loses money.</span>`
       : gm < .6 ? `<span style="color:var(--warn)">● Brand margin ${pct(gm)} (${mk.toFixed(1)}× COGS): below the 65–80 % niche benchmark; raise MSRP or cut COGS.</span>`
         : `<span style="color:var(--ok)">● Brand margin ${pct(gm)} (${mk.toFixed(1)}× COGS): healthy for a niche single SKU.</span>`;
     $("s-moq").innerHTML = [
-      row(`Boutique / concept store`, `${s.moq} units · ${eur.format(s.moq * s.wholesale)}`),
-      row(`Department store (2× depth)`, `${s.moq * 2} units · ${eur.format(s.moq * 2 * s.wholesale)}`),
-      row(`Annual units / boutique (1 + ${s.re} reorders)`, `${s.moq * (1 + s.re)} units`),
-    ].join("") + `<tr><td colspan="2" class="note" style="border:0;padding-top:4px">Smallest multiple of the ${s.pack}-unit case reaching the ${eur.format(s.open)} opening-order target.</td></tr>`;
+      row(`Boutique / concept store`, `${L.moq} units · ${f0(L.order)}`),
+      row(`Department store (2× depth)`, `${L.moq * 2} units · ${f0(L.order * 2)}`),
+      row(`Annual units / boutique (1 + ${s.re} reorders)`, `${L.moq * (1 + s.re)} units`),
+    ].join("") + `<tr><td colspan="2" class="note" style="border:0;padding-top:4px">Smallest multiple of the ${s.pack}-unit case reaching the ${f0(L.open)} ${c === "EUR" ? "EU" : c === "CHF" ? "Swiss" : "UK"} opening-order minimum.</td></tr>`;
+    // Shipping threshold warnings follow the market: an order under free shipping pays freight (and, cross-border, a clearance fee)
+    const gap = m.freeShip - L.order, addU = gap > 0 ? Math.ceil(gap / L.wholesale / s.pack) * s.pack : 0;
+    $("s-ship").innerHTML = (gap > 0
+      ? `<div class="callout alert"><b>Below free shipping.</b> Opening order ${f0(L.order)} vs ${f0(m.freeShip)} threshold: add ${addU} units (one more ${s.pack}-case${addU > s.pack ? "s" : ""}) or charge ${f0(m.freight)} freight.</div>`
+      : `<div class="callout safe"><b>Free shipping.</b> Opening order ${f0(L.order)} clears the ${f0(m.freeShip)} threshold.</div>`) +
+      `<div class="callout${c === "EUR" ? "" : " alert"}"><b>${c === "EUR" ? "Intra-EU." : "Cross-border."}</b> ${esc(m.duty)}${m.customs ? ` Clearance ≈ ${f0(m.customs)} per shipment.` : ""}</div>`;
+    $("s-markets").innerHTML = ["FR", "BE", "NL", "DE", "LU"].map(cc => {
+      const vat = VAT[cc], v = vat === s.vat ? s.msrp : pricePoint(s.ht * (1 + vat / 100));
+      return row(`${cc} · VAT ${vat} %`, `${local(v, "EUR")} · whs ${local(s.wholesale, "EUR", 2)}`);
+    }).join("") + ["CHF", "GBP"].map(k => {
+      const l = lists[k];
+      return row(`${k === "CHF" ? "CH" : "UK"} · VAT ${l.m.vat} % · corridor +${Math.round((l.m.corridor - 1) * 100)} %`, `${local(l.msrp, k)} · whs ${local(l.wholesale, k, 2)}`);
+    }).join("");
+    $("s-fx").textContent = `1 € = ${fx.CHF.toFixed(4)} CHF · ${fx.GBP.toFixed(4)} £ — ${fx.src === "ECB" ? `ECB reference rate${fx.asof ? " of " + fx.asof : ""}` : "offline reference rate"}. Ledger and inputs stay in EUR; figures are shown in ${c}.`;
     const live = rows.filter(r => r.pipeline_status !== "Declined");
     const weighted = live.reduce((a, r) => a + r._wval, 0);
     const committed = live.filter(r => PROTECTED.has(r.pipeline_status)).reduce((a, r) => a + r._val, 0);
     const potential = live.reduce((a, r) => a + r._val, 0);
-    const profit = weighted * (s.brandM / s.wholesale);
+    const profit = live.reduce((a, r) => { const l = listOf(r); return a + r._wval * l.brandM / l.wholesale; }, 0);
     const units = live.reduce((a, r) => a + moqFor(r) * (1 + s.re) * PROB[r.pipeline_status], 0);
+    const export_ = live.filter(r => mkOf(r) !== "EUR").reduce((a, r) => a + r._wval, 0);
     $("s-scope").textContent = `${rows.length} stores`;
     $("s-proj").innerHTML = `
       <div class="hero"><span>Weighted revenue</span><b>${short(weighted)}</b></div>
       <div><span>Weighted gross profit</span><b>${short(profit)}</b></div>
       <div><span>Committed (partners)</span><b>${short(committed)}</b></div>
       <div><span>Full potential</span><b>${short(potential)}</b></div>
-      <div><span>Weighted units</span><b>${Math.round(units).toLocaleString("fr-FR")}</b></div>
-      <div><span>Cost of goods</span><b>${short(units * s.cogs)}</b></div>`;
+      <div><span>Weighted units</span><b>${Math.round(units).toLocaleString(m.locale)}</b></div>
+      <div><span>Export share (CH)</span><b>${weighted ? pct(export_ / weighted) : "–"}</b></div>`;
     $("m-rev").textContent = short(weighted);
-    $("m-rev-h").textContent = `${short(potential)} potential · ${eur2.format(s.wholesale)} wholesale`;
+    $("m-rev-h").textContent = `${short(potential)} potential · ${f2(L.wholesale)} wholesale`;
   }
   let simTimer;
   Object.values(SIM_FIELDS).forEach(id => $(id).addEventListener("input", () => {
     clearTimeout(simTimer);
     simTimer = setTimeout(() => {
       sim = readSim();
+      reprice();
       store.set(SIM_KEY, Object.fromEntries(Object.entries(SIM_FIELDS).map(([k, i]) => [k, $(i).value])));
       refreshDerived();
       apply();
@@ -1737,7 +1893,10 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     ["Tier score", "tier_score"], ["Brand fit", "brand_alignment_score"], ["Single-SKU openness", "single_sku_openness"],
     ["Segment", "segment"], ["Entry barrier", "entry_barrier"], ["Openness verified", "openness_verified"],
     ["Sampling policy", r => SAMPLING_LABEL[samplingPolicy(r)]], ["Recommended MOQ", r => moqFor(r)],
+    ["Market", r => mkOf(r)], ["VAT %", r => msrpFor(r).vat], ["Local MSRP TTC", r => msrpFor(r).v],
+    ["Local wholesale HT", r => listOf(r).wholesale.toFixed(2)],
     ["Year-1 value EUR", r => Math.round(r._val)], ["Weighted value EUR", r => Math.round(r._wval)],
+    ["Year-1 value (display currency)", r => `${Math.round(r._val * fx[cur])} ${cur}`],
     ["Units delivered", r => r._ws ? r._ws.units : ""], ["Revenue invoiced EUR", r => r._ws ? r._ws.revenue.toFixed(2) : ""],
     ["Outstanding EUR", r => r._ws ? r._ws.outstanding.toFixed(2) : ""], ["Last invoice", r => r._ws?.last || ""],
     ["Territory", r => PROTECTED.has(r.pipeline_status) ? "Protected" : r._zone ? `In zone of ${r._zone.name} (${r._zone.km.toFixed(1)} km)` : "Open"],
@@ -1814,6 +1973,52 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     el.addEventListener("keydown", e => e.key === "Enter" && go(e));
   });
 
+  // ---- Currency toggle: re-price every figure in place, persist the choice
+  let fxTimer;
+  function curDOM() {
+    const i = Object.keys(MARKETS).indexOf(cur);
+    $("cur").style.setProperty("--i", i);
+    document.querySelectorAll("[data-cur]").forEach(b => b.setAttribute("aria-pressed", b.dataset.cur === cur));
+    $("cur").title = `1 € = ${fx.CHF.toFixed(4)} CHF · ${fx.GBP.toFixed(4)} £ (${fx.src === "ECB" ? "ECB " + (fx.asof || "") : "reference"})`;
+    document.documentElement.dataset.cur = cur;
+  }
+  function repriceAll(animate) {
+    reprice();
+    refreshDerived();
+    if (tableReady) table.redraw(true);
+    apply();
+    if (dossierId != null) showDossier(dossierId, false);
+    if ($("pitch").open) renderPitch();
+    curDOM();
+    if (animate) {
+      document.body.classList.remove("fx-tick"); void document.body.offsetWidth; document.body.classList.add("fx-tick");
+      clearTimeout(fxTimer); fxTimer = setTimeout(() => document.body.classList.remove("fx-tick"), 500);
+    }
+    document.dispatchEvent(new CustomEvent("currency:change", { detail: { currency: cur, fx } }));
+  }
+  function setCurrency(c) {
+    if (!MARKETS[c] || c === cur) return;
+    cur = c;
+    store.set(CUR_KEY, c);
+    repriceAll(true);
+    toast(`${c} · ${MARKETS[c].name}`);
+  }
+  document.querySelectorAll("[data-cur]").forEach(b => b.addEventListener("click", () => setCurrency(b.dataset.cur)));
+  curDOM();
+  // ECB reference rates (Frankfurter, CORS-enabled, no key) once a day; the reference table keeps working offline
+  (async () => {
+    if (fx.fetched === TODAY || !navigator.onLine) return;
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 5000);
+    try {
+      const j = await (await fetch("https://api.frankfurter.dev/v1/latest?base=EUR&symbols=CHF,GBP", { signal: ctl.signal })).json();
+      if (j?.rates?.CHF > 0 && j.rates.GBP > 0) {
+        fx = { EUR: 1, CHF: j.rates.CHF, GBP: j.rates.GBP, asof: j.date, src: "ECB", fetched: TODAY };
+        store.set(FX_KEY, fx);
+        if (tableReady) repriceAll(false);
+      }
+    } catch (e) { /* offline or blocked: reference rates stay */ } finally { clearTimeout(t); }
+  })();
+
   let firstFit = true;
   function applyAndFit() {
     const keep = apply();
@@ -1828,8 +2033,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   ["status", "priority", "quick", "accounts", "sampling"].forEach(id => $(id).addEventListener("change", applyAndFit));
   document.querySelectorAll("input[name=cc]").forEach(i => i.addEventListener("change", () => { fillCities(); applyAndFit(); }));
   let qTimer;
-  $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(apply, 120); });
-  ["tier", "align"].forEach(id => $(id).addEventListener("input", apply));
+  $("q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(scheduleApply, 90); });
+  ["tier", "align"].forEach(id => $(id).addEventListener("input", scheduleApply));
   document.querySelectorAll("input[name=open]").forEach(i => i.addEventListener("change", apply));
   document.querySelectorAll("input[name=src], input[name=seg]").forEach(i => i.addEventListener("change", applyAndFit));
   $("inview").addEventListener("change", apply);
@@ -1842,7 +2047,7 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
     apply();
     if (dossierId != null) showDossier(dossierId, false);
   });
-  map.on("moveend", () => $("inview").checked && apply());
+  map.on("moveend", () => $("inview").checked && scheduleApply());
   $("reset").addEventListener("click", () => {
     $("q").value = ""; $("type").value = "";
     document.querySelectorAll("input[name=cc]").forEach(i => (i.checked = true));
@@ -1862,6 +2067,8 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
   window.SillageContext = {
     data, statuses: STATUSES, protectedStatuses: [...PROTECTED], prob: PROB, today: TODAY,
     get zoneKm() { return zoneKm; }, get sim() { return sim; }, get shown() { return shown; }, get mode() { return mode; },
+    get currency() { return cur; }, get fx() { return fx; }, get lists() { return lists; }, markets: MARKETS, vat: VAT,
+    money, short, local, marketOf: mkOf, priceOf: listOf, msrpFor, moqFor,
     touched: key => touched[key] || null,
     focus: id => { focusStore(id); $("map").scrollIntoView({ behavior: "smooth", block: "center" }); },
     setStatus: (ids, status) => ids.forEach(id => setCrm(id, { pipeline_status: status })),

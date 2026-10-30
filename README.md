@@ -181,3 +181,14 @@ single-SKU, 50-door discovery-set dispatch (CSV + one-click status update), pipe
 collections audit, exclusivity-zone conflicts. Store names and cities get a brief. Optional
 Anthropic / OpenAI key (⚙︎, kept in this browser only) answers open questions grounded on the
 same CRM context. Status changes are dated in `perfumery-touch-v1` to drive the stagnation SLA.
+
+## Multi-currency & export tax engine
+- Header toggle **€ / CHF / £** (persisted per browser) re-prices every figure: KPIs, pipeline values,
+  margin simulator, wholesale ledger, dossiers, Sillage AI. Ledger and simulator inputs stay in EUR.
+- FX: ECB reference rates via Frankfurter (once a day, cached); offline fallback to a reference table.
+- Markets: EU (per-country VAT FR 20 · BE/NL 21 · DE 19 · LU 17), Switzerland (CHF list, 8.1 % VAT,
+  +8 % price corridor, CHF 1 200 minimum, CHF 1 500 free shipping, ~CHF 65 clearance), UK (GBP list,
+  20 % VAT, +5 % corridor, £800 minimum, £1 000 free shipping). Swiss doors always buy on the CHF list.
+- MOQ, free-shipping warnings and customs notes follow the selected market; pitches quote each
+  store's own price list. Sillage AI adds a "Swiss & Non-EU Export Strategy" analysis and feeds the
+  currency context to the LLM.

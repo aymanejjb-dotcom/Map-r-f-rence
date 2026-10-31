@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="glow" cx="78%" cy="12%" r="90%"><stop offset="0" stop-color="#c5a059" stop-opacity=".32"/><stop offset=".6" stop-color="#c5a059" stop-opacity="0"/></radialGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0dcae"/><stop offset=".55" stop-color="#c5a059"/><stop offset="1" stop-color="#8c6f35"/></linearGradient>
+    <radialGradient id="glow" cx="78%" cy="12%" r="90%"><stop offset="0" stop-color="#D4AF37" stop-opacity=".32"/><stop offset=".6" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0dcae"/><stop offset=".55" stop-color="#D4AF37"/><stop offset="1" stop-color="#9c7c22"/></linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="#000"/>
   <rect width="512" height="512" rx="112" fill="url(#glow)"/>
-  <rect x="6" y="6" width="500" height="500" rx="106" fill="none" stroke="#c5a059" stroke-opacity=".28" stroke-width="3"/>
+  <rect x="6" y="6" width="500" height="500" rx="106" fill="none" stroke="#D4AF37" stroke-opacity=".28" stroke-width="3"/>
   <path fill="url(#gold)" d="M124 372V364C142 362 150 356 150 336V176C150 156 142 150 124 148V140H206L262 300L318 140H396V148C378 150 370 156 370 176V336C370 356 378 362 396 364V372H286V364C304 362 312 356 312 336V196L250 372H236L176 196V336C176 356 184 362 204 364V372Z"/>
-  <path d="M176 412H336" stroke="#c5a059" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M176 412H336" stroke="#D4AF37" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
 </svg>

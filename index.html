@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* ———————————————————————————————————————————————————————————————
    Maison Atlas — design system
@@ -29,8 +29,8 @@
    ——————————————————————————————————————————————————————————————— */
 :root {
   color-scheme: dark;
-  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, "Helvetica Neue", sans-serif;
+  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, "Helvetica Neue", sans-serif;
   --serif: "Playfair Display", "Bodoni 72", "Bodoni Moda", Didot, Georgia, serif;
 
   --bg: #000000;
@@ -43,14 +43,14 @@
   --ink-2: #d2d2d7;
   --muted: #8e8e93;
   --faint: #5a5a5f;
-  --gold: #c5a059;
-  --gold-hi: #e2c88f;
-  --gold-deep: #8c6f35;
-  --gold-lo: rgba(197,160,89,.12);
-  --gold-line: rgba(197,160,89,.38);
+  --gold: #D4AF37;
+  --gold-hi: #ecd27a;
+  --gold-deep: #9c7c22;
+  --gold-lo: rgba(212,175,55,.12);
+  --gold-line: rgba(212,175,55,.38);
 
   --niche: #d29ab8; --concept: #7cc8bd; --dept: #d6b679;
-  --s-nc: #636366; --s-disc: #8fb3ff; --s-follow: #f2a65e; --s-meet: #bf9cff; --s-partner: #5fd08a; --s-key: #c5a059; --s-declined: #ff6b6b;
+  --s-nc: #636366; --s-disc: #8fb3ff; --s-follow: #f2a65e; --s-meet: #bf9cff; --s-partner: #5fd08a; --s-key: #D4AF37; --s-declined: #ff6b6b;
   --warn: #f2a65e; --ok: #5fd08a; --bad: #ff6b6b;
 
   --r-sm: 10px; --r: 16px; --r-lg: 22px;
@@ -74,7 +74,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 button { font-family: inherit; }
 a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
-::selection { background: rgba(197,160,89,.35); }
+::selection { background: rgba(212,175,55,.35); }
 .wrap { max-width: 1600px; margin: 0 auto; padding: 0 max(24px, env(safe-area-inset-right)) 48px max(24px, env(safe-area-inset-left)); }
 .card { background: var(--card); border: 1px solid var(--hair); border-radius: var(--r); box-shadow: var(--shadow); }
 .eyebrow { font: 600 10.5px/1.2 var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -106,7 +106,7 @@ a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action
 .cur { --i: 0; position: relative; display: inline-grid; grid-template-columns: repeat(3, 1fr); padding: 3px; border-radius: 999px; flex: none;
   background: rgba(255,255,255,.04); border: 1px solid var(--hair); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); isolation: isolate; }
 .cur::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3); border-radius: 999px;
-  background: linear-gradient(180deg, rgba(226,200,143,.26), rgba(197,160,89,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(197,160,89,.55);
+  background: linear-gradient(180deg, rgba(226,200,143,.26), rgba(212,175,55,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(212,175,55,.55);
   transform: translate3d(calc(var(--i) * 100%), 0, 0); transition: transform .45s var(--ease); will-change: transform; }
 .cur button { border: 0; background: none; color: var(--muted); cursor: pointer; min-width: 44px; min-height: 30px; padding: 0 10px; border-radius: 999px;
   font: 600 12px/1 var(--text); letter-spacing: .02em; font-variant-numeric: tabular-nums; transition: color .3s; }
@@ -148,7 +148,7 @@ a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action
 .suite svg { grid-row: 1 / 3; width: 32px; height: 32px; padding: 7px; border-radius: 10px; background: var(--gold-lo); color: var(--gold-hi); box-shadow: inset 0 0 0 1px var(--gold-line); }
 .suite b { font: 600 13.5px/1.2 var(--sans); letter-spacing: -.01em; }
 .suite small { color: var(--muted); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (hover: hover) { .suite button:hover { border-color: var(--gold-line); background: linear-gradient(180deg, rgba(197,160,89,.08), rgba(255,255,255,.012)); transform: translateY(-1px); } }
+@media (hover: hover) { .suite button:hover { border-color: var(--gold-line); background: linear-gradient(180deg, rgba(212,175,55,.08), rgba(255,255,255,.012)); transform: translateY(-1px); } }
 .suite button:active { transform: scale(.98); transition-duration: .08s; }
 @media (max-width: 900px) { .suite { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
@@ -158,7 +158,7 @@ a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action
   box-shadow: var(--shadow); transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s; transform: translateZ(0);
   -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .widget::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .35s;
-  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(197,160,89,.16), transparent 70%); }
+  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(212,175,55,.16), transparent 70%); }
 @media (hover: hover) {
   .widget:hover { transform: translate3d(0,-3px,0); box-shadow: var(--lift); border-color: var(--hair-2); }
   .widget:hover::before { opacity: 1; }
@@ -170,7 +170,7 @@ a, button, select, label, summary, .chip, .btn, input[type=range] { touch-action
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .widget .val small { font: 500 12px var(--text); color: var(--muted); letter-spacing: 0; margin-left: 4px; }
 .widget.key .val { color: var(--gold-hi); }
-.widget.key { border-color: rgba(197,160,89,.22); }
+.widget.key { border-color: rgba(212,175,55,.22); }
 .widget .hint { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: auto; }
 .widget .eyebrow { display: flex; align-items: center; gap: 7px; }
 .widget .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); flex: none; }
@@ -198,7 +198,7 @@ select, input[type=search], input[type=number], input[type=text], input[type=dat
 select { padding-right: 30px; min-width: 140px; cursor: pointer;
   background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
   background-position: calc(100% - 15px) 52%, calc(100% - 11px) 52%; background-size: 4px 4px; background-repeat: no-repeat; }
-select:focus, input:focus, textarea:focus { border-color: var(--gold-line); box-shadow: 0 0 0 3px rgba(197,160,89,.14); }
+select:focus, input:focus, textarea:focus { border-color: var(--gold-line); box-shadow: 0 0 0 3px rgba(212,175,55,.14); }
 select option { background: #1c1c1e; color: var(--ink); }
 input::placeholder, textarea::placeholder { color: var(--faint); }
 .f input[type=search] { width: 260px; max-width: 100%; }
@@ -246,8 +246,8 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .legend { background: rgba(18,18,20,.78); color: var(--ink-2); padding: 12px 14px; border-radius: 14px; border: 1px solid var(--hair); font-size: 11.5px; line-height: 1.9;
   backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8); }
 .legend .lg { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 0; box-shadow: 0 0 8px currentColor; }
-.legend .zl { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px dashed var(--gold); margin-right: 7px; vertical-align: -1px; background: rgba(197,160,89,.12); }
-.legend .ql { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--gold-hi); box-shadow: 0 0 0 3px rgba(197,160,89,.25), 0 0 10px var(--gold); }
+.legend .zl { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px dashed var(--gold); margin-right: 7px; vertical-align: -1px; background: rgba(212,175,55,.12); }
+.legend .ql { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--gold-hi); box-shadow: 0 0 0 3px rgba(212,175,55,.25), 0 0 10px var(--gold); }
 .legend .lm { color: var(--faint); }
 
 /* Custom DOM markers: glowing dots, status halo, pulse on Tier 1 quick wins */
@@ -426,7 +426,7 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .dos dd { margin: 0; color: var(--ink-2); }
 .dos .warn { color: var(--warn); }
 .dos textarea { width: 100%; resize: vertical; min-height: 84px; line-height: 1.5; }
-.callout { border-radius: 12px; background: var(--gold-lo); box-shadow: inset 0 0 0 1px rgba(197,160,89,.2); padding: 12px 14px; font-size: 13px; margin: 14px 0; color: var(--ink-2); }
+.callout { border-radius: 12px; background: var(--gold-lo); box-shadow: inset 0 0 0 1px rgba(212,175,55,.2); padding: 12px 14px; font-size: 13px; margin: 14px 0; color: var(--ink-2); }
 .callout b { color: var(--ink); font-weight: 600; }
 .callout.alert { background: rgba(242,166,94,.09); box-shadow: inset 0 0 0 1px rgba(242,166,94,.25); }
 .callout.safe { background: rgba(95,208,138,.07); box-shadow: inset 0 0 0 1px rgba(95,208,138,.22); }
@@ -450,7 +450,7 @@ input[type=range]::-moz-range-progress { height: 3px; background: var(--gold); b
 .proj span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .proj b { font: 600 21px/1.3 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .proj .hero b { color: var(--gold-hi); }
-.proj .hero { border-color: rgba(197,160,89,.25); }
+.proj .hero { border-color: rgba(212,175,55,.25); }
 .note { font-size: 11.5px; color: var(--muted); margin: 12px 0 0; line-height: 1.55; }
 .health { font-size: 12.5px; margin-top: 10px; }
 
@@ -488,7 +488,7 @@ dialog.sheet-dlg.closing::backdrop { animation: fade .35s var(--ease) reverse fo
 .mode { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; margin: 0 auto; padding: 3px; border-radius: 999px;
   background: rgba(255,255,255,.04); border: 1px solid var(--hair); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); isolation: isolate; }
 .mode::before { content: ""; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 999px;
-  background: linear-gradient(180deg, rgba(226,200,143,.22), rgba(197,160,89,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(197,160,89,.55);
+  background: linear-gradient(180deg, rgba(226,200,143,.22), rgba(212,175,55,.1)); box-shadow: inset 0 0 0 1px var(--gold-line), 0 6px 18px -8px rgba(212,175,55,.55);
   transition: transform .5s var(--ease); }
 body[data-mode=partner] .mode::before { transform: translateX(100%); }
 .mode button { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 8px 18px; min-height: 34px; border-radius: 999px;
@@ -499,7 +499,7 @@ body[data-mode=partner] .mode::before { transform: translateX(100%); }
 .mode button[aria-pressed=true] small { color: var(--gold-hi); }
 .hero .demo { margin-left: 10px; vertical-align: 3px; }
 .rule { height: 1px; border: 0; margin: 0 0 22px; background: linear-gradient(90deg, transparent, var(--gold-line) 20%, var(--gold-line) 80%, transparent); opacity: .7; }
-body[data-mode=partner] .map-card { box-shadow: 0 0 0 1px rgba(197,160,89,.18), 0 40px 80px -40px rgba(197,160,89,.25); }
+body[data-mode=partner] .map-card { box-shadow: 0 0 0 1px rgba(212,175,55,.18), 0 40px 80px -40px rgba(212,175,55,.25); }
 
 /* Partner pins: gold halo around the top performers */
 body:not([data-mode=partner]) .map-ctl { display: none; }
@@ -536,14 +536,14 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 .rank .amt small { display: block; font: 400 11px var(--text); color: var(--muted); }
 
 /* Wholesale Stock & Invoicing drawer (dossier, partners only) */
-.drawer { margin: 20px -4px 0; border-radius: 18px; border: 1px solid rgba(197,160,89,.24); overflow: hidden;
-  background: linear-gradient(180deg, rgba(197,160,89,.08), rgba(197,160,89,.015) 140px), var(--well);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 24px 50px -30px rgba(197,160,89,.4); }
+.drawer { margin: 20px -4px 0; border-radius: 18px; border: 1px solid rgba(212,175,55,.24); overflow: hidden;
+  background: linear-gradient(180deg, rgba(212,175,55,.08), rgba(212,175,55,.015) 140px), var(--well);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 24px 50px -30px rgba(212,175,55,.4); }
 .drawer > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 14px 16px; user-select: none; }
 .drawer > summary::-webkit-details-marker { display: none; }
 .drawer > summary b { font: 500 18px/1.1 var(--serif); }
 .drawer[open] > summary .chev { transform: rotate(225deg) translateY(-1px); }
-.drawer-body { padding: 0 16px 16px; border-top: 1px solid rgba(197,160,89,.16); animation: drawer-in .5s var(--ease); }
+.drawer-body { padding: 0 16px 16px; border-top: 1px solid rgba(212,175,55,.16); animation: drawer-in .5s var(--ease); }
 @keyframes drawer-in { from { opacity: 0; transform: translateY(-6px); } }
 .drawer .kv { margin: 14px 0 10px; background: rgba(0,0,0,.35); }
 .spark { display: block; width: 100%; height: 72px; margin: 4px 0 2px; overflow: visible; }
@@ -571,6 +571,12 @@ body:not([data-mode=partner]) .map-ctl { display: none; }
 /* ——— Responsive ——— */
 @media (max-width: 1280px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 1080px) { .nav-in .mode button small { display: none; } }
+.brand { flex: none; }
+@media (max-width: 1720px) { .brand .sub { display: none; } }
+@media (max-width: 1500px) { .nav-actions > .btn[data-suite=forecast] { display: none; } .nav-actions .btn .long { display: none; } }
+@media (max-width: 1360px) { .nav-in { gap: 12px; } .nav-actions { gap: 6px; } .nav-actions #go-sim { display: none; } .nav-in .mode button { padding: 8px 14px; } }
+@media (max-width: 1180px) { .nav-actions .sl-nav, .nav-actions #pdf { display: none; } }
+@media (max-width: 700px) { .lang-tg { height: 34px; } .lang-tg button { min-width: 30px; padding: 0 6px; } }
 @media (max-width: 860px) { .board { grid-template-columns: 1fr; } .board > div + div { border-left: 0; border-top: 1px solid var(--hair); } }
 @media (max-width: 1080px) {
   .ctl-body { grid-template-columns: 1fr; }
@@ -733,6 +739,44 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   .ep-row { grid-template-columns: 104px 1fr 26px; }
 }
 @media (prefers-reduced-motion: reduce) { .badge.stock i, .ep-row > i b { animation: none; } }
+
+/* ——— Workspace: split / map / data + immersive full screen ——— */
+.ws-bar { display: flex; align-items: center; gap: 14px; margin: 4px 0 14px; flex-wrap: wrap; }
+.ws-hint { color: var(--faint); font: 500 11.5px var(--text); letter-spacing: .02em; }
+@media (hover: none) { .ws-hint { display: none; } }
+body[data-ws=map] .pipeline, body[data-ws=map] .board { display: none !important; }
+body[data-ws=data] .map-card, body[data-ws=data] .board { display: none !important; }
+body[data-ws=map] .map-card { height: calc(100vh - 150px); height: calc(100svh - 150px); min-height: 480px; }
+.fs-btn { position: absolute; z-index: 850; top: 12px; right: 12px; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px; cursor: pointer;
+  color: var(--ink); background: rgba(18,18,20,.66); border: 1px solid var(--hair-2); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8);
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); transition: transform .35s var(--ease), border-color .3s, color .3s; }
+.fs-btn:hover { color: var(--gold-hi); border-color: var(--gold-line); transform: scale(1.05); }
+.fs-btn:active { transform: scale(.94); }
+.fs-btn.inline { position: static; width: 32px; height: 32px; border-radius: 10px; box-shadow: none; }
+.fs-btn svg { width: 15px; height: 15px; }
+.fs-btn .i-in, .is-full .fs-btn .i-out, .is-full #data-fs .i-out { display: none; }
+.is-full .fs-btn .i-in, .is-full #data-fs .i-in { display: inline; }
+.map-card .leaflet-top.leaflet-right { margin-top: 48px; }
+.map-card.is-full, .pipeline.is-full { position: fixed !important; inset: 0; z-index: 940; margin: 0 !important; border-radius: 0 !important; height: auto !important; max-height: none;
+  animation: fsIn .45s var(--ease); }
+.map-card.is-full { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.map-card.is-full .fs-btn { top: calc(14px + env(safe-area-inset-top)); right: calc(14px + env(safe-area-inset-right)); }
+.pipeline.is-full { display: flex; flex-direction: column; background: rgba(0,0,0,.92); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.pipeline.is-full .cards { overflow-y: auto; flex: 1; }
+html.fs-lock, html.fs-lock body { overflow: hidden; }
+@keyframes fsIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .map-card.is-full, .pipeline.is-full { animation: none; } }
+
+/* ——— Language toggle FR | EN ——— */
+.lang-tg { display: inline-flex; align-items: center; gap: 2px; padding: 0 4px; height: 36px; border-radius: 999px; border: 1px solid var(--hair);
+  background: rgba(255,255,255,.03); flex: none; }
+.lang-tg span { color: var(--faint); font-size: 11px; }
+.lang-tg button { border: 0; background: none; cursor: pointer; color: var(--muted); font: 600 11px/1 var(--text); letter-spacing: .14em;
+  min-width: 34px; min-height: 30px; padding: 0 8px; border-radius: 999px; transition: color .25s var(--ease), background .25s var(--ease); }
+.lang-tg button[aria-pressed=true] { color: var(--gold-hi); background: rgba(212,175,55,.1); }
+@media (hover: hover) { .lang-tg button:hover { color: var(--ink); } }
+html[lang=fr] [data-l=en], html[lang=en] [data-l=fr] { display: none; }
 </style>
 </head>
 <body>
@@ -765,12 +809,12 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
 <section class="hero">
   <div data-only="global">
     <span class="eyebrow">Global Target Directory · B2B pipeline</span>
-    <h2>The quiet <em>art</em> of placement.</h2>
+    <h2 data-i18n-skip><span data-l="fr">L'art <em>discret</em> du référencement.</span><span data-l="en">The quiet <em>art</em> of placement.</span></h2>
     <p>Four hundred doors across six markets, scored for fit and openness. Choose where your fragrance belongs, then reach out with intent.</p>
   </div>
   <div data-only="partner" hidden>
-    <span class="eyebrow">Ma Carte Partner · Wholesale<span class="pill demo" id="demo-pill" hidden title="sources/wholesale.json ships illustrative figures: replace them with your own ledger">Demo ledger</span></span>
-    <h2>Where it <em>sells.</em></h2>
+    <span class="eyebrow">Ma Carte Partner · Wholesale</span>
+    <h2 data-i18n-skip><span data-l="fr">Là où il <em>se vend.</em></span><span data-l="en">Where it <em>sells.</em></span></h2>
     <p>Only the doors that carry your fragrance: stock engaged, invoices issued, cash collected — and the cities where it moves.</p>
   </div>
 </section>
@@ -850,7 +894,15 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   </div>
 </details>
 
-<section class="map-card"><div id="map" aria-label="Store map"></div></section>
+<div class="ws-bar" role="toolbar" aria-label="Workspace">
+  <div class="seg-ctl ws-seg" role="group" aria-label="Workspace layout">
+    <button data-ws="split" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2.5" width="12" height="5" rx="1.2"/><rect x="2" y="9.5" width="12" height="4" rx="1.2"/></svg>Map &amp; data</button>
+    <button data-ws="map" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1.5 4 6 2.5l4 1.5 4.5-1.5v9.5L10 13.5 6 12l-4.5 1.5z"/><path d="M6 2.5V12M10 4v9.5"/></svg>Map</button>
+    <button data-ws="data" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4h12M2 8h12M2 12h12"/></svg>Data</button>
+  </div>
+  <span class="ws-hint">Press F for full screen · Esc to exit</span>
+</div>
+<section class="map-card" id="map-card"><div id="map" aria-label="Store map"></div><button class="fs-btn" id="map-fs" type="button" title="Full-screen map" aria-label="Full-screen map" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path class="i-out" d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/><path class="i-in" d="M6 2.5V6H2.5M13.5 6H10V2.5M10 13.5V10h3.5M2.5 10H6v3.5"/></svg></button></section>
 
 <section class="board" data-only="partner" hidden aria-label="Top-performing cities and stores">
   <div>
@@ -860,12 +912,12 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   </div>
   <div>
     <span class="eyebrow">Top-performing doors</span>
-    <h2>The <em>gold</em> circle</h2>
+    <h2 data-i18n-skip><span data-l="fr">Le cercle <em>d'or</em></span><span data-l="en">The <em>gold</em> circle</span></h2>
     <div id="b-stores"></div>
   </div>
 </section>
 
-<section class="pipeline card">
+<section class="pipeline card" id="pipeline">
   <div class="pipe-head">
     <h2>Pipeline</h2><span class="pill" id="t-count"></span>
     <div class="tools">
@@ -880,6 +932,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
         <option value="pipeline_status:desc">Pipeline stage</option>
         <option value="name:asc">Name A–Z</option>
       </select>
+      <button class="fs-btn inline" id="data-fs" type="button" title="Full-screen data" aria-label="Full-screen data" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path class="i-out" d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/><path class="i-in" d="M6 2.5V6H2.5M13.5 6H10V2.5M10 13.5V10h3.5M2.5 10H6v3.5"/></svg></button>
       <div class="seg-ctl" role="group" aria-label="View">
         <button data-view="table" aria-pressed="true" title="Table"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4h12M2 8h12M2 12h12"/></svg>Table</button>
         <button data-view="list" aria-pressed="false" title="List"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="3" cy="4" r="1"/><circle cx="3" cy="8" r="1"/><circle cx="3" cy="12" r="1"/><path d="M6 4h8M6 8h8M6 12h8"/></svg>List</button>
@@ -980,6 +1033,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
 <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
 <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+<script src="i18n.js"></script>
 <script src="perfumeries.js"></script>
 <script src="intelligence.js"></script>
 <script src="ai_assistant.js" defer></script>
@@ -1107,7 +1161,6 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     document.body.dataset.mode = mode;
     document.querySelectorAll(".mode [data-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === mode));
     document.querySelectorAll("[data-only]").forEach(el => { el.hidden = el.dataset.only !== mode; });
-    $("demo-pill").hidden = !data.some(r => PROTECTED.has(r.pipeline_status) && isDemo(r));
   }
   modeDOM();
   let topRank = new Map(), maxRev = 1;   // top performers (gold halo) and the revenue scale for pin size
@@ -1246,7 +1299,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   }
   const heat = L.heatLayer
     ? L.heatLayer([], { radius: 42, blur: 34, maxZoom: 10, minOpacity: .28,
-        gradient: { .15: "#2a1e0a", .4: "#6f5526", .65: "#c5a059", .85: "#e2c88f", 1: "#fff4d6" } })
+        gradient: { .15: "#2a1e0a", .4: "#6f5526", .65: "#D4AF37", .85: "#ecd27a", 1: "#fff4d6" } })
     : L.layerGroup();
   const heatCtl = L.control({ position: "topleft" });
   heatCtl.onAdd = () => {
@@ -1321,7 +1374,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   const zoneCell = r => PROTECTED.has(r.pipeline_status) ? `<span class="badge" style="--c:var(--gold)">◎ Protected</span>`
     : r._zone ? `<span class="badge" style="--c:var(--warn)" title="Inside ${esc(r._zone.name)}'s ${zoneKm} km zone">⚑ ${r._zone.km.toFixed(1)} km</span>` : `<span class="muted">Open</span>`;
   const table = new Tabulator("#table", {
-    data, index: "id", layout: "fitColumns", height: phone.matches ? 520 : 620, selectableRows: false, renderVerticalBuffer: 400,
+    data, index: "id", layout: "fitColumns", height: phone.matches ? 520 : 680, selectableRows: false, renderVerticalBuffer: 400,
     initialSort: [{ column: "tier_score", dir: "desc" }],
     columns: [
       { title: "Name", field: "name", minWidth: 200, widthGrow: 2, frozen: true, formatter: c => `<span class="tname">${esc(c.getValue())}</span>` },
@@ -1468,6 +1521,46 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     if (v === "table") { if (tableReady) table.redraw(true); } else scheduleCards();
   }
   document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+
+  // ---- Workspace: split / map / data, plus immersive full screen for either surface
+  const WS_KEY = "atlas-ws-v1";
+  const tableH = () => {
+    const full = $("pipeline").classList.contains("is-full");
+    if (full) return Math.max(320, window.innerHeight - $("pipeline").querySelector(".pipe-head").offsetHeight - 8);
+    if (document.body.dataset.ws === "data") return Math.max(520, window.innerHeight - 190);
+    return phone.matches ? 520 : 680;
+  };
+  const relayout = () => requestAnimationFrame(() => {
+    map.invalidateSize({ pan: false });
+    if (tableReady) { table.setHeight(tableH()); if (view === "table") table.redraw(true); }
+  });
+  function setWs(w) {
+    document.body.dataset.ws = w;
+    store.set(WS_KEY, w);
+    document.querySelectorAll("[data-ws]").forEach(b => b.setAttribute("aria-pressed", b.dataset.ws === w));
+    relayout();
+  }
+  function setFull(el, on) {
+    const other = el.id === "map-card" ? $("pipeline") : $("map-card");
+    if (on) other.classList.remove("is-full");
+    el.classList.toggle("is-full", on);
+    const any = $("map-card").classList.contains("is-full") || $("pipeline").classList.contains("is-full");
+    document.documentElement.classList.toggle("fs-lock", any);
+    $("map-fs").setAttribute("aria-pressed", $("map-card").classList.contains("is-full"));
+    $("data-fs").setAttribute("aria-pressed", $("pipeline").classList.contains("is-full"));
+    relayout();
+  }
+  document.querySelectorAll("[data-ws]").forEach(b => b.addEventListener("click", () => setWs(b.dataset.ws)));
+  $("map-fs").addEventListener("click", e => { e.stopPropagation(); setFull($("map-card"), !$("map-card").classList.contains("is-full")); });
+  $("data-fs").addEventListener("click", () => setFull($("pipeline"), !$("pipeline").classList.contains("is-full")));
+  document.addEventListener("keydown", e => {
+    if (e.target.closest?.("input, textarea, select, [contenteditable]") || e.metaKey || e.ctrlKey || e.altKey || document.querySelector("dialog[open]")) return;
+    if (e.key === "Escape") { const f = document.querySelector(".is-full"); if (f) { setFull(f, false); e.stopPropagation(); } }
+    else if (e.key === "f" || e.key === "F") setFull(document.body.dataset.ws === "data" ? $("pipeline") : $("map-card"), !document.querySelector(".is-full"));
+  }, true);
+  window.addEventListener("resize", () => document.querySelector(".is-full") && relayout());
+  document.body.dataset.ws = store.get(WS_KEY, "split");
+  document.querySelectorAll("[data-ws]").forEach(b => b.setAttribute("aria-pressed", b.dataset.ws === document.body.dataset.ws));
   $("sort").addEventListener("change", () => { const [f, d] = $("sort").value.split(":"); table.setSort(f, d); });
   table.on("dataSorted", scheduleCards);
   $("cards").addEventListener("change", e => {
@@ -1675,9 +1768,9 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     w.invoices.forEach(i => { const t = Date.parse(i.date); line += ` L${X(t)},${Y(prev)} L${X(t)},${Y(i.cumulative)}`; prev = i.cumulative; });
     line += ` L${X(t1)},${Y(prev)}`;
     return `<svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c5a059" stop-opacity=".38"/><stop offset="1" stop-color="#c5a059" stop-opacity="0"/></linearGradient></defs>
+      <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D4AF37" stop-opacity=".38"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></linearGradient></defs>
       <path d="${line} L${X(t1)},62 L${X(t0)},62 Z" fill="url(#sg)"/>
-      <path d="${line}" fill="none" stroke="#e2c88f" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
+      <path d="${line}" fill="none" stroke="#ecd27a" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
       <div class="spark-cap"><span>${fmtDate(w.since)}</span><span>Cumulative revenue</span><span>${fmtDate(TODAY)}</span></div>`;
   }
   function drawerHTML(r) {
@@ -1700,7 +1793,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
           <label style="grid-column:1/-1">Reference / SKU<input name="sku" type="text" list="sku-list" required value="${esc(skus[0] || sim.scent || "")}" placeholder="Hero SKU"><datalist id="sku-list">${skus.map(k => `<option value="${esc(k)}">`).join("")}</datalist></label>
           <button class="btn sm gold" type="submit">Log delivery</button></form>`;
     return `<details class="drawer" id="drawer"${drawerOpen ? " open" : ""}>
-      <summary><span class="eyebrow">Wholesale</span><b>Stock &amp; Invoicing</b>${isDemo(r) ? `<span class="pill" title="Illustrative figures from sources/wholesale.json">Demo</span>` : ""}<span class="chev" aria-hidden="true"></span></summary>
+      <summary><span class="eyebrow">Wholesale</span><b>Stock &amp; Invoicing</b><span class="chev" aria-hidden="true"></span></summary>
       <div class="drawer-body">
         ${restockHTML(r)}
         ${w ? `<div class="kv gold"><div><span>Units</span><b>${w.units}</b></div><div><span>Revenue</span><b>${short(w.revenue)}</b></div><div><span>Collected</span><b>${short(w.paid)}</b></div><div><span>Due</span><b${w.overdueN ? ' style="color:var(--bad)"' : ""}>${short(w.outstanding)}</b></div></div>${sparkline(w)}` : ""}
@@ -1857,7 +1950,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     const body = [greet, "", opener + " " + hook, "", product, "", samp, "", terms + pilot, network ? "\n" + network : "", "", cta, "", sign].join("\n").replace(/\n{3,}/g, "\n\n");
     return { subject, body, pol };
   }
-  let pitchId = null, pitchLang = "fr", pitchMode = "single";
+  let pitchId = null, pitchLang = window.I18N?.lang || "fr", pitchMode = "single";
   function renderPitch() {
     const r = byId.get(pitchId), p = pitchText(r, pitchLang);
     document.querySelectorAll("[data-pmode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.pmode === pitchMode));
@@ -1875,7 +1968,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
   }
   function openPitch(id, mode) {
     if (!byId.has(id)) return;
-    if (id !== pitchId) seqDraft = {};
+    if (id !== pitchId) { seqDraft = {}; pitchLang = window.I18N?.lang || pitchLang; }
     pitchId = id;
     pitchMode = mode || (sequences[byId.get(id).crm_key] ? "seq" : pitchMode);
     renderPitch();
@@ -2078,9 +2171,9 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     const W = 520, H = Math.min(300, Math.max(180, W * h0 / w0)), sc = Math.min((W - 40) / w0, (H - 40) / h0);
     const ox = (W - w0 * sc) / 2, oy = (H - h0 * sc) / 2;
     const P = r => [ox + (r.lng - Math.min(...lo)) * k * sc, H - oy - (r.lat - Math.min(...la)) * sc];
-    const fill = r => PROTECTED.has(r.pipeline_status) ? "#c5a059" : { "Niche Boutique": "#9c4f78", "Independent Concept Store": "#2f7d72", "Department Store": "#a4874a" }[r.type];
+    const fill = r => PROTECTED.has(r.pipeline_status) ? "#D4AF37" : { "Niche Boutique": "#9c4f78", "Independent Concept Store": "#2f7d72", "Department Store": "#a4874a" }[r.type];
     return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="border:.6pt solid #e3dccd;border-radius:3mm;background:#fcfaf6;margin:3mm 0">${
-      rows.filter(r => PROTECTED.has(r.pipeline_status)).map(r => { const [x, y] = P(r); return `<circle cx="${x}" cy="${y}" r="${Math.max(6, zoneKm * sc / 111)}" fill="#c5a059" fill-opacity=".12" stroke="#c5a059" stroke-dasharray="3 3" stroke-width=".8"/>`; }).join("")}${
+      rows.filter(r => PROTECTED.has(r.pipeline_status)).map(r => { const [x, y] = P(r); return `<circle cx="${x}" cy="${y}" r="${Math.max(6, zoneKm * sc / 111)}" fill="#D4AF37" fill-opacity=".12" stroke="#D4AF37" stroke-dasharray="3 3" stroke-width=".8"/>`; }).join("")}${
       rows.map(r => { const [x, y] = P(r); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2 + r.export_potential_score / 25).toFixed(1)}" fill="${fill(r)}" fill-opacity=".85" stroke="#fff" stroke-width=".8"/>`; }).join("")}</svg>
       <p class="meta">Dot size = export potential · gold = partner accounts with their ${zoneKm} km exclusivity zone · plum = niche · teal = concept · bronze = department store.</p>`;
   }
@@ -2550,7 +2643,7 @@ h1, h2, h3, .serif { font-optical-sizing: auto; font-kerning: normal; }
     applyAndFit();
   });
 
-  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); setMode(mode); });
+  table.on("tableBuilt", () => { tableReady = true; refreshDerived(); setView(view); setMode(mode); relayout(); });
 
   // ---- Sillage AI bridge: ai_assistant.js reads the live dataset and pipeline state through this
   window.SillageContext = {

@@ -9,7 +9,7 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 | `harvest_osm.py` | Network step: harvests stockists from OpenStreetMap into `sources/osm_raw.json` |
 | `sources/cities.json` | Cached bounding boxes of the target cities |
 | `sources/crm.json` | Optional: pipeline status / decision maker / notes per `crm_key`, exported from the map |
-| `sources/wholesale.json` | Wholesale ledger per partner `crm_key`: deliveries + invoices (ships as an illustrative `"demo": true` ledger) |
+| `sources/wholesale.json` | Wholesale ledger per partner `crm_key`: deliveries + invoices (ships empty: no demo partners or invoices — fill it from the app) |
 | `sources/osm_raw.json` | Raw OSM harvest (everything looked at, before filtering) |
 | `build_perfumeries.py` | Offline: curated rows + filtered OSM rows → validation → `perfumeries.json` / `.js` |
 | `perfumeries.json` | Canonical dataset |
@@ -17,7 +17,8 @@ department stores in **BE, NL, DE, FR, LU, CH**.
 | `index.html` | Leaflet (canvas renderer) on OpenFreeMap vector basemaps (MapLibre GL) + Tabulator app |
 | `intelligence.js` | Predictive engines: restock & sell-through velocity, territory cannibalization guard, market pulse, 6-month cash-flow forecast, print-grade PDF renderer |
 | `modules.js` | Platform modules: revenue forecast panel, legal agreement / NDA generator, webhook & integration center, PWA install + offline kit |
-| `ai_assistant.js` | Sillage AI: built-in analytics (pulse-adjusted scores) + optional Anthropic / OpenAI engine |
+| `ai_assistant.js` | Sillage AI: dynamic query engine + built-in analytics (pulse-adjusted scores) + optional Anthropic / OpenAI engine |
+| `i18n.js` | FR (default) / EN interface: live DOM translation, FR\|EN toggle in the nav, print documents |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Installable PWA: service worker (app shell, libraries, map tiles), manifest, iOS / Android icons |
 
 ## Usage
@@ -169,7 +170,7 @@ A top switch (remembered; `#partners` deep-links) flips the whole app between tw
 In a partner's dossier: totals, a cumulative-revenue sparkline, itemised invoices (date, due date,
 status, amount, running total; tap a status to mark it paid) and the delivery log (stock engagement).
 Log new deliveries and invoices in place; edits stay in this browser until **Export ledger JSON**
-(save as `sources/wholesale.json`, set `"demo": false`, rebuild). The build validates dates, amounts,
+(save as `sources/wholesale.json`, rebuild). The build validates dates, amounts,
 statuses and that every ledger account is still a partner.
 
 ## Sales pipeline (CRM)
@@ -203,6 +204,29 @@ single-SKU, 50-door discovery-set dispatch (CSV + one-click status update), pipe
 collections audit, exclusivity-zone conflicts. Store names and cities get a brief. Optional
 Anthropic / OpenAI key (⚙︎, kept in this browser only) answers open questions grounded on the
 same CRM context. Status changes are dated in `perfumery-touch-v1` to drive the stagnation SLA.
+
+Free-form questions go through a **dynamic query engine** (no canned answer): it extracts stores
+(accent-insensitive, partial names), cities (FR/EN aliases: Bruxelles, Genève, Anvers…), countries,
+store types, pipeline statuses, high openness and "top N", then picks an intent:
+- **Store brief / compare** — "Senteurs d'Ailleurs", "compare Jovoy vs Nose": scores, fit, tier,
+  openness, CX, friction, territory, status, export potential, verdict.
+- **Territorial exclusivity** — "Jovoy exclusivité", "zones à Paris": inside a partner zone or not,
+  partners within the radius, doors an exclusive radius would freeze (score at stake, Tier 1
+  count), exclusive-vs-selective verdict, best exclusive anchors of a city.
+- **Staff / CX friction** — "friction équipe à Bruxelles", "easiest doors in Zürich": 0–100 score
+  from CX traits, staff and watch-out notes, rating and entry barrier, with drivers and approach.
+- **Ranking / counts** — "top 10 boutiques de niche en Suisse", "combien de partenaires en Allemagne".
+Answers are written natively in the interface language.
+
+## Language (FR / EN)
+French is the default. The FR | EN toggle in the top bar switches every rendered label, table,
+tooltip, dossier, Sillage analysis and print document live (`i18n.js`: exact strings → templates →
+glossary; originals are kept, so EN restores the source text). Legal agreements and NDAs have a
+full French version (French court names, articles and statutory references).
+
+## Workspace
+"Map & data" (stacked), "Map" (map only, full height) or "Data" (table only). The ⤢ buttons — or
+**F** — open the map or the table in immersive full screen; **Esc** exits.
 
 ## Multi-currency & export tax engine
 - Header toggle **€ / CHF / £** (persisted per browser) re-prices every figure: KPIs, pipeline values,

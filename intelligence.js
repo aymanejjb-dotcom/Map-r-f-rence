@@ -256,14 +256,14 @@ html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 body { margin: 0; font: 400 9.6pt/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: #1b1a17; letter-spacing: -.003em; }
 .serif, h1, h2, h3 { font-family: "Playfair Display", "Bodoni 72", Didot, Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
 .cover { height: 252mm; display: flex; flex-direction: column; justify-content: space-between; padding: 6mm 2mm; page-break-after: always;
-  background: radial-gradient(120% 80% at 100% 0%, rgba(197,160,89,.18), transparent 60%); }
-.brand { font: 600 7.5pt/1 -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; text-transform: uppercase; color: #8c6f35; }
+  background: radial-gradient(120% 80% at 100% 0%, rgba(212,175,55,.18), transparent 60%); }
+.brand { font: 600 7.5pt/1 -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .32em; text-transform: uppercase; color: #9c7c22; }
 .cover h1 { font-size: 40pt; line-height: 1.04; margin: 0 0 6mm; }
-.cover h1 em { color: #8c6f35; }
+.cover h1 em { color: #9c7c22; }
 .cover .lede { font-size: 12pt; color: #4a463f; max-width: 130mm; }
-.rule { height: 1px; background: linear-gradient(90deg, #c5a059, rgba(197,160,89,0)); margin: 6mm 0; }
+.rule { height: 1px; background: linear-gradient(90deg, #D4AF37, rgba(212,175,55,0)); margin: 6mm 0; }
 .meta { color: #6e685e; font-size: 8.5pt; }
-.eyebrow { font: 600 7pt/1.2 -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8c6f35; }
+.eyebrow { font: 600 7pt/1.2 -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #9c7c22; }
 h2 { font-size: 17pt; margin: 9mm 0 3mm; }
 h3 { font-size: 12pt; margin: 6mm 0 2mm; }
 .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border: .6pt solid #e3dccd; border-radius: 3mm; overflow: hidden; margin: 4mm 0; }
@@ -275,14 +275,14 @@ h3 { font-size: 12pt; margin: 6mm 0 2mm; }
 .kpis.gold b { color: #7a5f2b; }
 .bars { display: grid; grid-template-columns: 58mm 1fr 10mm; gap: 1.6mm 3mm; align-items: center; margin: 3mm 0; }
 .bars i { display: block; height: 2.2mm; border-radius: 2mm; background: #efe9dd; overflow: hidden; }
-.bars i b { display: block; height: 100%; background: linear-gradient(90deg, #8c6f35, #c5a059); border-radius: 2mm; }
+.bars i b { display: block; height: 100%; background: linear-gradient(90deg, #9c7c22, #D4AF37); border-radius: 2mm; }
 .bars em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
 table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin: 2mm 0 4mm; }
-th { text-align: left; font: 600 6.6pt -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #8a8478; border-bottom: .8pt solid #c5a059; padding: 1.6mm 1.6mm; }
+th { text-align: left; font: 600 6.6pt -apple-system, "Helvetica Neue", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #8a8478; border-bottom: .8pt solid #D4AF37; padding: 1.6mm 1.6mm; }
 td { padding: 1.7mm 1.6mm; border-bottom: .5pt solid #ece6da; vertical-align: top; font-variant-numeric: tabular-nums; }
 td.r, th.r { text-align: right; }
 tr { page-break-inside: avoid; }
-.callout { border-left: 1.2mm solid #c5a059; background: #fbf7ef; padding: 3mm 4mm; margin: 3mm 0; border-radius: 0 2mm 2mm 0; }
+.callout { border-left: 1.2mm solid #D4AF37; background: #fbf7ef; padding: 3mm 4mm; margin: 3mm 0; border-radius: 0 2mm 2mm 0; }
 .callout.alert { border-color: #d9822b; background: #fdf3e8; }
 .callout.bad { border-color: #c94a4a; background: #fbecec; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
@@ -303,7 +303,8 @@ svg { display: block; }
     frame.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden";
     document.body.appendChild(frame);
     const esc = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-    frame.srcdoc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(title)}</title>
+    if (window.I18N) { body = window.I18N.html(body); title = window.I18N.t(title); }
+    frame.srcdoc = `<!doctype html><html lang="${window.I18N?.lang || "fr"}"><head><meta charset="utf-8"><title>${esc(title)}</title>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap">
       <style>${PRINT_CSS}</style></head><body>${body}</body></html>`;
     return new Promise(resolve => {

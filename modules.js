@@ -43,7 +43,7 @@
 .mx-kpis b { display: block; margin-top: 6px; font: 500 21px/1.1 var(--sans); font-variant-numeric: tabular-nums; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mx-kpis .gold b { color: var(--gold-hi); }
 .mx-kpis small { display: block; color: var(--faint); font-size: 11px; margin-top: 3px; }
-.mx-chart { border-radius: 16px; border: 1px solid var(--hair); background: radial-gradient(120% 100% at 100% 0%, rgba(197,160,89,.08), transparent 60%), var(--well); padding: 12px 10px 6px; }
+.mx-chart { border-radius: 16px; border: 1px solid var(--hair); background: radial-gradient(120% 100% at 100% 0%, rgba(212,175,55,.08), transparent 60%), var(--well); padding: 12px 10px 6px; }
 .mx-chart svg { display: block; width: 100%; height: auto; }
 .mx-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11.5px; color: var(--muted); padding: 4px 6px 2px; }
 .mx-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
@@ -131,14 +131,14 @@
     const max = step * 4 / ctx.fx[ctx.currency];
     const y = v => T + (H - T - B) * (1 - v / max);
     const c = light ? { grid: "#ece6da", txt: "#8a8478", gold: "#b8924a", pipe: "rgba(184,146,74,.32)", cash: "#1b1a17", band: "#6e685e" }
-      : { grid: "rgba(255,255,255,.07)", txt: "#8e8e93", gold: "url(#mxg)", pipe: "rgba(197,160,89,.28)", cash: "#f5f5f7", band: "rgba(245,245,247,.45)" };
+      : { grid: "rgba(255,255,255,.07)", txt: "#8e8e93", gold: "url(#mxg)", pipe: "rgba(212,175,55,.28)", cash: "#f5f5f7", band: "rgba(245,245,247,.45)" };
     const ticks = [0, .25, .5, .75, 1].map(k => k * max);
     const sym = ctx.markets[ctx.currency].sym, k = step >= 1000;
     const tick = v => { const x = v * ctx.fx[ctx.currency], n = k ? +(x / 1000).toFixed(1) + "k" : String(Math.round(x)); return x === 0 ? "0" : ctx.currency === "EUR" ? `${n} ${sym}` : `${sym} ${n}`; };
     const fmt = v => ctx.short(v);
     const cash = f.months.map((m, i) => [L + bw * i + bw / 2, y(m.cash)]);
     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Six-month turnover forecast">
-      <defs><linearGradient id="mxg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2c88f"/><stop offset="1" stop-color="#8c6f35"/></linearGradient></defs>
+      <defs><linearGradient id="mxg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecd27a"/><stop offset="1" stop-color="#9c7c22"/></linearGradient></defs>
       ${ticks.map(v => `<line x1="${L}" x2="${W - 6}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="${c.grid}"/><text x="${L - 8}" y="${(y(v) + 3.5).toFixed(1)}" fill="${c.txt}" font-size="10" text-anchor="end">${esc(tick(v))}</text>`).join("")}
       ${f.months.map((m, i) => {
         const x = L + bw * i + bw * .2, w = bw * .6, yp = y(m.partners), yt = y(m.total), cx = L + bw * i + bw / 2;
@@ -178,7 +178,7 @@
         <div><span>Peak month</span><b>${monthLabel(peak.ym)}</b><small>${ctx.short(peak.total)}</small></div>
       </div>
       <div class="mx-chart">${chartSVG(f, false, fc.body.clientWidth < 520 ? 360 : 640)}
-        <div class="mx-legend"><span><i style="background:linear-gradient(#e2c88f,#8c6f35)"></i>Partner reorders</span><span><i style="background:rgba(197,160,89,.28);outline:1px dashed rgba(226,200,143,.6)"></i>Weighted pipeline</span><span><i style="background:transparent;border:1.6px solid var(--ink);border-radius:50%"></i>Cash-in</span><span>│ confidence range</span></div></div>
+        <div class="mx-legend"><span><i style="background:linear-gradient(#ecd27a,#9c7c22)"></i>Partner reorders</span><span><i style="background:rgba(212,175,55,.28);outline:1px dashed rgba(226,200,143,.6)"></i>Weighted pipeline</span><span><i style="background:transparent;border:1.6px solid var(--ink);border-radius:50%"></i>Cash-in</span><span>│ confidence range</span></div></div>
       <h4 class="eyebrow" style="margin:4px 0 -6px">By market currency</h4>
       <div class="mx-scroll"><table class="mx-t"><tr><th>Market</th><th class="r">Partners</th><th class="r">6-mo · local</th><th class="r">In ${cur}</th><th class="r">FX ±5 %</th></tr>
         ${mk.map(m => `<tr><td><b>${esc(m.c)}</b> <span class="muted">${esc(m.name)}</span></td><td class="r">${m.doors}</td><td class="r">${m.eur ? ctx.local(m.local, m.c) : "–"}</td><td class="r">${m.eur ? ctx.money(m.eur) : "–"}</td><td class="r">${m.eur && m.c !== cur ? "± " + ctx.money(m.eur * .05) : "–"}</td></tr>`).join("")}</table></div>
@@ -188,7 +188,7 @@
         ${f.months.map(m => `<tr><td>${monthLabel(m.ym)} <span class="muted">· season ${Intel.SEASON[+m.ym.slice(5, 7) - 1].toFixed(2)}</span></td><td class="r">${ctx.money(m.partners)}</td><td class="r">${ctx.money(m.pipeline)}</td><td class="r"><b>${ctx.money(m.total)}</b></td><td class="r muted">${ctx.short(m.lo)}–${ctx.short(m.hi)}</td><td class="r">${ctx.money(m.cash)}</td></tr>`).join("")}</table></div>
       <h4 class="eyebrow" style="margin:4px 0 -6px">Partner accounts</h4>
       <div class="mx-scroll"><table class="mx-t"><tr><th>Account</th><th class="r">Run-rate / mo</th><th class="r">90-day trend</th><th class="r">Terms</th><th class="r">6-month</th></tr>
-        ${f.accounts.slice(0, 12).map(a => `<tr><td><button class="linkish" data-fc-focus="${a.r.id}">${esc(a.r.name)}</button><div class="muted" style="font-size:11.5px">${esc(a.r.city)} · ${esc(a.mk)}${ctx.isDemo(a.r) ? " · demo ledger" : ""}</div></td><td class="r">${ctx.money(a.base)}</td><td class="r">${trend(a.trend)}</td><td class="r">${a.terms} d</td><td class="r"><b>${ctx.money(a.six)}</b></td></tr>`).join("") || `<tr><td colspan="5" class="muted">No partner invoices in the last 12 months.</td></tr>`}</table></div>
+        ${f.accounts.slice(0, 12).map(a => `<tr><td><button class="linkish" data-fc-focus="${a.r.id}">${esc(a.r.name)}</button><div class="muted" style="font-size:11.5px">${esc(a.r.city)} · ${esc(a.mk)}</div></td><td class="r">${ctx.money(a.base)}</td><td class="r">${trend(a.trend)}</td><td class="r">${a.terms} d</td><td class="r"><b>${ctx.money(a.six)}</b></td></tr>`).join("") || `<tr><td colspan="5" class="muted">No partner invoices in the last 12 months.</td></tr>`}</table></div>
       <p class="mx-note">Partners: deseasonalised monthly run-rate from the last 12 months of invoices × local seasonality (Q4 gifting build, ski-resort winters, coastal summers) × damped 90-day reorder-velocity trend × regional purchasing shift. Pipeline: close probability × opening order landing 1–3 months out by stage (meeting, follow-up, discovery set), then reorders at ${ctx.sim.re}/year. Cash: turnover shifted by each account's median payment terms, plus receivables already invoiced (overdue at 85 %). Ledger amounts are EUR; local columns convert at ${ctx.fx.src === "ECB" ? "ECB " + esc(ctx.fx.asof || "") : "reference"} rates.</p>`;
   }
   function forecastCSV() {
@@ -212,7 +212,7 @@
       ${mk.filter(m => m.eur).map(m => `<tr><td>${esc(m.c)} · ${esc(m.name)}</td><td class="r">${m.doors}</td><td class="r">${ctx.local(m.local, m.c)}</td><td class="r">${ctx.money(m.eur)}</td></tr>`).join("")}</table>
       <h3>Top accounts</h3><table><tr><th>Account</th><th>City</th><th class="r">Run-rate / mo</th><th class="r">Trend</th><th class="r">6-month</th></tr>
       ${f.accounts.slice(0, 15).map(a => `<tr><td>${esc(a.r.name)}</td><td>${esc(a.r.city)}</td><td class="r">${ctx.money(a.base)}</td><td class="r">${a.trend === 1 ? "flat" : (a.trend > 1 ? "+" : "−") + Math.abs(Math.round((a.trend - 1) * 100)) + " %"}</td><td class="r">${ctx.money(a.six)}</td></tr>`).join("")}</table>
-      <p class="meta">Method: deseasonalised 12-month invoice run-rate × seasonality × damped velocity trend × regional shift; pipeline weighted by stage probability. Editorial seasonal and regional indices; ${f.accounts.some(a => ctx.isDemo(a.r)) ? "includes the illustrative demo ledger." : "based on the live ledger."}</p>
+      <p class="meta">Method: deseasonalised 12-month invoice run-rate × seasonality × damped velocity trend × regional shift; pipeline weighted by stage probability. Editorial seasonal and regional indices; based on the live ledger.</p>
       <div class="foot"><span>${esc(brand)} · Forecast</span><span>Confidential · ${date} · figures in ${ctx.currency}</span></div>`;
     ctx.toast("Preparing PDF · choose “Save as PDF”");
     Intel.printDocument(`${brand} — Six-month forecast`, body);
@@ -249,8 +249,22 @@
     selective: "Selective Distribution Agreement",
     nda: "Mutual Non-Disclosure Agreement",
   };
+  const LAW_FR = {
+    FR: ["droit français", "le Tribunal des activités économiques de Paris"],
+    BE: ["droit belge", "le Tribunal de l'entreprise francophone de Bruxelles"],
+    NL: ["droit néerlandais", "le Tribunal d'arrondissement d'Amsterdam (Rechtbank Amsterdam)"],
+    DE: ["droit allemand", "le Tribunal régional de Francfort-sur-le-Main (chambre commerciale)"],
+    LU: ["droit luxembourgeois", "le Tribunal d'arrondissement de Luxembourg"],
+    CH: ["droit suisse (Code des obligations)", "le Tribunal de commerce du canton de Zurich"],
+  };
+  const KINDS_FR = {
+    exclusive: "Contrat de distribution exclusive territoriale",
+    selective: "Contrat de distribution sélective",
+    nda: "Accord de confidentialité réciproque",
+  };
+  const isFR = () => (window.I18N?.lang || "fr") === "fr";
   let ct = null, ctId = null;
-  const legal = () => ({ entity: ctx.sim.brand || "Maison Atlas", address: "", signer: "", title: "Founder", term: 24, terms: 30, ...store.get(LEGAL_KEY, {}) });
+  const legal = () => ({ entity: ctx.sim.brand || "Maison Atlas", address: "", signer: "", title: isFR() ? "Fondateur·rice" : "Founder", term: 24, terms: 30, ...store.get(LEGAL_KEY, {}) });
   const contractNo = r => {
     let h = 0;
     for (const ch of r.crm_key) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
@@ -268,6 +282,14 @@
   function contractSummary() {
     const r = ctx.byId(ctId), o = readContract(), L = ctx.priceOf(r), near = neighbours(r, o.radius);
     const s = ct.body.querySelector("[data-csum]");
+    if (isFR()) {
+      const K = KINDS_FR, LW = LAW_FR;
+      s.innerHTML = o.kind === "nda"
+        ? `<b>${esc(K.nda)}</b> entre ${esc(o.entity)} et ${esc(r.name)} · ${o.term} mois · ${esc(LW[o.law][0])}.`
+        : `<b>${esc(K[o.kind])}</b> · prix de gros ${ctx.local(L.wholesale, L.c, 2)} HT par unité · MOQ ${ctx.moqFor(r)} unités · ${o.terms} jours nets · ${o.term} mois${
+          o.kind === "exclusive" ? ` · rayon d'exclusivité <b>${o.radius} km</b> autour de ${esc(r.full_address.split(",")[0])}${near.length ? ` · <span style="color:var(--warn)">${near.length} partenaire${near.length > 1 ? "s" : ""} existant${near.length > 1 ? "s" : ""} inclus (exclu${near.length > 1 ? "s" : ""} du périmètre)</span>` : ""}` : ""}.`;
+      return;
+    }
     s.innerHTML = o.kind === "nda"
       ? `<b>${esc(KINDS.nda)}</b> between ${esc(o.entity)} and ${esc(r.name)} · ${o.term} months · ${esc(LAW[o.law][0])}.`
       : `<b>${esc(KINDS[o.kind])}</b> · wholesale ${ctx.local(L.wholesale, L.c, 2)} HT per unit · MOQ ${ctx.moqFor(r)} units · net ${o.terms} days · ${o.term} months${
@@ -291,7 +313,7 @@
     ct.title(r.name);
     ct.sub.textContent = `${r.full_address} · ${r.pipeline_status}`;
     ct.body.innerHTML = `<form class="mx-form" onsubmit="return false">
-      <label class="wide">Agreement<select name="kind">${Object.entries(KINDS).map(([k, v]) => `<option value="${k}"${k === (P ? "exclusive" : "nda") ? " selected" : ""}>${v}</option>`).join("")}</select></label>
+      <label class="wide">Agreement<select name="kind">${Object.entries(isFR() ? KINDS_FR : KINDS).map(([k, v]) => `<option value="${k}"${k === (P ? "exclusive" : "nda") ? " selected" : ""}>${v}</option>`).join("")}</select></label>
       <label>Supplier legal entity<input name="entity" value="${esc(g.entity)}" autocomplete="organization"></label>
       <label>Supplier registered address<input name="address" value="${esc(g.address)}" placeholder="Street, postcode, city, country" autocomplete="street-address"></label>
       <label>Supplier signatory<input name="signer" value="${esc(g.signer)}" placeholder="Full name" autocomplete="name"></label>
@@ -300,7 +322,7 @@
       <label>Term (months)<input name="term" type="number" min="1" step="1" value="${g.term}" inputmode="numeric"></label>
       <label>Payment terms (days net)<input name="terms" type="number" min="0" step="1" value="${g.terms}" inputmode="numeric"></label>
       <label>Exclusive radius (km)<input name="radius" type="number" min="0.1" step="0.1" value="${ctx.zoneKm}" inputmode="decimal"></label>
-      <label class="wide">Governing law &amp; venue<select name="law">${Object.entries(LAW).map(([k, v]) => `<option value="${k}"${k === r.country ? " selected" : ""}>${v[0]} · ${v[1]}</option>`).join("")}</select></label>
+      <label class="wide">Governing law &amp; venue<select name="law">${Object.entries(isFR() ? LAW_FR : LAW).map(([k, v]) => `<option value="${k}"${k === r.country ? " selected" : ""}>${v[0]} · ${v[1]}</option>`).join("")}</select></label>
     </form>
     <div class="mx-sum" data-csum></div>
     <p class="mx-note">Pre-filled from the CRM: store identity and address, decision maker (${esc(r.decision_maker_role)}), the ${esc(ctx.priceOf(r).c)} price list, MOQ and exclusivity radius. Territorial clauses follow Regulation (EU) 2022/720 (VBER) and Art. 5 Swiss Cartel Act: active sales into the territory are restricted, passive and online sales are not; resale prices stay recommended only.</p>`;
@@ -308,6 +330,7 @@
     ct.open();
   }
   function contractPDF() {
+    if (isFR()) return contractPDF_FR();
     const r = ctx.byId(ctId), o = readContract(), L = ctx.priceOf(r), p = ctx.msrpFor(r), moq = ctx.moqFor(r), no = contractNo(r);
     const [law, venue] = LAW[o.law], eu = o.law !== "CH", near = neighbours(r, o.radius);
     const date = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -368,6 +391,72 @@
       <div class="foot"><span>${esc(o.entity)} · ${esc(no)}</span><span>Confidential · ${esc(r.name)}</span></div>`;
     ctx.toast("Preparing agreement · choose “Save as PDF”");
     Intel.printDocument(`${KINDS[o.kind]} — ${r.name}`, body);
+  }
+
+
+  // Version française du contrat (langue par défaut de l'interface)
+  function contractPDF_FR() {
+    const r = ctx.byId(ctId), o = readContract(), L = ctx.priceOf(r), p = ctx.msrpFor(r), moq = ctx.moqFor(r), no = contractNo(r);
+    const [law, venue] = LAW_FR[o.law], eu = o.law !== "CH", near = neighbours(r, o.radius);
+    const date = d => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    const nda = o.kind === "nda", excl = o.kind === "exclusive";
+    const sup = `<b>${esc(o.entity)}</b>${o.address ? `, ${esc(o.address)}` : ""} (le « Fournisseur »)`;
+    const ret = `<b>${esc(r.name)}</b>, ${esc(r.full_address)} (le « ${nda ? "Destinataire" : "Distributeur"} »)`;
+    const sig = `<div class="two" style="margin-top:12mm">
+      <div><div class="eyebrow">Pour le Fournisseur</div><div style="height:22mm;border-bottom:.6pt solid #1b1a17"></div><p class="meta">${esc(o.signer || "Nom")} · ${esc(o.title)}<br>Date et lieu</p></div>
+      <div><div class="eyebrow">Pour ${esc(r.name)}</div><div style="height:22mm;border-bottom:.6pt solid #1b1a17"></div><p class="meta">Nom · ${esc(window.I18N ? window.I18N.t(r.decision_maker_role) : r.decision_maker_role)}<br>Date et lieu</p></div></div>`;
+    const art = (n, t, body) => `<h3>Article ${n} · ${t}</h3>${body}`;
+    const late = eu
+      ? "Tout retard de paiement porte intérêt au taux de refinancement de la Banque centrale européenne majoré de huit points de pourcentage, ainsi qu'une indemnité forfaitaire pour frais de recouvrement de 40 EUR par facture, conformément à la directive 2011/7/UE telle que transposée dans le droit applicable."
+      : "Tout retard de paiement porte intérêt moratoire au taux de 5 % l'an (art. 104 du Code des obligations) dès l'échéance, sans mise en demeure.";
+    const incoterm = L.c === "EUR"
+      ? "Les livraisons sont effectuées DAP (Incoterms® 2020) aux Locaux. Les livraisons intracommunautaires entre assujettis à la TVA sont facturées selon le mécanisme d'autoliquidation lorsqu'il s'applique."
+      : `Les livraisons sont effectuées DAP (Incoterms® 2020) aux Locaux. Le Distributeur agit en qualité d'importateur et supporte la TVA à l'importation (${L.m.vat} %) ; le Fournisseur mentionne l'origine préférentielle des Produits sur chaque facture.`;
+    let articles;
+    if (nda) {
+      articles = [
+        art(1, "Objet", `<p>Les parties souhaitent évaluer une relation de distribution des parfums du Fournisseur dans les locaux du Destinataire (l'« Objet ») et n'échangeront d'informations qu'à cette seule fin.</p>`),
+        art(2, "Informations confidentielles", `<p>Sont des « Informations confidentielles » toutes les informations non publiques communiquées par l'une des parties, sous quelque forme que ce soit, notamment formules, lancements, tarifs, marges, données de sell-through, données clients, conditions fournisseurs et plans d'affaires. En sont exclues les informations tombées dans le domaine public sans faute, déjà connues légitimement du destinataire, développées de manière indépendante ou reçues d'un tiers non tenu au secret.</p>`),
+        art(3, "Obligations", `<p>Chaque partie s'engage à (a) n'utiliser les Informations confidentielles de l'autre que pour l'Objet ; (b) ne les communiquer qu'aux salariés et conseils qui en ont besoin et sont tenus à des obligations équivalentes ; (c) les protéger avec au moins une diligence raisonnable ; (d) ne procéder à aucune ingénierie inverse d'un échantillon, testeur ou formule. Une divulgation imposée par la loi est permise après information préalable de la partie divulgatrice lorsque la loi l'autorise.</p>`),
+        art(4, "Échantillons &amp; testeurs", `<p>Les coffrets découverte et testeurs restent la propriété du Fournisseur, sont remis à des fins d'évaluation et d'échantillonnage en boutique uniquement et ne peuvent être revendus.</p>`),
+        art(5, "Durée &amp; restitution", `<p>Le présent accord prend effet le ${date(o.start)} pour une durée de ${o.term} mois ; les obligations de confidentialité survivent trois (3) ans après son terme. Sur demande, chaque partie restitue ou détruit les Informations confidentielles de l'autre, sauf copies conservées au titre d'obligations légales d'archivage.</p>`),
+        art(6, "Absence de licence et d'engagement", `<p>Aucune licence de marque, de brevet ou de savoir-faire n'est concédée. Aucune partie n'est tenue de conclure un contrat de distribution.</p>`),
+        art(7, "Données personnelles", `<p>Les données personnelles échangées sont traitées conformément ${eu ? "au règlement (UE) 2016/679 (RGPD)" : "à la loi fédérale suisse sur la protection des données (nLPD)"}.</p>`),
+        art(8, "Droit applicable &amp; juridiction", `<p>Le présent accord est régi par le ${esc(law)}. Compétence exclusive est attribuée à ${esc(venue)}.</p>`),
+      ];
+    } else {
+      articles = [
+        art(1, "Désignation", `<p>Le Fournisseur désigne le Distributeur comme ${excl ? "distributeur <b>exclusif</b>" : "distributeur <b>agréé</b> de son réseau sélectif"} des Produits au ${esc(r.full_address)} (les « Locaux »). Le Distributeur accepte et ne vend les Produits qu'aux consommateurs finaux et aux autres distributeurs agréés du réseau sélectif du Fournisseur.</p>`),
+        art(2, "Produits", `<p>La collection de parfums du Fournisseur${ctx.sim.scent ? `, dont <b>${esc(ctx.sim.scent)}</b>` : ""}, telle que figurant au tarif en vigueur (les « Produits »). Le Fournisseur peut ajouter ou retirer des références moyennant un préavis de 60 jours.</p>`),
+        art(3, "Territoire", excl ? `<p>Le Territoire est la zone comprise dans un rayon de <b>${o.radius} km</b> autour des Locaux${r.district ? ` (${esc(r.district)}, ${esc(r.city)})` : ` (${esc(r.city)})`}. Pendant la durée du contrat, le Fournisseur s'interdit de désigner un autre distributeur disposant d'un point de vente physique dans le Territoire et de vendre activement les Produits à des détaillants qui y sont établis.${
+            near.length ? ` Les distributeurs agréés déjà implantés dans le Territoire en sont exclus et conservent leurs droits : ${near.map(x => `${esc(x.p.name)} (${x.km.toFixed(1).replace(".", ",")} km)`).join(" ; ")}.` : ""}</p>
+            <p>Conformément ${eu ? "à l'article 4, point b), du règlement (UE) 2022/720" : "à l'article 5, alinéa 4, de la loi suisse sur les cartels"}, aucune stipulation du présent contrat ne restreint les ventes passives, y compris en ligne, de tout distributeur à des clients situés dans le Territoire, ni la liberté du Distributeur de répondre à des commandes non sollicitées venant de l'extérieur.</p>`
+          : `<p>Aucune exclusivité n'est consentie. Le Fournisseur exploite un système de distribution sélective fondé sur les critères qualitatifs de l'article 6.</p>`),
+        art(4, "Prix &amp; commande minimale", `<p>Les Produits sont facturés au tarif de gros ${esc(window.I18N ? window.I18N.t(L.m.name) : L.m.name)} du Fournisseur en ${esc(L.c)}, soit actuellement <b>${ctx.local(L.wholesale, L.c, 2)} HT</b> par unité de la référence phare. Le prix de vente conseillé est de ${ctx.local(p.v, p.c)} TTC (TVA ${p.vat} %) ; il est <b>purement indicatif</b> et le Distributeur fixe librement ses prix de revente.</p>
+          <p>La commande d'ouverture est de <b>${moq} unités</b> (${ctx.local(moq * L.wholesale, L.c)} HT) ; les réassorts sont passés par colis de ${ctx.sim.pack} unités. Toute modification tarifaire prend effet 60 jours après notification écrite.</p>`),
+        art(5, "Commandes &amp; livraison", `<p>${incoterm} La propriété est transférée au complet paiement ; les risques sont transférés à la livraison. Les manquants ou dommages apparents doivent être signalés dans les 5 jours ouvrés suivant la livraison.</p>`),
+        art(6, "Critères sélectifs &amp; présentation de la marque", `<p>Le Distributeur s'engage à (a) présenter les Produits dans un cadre conforme à leur prestige, avec au moins un testeur disponible ; (b) faire suivre à son personnel de vente la formation produit du Fournisseur ; (c) ne pas vendre les Produits via des places de marché tierces exploitées de façon visible par un tiers (CJUE, C-230/16, Coty), les ventes depuis son propre site restant libres ; (d) ne pas vendre à des revendeurs extérieurs au réseau agréé du Fournisseur.</p>`),
+        art(7, "Paiement", `<p>Les factures sont payables à <b>${o.terms} jours nets</b> date de facture par virement${L.c !== "EUR" ? ` en ${esc(L.c)}` : ""}. ${late} Le Fournisseur peut suspendre les livraisons tant qu'une facture demeure impayée plus de 30 jours après son échéance.</p>`),
+        art(8, "Marketing &amp; propriété intellectuelle", `<p>Le Fournisseur concède au Distributeur un droit non exclusif et gratuit d'utiliser ses marques et visuels aux seules fins de promouvoir les Produits dans les Locaux et sur les canaux propres du Distributeur. Tous les droits demeurent la propriété du Fournisseur.</p>`),
+        art(9, "Confidentialité", `<p>Chaque partie garde confidentielles les informations non publiques de l'autre, notamment les conditions commerciales du présent contrat, les tarifs, les données de sell-through et les plans de lancement, pendant la durée du contrat et trois (3) ans après son terme.</p>`),
+        art(10, "Durée &amp; résiliation", `<p>Le présent contrat prend effet le ${date(o.start)} pour une durée initiale de ${o.term} mois et se renouvelle par périodes successives de 12 mois, sauf dénonciation écrite par l'une des parties trois (3) mois avant l'échéance. Chaque partie peut le résilier avec effet immédiat en cas de manquement grave non réparé dans les 30 jours suivant sa notification. À la résiliation, le Fournisseur peut racheter le stock vendable au prix facturé.</p>`),
+        art(11, "Droit applicable &amp; juridiction", `<p>Le présent contrat est régi par le ${esc(law)}, à l'exclusion de la Convention des Nations unies sur les contrats de vente internationale de marchandises (CVIM). Compétence exclusive est attribuée à ${esc(venue)}.</p>`),
+      ];
+    }
+    const title = KINDS_FR[o.kind];
+    const body = `<div data-i18n-skip><section class="cover">
+      <div><div class="brand">${esc(o.entity)} · ${nda ? "Confidentiel" : "Distribution"}</div><div class="rule"></div></div>
+      <div><div class="eyebrow">Contrat ${esc(no)}</div><h1>${esc(title).replace(/^(Contrat|Accord) (.+)$/, "$1<br><em>$2.</em>")}</h1>
+        <p class="lede">Entre ${sup}<br>et ${ret}.</p>
+        ${nda ? `<div class="kpis gold"><div><span>Effet</span><b style="font-size:11pt">${date(o.start)}</b></div><div><span>Durée</span><b>${o.term} mois</b></div><div><span>Survie</span><b>3 ans</b></div><div><span>Droit</span><b style="font-size:10pt">${esc(law)}</b></div></div>`
+          : `<div class="kpis gold"><div><span>Territoire</span><b style="font-size:12pt">${excl ? String(o.radius).replace(".", ",") + " km" : "Sélectif"}</b></div><div><span>Prix de gros HT</span><b style="font-size:12pt">${ctx.local(L.wholesale, L.c, 2)}</b></div><div><span>Commande d'ouverture</span><b style="font-size:12pt">${moq} u.</b></div><div><span>Paiement</span><b style="font-size:12pt">${o.terms} j nets</b></div></div>`}</div>
+      <div class="meta">Effet au ${date(o.start)} · durée ${o.term} mois · ${esc(law)} · réf. CRM ${esc(r.crm_key)}</div></section>
+      ${articles.join("")}
+      <p class="meta" style="margin-top:6mm">Fait en deux exemplaires originaux${nda ? "" : ". Annexe 1 : tarif en vigueur · Annexe 2 : carte du territoire et exclusions"}. Modèle généré depuis le CRM du Fournisseur ; chaque partie est invitée à consulter son propre conseil juridique avant signature.</p>
+      ${sig}
+      <div class="foot"><span>${esc(o.entity)} · ${esc(no)}</span><span>Confidentiel · ${esc(r.name)}</span></div></div>`;
+    ctx.toast("Préparation du contrat · choisir « Enregistrer en PDF »");
+    Intel.printDocument(`${title} — ${r.name}`, body);
   }
 
   // ———————————————————————————————— 3 · Webhook & integration center

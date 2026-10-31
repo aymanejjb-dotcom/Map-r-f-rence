@@ -2,10 +2,10 @@
    App shell + store data precached at install, CDN libraries and fonts cache-first, map tiles cached as
    they are viewed (or warmed by the "offline kit"), live APIs (FX, LLM, sync endpoint) never cached.
    Bump VERSION whenever a precached file changes. */
-const VERSION = "atlas-2026-10-30";
+const VERSION = "atlas-2026-10-31-fr";
 const SHELL = `shell-${VERSION}`, LIBS = "libs-v1", TILES = "tiles-v1";
 const MAX_TILES = 4000;
-const CORE = ["./", "index.html", "perfumeries.js", "intelligence.js", "ai_assistant.js", "modules.js", "manifest.webmanifest",
+const CORE = ["./", "index.html", "i18n.js", "perfumeries.js", "intelligence.js", "ai_assistant.js", "modules.js", "manifest.webmanifest",
   "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png"];
 const CDN = [
   "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
@@ -16,7 +16,7 @@ const CDN = [
   "https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js",
   "https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css",
   "https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js",
-  "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap",
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap",
 ];
 const LIVE = /(^|\.)(frankfurter\.dev|anthropic\.com|openai\.com|workers\.dev)$/;
 const LIB_HOSTS = new Set(["unpkg.com", "fonts.googleapis.com", "fonts.gstatic.com"]);

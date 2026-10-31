@@ -142,7 +142,7 @@
           ${g.export ? (l => `<div class="sl-sub sl-warn">Export · ${esc(l.c)} list: wholesale ${ctx.local(l.wholesale, l.c, 2)}, shelf ${ctx.local(l.msrp, l.c)} (VAT ${l.m.vat} %), opening ${ctx.local(l.order, l.c)} · ${ctx.local(l.m.customs, l.c)} clearance per shipment.</div>`)(ctx.priceOf(g.all[0])) : ""}
           ${g.traits.length ? `<div class="sl-sub">Store culture: ${g.traits.map(esc).join(" · ")}</div>` : ""}</div>`;
       }).join("") +
-      `<p class="sl-rec"><b>Recommendation.</b> Open ${esc(rows[0]?.city || "–")} first with its top two doors as an exclusive pair, then roll into ${rows.slice(1, 3).map(g => esc(g.city)).join(" and ")} once the first reorder lands — this keeps samples concentrated where word-of-mouth compounds.</p>`;
+      `<p class="sl-rec"><b>Recommendation.</b> Open ${esc(rows[0]?.city || "–")} first with its top two doors as an exclusive pair, then roll into ${rows.slice(1, 3).map(g => esc(g.city)).join(L(" et ", " and "))} once the first reorder lands — this keeps samples concentrated where word-of-mouth compounds.</p>`;
     return { html, summary: rows.map(g => ({ city: g.city, country: g.country, winnable: g.pros.length, high_openness: g.high, tier1: g.quick, avg_fit: g.fit, expected_y1_eur: Math.round(g.value), partners: g.partners, export_market: g.export })) };
   }
 
@@ -345,22 +345,243 @@
     if (/exclusiv|zone|territor|conflict|conflit|radius/.test(t)) return "exclusivity";
     return null;
   }
+  // ———————————————————————————————— Dynamic query engine (built-in, offline)
+  // Parses the question into entities (stores, cities, countries, types, statuses, openness, N)
+  // and intents (brief, compare, exclusivity, friction, ranking, count), then answers from live data.
+  const tl = s => window.I18N ? window.I18N.t(s) : s;
+  const FR = () => (window.I18N?.lang || "fr") === "fr";
+  const L = (fr, en) => FR() ? fr : en;
+  const fold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’'`´]/g, "'").replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim();
+  const has = (t, w) => (" " + t + " ").includes(" " + w + " ");
+  const GENERIC = new Set(["parfumerie", "parfumeries", "perfumery", "parfum", "parfums", "perfume", "store", "shop", "boutique", "the", "les", "des", "and", "concept", "maison", "house", "galeries", "grand", "magasin", "beauty", "cosmetics", "haute", "paris", "berlin", "london", "city", "le", "la", "de", "du", "et", "a", "au", "aux"]);
+  const COUNTRY_WORDS = {
+    FR: ["france", "french", "francais", "francaise", "fr"], BE: ["belgium", "belgique", "belgian", "belge", "be"], NL: ["netherlands", "pays bas", "holland", "hollande", "dutch", "nl", "neerlandais"],
+    DE: ["germany", "allemagne", "german", "allemand", "allemande", "deutschland", "de"], LU: ["luxembourg", "lux", "lu"], CH: ["switzerland", "suisse", "swiss", "schweiz", "ch", "helvetique"],
+  };
+  const TYPE_WORDS = { "Niche Boutique": ["niche boutique", "niche boutiques", "boutique de niche", "boutiques de niche", "niche"], "Independent Concept Store": ["concept store", "concept stores", "concept"], "Department Store": ["department store", "department stores", "grand magasin", "grands magasins", "dept"] };
+  const STATUS_WORDS = [
+    ["Key Account", /\bkey accounts?\b|\bcomptes? cles?\b/], ["Partner Active", /\bpartners?\b|\bpartenaires?\b|\bactive accounts?\b/], ["Declined", /\bdeclin/],
+    ["Meeting Booked", /\bmeetings?\b|\brendez vous\b|\brdv\b/], ["Follow-up Required", /\bfollow ?ups?\b|\brelances?\b/], ["Discovery Set Sent", /\bdiscovery sets? sent\b|\bcoffrets? envoyes?\b/],
+    ["Not Contacted", /\bnot contacted\b|\buncontacted\b|\bnon contactes?\b|\bjamais contactes?\b/],
+  ];
+  const CITY_ALIAS = { bruxelles: "Brussels", brussel: "Brussels", anvers: "Antwerp", antwerpen: "Antwerp", gand: "Ghent", gent: "Ghent", louvain: "Leuven", liege: "Liège",
+    geneve: "Geneva", genf: "Geneva", zurich: "Zürich", bale: "Basel", berne: "Bern", lucerne: "Luzern", munchen: "Munich", francfort: "Frankfurt am Main", frankfurt: "Frankfurt am Main",
+    cologne: "Köln", hambourg: "Hamburg", dusseldorf: "Düsseldorf", "la haye": "The Hague", "den haag": "The Hague", "saint moritz": "St. Moritz", "st moritz": "St. Moritz", nuremberg: "Nürnberg", aix: "Aix-en-Provence" };
+  const WORD_N = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5, sept: 7, huit: 8, neuf: 9, dix: 10 };
+
+  // Staff / CX friction score, 0 (frictionless) – 100 (hard door): traits, staff & watch-out notes, rating, entry barrier
+  const FRICTION_TRAIT = { "Pushes sales": 12, "Busy weekends": 6, "Tourist crowds": 8, "Expert staff": -7, "Luxury service": -3, "Allows free sniffing": -5, "Generous samples": -4,
+    "Discovery bar / blotters": -3, "Appointment-friendly": -3, "Curated indie brands": -4, "Gift wrapping": -1 };
+  const STAFF_NEG = [/snob/, /pushy|aggressive|hard.?sell/, /sales.?led|commercial/, /understaffed|long wait|queue/, /varies|mixed|inconsistent|depends/, /stiff|cold|reserved|formal/, /generalist|little niche/, /brand.?(employed|led|trained)|counters?/, /tourist/];
+  const STAFF_POS = [/expert|knowledgeable|expertise/, /passionate|enthusiastic|loves/, /warm|friendly|welcoming|courteous|helpful/, /personal|attentive|patience|unhurried/, /owner.?(run|led)|founder/, /well.?trained|professional|polished|competent|excellent/];
+  const frMemo = new Map();
+  function friction(r) {
+    if (frMemo.has(r.id)) return frMemo.get(r.id);
+    const drivers = [];
+    let f = 40;
+    r.cx_traits.forEach(t => { const v = FRICTION_TRAIT[t]; if (v) { f += v; drivers.push([t, v]); } });
+    const txt = fold(`${r.cx_insights?.staff || ""} ${r.cx_insights?.watch_out || ""}`);
+    const neg = STAFF_NEG.filter(re => re.test(txt)).length, pos = STAFF_POS.filter(re => re.test(txt)).length;
+    if (neg) { f += 4 * neg; drivers.push([L("signaux équipe négatifs", "negative staff signals") + ` ×${neg}`, 4 * neg]); }
+    if (pos) { f -= 4 * pos; drivers.push([L("signaux équipe positifs", "positive staff signals") + ` ×${pos}`, -4 * pos]); }
+    if (r.customer_experience_rating != null) { const v = Math.round((4.3 - r.customer_experience_rating) * 14); if (v) { f += v; drivers.push([L(`note CX ${r.customer_experience_rating}`, `CX rating ${r.customer_experience_rating}`), v]); } }
+    const b = Math.round((BARRIER[r.entry_barrier] || 0) * 1.1);
+    if (b) { f += b; drivers.push([L(`barrière d'entrée ${({ Low: "faible", Med: "moyenne", High: "élevée", "Very High": "très élevée" })[r.entry_barrier]}`, `entry barrier ${r.entry_barrier}`), b]); }
+    const scoreF = Math.max(0, Math.min(100, Math.round(f)));
+    const level = scoreF <= 30 ? L("faible", "low") : scoreF <= 55 ? L("modérée", "moderate") : L("élevée", "high");
+    const out = { score: scoreF, level, tone: scoreF <= 30 ? "ok" : scoreF <= 55 ? "" : "warn", drivers: drivers.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])) };
+    frMemo.set(r.id, out);
+    return out;
+  }
+  const frTag = r => { const f = friction(r); return `<span class="${f.tone === "warn" ? "sl-warn" : ""}">${L("friction", "friction")} ${f.score} (${f.level})</span>`; };
+
+  function parse(q) {
+    const t = fold(q);
+    const ents = { t, stores: [], cities: [], countries: [], types: [], statuses: [], open: null, n: null };
+    // N: "top 10", "10 meilleures", "five best"
+    const mN = t.match(/\b(?:top|les|the|best|meilleur(?:e|s|es)?)\s+(\d{1,2})\b|\b(\d{1,2})\s+(?:best|meilleur|top|premi|doors|portes|stores|boutiques|adresses|points)/);
+    if (mN) ents.n = +(mN[1] || mN[2]);
+    else { const w = Object.keys(WORD_N).find(k => new RegExp(`\\b(top|the|les) ${k}\\b`).test(t)); if (w) ents.n = WORD_N[w]; }
+    // Countries
+    Object.entries(COUNTRY_WORDS).forEach(([cc, ws]) => {
+      if (ws.some(w => w.length > 2 ? has(t, w) : new RegExp(`(^|\\s)${w}(\\s|$)`).test(q.toLowerCase().replace(/[^a-z ]/g, " ")) && q.includes(w.toUpperCase()))) ents.countries.push(cc);
+    });
+    // Cities (longest first, word-bounded)
+    const cities = [...new Set(ctx.data.map(r => r.city))].sort((a, b) => b.length - a.length);
+    let rest = " " + t + " ";
+    for (const c of cities) { const fc = fold(c); if (fc.length > 2 && rest.includes(" " + fc + " ")) { ents.cities.push(c); rest = rest.replace(" " + fc + " ", " "); } }
+    const known = new Set(cities);
+    Object.entries(CITY_ALIAS).forEach(([al, c]) => { if (known.has(c) && !ents.cities.includes(c) && rest.includes(" " + al + " ")) { ents.cities.push(c); rest = rest.replace(" " + al + " ", " "); } });
+    // Stores: full normalised name, else all distinctive tokens of the name
+    const scored = [];
+    ctx.data.forEach(r => {
+      const fn = fold(r.name);
+      if (fn.length >= 4 && (" " + t + " ").includes(" " + fn + " ")) { scored.push([r, 100 + fn.length]); return; }
+      const toks = fn.split(" ").filter(w => w.length >= 4 && !GENERIC.has(w) && !ents.cities.some(c => fold(c) === w));
+      if (toks.length && toks.every(w => has(t, w))) scored.push([r, toks.join("").length]);
+    });
+    if (scored.length) {
+      const best = Math.max(...scored.map(x => x[1]));
+      let hits = scored.filter(x => x[1] >= Math.min(best, 100) * (best >= 100 ? 1 : .8)).map(x => x[0]);
+      if (ents.cities.length) { const inCity = hits.filter(r => ents.cities.includes(r.city)); if (inCity.length) hits = inCity; }
+      ents.stores = hits.slice(0, 6);
+    }
+    Object.entries(TYPE_WORDS).forEach(([ty, ws]) => { if (ws.some(w => has(t, w))) ents.types.push(ty); });
+    if (ents.types.includes("Niche Boutique") && ents.types.length > 1 && !/\bniche boutique|boutique de niche/.test(t)) ents.types = ents.types.filter(x => x !== "Niche Boutique");
+    STATUS_WORDS.forEach(([s, re]) => { if (re.test(t)) ents.statuses.push(s); });
+    if (/\b(high|forte?|haute|tres) (openness|ouverture)|\bopen to (a )?single|\bouverte?s? (au|a la) mono|\bhigh openness/.test(t)) ents.open = "High";
+    // Intents
+    ents.intent = {
+      friction: /friction|staff|personnel|equipe|vendeu|accueil|welcome|service|cx\b|customer experience|experience client|snob|pushy|difficile|hard door|easy door|facile/.test(t),
+      exclusivity: /exclusi|territor|zone|rayon|radius|conflict|conflit|cannibal|overlap|chevauch|protect/.test(t),
+      compare: /\bvs\b|versus|compar|\bor\b|\bou\b|difference|better|mieux/.test(t) && ents.stores.length >= 2,
+      count: /how many|combien|nombre de|number of|count/.test(t),
+      worst: /worst|pire|lowest|plus faible|moins bon|weakest|least|hardest|plus difficile|highest friction|plus de friction/.test(t),
+      easiest: /easiest|plus facile|lowest friction|moins de friction|smoothest|accueillant/.test(t),
+      rank: /best|top|meilleur|priorit|where|ou lancer|recommend|recommand|which|quel|quelle|quels|quelles|list|liste|show|montre|affiche/.test(t),
+    };
+    return ents;
+  }
+
+  function filterBy(e) {
+    return ctx.data.filter(r => (!e.cities.length || e.cities.includes(r.city)) && (!e.countries.length || e.countries.includes(r.country))
+      && (!e.types.length || e.types.includes(r.type)) && (!e.statuses.length || e.statuses.includes(r.pipeline_status)) && (!e.open || r.single_sku_openness === e.open));
+  }
+  const scopeLabel = e => {
+    const bits = [];
+    if (e.cities.length) bits.push(e.cities.join(", "));
+    if (e.countries.length) bits.push(e.countries.join(", "));
+    if (e.types.length) bits.push(e.types.map(ty => L(({ "Niche Boutique": "boutiques de niche", "Independent Concept Store": "concept stores", "Department Store": "grands magasins" })[ty], ty)).join(", "));
+    if (e.statuses.length) bits.push(e.statuses.join(", "));
+    if (e.open) bits.push(L("forte ouverture", "high openness"));
+    return bits.join(" · ") || L("tout le réseau", "the whole directory");
+  };
+  const metaL = r => `${esc(r.city)} · ${esc(r.country)} · ${L("affinité", "fit")} ${r.brand_alignment_score} · ${L("niveau", "tier")} ${r.tier_score} · ${L("ouverture", "SKU")} ${esc(L(tl(r.single_sku_openness).toLowerCase(), r.single_sku_openness))}`;
+
+  // Territorial exclusivity around one door: inside a partner zone? what would an exclusive radius here block?
+  function exclusivityFor(r) {
+    const R = ctx.zoneKm, z = zoneOf(r), near = ctx.data.filter(p => p.id !== r.id).map(p => ({ p, d: km(r, p) })).filter(x => x.d <= R).sort((a, b) => a.d - b.d);
+    const partners = near.filter(x => isProtected(x.p)), blocked = near.filter(x => isOpen(x.p));
+    const t1 = blocked.filter(x => x.p.launch_priority.startsWith("Tier 1")), lost = blocked.reduce((s, x) => s + score(x.p), 0);
+    const ownScore = score(r);
+    let verdict;
+    if (isProtected(r)) verdict = L(`<b>Compte protégé.</b> ${esc(r.name)} détient déjà un territoire de ${R.toFixed(1)} km : ${blocked.length} porte${blocked.length > 1 ? "s" : ""} prospectable${blocked.length > 1 ? "s" : ""} y ${blocked.length > 1 ? "sont gelées" : "est gelée"}.`,
+      `<b>Protected account.</b> ${esc(r.name)} already holds a ${R.toFixed(1)} km territory: ${blocked.length} prospectable door${blocked.length === 1 ? " is" : "s are"} frozen inside it.`);
+    else if (z) verdict = L(`<b>Conflit.</b> ${esc(r.name)} se trouve dans le territoire de ${esc(z.p.name)} (${z.km.toFixed(1)} km) : pas de démarchage actif sans renégocier l'exclusivité ou réduire le rayon sous ${Math.max(.5, z.km - .1).toFixed(1)} km.`,
+      `<b>Conflict.</b> ${esc(r.name)} sits inside ${esc(z.p.name)}'s territory (${z.km.toFixed(1)} km): no active pitch unless that exclusivity is renegotiated or the radius drops below ${Math.max(.5, z.km - .1).toFixed(1)} km.`);
+    else if (!blocked.length) verdict = L(`<b>Exclusivité sans coût.</b> Aucune autre porte dans un rayon de ${R.toFixed(1)} km : ${esc(r.name)} peut recevoir un territoire exclusif sans rien geler.`,
+      `<b>Free exclusivity.</b> No other door within ${R.toFixed(1)} km: ${esc(r.name)} can be granted an exclusive territory without freezing anything.`);
+    else if (lost > ownScore * 1.5 || t1.length > 1) verdict = L(`<b>Exclusivité déconseillée.</b> Elle gèlerait ${blocked.length} portes (dont ${t1.length} niveau 1) pesant ${lost} points de score contre ${ownScore} pour ${esc(r.name)} : préférer un accord sélectif.`,
+      `<b>Exclusivity not advised.</b> It would freeze ${blocked.length} doors (${t1.length} Tier 1) worth ${lost} score points against ${ownScore} for ${esc(r.name)}: offer a selective agreement instead.`);
+    else verdict = L(`<b>Exclusivité défendable.</b> Elle gèlerait ${blocked.length} porte${blocked.length > 1 ? "s" : ""} (${lost} points) contre ${ownScore} pour ${esc(r.name)} — monnayez-la contre un engagement de volume.`,
+      `<b>Exclusivity defensible.</b> It would freeze ${blocked.length} door${blocked.length > 1 ? "s" : ""} (${lost} points) against ${ownScore} for ${esc(r.name)} — trade it for a volume commitment.`);
+    return `<div class="sl-card"><div class="sl-card-h"><b>${storeLink(r)}</b><span class="sl-idx">${ownScore}</span></div>
+      <div class="sl-sub">${L("Exclusivité territoriale", "Territorial exclusivity")} · ${L("rayon", "radius")} ${R.toFixed(1)} km · ${esc(r.full_address)}</div>
+      <p class="sl-sub">${verdict}</p>
+      ${partners.length ? `<p class="sl-sub sl-warn">${L("Partenaires dans le rayon", "Partners within the radius")} : ${partners.map(x => `${storeLink(x.p)} ${x.d.toFixed(1)} km`).join(", ")}</p>` : ""}
+      ${blocked.length ? `<p class="sl-sub">${L("Portes concernées", "Doors affected")} : ${blocked.slice(0, 6).map(x => `${storeLink(x.p)} <span class="sl-mute">${x.d.toFixed(1)} km · ${score(x.p)}</span>`).join(", ")}${blocked.length > 6 ? "…" : ""}</p>` : ""}</div>`;
+  }
+
+  function frictionCard(r) {
+    const f = friction(r), ins = r.cx_insights || {};
+    const drv = f.drivers.slice(0, 5).map(([k, v]) => `${esc(L(EXACT_FR[k] || k, k))} ${v > 0 ? "+" : "−"}${Math.abs(v)}`).join(" · ");
+    const advice = f.score > 55
+      ? L("Porte exigeante : passer par le décideur, rendez-vous hors week-end, kit testeur + formation équipe, jamais de démarchage en boutique aux heures de pointe.", "Hard door: go through the decision maker, book outside weekends, bring tester + staff training, never cold-pitch on the floor at peak hours.")
+      : f.score > 30 ? L("Friction modérée : un brief équipe court et un coffret découverte réservé au personnel suffisent.", "Moderate friction: a short staff brief and a staff-only discovery set are enough.")
+      : L("Équipe réceptive : visite directe possible, l'équipe peut porter le récit du parfum seule.", "Receptive team: walk-in pitch is fine, staff can carry the fragrance story on their own.");
+    return `<div class="sl-card"><div class="sl-card-h"><b>${storeLink(r)}</b><span class="sl-idx ${f.tone === "warn" ? "sl-warn" : ""}">${f.score}</span></div>
+      <div class="sl-sub">${L("Friction équipe / CX", "Staff / CX friction")} : <b>${f.level}</b> · ${metaL(r)}</div>
+      ${ins.staff ? `<p class="sl-sub"><b>${L("Équipe", "Staff")}.</b> ${esc(ins.staff)}</p>` : ""}${ins.watch_out ? `<p class="sl-sub"><b>${L("Vigilance", "Watch out")}.</b> ${esc(ins.watch_out)}</p>` : ""}
+      <p class="sl-sub sl-mute">${drv || L("aucun signal marqué", "no strong signal")}</p>
+      <p class="sl-sub">${advice}</p></div>`;
+  }
+  const EXACT_FR = { "Pushes sales": "vente insistante", "Busy weekends": "week-ends chargés", "Tourist crowds": "affluence touristique", "Expert staff": "personnel expert", "Luxury service": "service luxe",
+    "Allows free sniffing": "essais libres", "Generous samples": "échantillons généreux", "Discovery bar / blotters": "bar découverte", "Appointment-friendly": "sur rendez-vous", "Curated indie brands": "marques indépendantes", "Gift wrapping": "paquet cadeau" };
+
+  function compareStores(rows) {
+    const line = (lab, f) => `<tr><td class="sl-mute">${lab}</td>${rows.map(r => `<td>${f(r)}</td>`).join("")}</tr>`;
+    const best = [...rows].sort((a, b) => (score(b) - friction(b).score / 4 - (zoneOf(b) ? 30 : 0)) - (score(a) - friction(a).score / 4 - (zoneOf(a) ? 30 : 0)))[0];
+    return `<p class="sl-lead">${L("Comparaison", "Comparison")} · ${rows.length} ${L("portes", "doors")}</p>
+      <div class="sl-card" style="overflow-x:auto"><table class="sl-t" style="width:100%;border-collapse:collapse;font-size:12px">
+        <tr><td></td>${rows.map(r => `<td><b>${storeLink(r)}</b><div class="sl-mute">${esc(r.city)}</div></td>`).join("")}</tr>
+        ${line(L("Score placement", "Placement score"), r => `<b>${score(r)}</b>`)}
+        ${line(L("Affinité", "Fit"), r => r.brand_alignment_score)}${line(L("Niveau", "Tier"), r => r.tier_score)}
+        ${line(L("Ouverture", "Openness"), r => esc(r.single_sku_openness))}${line("CX", r => r.customer_experience_rating ?? "–")}
+        ${line(L("Friction", "Friction"), r => `${friction(r).score} (${friction(r).level})`)}
+        ${line(L("Territoire", "Territory"), r => isProtected(r) ? L("protégé", "protected") : zoneOf(r) ? `<span class="sl-warn">${L("en zone", "in zone")}</span>` : L("libre", "clear"))}
+        ${line(L("Statut", "Status"), r => esc(r.pipeline_status))}
+        ${line(L("Potentiel export", "Export potential"), r => r.export_potential_score)}</table></div>
+      <p class="sl-rec"><b>${L("Verdict.", "Verdict.")}</b> ${L(`Prioriser ${storeLink(best)} : meilleur équilibre score / friction / territoire.`, `Prioritise ${storeLink(best)}: best balance of score, friction and territory.`)}</p>`;
+  }
+
+  function rankList(e, rows) {
+    const n = Math.min(e.n || 8, 25);
+    let key = r => score(r), label = L("score de placement", "placement score"), val = r => score(r);
+    if (e.intent.friction) {
+      const asc = e.intent.easiest || !e.intent.worst;
+      key = r => asc ? -friction(r).score : friction(r).score; val = r => friction(r).score; label = asc ? L("friction la plus faible", "lowest friction") : L("friction la plus forte", "highest friction");
+    } else if (e.intent.worst) { key = r => -score(r); label = L("score le plus faible", "lowest score"); }
+    const pool = e.statuses.length ? rows : rows.filter(r => r.pipeline_status !== "Declined");
+    const top = [...pool].sort((a, b) => key(b) - key(a)).slice(0, n);
+    const avgF = Math.round(avg(rows, r => friction(r).score));
+    return `<p class="sl-lead"><b>${esc(scopeLabel(e))}</b> : ${rows.length} ${L("portes", "doors")} · ${rows.filter(isProtected).length} ${L("partenaires", "partners")} · ${rows.filter(r => r.single_sku_openness === "High").length} ${L("à forte ouverture", "high-openness")} · ${L("friction moy.", "avg friction")} ${avgF}. ${L("Classement", "Ranked by")} : <b>${label}</b>.</p>
+      <ol class="sl-list">${top.map(r => `<li>${storeLink(r)} <span class="sl-score">${val(r)}</span><div class="sl-mute">${esc(r.pipeline_status)} · ${metaL(r)} · ${frTag(r)}${zoneOf(r) ? ` · <span class="sl-warn">${L("en zone", "in zone")} ${esc(zoneOf(r).p.name)}</span>` : ""}</div></li>`).join("")}</ol>
+      ${top.length ? `<p class="sl-rec"><b>${L("Prochaine action.", "Next action.")}</b> ${L(`Ouvrir ${storeLink(top[0])} en premier${top[1] ? `, puis ${storeLink(top[1])}` : ""}.`, `Open ${storeLink(top[0])} first${top[1] ? `, then ${storeLink(top[1])}` : ""}.`)}</p>` : ""}`;
+  }
+
+  function territoryScope(e, rows) {
+    const R = ctx.zoneKm, partners = rows.filter(isProtected), inZone = rows.filter(r => !isProtected(r) && zoneOf(r));
+    const free = rows.filter(r => isOpen(r) && !zoneOf(r)).sort((a, b) => score(b) - score(a));
+    // Best exclusive anchor: high own score, low score frozen around it
+    const anchors = free.map(r => { const lost = ctx.data.filter(p => p.id !== r.id && isOpen(p) && km(r, p) <= R).reduce((s, p) => s + score(p), 0); return { r, lost, net: score(r) - lost / 2 }; })
+      .sort((a, b) => b.net - a.net).slice(0, 4);
+    return `<p class="sl-lead"><b>${esc(scopeLabel(e))}</b> · ${L("rayon", "radius")} ${R.toFixed(1)} km : ${partners.length} ${L("comptes protégés", "protected accounts")}, ${inZone.length} ${L("portes en zone", "doors inside a zone")}, ${free.length} ${L("portes libres", "free doors")}.</p>
+      ${inZone.length ? `<div class="sl-card"><div class="sl-card-h"><b>${L("Portes gelées", "Frozen doors")}</b></div><ol class="sl-list">${inZone.slice(0, 6).map(r => `<li>${storeLink(r)}<div class="sl-mute">${L("zone de", "zone of")} ${esc(zoneOf(r).p.name)} · ${zoneOf(r).km.toFixed(1)} km · ${L("score", "score")} ${score(r)}</div></li>`).join("")}</ol></div>` : ""}
+      ${anchors.length ? `<div class="sl-card"><div class="sl-card-h"><b>${L("Meilleurs ancrages exclusifs", "Best exclusive anchors")}</b><span class="sl-mute">${L("score − coût de gel", "score − freeze cost")}</span></div><ol class="sl-list">${anchors.map(a => `<li>${storeLink(a.r)} <span class="sl-score">${score(a.r)}</span><div class="sl-mute">${L("gèlerait", "would freeze")} ${a.lost} ${L("points autour", "points around it")} · ${frTag(a.r)}</div></li>`).join("")}</ol></div>` : ""}
+      <p class="sl-rec"><b>${L("Recommandation.", "Recommendation.")}</b> ${anchors[0] ? L(`Proposer l'exclusivité à ${storeLink(anchors[0].r)} en priorité ; les autres en distribution sélective.`, `Offer exclusivity to ${storeLink(anchors[0].r)} first; keep the others selective.`) : L("Aucune porte libre : revoir le rayon ou les accords existants.", "No free door: revisit the radius or existing agreements.")}</p>`;
+  }
+
+  function countAnswer(e, rows) {
+    const by = k => Object.entries(rows.reduce((a, r) => ((a[r[k]] = (a[r[k]] || 0) + 1), a), {})).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => `${esc(k)} ${v}`).join(" · ");
+    return `<p class="sl-lead"><b>${rows.length}</b> ${L("portes", "doors")} · ${esc(scopeLabel(e))}.</p>
+      <p class="sl-sub">${L("Par statut", "By status")} : ${by("pipeline_status") || "–"}</p><p class="sl-sub">${L("Par type", "By type")} : ${by("type") || "–"}</p>
+      <p class="sl-sub">${L("Par ville", "By city")} : ${by("city") || "–"}</p>`;
+  }
+
   function localAnswer(q) {
+    const e = parse(q), I = e.intent;
+    // 1 · Named stores
+    if (e.stores.length) {
+      if (I.compare || (e.stores.length >= 2 && e.stores.length <= 4 && !I.exclusivity && !I.friction)) return compareStores(e.stores.slice(0, 4));
+      return e.stores.slice(0, 3).map(r => I.exclusivity ? exclusivityFor(r) : I.friction ? frictionCard(r) : storeBrief(r) + exclusivityFor(r).replace('<div class="sl-card">', '<div class="sl-card sl-sub-card">') + frictionCard(r)).join("");
+    }
+    const scoped = e.cities.length || e.countries.length || e.types.length || e.statuses.length || e.open;
+    const rows = filterBy(e);
+    // 2 · Scoped questions (a city, a country, a type, a status…)
+    if (scoped) {
+      if (!rows.length) return `<p class="sl-lead">${L(`Aucune porte ne correspond à <b>${esc(scopeLabel(e))}</b>.`, `No door matches <b>${esc(scopeLabel(e))}</b>.`)}</p>`;
+      if (I.count && !I.rank) return countAnswer(e, rows);
+      if (I.exclusivity) return territoryScope(e, rows);
+      return rankList(e, rows);
+    }
+    // 3 · Network-wide intents the analyses don't cover
+    if (I.friction) return rankList(e, ctx.data);
+    if (I.count) return countAnswer(e, ctx.data);
+    // 4 · Packaged analyses
     const id = route(q);
     if (id) return ANALYSES[id]().html;
-    const t = q.toLowerCase().trim();
-    const exactCity = ctx.data.some(r => r.city.toLowerCase() === t);
-    const hit = !exactCity && t.length > 3 && ctx.data.filter(r => r.name.toLowerCase().includes(t) || t.includes(r.name.toLowerCase())).slice(0, 3);
-    if (hit && hit.length) return hit.map(storeBrief).join("");
-    const city = ctx.data.find(r => r.city.toLowerCase() === t) || ctx.data.find(r => t.includes(r.city.toLowerCase()));
-    if (city) {
-      const rows = ctx.data.filter(r => r.city === city.city).sort((a, b) => score(b) - score(a));
-      return `<p class="sl-lead"><b>${esc(city.city)}</b>: ${rows.length} doors · ${rows.filter(isProtected).length} partners · ${rows.filter(r => r.single_sku_openness === "High").length} high-openness.</p>
-        <ol class="sl-list">${rows.slice(0, 8).map(r => `<li>${storeLink(r)} <span class="sl-score">${score(r)}</span><div class="sl-mute">${esc(r.pipeline_status)} · ${meta(r)}</div></li>`).join("")}</ol>`;
-    }
-    const o = overview();
-    return `<p class="sl-lead">${o.stores} doors in ${Object.keys(o.countries).length} markets (${o.shown} in the current view) · avg fit ${o.avg_fit} · ${o.openness.High || 0} high-openness · ${o.partners.length} partners.</p>
-      <p class="sl-sub">Built-in mode answers the ${CHIPS.length} analyses above, a store name or a city. Add an API key in ⚙︎ for open-ended strategy questions.</p>`;
+    if (I.rank) return rankList(e, ctx.data);
+    // 5 · Free-text match on network, notes, sentiment
+    const hits = ctx.data.filter(r => e.t.length > 3 && fold(`${r.network || ""} ${r.sentiment_summary} ${r.notes_prospections || ""} ${r.cx_traits.join(" ")}`).includes(e.t)).slice(0, 8);
+    if (hits.length) return `<p class="sl-lead">${L(`${hits.length} porte${hits.length > 1 ? "s" : ""} mentionnent « ${esc(q)} » :`, `${hits.length} door${hits.length > 1 ? "s" : ""} mention “${esc(q)}”:`)}</p><ol class="sl-list">${hits.map(r => `<li>${storeLink(r)} <span class="sl-score">${score(r)}</span><div class="sl-mute">${metaL(r)}</div></li>`).join("")}</ol>`;
+    const ex = ctx.data.filter(isOpen).sort((a, b) => score(b) - score(a))[0];
+    return `<p class="sl-lead">${L(`Je n'ai pas identifié de boutique, de ville ou d'analyse dans « ${esc(q)} ».`, `I couldn't find a store, city or analysis in “${esc(q)}”.`)}</p>
+      <p class="sl-sub">${L("Exemples", "Try")} : ${[
+        L(`« ${ex ? esc(ex.name) : "Paris"} exclusivité »`, `“${ex ? esc(ex.name) : "Paris"} exclusivity”`),
+        L("« friction équipe à Bruxelles »", "“staff friction in Brussels”"),
+        L("« top 10 boutiques de niche en Suisse »", "“top 10 niche boutiques in Switzerland”"),
+        L("« combien de partenaires en Allemagne »", "“how many partners in Germany”"),
+        L("« compare A vs B »", "“compare A vs B”")].join(" · ")}</p>`;
   }
 
   // ———————————————————————————————— LLM (optional)
@@ -377,7 +598,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     const id = route(q);
     const prospects = ctx.data.filter(isOpen).map(r => ({ r, s: score(r) })).sort((a, b) => b.s - a.s).slice(0, 40)
       .map(({ r, s }) => ({ name: r.name, city: r.city, cc: r.country, type: r.type, segment: r.segment, status: r.pipeline_status, score: s,
-        fit: r.brand_alignment_score, tier: r.tier_score, sku: r.single_sku_openness, cx: r.customer_experience_rating, sentiment: r.sentiment_summary, pitch: r.cx_insights?.pitch,
+        fit: r.brand_alignment_score, tier: r.tier_score, sku: r.single_sku_openness, cx: r.customer_experience_rating, sentiment: r.sentiment_summary, pitch: r.cx_insights?.pitch, friction: friction(r).score, staff: r.cx_insights?.staff, exclusivity_conflict: zoneOf(r) ? zoneOf(r).p.name : null,
         base_score: baseScore(r), market_pulse: pulseOf(r).delta, pulse_drivers: pulseOf(r).drivers.map(d => `${d.label} (${d.pts > 0 ? "+" : ""}${d.pts})`) }));
     return { overview: overview(), top_prospects: prospects, analysis: id ? { [id]: ANALYSES[id]().summary } : undefined };
   }
@@ -424,25 +645,25 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
   const css = `
 .sl-fab { position: fixed; z-index: 950; right: max(20px, env(safe-area-inset-right)); bottom: calc(20px + env(safe-area-inset-bottom));
   display: inline-flex; align-items: center; gap: 9px; height: 48px; padding: 0 20px 0 16px; border-radius: 999px; cursor: pointer;
-  font: 600 13.5px/1 var(--text, system-ui); letter-spacing: .01em; color: var(--gold-hi, #e2c88f);
-  background: linear-gradient(180deg, rgba(197,160,89,.22), rgba(197,160,89,.08)), rgba(18,18,20,.62);
-  border: 1px solid rgba(197,160,89,.45); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 18px 40px -14px rgba(0,0,0,.95), 0 0 24px -6px rgba(197,160,89,.45);
+  font: 600 13.5px/1 var(--text, system-ui); letter-spacing: .01em; color: var(--gold-hi, #ecd27a);
+  background: linear-gradient(180deg, rgba(212,175,55,.22), rgba(212,175,55,.08)), rgba(18,18,20,.62);
+  border: 1px solid rgba(212,175,55,.45); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 18px 40px -14px rgba(0,0,0,.95), 0 0 24px -6px rgba(212,175,55,.45);
   transition: transform .35s var(--ease-out, ease), opacity .3s, box-shadow .3s; }
-.sl-fab:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 22px 44px -14px rgba(0,0,0,.95), 0 0 32px -4px rgba(197,160,89,.6); }
+.sl-fab:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 22px 44px -14px rgba(0,0,0,.95), 0 0 32px -4px rgba(212,175,55,.6); }
 .sl-fab:active { transform: scale(.96); }
 .sl-fab svg { width: 18px; height: 18px; }
 .sl-fab.hide { opacity: 0; pointer-events: none; transform: translateY(12px) scale(.94); }
 .sl-panel { position: fixed; z-index: 1002; top: 12px; right: 12px; bottom: 12px; width: min(460px, calc(100vw - 24px));
   display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; color: var(--ink, #f5f5f7);
-  background: rgba(14,14,16,.82); border: 1px solid rgba(197,160,89,.22);
+  background: rgba(14,14,16,.82); border: 1px solid rgba(212,175,55,.22);
   backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
   box-shadow: 0 40px 100px -20px #000, 0 0 0 .5px rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.06) inset;
   transform: translateX(calc(100% + 24px)); visibility: hidden; transition: transform .55s var(--ease, ease), visibility 0s linear .55s; }
 .sl-panel.open { transform: none; visibility: visible; transition: transform .55s var(--ease, ease), visibility 0s; }
 .sl-head { display: flex; align-items: center; gap: 12px; padding: 14px 14px 12px 18px; border-bottom: 1px solid var(--hair, rgba(255,255,255,.08)); flex: none; }
 .sl-orb { width: 30px; height: 30px; border-radius: 50%; flex: none; display: grid; place-items: center; color: #0b0904;
-  background: radial-gradient(circle at 35% 30%, #f3e2b8, #c5a059 55%, #8c6f35); box-shadow: 0 0 18px -2px rgba(197,160,89,.6); }
+  background: radial-gradient(circle at 35% 30%, #f3e2b8, #D4AF37 55%, #9c7c22); box-shadow: 0 0 18px -2px rgba(212,175,55,.6); }
 .sl-orb svg { width: 15px; height: 15px; }
 .sl-title { flex: 1; min-width: 0; }
 .sl-title b { display: block; font: 500 18px/1.1 var(--serif, Georgia, serif); }
@@ -457,55 +678,55 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
 .sl-cfg .row { display: flex; gap: 8px; } .sl-cfg .row > * { flex: 1; }
 .sl-log { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 18px; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
 .sl-msg { max-width: 100%; font-size: 13.5px; line-height: 1.5; animation: sl-in .45s var(--ease-out, ease) both; }
-.sl-msg.user { align-self: flex-end; max-width: 85%; background: rgba(197,160,89,.16); border: 1px solid rgba(197,160,89,.3); padding: 9px 13px; border-radius: 16px 16px 4px 16px; }
-.sl-msg.ai { padding-left: 14px; border-left: 1px solid rgba(197,160,89,.35); }
-.sl-msg.ai h4 { margin: 14px 0 6px; font: 600 11px/1.2 var(--text, system-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold, #c5a059); }
+.sl-msg.user { align-self: flex-end; max-width: 85%; background: rgba(212,175,55,.16); border: 1px solid rgba(212,175,55,.3); padding: 9px 13px; border-radius: 16px 16px 4px 16px; }
+.sl-msg.ai { padding-left: 14px; border-left: 1px solid rgba(212,175,55,.35); }
+.sl-msg.ai h4 { margin: 14px 0 6px; font: 600 11px/1.2 var(--text, system-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold, #D4AF37); }
 .sl-msg p { margin: 0 0 8px; }
 .sl-lead { color: var(--ink-2, #d2d2d7); }
 .sl-sub, .sl-mute { color: var(--muted, #8e8e93); font-size: 12px; }
 .sl-warn { color: var(--warn, #f2a65e); }
-.sl-rec { background: rgba(197,160,89,.08); border: 1px solid rgba(197,160,89,.2); border-radius: 12px; padding: 10px 12px; margin-top: 10px !important; }
+.sl-rec { background: rgba(212,175,55,.08); border: 1px solid rgba(212,175,55,.2); border-radius: 12px; padding: 10px 12px; margin-top: 10px !important; }
 .sl-card { background: rgba(255,255,255,.035); border: 1px solid var(--hair, rgba(255,255,255,.08)); border-radius: 14px; padding: 12px 13px; margin-bottom: 8px; }
 .sl-card-h { display: flex; align-items: center; gap: 8px; font-size: 14px; }
-.sl-rank { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 600; background: rgba(197,160,89,.2); color: var(--gold-hi, #e2c88f); }
-.sl-idx { margin-left: auto; font: 600 15px var(--sans, system-ui); color: var(--gold-hi, #e2c88f); font-variant-numeric: tabular-nums; }
+.sl-rank { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 600; background: rgba(212,175,55,.2); color: var(--gold-hi, #ecd27a); }
+.sl-idx { margin-left: auto; font: 600 15px var(--sans, system-ui); color: var(--gold-hi, #ecd27a); font-variant-numeric: tabular-nums; }
 .sl-bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,.06); margin: 8px 0; overflow: hidden; }
-.sl-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-deep, #8c6f35), var(--gold-hi, #e2c88f)); }
+.sl-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold-deep, #9c7c22), var(--gold-hi, #ecd27a)); }
 .sl-kv { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--ink-2, #d2d2d7); margin-bottom: 4px; }
 .sl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
 .sl-stats div { background: rgba(255,255,255,.04); border: 1px solid var(--hair, rgba(255,255,255,.08)); border-radius: 12px; padding: 8px 10px; }
 .sl-stats span { display: block; font-size: 10.5px; color: var(--muted, #8e8e93); text-transform: uppercase; letter-spacing: .08em; }
-.sl-stats b { font: 600 18px var(--sans, system-ui); color: var(--gold-hi, #e2c88f); }
+.sl-stats b { font: 600 18px var(--sans, system-ui); color: var(--gold-hi, #ecd27a); }
 .sl-list { margin: 4px 0 8px; padding-left: 20px; display: grid; gap: 6px; }
 .sl-list li::marker { color: var(--faint, #5a5a5f); font-size: 11px; }
-.sl-store { all: unset; cursor: pointer; color: var(--gold-hi, #e2c88f); font-weight: 500; }
+.sl-store { all: unset; cursor: pointer; color: var(--gold-hi, #ecd27a); font-weight: 500; }
 .sl-store:hover { text-decoration: underline; text-underline-offset: 3px; }
-.sl-store:focus-visible { outline: 2px solid var(--gold, #c5a059); border-radius: 4px; }
+.sl-store:focus-visible { outline: 2px solid var(--gold, #D4AF37); border-radius: 4px; }
 .sl-season { display: grid; grid-template-columns: repeat(12, 1fr); align-items: end; gap: 3px; height: 54px; margin: 2px 0 12px; padding: 8px; border-radius: 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); }
 .sl-season i { display: block; border-radius: 3px 3px 1px 1px; background: rgba(255,255,255,.12); }
-.sl-season i.win { background: linear-gradient(180deg, var(--gold-hi, #e2c88f), var(--gold, #c5a059)); }
+.sl-season i.win { background: linear-gradient(180deg, var(--gold-hi, #ecd27a), var(--gold, #D4AF37)); }
 .sl-season i.on { background: var(--ink, #f5f5f7); }
-.sl-score { font-size: 11px; color: var(--gold, #c5a059); font-variant-numeric: tabular-nums; margin-left: 4px; }
+.sl-score { font-size: 11px; color: var(--gold, #D4AF37); font-variant-numeric: tabular-nums; margin-left: 4px; }
 .sl-tag { font-size: 11px; color: var(--ink-2, #d2d2d7); background: rgba(255,255,255,.06); border-radius: 999px; padding: 2px 8px; margin-left: 4px; white-space: nowrap; }
 .sl-tag.bad { color: var(--bad, #ff6b6b); background: rgba(255,107,107,.1); }
 .sl-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .sl-btn { font: 500 12px var(--text, system-ui); color: var(--ink, #fff); background: rgba(255,255,255,.06); border: 1px solid var(--hair-2, rgba(255,255,255,.14)); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
 .sl-btn:hover { background: rgba(255,255,255,.1); }
-.sl-btn.gold { background: var(--gold, #c5a059); color: #0b0904; border-color: transparent; font-weight: 600; }
+.sl-btn.gold { background: var(--gold, #D4AF37); color: #0b0904; border-color: transparent; font-weight: 600; }
 .sl-typing { display: inline-flex; gap: 4px; padding: 6px 0; }
-.sl-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold, #c5a059); animation: sl-dot 1.2s infinite ease-in-out; }
+.sl-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold, #D4AF37); animation: sl-dot 1.2s infinite ease-in-out; }
 .sl-typing i:nth-child(2) { animation-delay: .15s; } .sl-typing i:nth-child(3) { animation-delay: .3s; }
 .sl-foot { flex: none; padding: 10px 14px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--hair, rgba(255,255,255,.08)); }
 .sl-chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); mask-image: linear-gradient(90deg, #000 90%, transparent); }
 .sl-chips::-webkit-scrollbar { display: none; }
-.sl-chip { flex: none; font: 500 12px/1 var(--text, system-ui); color: var(--ink-2, #d2d2d7); background: rgba(255,255,255,.05); border: 1px solid rgba(197,160,89,.28);
+.sl-chip { flex: none; font: 500 12px/1 var(--text, system-ui); color: var(--ink-2, #d2d2d7); background: rgba(255,255,255,.05); border: 1px solid rgba(212,175,55,.28);
   border-radius: 999px; padding: 8px 12px; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
-.sl-chip:hover { background: rgba(197,160,89,.14); border-color: rgba(197,160,89,.55); color: var(--gold-hi, #e2c88f); }
+.sl-chip:hover { background: rgba(212,175,55,.14); border-color: rgba(212,175,55,.55); color: var(--gold-hi, #ecd27a); }
 .sl-form { display: flex; align-items: flex-end; gap: 8px; background: rgba(255,255,255,.05); border: 1px solid var(--hair-2, rgba(255,255,255,.14)); border-radius: 18px; padding: 6px 6px 6px 14px; transition: border-color .2s; }
-.sl-form:focus-within { border-color: rgba(197,160,89,.5); }
+.sl-form:focus-within { border-color: rgba(212,175,55,.5); }
 .sl-form textarea { flex: 1; resize: none; border: 0; outline: 0; background: transparent; color: var(--ink, #fff); font: 14px/1.4 var(--text, system-ui); padding: 7px 0; max-height: 120px; min-height: 22px; }
 .sl-form textarea::placeholder { color: var(--faint, #5a5a5f); }
-.sl-send { width: 34px; height: 34px; border-radius: 50%; border: 0; flex: none; cursor: pointer; display: grid; place-items: center; background: var(--gold, #c5a059); color: #0b0904; transition: opacity .2s, transform .15s; }
+.sl-send { width: 34px; height: 34px; border-radius: 50%; border: 0; flex: none; cursor: pointer; display: grid; place-items: center; background: var(--gold, #D4AF37); color: #0b0904; transition: opacity .2s, transform .15s; }
 .sl-send:disabled { opacity: .35; cursor: default; }
 .sl-send:not(:disabled):active { transform: scale(.92); }
 .sl-send svg { width: 15px; height: 15px; }
@@ -530,7 +751,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
   border-radius: 12px; font-size: 12.5px; background: rgba(242,166,94,.08); box-shadow: inset 0 0 0 1px rgba(242,166,94,.28); transition: transform .15s, background .2s; }
 .sl-alert.bad { background: rgba(255,107,107,.08); box-shadow: inset 0 0 0 1px rgba(255,107,107,.3); }
 .sl-alert:active { transform: scale(.98); }
-.sl-alert:focus-visible { outline: 2px solid #c5a059; }
+.sl-alert:focus-visible { outline: 2px solid #D4AF37; }
 .sl-alert i { width: 8px; height: 8px; border-radius: 50%; background: #f2a65e; box-shadow: 0 0 8px #f2a65e; }
 .sl-alert.bad i { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
 .sl-alert b { font-weight: 600; color: #f5f5f7; white-space: nowrap; }
@@ -618,9 +839,16 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     }
     refreshAlerts();
     document.addEventListener("sillage:alerts", refreshAlerts);
+    // Language switch: refresh the greeting if the conversation hasn't started
+    document.addEventListener("atlas:lang", () => {
+      if (history.length <= 1 && history.every(m => m.role !== "user")) { history = []; save(); if (log.childElementCount) render(); }
+      modeLine();
+    });
     function welcome() {
       const o = overview();
-      return `<p><span class="serif" style="font-size:17px">Bonjour.</span></p><p class="sl-lead">I read ${o.stores} doors across ${Object.keys(o.countries).length} markets, ${o.partners.length} partner accounts and a ${o.exclusivity_radius_km.toFixed(1)} km exclusivity radius — live from this CRM, priced in ${esc(o.currency.display)}. Pick an analysis below or ask anything.</p>`;
+      return FR()
+        ? `<p><span class="serif" style="font-size:17px">Bonjour.</span></p><p class="sl-lead" data-i18n-skip>J'analyse ${o.stores} portes sur ${Object.keys(o.countries).length} marchés, ${o.partners.length} compte${o.partners.length > 1 ? "s" : ""} partenaire${o.partners.length > 1 ? "s" : ""} et un rayon d'exclusivité de ${o.exclusivity_radius_km.toFixed(1)} km — en direct depuis ce CRM, en ${esc(o.currency.display)}. Interrogez une boutique, une ville, l'exclusivité territoriale ou la friction équipe, ou choisissez une analyse.</p>`
+        : `<p><span class="serif" style="font-size:17px">Hello.</span></p><p class="sl-lead">I read ${o.stores} doors across ${Object.keys(o.countries).length} markets, ${o.partners.length} partner account${o.partners.length === 1 ? "" : "s"} and a ${o.exclusivity_radius_km.toFixed(1)} km exclusivity radius — live from this CRM, priced in ${esc(o.currency.display)}. Ask about a store, a city, territorial exclusivity or staff friction, or pick an analysis.</p>`;
     }
     function render() {
       log.innerHTML = "";
@@ -669,7 +897,7 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     fab.addEventListener("click", open);
     navBtn?.addEventListener("click", toggle);
     // Other modules (suite bar) can open the assistant on a given analysis
-    document.addEventListener("sillage:ask", e => { const c = CHIPS.find(x => x.id === e.detail?.chip); open(); if (c) ask(c.label, c.id); });
+    document.addEventListener("sillage:ask", e => { const c = CHIPS.find(x => x.id === e.detail?.chip); open(); if (c) ask(tl(c.label), c.id); });
     document.addEventListener("keydown", e => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); toggle(); }
       else if (e.key === "Escape" && panel.classList.contains("open")) close();
@@ -678,13 +906,13 @@ Answer like a luxury-retail strategist: a one-line verdict, then at most 6 tight
     ta.addEventListener("input", () => { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; send.disabled = busy || !ta.value.trim(); });
     ta.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $(".sl-form").requestSubmit(); } });
     $(".sl-form").addEventListener("submit", e => { e.preventDefault(); const q = ta.value; ta.value = ""; ta.style.height = "auto"; ask(q); });
-    $(".sl-chips").addEventListener("click", e => { const c = e.target.closest("[data-chip]"); if (c) ask(CHIPS.find(x => x.id === c.dataset.chip).label, c.dataset.chip); });
+    $(".sl-chips").addEventListener("click", e => { const c = e.target.closest("[data-chip]"); if (c) ask(tl(CHIPS.find(x => x.id === c.dataset.chip).label), c.dataset.chip); });
 
     panel.addEventListener("click", e => {
       const seq = e.target.closest("[data-seq]");
       if (seq) { ctx.openPitch(+seq.dataset.seq, "seq"); return; }
       const al = e.target.closest("[data-alert]");
-      if (al) { ask(CHIPS.find(x => x.id === al.dataset.alert).label, al.dataset.alert); return; }
+      if (al) { ask(tl(CHIPS.find(x => x.id === al.dataset.alert).label), al.dataset.alert); return; }
       const s = e.target.closest(".sl-store");
       if (s) { ctx.focus(+s.dataset.id); if (matchMedia("(max-width: 700px)").matches) close(); return; }
       const act = e.target.closest("[data-act]")?.dataset.act;

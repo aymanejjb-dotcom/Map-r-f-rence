@@ -26,9 +26,9 @@ jobs:
         run: |
           mkdir _site
           cp index.html manifest.webmanifest sw.js .nojekyll _site/
-          cp perfumeries.js perfumeries.json intelligence.js ai_assistant.js modules.js _site/
+          cp i18n.js perfumeries.js perfumeries.json intelligence.js ai_assistant.js modules.js _site/
           cp -r icons _site/
-          for f in index.html perfumeries.js intelligence.js ai_assistant.js modules.js sw.js manifest.webmanifest; do
+          for f in index.html i18n.js perfumeries.js intelligence.js ai_assistant.js modules.js sw.js manifest.webmanifest; do
             test -s "_site/$f" || { echo "missing $f"; exit 1; }
           done
       - uses: actions/configure-pages@v5
